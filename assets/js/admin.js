@@ -12,6 +12,7 @@
                 $this.attr('data-id', bundle_count);
                 $this.find('.bundle-label').val(obj.label);
                 $this.find('.bundle-name').val(obj.name);
+                $this.find('.bundle-select').val(obj.config);
 
                 $('.wpcfm-bundles').append($this);
                 $('.wpcfm-content-bundles .wpcfm-tabs ul').append('<li data-id="' + bundle_count + '">' + obj.label + '</li>');
@@ -37,7 +38,8 @@
 
                 var obj = {
                     'label': $this.find('.bundle-label').val(),
-                    'name': $this.find('.bundle-name').val()
+                    'name': $this.find('.bundle-name').val(),
+                    'config': $this.find('.bundle-select').multipleSelect('getSelects')
                 };
 
                 // Facet save hook
@@ -51,23 +53,6 @@
                 $('.wpcfm-response').html(response);
             });
         });
-
-
-        // Tab click
-        $(document).on('click', '.nav-tab', function() {
-            var tab = $(this).attr('rel');
-            $('.nav-tab').removeClass('nav-tab-active');
-            $(this).addClass('nav-tab-active');
-            $('.wpcfm-content').removeClass('active');
-            $('.wpcfm-content-' + tab).addClass('active');
-            $('.wpcfm-rebuild, .add-bundle, .add-template').hide();
-
-            if ('bundles' == tab) {
-                $('.wpcfm-rebuild').show();
-                $('.add-bundle').show();
-            }
-        });
-        $('.nav-tab:first').click();
 
 
         // "Add bundle" button
@@ -99,6 +84,13 @@
             $(this).addClass('active');
             $('.wpcfm-bundle').hide();
             $('.wpcfm-bundle[data-id=' + id + ']').show();
+
+            // Trigger jQuery Multi Select
+            $('.bundle-select').multipleSelect({
+                isOpen: true,
+                keepOpen: true,
+                filter: true
+            });
 
             // Make sure the content area is tall enough
             var nav_height = $(this).closest('.wpcfm-tabs').height();

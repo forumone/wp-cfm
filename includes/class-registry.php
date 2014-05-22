@@ -8,7 +8,7 @@ class WPCFM_Registry
      */
     function get_namespaces() {
         $namespaces = array(
-            'wp_options' => 'Core Options Table'
+            'wp_options' => 'WP Options'
         );
 
         return apply_filters( 'wpcfm_namespaces', $namespaces );

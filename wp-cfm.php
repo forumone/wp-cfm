@@ -33,9 +33,9 @@ class WPCFM
     function __construct() {
 
         // setup variables
-        define( 'WP_CFM_VERSION', '1.0.0' );
-        define( 'WP_CFM_DIR', dirname( __FILE__ ) );
-        define( 'WP_CFM_URL', plugins_url( 'wp-cfm' ) );
+        define( 'WPCFM_VERSION', '1.0.0' );
+        define( 'WPCFM_DIR', dirname( __FILE__ ) );
+        define( 'WPCFM_URL', plugins_url( 'wp-cfm' ) );
 
         // WP is loaded
         add_action( 'init', array( $this, 'init' ) );
@@ -51,8 +51,8 @@ class WPCFM
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
         // includes
-        include( WP_CFM_DIR . '/includes/class-registry.php' );
-        include( WP_CFM_DIR . '/includes/class-ajax.php' );
+        include( WPCFM_DIR . '/includes/class-registry.php' );
+        include( WPCFM_DIR . '/includes/class-ajax.php' );
 
         $this->registry = new WPCFM_Registry();
         $this->ajax = new WPCFM_Ajax();
@@ -71,7 +71,7 @@ class WPCFM
      * Route to the correct edit screen
      */
     function settings_page() {
-        include( WP_CFM_DIR . '/templates/page-settings.php' );
+        include( WPCFM_DIR . '/templates/page-settings.php' );
     }
 }
 

@@ -1,11 +1,14 @@
 <?php
+
 $configuration = $this->registry->get_configuration_items();
 $namespaces = $this->registry->get_namespaces();
-//echo '<pre>';var_dump($configuration);echo '</pre>';
+
 ?>
 
-<script src="<?php echo WP_CFM_URL; ?>/assets/js/admin.js"></script>
-<link href="<?php echo WP_CFM_URL; ?>/assets/css/admin.css" rel="stylesheet">
+<script src="<?php echo WPCFM_URL; ?>/assets/js/admin.js"></script>
+<script src="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/jquery.multiple.select.js"></script>
+<link href="<?php echo WPCFM_URL; ?>/assets/css/admin.css" rel="stylesheet">
+<link href="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/multiple-select.css" rel="stylesheet">
 
 
 <div class="wrap">
@@ -45,12 +48,17 @@ $namespaces = $this->registry->get_namespaces();
                 <tr>
                     <td><?php _e( 'Bundle Data', 'wpcfm' ); ?>:</td>
                     <td>
-                        <?php foreach ( $configuration as $namespace => $settings ) : ?>
-                        <h3><?php echo $namespaces[ $namespace ]; ?></h3>
-                        <?php foreach ( $settings as $key => $val ) : ?>
-                        <div><?php echo $key; ?></div>
-                        <?php endforeach; ?>
-                        <?php endforeach; ?>
+                        <div class="bundle-select-wrapper">
+                            <select class="bundle-select" multiple="multiple">
+                            <?php foreach ( $configuration as $namespace => $settings ) : ?>
+                                <optgroup label="<?php echo $namespaces[ $namespace ]; ?>">
+                                    <?php foreach ( $settings as $key => $val ) : ?>
+                                    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
+                                    <?php endforeach; ?>
+                                </optgroup>
+                            <?php endforeach; ?>
+                            </select>
+                        </div>
                     </td>
                 </tr>
             </table>
