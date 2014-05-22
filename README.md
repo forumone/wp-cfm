@@ -2,6 +2,8 @@
 
 Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.
 
+![Admin Screen](http://i.imgur.com/VkYVoSW.png)
+
 #### What does this mean for me?
 
 * Less need to copy the database. If you make changes, **Push** your bundle to the filesystem. To load changes, **Pull** the bundle into your database.
