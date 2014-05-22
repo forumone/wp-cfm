@@ -27,6 +27,7 @@ defined( 'ABSPATH' ) or die();
 
 class WPCFM
 {
+    public $readwrite;
     public $registry;
     public $ajax;
 
@@ -51,9 +52,11 @@ class WPCFM
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
         // includes
+        include( WPCFM_DIR . '/includes/class-readwrite.php' );
         include( WPCFM_DIR . '/includes/class-registry.php' );
         include( WPCFM_DIR . '/includes/class-ajax.php' );
 
+        $this->readwrite = new WPCFM_Readwrite();
         $this->registry = new WPCFM_Registry();
         $this->ajax = new WPCFM_Ajax();
     }

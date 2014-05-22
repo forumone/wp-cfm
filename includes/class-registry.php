@@ -16,7 +16,7 @@ class WPCFM_Registry
 
 
     /**
-     * Each configuration item has a key and value
+     * Each configuration item is a key/value pair
      * The `wpcfm_configuration_items` filter allows devs to
      * register additional configuration items
      * 
