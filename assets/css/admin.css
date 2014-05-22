@@ -1,0 +1,95 @@
+
+/* Admin - Settings page */
+
+.wpcfm-response {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background-color: #fff;
+    border-left: 4px solid #7ad03a;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+
+.wpcfm-action-buttons {
+    padding: 10px;
+    margin-top: 10px;
+    background: #fafafa;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+.wpcfm-content {
+    font-size: 13px;
+    border: 1px solid #ccc;
+}
+
+.wpcfm-content .bundle-name {
+    border: none;
+    box-shadow: none;
+    background: none;
+}
+
+.wpcfm-bundles {
+    overflow: auto;
+    border-left: 1px solid #ccc;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.wpcfm-table {
+    width: 100%;
+}
+
+.wpcfm-table td {
+    padding: 0 0 10px 0;
+}
+
+.bundles-hidden {
+    display: none;
+}
+
+.wpcfm-tabs {
+    float: left;
+    width: 160px;
+}
+
+.wpcfm-tabs ul {
+    margin: 15px 0 15px -4px;
+}
+
+.wpcfm-tabs li {
+    margin: 0;
+    padding: 5px 5px 5px 12px;
+    cursor: pointer;
+    color: #21759b;
+}
+
+.wpcfm-tabs li.active {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    border-radius: 2px 0 0 2px;
+    margin-right: -1px;
+}
+
+.remove-bundle {
+    color: #a00;
+    cursor: pointer;
+    float: right;
+}
+
+.remove-bundle:hover {
+    color: red;
+}
+
+.clear {
+    clear: both;
+}
+
+/* WordPress 3.8 */
+
+.wpcfm-content input,
+.wpcfm-content select,
+.wpcfm-content textarea {
+    font-size: 13px;
+}

@@ -25,9 +25,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 defined( 'ABSPATH' ) or die();
 
-class WP_CFM
+class WPCFM
 {
     public $registry;
+    public $ajax;
 
     function __construct() {
 
@@ -51,8 +52,10 @@ class WP_CFM
 
         // includes
         include( WP_CFM_DIR . '/includes/class-registry.php' );
+        include( WP_CFM_DIR . '/includes/class-ajax.php' );
 
-        $this->registry = new WP_CFM_Registry();
+        $this->registry = new WPCFM_Registry();
+        $this->ajax = new WPCFM_Ajax();
     }
 
 
@@ -72,4 +75,4 @@ class WP_CFM
     }
 }
 
-$wp_cfm = new WP_CFM();
+$wp_cfm = new WPCFM();

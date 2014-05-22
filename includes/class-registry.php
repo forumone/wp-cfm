@@ -1,6 +1,6 @@
 <?php
 
-class WP_CFM_Registry
+class WPCFM_Registry
 {
 
     /**
