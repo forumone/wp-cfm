@@ -82,11 +82,12 @@
             var id = $(this).attr('data-id');
             $(this).siblings('li').removeClass('active');
             $(this).addClass('active');
+            $bundle = $('.wpcfm-bundle[data-id=' + id + ']');
             $('.wpcfm-bundle').hide();
-            $('.wpcfm-bundle[data-id=' + id + ']').show();
+            $bundle.show();
 
             // Trigger jQuery Multi Select
-            $('.bundle-select').multipleSelect({
+            $bundle.find('.bundle-select').multipleSelect({
                 isOpen: true,
                 keepOpen: true,
                 filter: true
@@ -94,9 +95,9 @@
 
             // Make sure the content area is tall enough
             var nav_height = $(this).closest('.wpcfm-tabs').height();
-            var content_height = $('.wpcfm-bundle[data-id=' + id + ']').height();
+            var content_height = $bundle.height();
             if (content_height < nav_height) {
-                $('.wpcfm-bundle[data-id=' + id + ']').height(nav_height - 40);
+                $bundle.height(nav_height - 40);
             }
         });
 
