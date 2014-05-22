@@ -27,6 +27,7 @@ defined( 'ABSPATH' ) or die();
 
 class WP_CFM
 {
+    public $registry;
 
     function __construct() {
 
@@ -47,6 +48,11 @@ class WP_CFM
 
         // hooks
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+
+        // includes
+        include( WP_CFM_DIR . '/includes/class-registry.php' );
+
+        $this->registry = new WP_CFM_Registry();
     }
 
 
