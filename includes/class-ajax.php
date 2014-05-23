@@ -3,7 +3,14 @@
 class WPCFM_Ajax
 {
 
+    public $readwrite;
+    public $helper;
+
     function __construct() {
+
+        $this->readwrite = new WPCFM_Readwrite();
+        $this->helper = new WPCFM_Helper();
+
         add_action( 'wp_ajax_wpcfm_load', array( $this, 'load_settings' ) );
         add_action( 'wp_ajax_wpcfm_save', array( $this, 'save_settings' ) );
         add_action( 'wp_ajax_wpcfm_push', array( $this, 'push_settings' ) );
@@ -39,9 +46,7 @@ class WPCFM_Ajax
     function load_diff() {
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
-
-            $readwrite = new WPCFM_Readwrite();
-            echo json_encode( $readwrite->compare_bundle( $bundle_name ) );
+            echo json_encode( $this->readwrite->compare_bundle( $bundle_name ) );
         }
         exit;
     }
@@ -54,16 +59,15 @@ class WPCFM_Ajax
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
 
-            $helper = new WPCFM_Helper();
-            $readwrite = new WPCFM_Readwrite();
-            $readwrite->push_bundle( $bundle_name );
-            /*
-            $bundle_names = $helper->get_bundle_names();
-
-            foreach ( $bundle_names as $bundle_name ) {
-                $readwrite->push_bundle( $bundle_name );
+            if ( 'all' == $bundle_name ) {
+                $bundle_names = $this->helper->get_bundle_names();
+                foreach ( $bundle_names as $bundle_name ) {
+                    $this->readwrite->push_bundle( $bundle_name );
+                }
             }
-            */
+            else {
+                $this->readwrite->push_bundle( $bundle_name );
+            }
 
             echo __( 'Push successful', 'wpcfm' );
         }
@@ -78,16 +82,15 @@ class WPCFM_Ajax
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
 
-            $helper = new WPCFM_Helper();
-            $readwrite = new WPCFM_Readwrite();
-            $readwrite->pull_bundle( $bundle_name );
-            /*
-            $bundle_names = $helper->get_bundle_names();
-
-            foreach ( $bundle_names as $bundle_name ) {
-                $readwrite->pull_bundle( $bundle_name );
+            if ( 'all' == $bundle_name ) {
+                $bundle_names = $this->helper->get_bundle_names();
+                foreach ( $bundle_names as $bundle_name ) {
+                    $this->readwrite->pull_bundle( $bundle_name );
+                }
             }
-            */
+            else {
+                $this->readwrite->pull_bundle( $bundle_name );
+            }
 
             echo __( 'Pull successful', 'wpcfm' );
         }
