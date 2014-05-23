@@ -26,15 +26,33 @@ function my_custom_namespace( $namespaces ) {
     $namespaces['custom_field_suite'] = 'Custom Field Suite';
     return $namespaces;
 }
-add_filter( 'wpcfm_namespaces', 'my_custom_namespaces' );
+add_filter( 'wpcfm_namespaces', 'my_custom_namespace' );
 ```
 
 * **wpcfm_configuration_items** - Add custom configuration settings to the pile
 
 ```php
-function wpcfm_configuration_items( items ) {
+function my_custom_configuration_items( $items ) {
     $items['custom_field_suite']['field_groups'] = 'SOME DATA';
     return items;
 }
 add_filter( 'wpcfm_configuration_items', 'my_custom_configuration_items' );
+```
+
+* **wpcfm_pull_handler** - Determine how to import custom settings (settings outside of `wp_options`)
+
+```php
+/*
+$params['setting_name'] - the option name
+$params['namespace'] - the option namespace
+$params['old_data'] - the current DB value
+$params['new_data'] - the current file value (which will overwrite the DB)
+*/
+function my_custom_pull_handler( $handler, $params ) {
+    if ( 'my_custom_option' == $params['setting_name'] ) {
+        $handler = 'import_plugin_changes'; // a function name (string) or class (array)
+    }
+    return $handler;
+}
+add_filter( 'wpcfm_pull_handler', 'my_custom_pull_handler' );
 ```
