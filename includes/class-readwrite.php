@@ -15,6 +15,7 @@ class WPCFM_Readwrite
         }
 
         //$this->compare_bundle( 'widgets' );
+        //$this->push_bundle( 'widgets' );
         $this->pull_bundle( 'widgets' );
     }
 
@@ -144,7 +145,7 @@ class WPCFM_Readwrite
      */
     function callback_wp_options( $params ) {
         $option_name = $params['setting_name'];
-        $option_value = $params['new_data'];
+        $option_value = maybe_unserialize( $params['new_data'] );
         update_option( $option_name, $option_value );
     }
 }
