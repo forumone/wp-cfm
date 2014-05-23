@@ -105,7 +105,8 @@
 /* Bundle Actions */
 
 .bundle-row .bundle-name {
-    font-size: 16px;
+    font-size: 14px;
+    padding-top: 5px;
 }
 
 .bundle-row .bundle-actions {
@@ -124,6 +125,11 @@
 
 .bundle-row:last-child {
     border-bottom: none;
+}
+
+.bundle-row-all {
+    color: #fff;
+    background: #026187;
 }
 
 /* MultiSelect */

@@ -27,6 +27,14 @@ $bundles = $this->helper->get_bundles();
     <div class="wpcfm-response"></div>
 
     <div class="wpcfm-content wpcfm-content-actions">
+        <div class="bundle-row bundle-row-all" data-bundle="all">
+            <div class="bundle-actions">
+                <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
+                <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+            </div>
+            <div class="bundle-name">All Bundles</div>
+            <div class="clear"></div>
+        </div>
         <?php foreach ( $bundles as $bundle ) : ?>
         <div class="bundle-row" data-bundle="<?php echo $bundle['name']; ?>">
             <div class="bundle-actions">
