@@ -2,6 +2,7 @@
 
 $configuration = $this->registry->get_configuration_items();
 $namespaces = $this->registry->get_namespaces();
+$bundles = $this->helper->get_bundles();
 
 ?>
 
@@ -26,15 +27,17 @@ $namespaces = $this->registry->get_namespaces();
     <div class="wpcfm-response"></div>
 
     <div class="wpcfm-content wpcfm-content-actions">
-        <div class="bundle-row" data-bundle="widgets">
+        <?php foreach ( $bundles as $bundle ) : ?>
+        <div class="bundle-row" data-bundle="<?php echo $bundle['name']; ?>">
             <div class="bundle-actions">
                 <a class="button diff-bundle"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
                 <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
                 <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
             </div>
-            <div class="bundle-name">Widgets</div>
+            <div class="bundle-name"><?php echo $bundle['label']; ?></div>
             <div class="clear"></div>
         </div>
+        <?php endforeach; ?>
     </div>
 
     <div class="wpcfm-content wpcfm-content-bundles">

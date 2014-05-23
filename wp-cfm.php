@@ -59,6 +59,7 @@ class WPCFM
 
         $this->readwrite = new WPCFM_Readwrite();
         $this->registry = new WPCFM_Registry();
+        $this->helper = new WPCFM_Helper();
         $ajax = new WPCFM_Ajax();
     }
 
