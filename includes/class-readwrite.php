@@ -14,7 +14,7 @@ class WPCFM_Readwrite
             mkdir( $this->folder );
         }
 
-        $this->push_bundle( 'widgets' );
+        //$this->compare_bundle( 'widgets' );
     }
 
 
@@ -45,7 +45,12 @@ class WPCFM_Readwrite
     function compare_bundle( $bundle_name ) {
         $file_bundle = $this->read_file( $bundle_name );
         $db_bundle = $this->read_db( $bundle_name );
+
         // Compare!
+        echo '<pre>';
+        var_dump( $file_bundle );
+        var_dump( $db_bundle );
+        echo '</pre>';
     }
 
 
@@ -72,13 +77,36 @@ class WPCFM_Readwrite
      * @return array
      */
     function read_db( $bundle_name ) {
+
+        $output = array();
         $registry = new WPCFM_Registry();
-        return $registry->get_configuration_items();
+        $all_config = $registry->get_configuration_items();
+
+        $opts = get_option( 'wpcfm_settings' );
+        $opts = json_decode( $opts, true );
+        foreach ( $opts['bundles'] as $bundle ) {
+            if ( $bundle['name'] == $bundle_name ) {
+                $bundle_config = $bundle['config'];
+                break;
+            }
+        }
+
+        foreach ( $all_config as $namespace => $config_items ) {
+            foreach ( $config_items as $key => $val ) {
+                if ( in_array( $key, $bundle_config ) ) {
+                    $output[ $namespace ][ $key ] = $val;
+                }
+            }
+        }
+
+        return $output;
     }
 
 
     /**
      * Save the bundle (to database)
+     * Figure out how to handle DB writes
+     * @todo support custom (3rd party) write handlers
      */
     function write_db( $bundle_name, $data ) {
 
