@@ -29,7 +29,6 @@ class WPCFM
 {
     public $readwrite;
     public $registry;
-    public $ajax;
 
     function __construct() {
 
@@ -58,7 +57,7 @@ class WPCFM
 
         $this->readwrite = new WPCFM_Readwrite();
         $this->registry = new WPCFM_Registry();
-        $this->ajax = new WPCFM_Ajax();
+        $ajax = new WPCFM_Ajax();
     }
 
 

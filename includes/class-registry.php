@@ -32,7 +32,6 @@ class WPCFM_Registry
         FROM $wpdb->options
         WHERE option_name NOT LIKE '_transient%' AND option_name NOT LIKE '_site_transient%'
         ORDER BY option_name";
-
         $results = $wpdb->get_results( $sql );
 
         foreach ( $results as $result ) {
