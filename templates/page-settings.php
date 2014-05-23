@@ -16,8 +16,9 @@ $bundles = $this->helper->get_bundles();
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/jquery.pretty-text-diff.js"></script>
 
 <div class="wrap">
-    <h2>WP-CFM</h2>
-    <p>Configuration management for WordPress (by <a href="http://forumone.com" target="_blank">Forum One</a>)</p>
+    <h2>
+        Configuration Management <span>by <a href="http://forumone.com/" target="_blank">Forum One Communications</a></span>
+    </h2>
 
     <h2 class="nav-tab-wrapper">
         <a class="nav-tab" rel="bundles"><?php _e( 'Bundles', 'wpcfm' ); ?></a>

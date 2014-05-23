@@ -1,6 +1,12 @@
 
 /* Admin - Settings page */
 
+h2 span {
+    font-size: 13px;
+    margin-left: 5px;
+    display: inline-block;
+}
+
 .nav-tab-wrapper .nav-tab {
     cursor: pointer;
 }
