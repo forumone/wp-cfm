@@ -59,6 +59,8 @@ class WPCFM_Registry
             'cron',
             'db_version',
             'home',
+            'logged_in_key',
+            'logged_in_salt',
             'nonce_key',
             'nonce_salt',
             'rewrite_rules',

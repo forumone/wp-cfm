@@ -20,11 +20,27 @@ $bundles = $this->helper->get_bundles();
     <p>Configuration management for WordPress (by <a href="http://forumone.com" target="_blank">Forum One</a>)</p>
 
     <h2 class="nav-tab-wrapper">
-        <a class="nav-tab" rel="actions"><?php _e( 'Push / Pull', 'wpcfm' ); ?></a>
         <a class="nav-tab" rel="bundles"><?php _e( 'Bundles', 'wpcfm' ); ?></a>
+        <a class="nav-tab" rel="actions"><?php _e( 'Push / Pull', 'wpcfm' ); ?></a>
     </h2>
 
     <div class="wpcfm-response"></div>
+
+    <div class="wpcfm-content wpcfm-content-bundles">
+        <div class="wpcfm-action-buttons">
+            <div style="float:right">
+                <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wpcfm' ); ?></a>
+            </div>
+            <a class="button add-bundle"><?php _e( 'Add Bundle', 'wpcfm' ); ?></a>
+            <div class="clear"></div>
+        </div>
+
+        <div class="wpcfm-tabs">
+            <ul></ul>
+        </div>
+        <div class="wpcfm-bundles"></div>
+        <div class="clear"></div>
+    </div>
 
     <div class="wpcfm-content wpcfm-content-actions">
         <div class="bundle-row bundle-row-all" data-bundle="all">
@@ -46,22 +62,6 @@ $bundles = $this->helper->get_bundles();
             <div class="clear"></div>
         </div>
         <?php endforeach; ?>
-    </div>
-
-    <div class="wpcfm-content wpcfm-content-bundles">
-        <div class="wpcfm-action-buttons">
-            <div style="float:right">
-                <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wpcfm' ); ?></a>
-            </div>
-            <a class="button add-bundle"><?php _e( 'Add Bundle', 'wpcfm' ); ?></a>
-            <div class="clear"></div>
-        </div>
-
-        <div class="wpcfm-tabs">
-            <ul></ul>
-        </div>
-        <div class="wpcfm-bundles"></div>
-        <div class="clear"></div>
     </div>
 
     <!-- diff modal -->

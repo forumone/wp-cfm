@@ -153,6 +153,7 @@ ins {
 }
 
 del {
+    text-decoration: none;
     background-color: #ffc6c6;
 }
 
