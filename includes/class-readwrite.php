@@ -3,7 +3,6 @@
 class WPCFM_Readwrite
 {
     public $folder;
-    public $settings;
 
 
     function __construct() {
