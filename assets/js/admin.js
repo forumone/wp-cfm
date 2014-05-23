@@ -42,7 +42,6 @@
                     'config': $this.find('.bundle-select').multipleSelect('getSelects')
                 };
 
-                // Facet save hook
                 data.bundles.push(obj);
             });
 
@@ -66,13 +65,29 @@
         });
 
 
-        // "Remove bundle" button
+        // "Delete bundle" button
         $(document).on('click', '.remove-bundle', function() {
             if (confirm('You are about to delete this bundle. Continue?')) {
                 var id = $(this).closest('.wpcfm-bundle').attr('data-id');
                 $(this).closest('.wpcfm-bundle').remove();
                 $('.wpcfm-content-bundles .wpcfm-tabs li[data-id=' + id + ']').remove();
                 $('.wpcfm-content-bundles .wpcfm-tabs li:first').click();
+            }
+        });
+
+
+        // "Push" button
+        $(document).on('click', '.push-bundle', function() {
+            if (confirm('Export DB settings to file?')) {
+                alert('cool');
+            }
+        });
+
+
+        // "Pull" button
+        $(document).on('click', '.pull-bundle', function() {
+            if (confirm('Import file settings to DB?')) {
+                alert('cool');
             }
         });
 
@@ -91,6 +106,7 @@
                 width: 500,
                 multiple: true,
                 multipleWidth: 220,
+                keepOpen: true,
                 isOpen: true
             });
 
