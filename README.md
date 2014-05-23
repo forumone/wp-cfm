@@ -11,7 +11,7 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 #### Terminology
 
-**Bundle**: A group of settings that you want to track. This could be a single setting, or the entirety of your site.
+**Bundle**: A group of settings that you want to track. This could be a single setting, or all of your site's available settings.
 
 **Push**: Export configuration from your database to the filesystem.
 
