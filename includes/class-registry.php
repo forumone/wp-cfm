@@ -3,15 +3,8 @@
 class WPCFM_Registry
 {
 
-    /**
-     * Register namespaces
-     */
-    function get_namespaces() {
-        $namespaces = array(
-            'wp_options' => 'WP Options'
-        );
-
-        return apply_filters( 'wpcfm_namespaces', $namespaces );
+    function __construct() {
+        add_filter( 'wpcfm_configuration_items', array( $this, 'disallowed_items' ) );
     }
 
 
@@ -38,5 +31,45 @@ class WPCFM_Registry
         }
 
         return apply_filters( 'wpcfm_configuration_items', $items );
+    }
+
+
+    /**
+     * Register namespaces
+     */
+    function get_namespaces() {
+        $namespaces = array(
+            'wp_options' => 'WP Options'
+        );
+
+        return apply_filters( 'wpcfm_namespaces', $namespaces );
+    }
+
+
+    /**
+     * Ignore certain configuration settings
+     * 
+     * @since 1.0.0
+     */
+    function disallowed_items( $items ) {
+
+        $disallowed_items = array(
+            'auth_key',
+            'auth_salt',
+            'cron',
+            'db_version',
+            'home',
+            'nonce_key',
+            'nonce_salt',
+            'rewrite_rules',
+            'siteurl',
+            'wpcfm_settings',
+        );
+
+        foreach ( $disallowed_items as $row ) {
+            unset( $items['wp_options'][ $row ] );
+        }
+
+        return $items;
     }
 }

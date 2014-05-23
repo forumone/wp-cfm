@@ -6,6 +6,7 @@ Description: WordPress Configuration Management
 Version: 1.0.0
 Author: Forum One Communications
 Author URI: http://forumone.com/
+License: GPLv2
 
 Copyright 2014 Forum One Communications
 

@@ -88,9 +88,10 @@
 
             // Trigger jQuery Multi Select
             $bundle.find('.bundle-select').multipleSelect({
-                isOpen: true,
-                keepOpen: true,
-                filter: true
+                width: 500,
+                multiple: true,
+                multipleWidth: 220,
+                isOpen: true
             });
 
             // Make sure the content area is tall enough

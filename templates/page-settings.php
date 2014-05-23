@@ -19,6 +19,8 @@ $namespaces = $this->registry->get_namespaces();
 
     <div class="wpcfm-action-buttons">
         <div style="float:right">
+            <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a>
+            <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
             <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wpcfm' ); ?></a>
         </div>
         <a class="button add-bundle"><?php _e( 'Add Bundle', 'wpcfm' ); ?></a>
