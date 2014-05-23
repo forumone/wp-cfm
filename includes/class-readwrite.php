@@ -13,10 +13,6 @@ class WPCFM_Readwrite
         if ( ! is_dir( $this->folder ) ) {
             mkdir( $this->folder );
         }
-
-        //$this->compare_bundle( 'widgets' );
-        //$this->push_bundle( 'widgets' );
-        $this->pull_bundle( 'widgets' );
     }
 
 
@@ -121,16 +117,20 @@ class WPCFM_Readwrite
 
                 // Handle each input value
                 $callback = array( $this, 'callback_wp_options' );
-                $callback = apply_filters( 'wpcfm_pull_callback', $callback, $key );
+                $callback = apply_filters( 'wpcfm_pull_handler', $callback, $key );
+                $callback_params = array(
+                    'setting_name' => $key,
+                    'namespace' => $namespace,
+                    'old_data' => $db_data[ $namespace ][ $key ],
+                    'new_data' => $val,
+                );
 
                 if ( is_callable( $callback ) ) {
                     if ( is_array( $callback ) ) {
-                        $success = $callback[0]->$callback[1]( array(
-                            'setting_name' => $key,
-                            'namespace' => $namespace,
-                            'old_data' => $db_data[ $namespace ][ $key ],
-                            'new_data' => $val,
-                        ) );
+                        $success = $callback[0]->$callback[1]( $callback_params );
+                    }
+                    else {
+                        $success = $callback( $callback_params );
                     }
                 }
             }
