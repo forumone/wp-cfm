@@ -53,11 +53,17 @@ $namespaces = $this->registry->get_namespaces();
         <div class="clear"></div>
     </div>
 
-    <div class="wpcfm-diff" id="diff1">
-        <p>Database diff:</p>
-        <div class="original" style="display:none"></div>
-        <div class="changed" style="display:none"></div>
-        <div class="diff"></div>
+    <!-- diff modal -->
+
+    <div style="display:none">
+        <div id="mydiff">
+            <div class="wpcfm-diff">
+                <div class="original" style="display:none"></div>
+                <div class="changed" style="display:none"></div>
+                <div class="diff"></div>
+            </div>
+        </div>
+        <a class="trigger-modal thickbox" href="#TB_inline?width=600&height=400&inlineId=mydiff"></a>
     </div>
 
     <!-- clone settings -->

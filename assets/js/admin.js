@@ -131,6 +131,8 @@
                 $('.wpcfm-diff').prettyTextDiff({
                     cleanup: true
                 });
+                //$('#mydiff > div').html($('.wpcfm-diff .diff').html());
+                $('.trigger-modal').click();
             }, 'json');
         });
 

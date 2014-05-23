@@ -43,6 +43,10 @@ class WPCFM_Readwrite
         $file_bundle = var_export( $this->read_file( $bundle_name ), true );
         $db_bundle = var_export( $this->read_db( $bundle_name ), true );
 
+        if ( $file_bundle == $db_bundle ) {
+            $file_bundle = $db_bundle = __( 'Both bundles are identical', 'wpcfm' );
+        }
+
         return array(
             'file' => $file_bundle,
             'db' => $db_bundle,
