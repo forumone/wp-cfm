@@ -11,11 +11,9 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 #### Terminology
 
-**Bundle**: A group of settings that you want to track. This could be a single setting, or all of your site's available settings.
-
-**Push**: Export configuration from your database to the filesystem.
-
-**Pull**: Import configuration from the filesystem into your database.
+* **Bundle**: A group of settings to track. This could be a single setting, or all the site's available settings.
+* **Push**: Export configuration from your database to the filesystem.
+* **Pull**: Import configuration from the filesystem into your database.
 
 #### Developer Hooks
 
@@ -34,7 +32,7 @@ add_filter( 'wpcfm_namespaces', 'my_custom_namespace' );
 ```php
 function my_custom_configuration_items( $items ) {
     $items['custom_field_suite']['field_groups'] = 'SOME DATA';
-    return items;
+    return $items;
 }
 add_filter( 'wpcfm_configuration_items', 'my_custom_configuration_items' );
 ```
@@ -50,7 +48,7 @@ $params['new_data'] - the current file value (which will overwrite the DB)
 */
 function my_custom_pull_handler( $handler, $params ) {
     if ( 'my_custom_option' == $params['setting_name'] ) {
-        $handler = 'import_plugin_changes'; // a function name (string) or class (array)
+        $handler = 'import_plugin_changes'; // a function name (string) or method name (array)
     }
     return $handler;
 }
