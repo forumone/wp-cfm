@@ -73,7 +73,7 @@
 }
 
 .bundle-select-wrapper {
-    height: 320px;
+    height: 300px;
 }
 
 .wp-admin select.bundle-select {
@@ -92,6 +92,12 @@
 
 .clear {
     clear: both;
+}
+
+/* MultiSelect */
+
+.ms-parent .ms-choice {
+    display: none;
 }
 
 /* WordPress 3.8 */
