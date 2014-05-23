@@ -2,7 +2,7 @@
 
 Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.
 
-![Admin Screen](http://i.imgur.com/vhKMB99.png)
+![Admin Screen](http://i.imgur.com/EsdnMLJ.png)
 
 #### What does this mean for me?
 
