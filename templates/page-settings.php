@@ -75,7 +75,7 @@ $bundles = $this->helper->get_bundles();
                 <div class="diff"></div>
             </div>
         </div>
-        <a class="trigger-modal thickbox" href="#TB_inline?width=600&height=400&inlineId=mydiff"></a>
+        <a class="trigger-modal thickbox" href="#TB_inline?width=600&height=400&inlineId=mydiff" title="Original: file, Changed: database"></a>
     </div>
 
     <!-- clone settings -->

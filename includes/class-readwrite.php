@@ -59,8 +59,11 @@ class WPCFM_Readwrite
      * @return array
      */
     function read_file( $bundle_name ) {
-        $contents = file_get_contents( "$this->folder/$bundle_name.json" );
-        return json_decode( $contents, true );
+        if ( file_exists( "$this->folder/$bundle_name.json" ) ) {
+            $contents = file_get_contents( "$this->folder/$bundle_name.json" );
+            return json_decode( $contents, true );
+        }
+        return array();
     }
 
 
