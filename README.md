@@ -50,7 +50,7 @@ $params['new_data'] - the current file value (which will overwrite the DB)
 */
 function my_custom_pull_handler( $handler, $params ) {
     if ( 'my_custom_option' == $params['setting_name'] ) {
-        $handler = 'import_plugin_changes'; // a function name (string) or class (array)
+        $handler = 'import_plugin_changes'; // a function name (string) or method name (array)
     }
     return $handler;
 }
