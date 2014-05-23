@@ -15,6 +15,7 @@ class WPCFM_Readwrite
         }
 
         //$this->compare_bundle( 'widgets' );
+        $this->pull_bundle( 'widgets' );
     }
 
 
@@ -104,11 +105,46 @@ class WPCFM_Readwrite
 
 
     /**
-     * Save the bundle (to database)
+     * Save the bundle configuration data (to database)
      * Figure out how to handle DB writes
      * @todo support custom (3rd party) write handlers
      */
-    function write_db( $bundle_name, $data ) {
+    function write_db( $bundle_name, $file_data ) {
 
+        $success = false;
+        $registry = new WPCFM_Registry();
+        $db_data = $registry->get_configuration_items();
+
+        foreach ( $file_data as $namespace => $config_items ) {
+            foreach ( $config_items as $key => $val ) {
+
+                // Handle each input value
+                $callback = array( $this, 'callback_wp_options' );
+                $callback = apply_filters( 'wpcfm_pull_callback', $callback, $key );
+
+                if ( is_callable( $callback ) ) {
+                    if ( is_array( $callback ) ) {
+                        $success = $callback[0]->$callback[1]( array(
+                            'setting_name' => $key,
+                            'namespace' => $namespace,
+                            'old_data' => $db_data[ $namespace ][ $key ],
+                            'new_data' => $val,
+                        ) );
+                    }
+                }
+            }
+        }
+
+        return $success;
+    }
+
+
+    /**
+     * Default callback - write to wp_options table
+     */
+    function callback_wp_options( $params ) {
+        $option_name = $params['setting_name'];
+        $option_value = $params['new_data'];
+        update_option( $option_name, $option_value );
     }
 }
