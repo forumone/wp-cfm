@@ -54,6 +54,17 @@
         });
 
 
+        // Tab click
+        $(document).on('click', '.nav-tab', function() {
+            var tab = $(this).attr('rel');
+            $('.nav-tab').removeClass('nav-tab-active');
+            $(this).addClass('nav-tab-active');
+            $('.wpcfm-content').removeClass('active');
+            $('.wpcfm-content-' + tab).addClass('active');
+        });
+        $('.nav-tab:first').click();
+
+
         // "Add bundle" button
         $(document).on('click', '.add-bundle', function() {
             var html = $('.bundles-hidden').html();
@@ -80,8 +91,12 @@
         $(document).on('click', '.push-bundle', function() {
             $('.wpcfm-response').html('Pushing from DB to file...');
             $('.wpcfm-response').show();
+            var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
-            $.post(ajaxurl, { 'action': 'wpcfm_push' }, function(response) {
+            $.post(ajaxurl, {
+                'action': 'wpcfm_push',
+                'data': { 'bundle_name': bundle_name }
+            }, function(response) {
                 $('.wpcfm-response').html(response);
             });
         });
@@ -92,11 +107,31 @@
             if (confirm('Import file settings to DB?')) {
                 $('.wpcfm-response').html('Pulling from file into DB...');
                 $('.wpcfm-response').show();
+                var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
-                $.post(ajaxurl, { 'action': 'wpcfm_pull' }, function(response) {
+                $.post(ajaxurl, {
+                    'action': 'wpcfm_pull',
+                    'data': { 'bundle_name': bundle_name }
+                }, function(response) {
                     $('.wpcfm-response').html(response);
                 });
             }
+        });
+
+
+        // "Diff" button
+        $(document).on('click', '.diff-bundle', function() {
+            var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
+            $.post(ajaxurl, {
+                'action': 'wpcfm_diff',
+                'data': { 'bundle_name': bundle_name }
+            }, function(response) {
+                $('.wpcfm-diff .original').text(response.file);
+                $('.wpcfm-diff .changed').text(response.db);
+                $('.wpcfm-diff').prettyTextDiff({
+                    cleanup: true
+                });
+            }, 'json');
         });
 
 

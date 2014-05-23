@@ -40,14 +40,13 @@ class WPCFM_Readwrite
      * Compare the DB vs file versions
      */
     function compare_bundle( $bundle_name ) {
-        $file_bundle = $this->read_file( $bundle_name );
-        $db_bundle = $this->read_db( $bundle_name );
+        $file_bundle = var_export( $this->read_file( $bundle_name ), true );
+        $db_bundle = var_export( $this->read_db( $bundle_name ), true );
 
-        // Compare!
-        echo '<pre>';
-        var_dump( $file_bundle );
-        var_dump( $db_bundle );
-        echo '</pre>';
+        return array(
+            'file' => $file_bundle,
+            'db' => $db_bundle,
+        );
     }
 
 

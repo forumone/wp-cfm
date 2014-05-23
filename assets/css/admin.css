@@ -1,6 +1,10 @@
 
 /* Admin - Settings page */
 
+.nav-tab-wrapper .nav-tab {
+    cursor: pointer;
+}
+
 .wpcfm-response {
     display: none;
     margin-top: 10px;
@@ -12,15 +16,19 @@
 
 .wpcfm-action-buttons {
     padding: 10px;
-    margin-top: 10px;
     background: #fafafa;
-    border: 1px solid #ccc;
-    border-bottom: none;
+    border-bottom: 1px solid #ccc;
 }
 
 .wpcfm-content {
+    display: none;
     font-size: 13px;
     border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.wpcfm-content.active {
+    display: block;
 }
 
 .wpcfm-content .bundle-name {
@@ -94,10 +102,52 @@
     clear: both;
 }
 
+/* Bundle Actions */
+
+.bundle-row .bundle-name {
+    font-size: 16px;
+}
+
+.bundle-row .bundle-actions {
+    float: right;
+}
+
+.bundle-row {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+}
+
+.bundle-row:nth-child(even) {
+    background: #fafafa;
+}
+
+.bundle-row:last-child {
+    border-bottom: none;
+}
+
 /* MultiSelect */
 
 .ms-parent .ms-choice {
     display: none;
+}
+
+/* Diff */
+
+.wpcfm-diff .diff {
+    background: #fff;
+    padding: 10px;
+    overflow: auto;
+    font-family: "Courier New", sans-serif;
+}
+
+ins {
+    background-color: #c6ffc6;
+    text-decoration: none;
+}
+
+del {
+    background-color: #ffc6c6;
 }
 
 /* WordPress 3.8 */
