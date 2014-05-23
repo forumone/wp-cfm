@@ -54,6 +54,7 @@ class WPCFM
         // includes
         include( WPCFM_DIR . '/includes/class-readwrite.php' );
         include( WPCFM_DIR . '/includes/class-registry.php' );
+        include( WPCFM_DIR . '/includes/class-helper.php' );
         include( WPCFM_DIR . '/includes/class-ajax.php' );
 
         $this->readwrite = new WPCFM_Readwrite();

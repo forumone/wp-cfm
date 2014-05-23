@@ -78,16 +78,24 @@
 
         // "Push" button
         $(document).on('click', '.push-bundle', function() {
-            if (confirm('Export DB settings to file?')) {
-                alert('cool');
-            }
+            $('.wpcfm-response').html('Pushing from DB to file...');
+            $('.wpcfm-response').show();
+
+            $.post(ajaxurl, { 'action': 'wpcfm_push' }, function(response) {
+                $('.wpcfm-response').html(response);
+            });
         });
 
 
         // "Pull" button
         $(document).on('click', '.pull-bundle', function() {
             if (confirm('Import file settings to DB?')) {
-                alert('cool');
+                $('.wpcfm-response').html('Pulling from file into DB...');
+                $('.wpcfm-response').show();
+
+                $.post(ajaxurl, { 'action': 'wpcfm_pull' }, function(response) {
+                    $('.wpcfm-response').html(response);
+                });
             }
         });
 

@@ -63,7 +63,6 @@ class WPCFM_Registry
             'nonce_salt',
             'rewrite_rules',
             'siteurl',
-            'wpcfm_settings',
         );
 
         foreach ( $disallowed_items as $row ) {
