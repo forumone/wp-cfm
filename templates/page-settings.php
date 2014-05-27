@@ -2,7 +2,6 @@
 
 $configuration = $this->registry->get_configuration_items();
 $namespaces = $this->registry->get_namespaces();
-$bundles = $this->helper->get_bundles();
 
 ?>
 
@@ -20,14 +19,9 @@ $bundles = $this->helper->get_bundles();
         Configuration Management <span>by <a href="http://forumone.com/" target="_blank">Forum One Communications</a></span>
     </h2>
 
-    <h2 class="nav-tab-wrapper">
-        <a class="nav-tab" rel="bundles"><?php _e( 'Bundles', 'wpcfm' ); ?></a>
-        <a class="nav-tab" rel="actions"><?php _e( 'Push / Pull', 'wpcfm' ); ?></a>
-    </h2>
-
     <div class="wpcfm-response"></div>
 
-    <div class="wpcfm-content wpcfm-content-bundles">
+    <div class="wpcfm-bundles">
         <div class="wpcfm-action-buttons">
             <div style="float:right">
                 <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wpcfm' ); ?></a>
@@ -36,33 +30,19 @@ $bundles = $this->helper->get_bundles();
             <div class="clear"></div>
         </div>
 
-        <div class="wpcfm-tabs">
-            <ul></ul>
-        </div>
-        <div class="wpcfm-bundles"></div>
-        <div class="clear"></div>
-    </div>
-
-    <div class="wpcfm-content wpcfm-content-actions">
-        <div class="bundle-row bundle-row-all" data-bundle="all">
-            <div class="bundle-actions">
-                <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+        <div class="bundle-row row-default" data-bundle="all">
+            <div class="bundle-header">
+                <div class="bundle-actions">
+                    <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
+                    <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                </div>
+                <div class="bundle-toggle">All Bundles</div>
+                <div class="clear"></div>
             </div>
-            <div class="bundle-name">All Bundles</div>
-            <div class="clear"></div>
-        </div>
-        <?php foreach ( $bundles as $bundle ) : ?>
-        <div class="bundle-row" data-bundle="<?php echo $bundle['name']; ?>">
-            <div class="bundle-actions">
-                <a class="button diff-bundle"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+            <div class="bundle-row-inner">
+                No actions are available.
             </div>
-            <div class="bundle-name"><?php echo $bundle['label']; ?></div>
-            <div class="clear"></div>
         </div>
-        <?php endforeach; ?>
     </div>
 
     <!-- diff modal -->
@@ -81,33 +61,33 @@ $bundles = $this->helper->get_bundles();
     <!-- clone settings -->
 
     <div class="bundles-hidden">
-        <div class="wpcfm-bundle">
-            <table class="wpcfm-table">
-                <tr>
-                    <td style="width:175px"><?php _e( 'Label', 'wpcfm' ); ?>:</td>
-                    <td>
-                        <input type="text" class="bundle-label" value="" />
-                        <input type="text" class="bundle-name" value="" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php _e( 'Bundle Data', 'wpcfm' ); ?>:</td>
-                    <td>
-                        <div class="bundle-select-wrapper">
-                            <select class="bundle-select" multiple="multiple">
-                            <?php foreach ( $configuration as $namespace => $settings ) : ?>
-                                <optgroup label="<?php echo $namespaces[ $namespace ]; ?>">
-                                    <?php foreach ( $settings as $key => $val ) : ?>
-                                    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
-                                    <?php endforeach; ?>
-                                </optgroup>
+        <div class="bundle-row">
+            <div class="bundle-header">
+                <div class="bundle-actions">
+                    <a class="button diff-bundle"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
+                    <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
+                    <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                </div>
+                <div class="bundle-toggle">New bundle</div>
+                <div class="clear"></div>
+            </div>
+            <div class="bundle-row-inner">
+                <input type="text" class="bundle-label" value="New bundle" />
+                <input type="text" class="bundle-name" value="new_bundle" />
+                <div class="bundle-select-wrapper">
+                    <select class="bundle-select" multiple="multiple">
+                    <?php foreach ( $configuration as $namespace => $settings ) : ?>
+                        <optgroup label="<?php echo $namespaces[ $namespace ]; ?>">
+                            <?php foreach ( $settings as $key => $val ) : ?>
+                            <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
                             <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
+                        </optgroup>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+                <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
+                <div class="clear"></div>
+            </div>
         </div>
     </div>
 </div>

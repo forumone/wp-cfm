@@ -1,26 +1,28 @@
 (function($) {
     $(function() {
 
-        var bundle_count = 0;
-
         // Load
         $.post(ajaxurl, {
             action: 'wpcfm_load'
         }, function(response) {
             $.each(response.bundles, function(idx, obj) {
-                var $this = $('.bundles-hidden .wpcfm-bundle').clone();
-                $this.attr('data-id', bundle_count);
+                var $this = $('.bundles-hidden .bundle-row').clone();
                 $this.find('.bundle-label').val(obj.label);
                 $this.find('.bundle-name').val(obj.name);
                 $this.find('.bundle-select').val(obj.config);
-
+                $this.find('.bundle-toggle').html(obj.label);
+                $this.attr('data-bundle', obj.name);
                 $('.wpcfm-bundles').append($this);
-                $('.wpcfm-content-bundles .wpcfm-tabs ul').append('<li data-id="' + bundle_count + '">' + obj.label + '</li>');
-                bundle_count++;
-            });
 
-            // Set the UI elements
-            $('.wpcfm-content-bundles .wpcfm-tabs li:first').click();
+                // Trigger jQuery Multi Select
+                $this.find('.bundle-select').multipleSelect({
+                    width: 500,
+                    multiple: true,
+                    multipleWidth: 220,
+                    keepOpen: true,
+                    isOpen: true
+                });
+            });
         }, 'json');
 
 
@@ -33,7 +35,7 @@
                 'bundles': []
             };
 
-            $('.wpcfm-bundles .wpcfm-bundle').each(function() {
+            $('.wpcfm-bundles .bundle-row:not(.row-default)').each(function() {
                 var $this = $(this);
 
                 var obj = {
@@ -54,35 +56,23 @@
         });
 
 
-        // Tab click
-        $(document).on('click', '.nav-tab', function() {
-            var tab = $(this).attr('rel');
-            $('.nav-tab').removeClass('nav-tab-active');
-            $(this).addClass('nav-tab-active');
-            $('.wpcfm-content').removeClass('active');
-            $('.wpcfm-content-' + tab).addClass('active');
-        });
-        $('.nav-tab:first').click();
-
-
         // "Add bundle" button
         $(document).on('click', '.add-bundle', function() {
             var html = $('.bundles-hidden').html();
             $('.wpcfm-bundles').append(html);
-            $('.wpcfm-bundles .wpcfm-bundle:last').attr('data-id', bundle_count);
-            $('.wpcfm-content-bundles .wpcfm-tabs ul').append('<li data-id="' + bundle_count + '">New bundle</li>');
-            $('.wpcfm-content-bundles .wpcfm-tabs li:last').click();
-            bundle_count++;
+        });
+
+
+        // Toggle bundle details
+        $(document).on('click', '.bundle-toggle', function() {
+            $(this).closest('.bundle-row').toggleClass('active');
         });
 
 
         // "Delete bundle" button
         $(document).on('click', '.remove-bundle', function() {
             if (confirm('You are about to delete this bundle. Continue?')) {
-                var id = $(this).closest('.wpcfm-bundle').attr('data-id');
-                $(this).closest('.wpcfm-bundle').remove();
-                $('.wpcfm-content-bundles .wpcfm-tabs li[data-id=' + id + ']').remove();
-                $('.wpcfm-content-bundles .wpcfm-tabs li:first').click();
+                $(this).closest('.bundle-row').remove();
             }
         });
 
@@ -131,50 +121,21 @@
                 $('.wpcfm-diff').prettyTextDiff({
                     cleanup: true
                 });
-                //$('#mydiff > div').html($('.wpcfm-diff .diff').html());
                 $('.trigger-modal').click();
             }, 'json');
         });
 
 
-        // Sidebar link click
-        $(document).on('click', '.wpcfm-tabs li', function() {
-            var id = $(this).attr('data-id');
-            $(this).siblings('li').removeClass('active');
-            $(this).addClass('active');
-            $bundle = $('.wpcfm-bundle[data-id=' + id + ']');
-            $('.wpcfm-bundle').hide();
-            $bundle.show();
-
-            // Trigger jQuery Multi Select
-            $bundle.find('.bundle-select').multipleSelect({
-                width: 500,
-                multiple: true,
-                multipleWidth: 220,
-                keepOpen: true,
-                isOpen: true
-            });
-
-            // Make sure the content area is tall enough
-            var nav_height = $(this).closest('.wpcfm-tabs').height();
-            var content_height = $bundle.height();
-            if (content_height < nav_height) {
-                $bundle.height(nav_height - 40);
-            }
-        });
-
-
         // Change the sidebar link label
         $(document).on('keyup', '.bundle-label', function() {
-            var val = $(this).val();
-            var $tab = $(this).closest('.wpcfm-content').find('.wpcfm-tabs li.active');
-            $tab.html(val);
-
+            var label = $(this).val();
+            var val = label;
             val = $.trim(val).toLowerCase();
             val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
             val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
             val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
             $(this).siblings('.bundle-name').val(val);
+            $(this).closest('.bundle-row').find('.bundle-toggle').html(label);
         });
     });
 })(jQuery);

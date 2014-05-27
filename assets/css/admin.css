@@ -26,28 +26,16 @@ h2 span {
     border-bottom: 1px solid #ccc;
 }
 
-.wpcfm-content {
-    display: none;
+.wpcfm-bundles {
     font-size: 13px;
     border: 1px solid #ccc;
     margin-top: 10px;
 }
 
-.wpcfm-content.active {
-    display: block;
-}
-
-.wpcfm-content .bundle-name {
+.wpcfm-bundles .bundle-name {
     border: none;
     box-shadow: none;
     background: none;
-}
-
-.wpcfm-bundles {
-    overflow: auto;
-    border-left: 1px solid #ccc;
-    background-color: #fff;
-    padding: 20px;
 }
 
 .wpcfm-table {
@@ -62,30 +50,6 @@ h2 span {
     display: none;
 }
 
-.wpcfm-tabs {
-    float: left;
-    width: 160px;
-}
-
-.wpcfm-tabs ul {
-    margin: 15px 0 15px -4px;
-}
-
-.wpcfm-tabs li {
-    margin: 0;
-    padding: 5px 5px 5px 12px;
-    cursor: pointer;
-    color: #21759b;
-}
-
-.wpcfm-tabs li.active {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-right: 1px solid #fff;
-    border-radius: 2px 0 0 2px;
-    margin-right: -1px;
-}
-
 .bundle-select-wrapper {
     height: 300px;
 }
@@ -95,9 +59,9 @@ h2 span {
 }
 
 .remove-bundle {
+    float: right;
     color: #a00;
     cursor: pointer;
-    float: right;
 }
 
 .remove-bundle:hover {
@@ -120,22 +84,40 @@ h2 span {
 }
 
 .bundle-row {
-    padding: 10px 20px;
     border-bottom: 1px solid #ccc;
     background: #fff;
-}
-
-.bundle-row:nth-child(even) {
-    background: #fafafa;
 }
 
 .bundle-row:last-child {
     border-bottom: none;
 }
 
-.bundle-row-all {
+.bundle-row .bundle-row-inner {
+    display: none;
+}
+
+.bundle-row.active .bundle-row-inner {
+    display: block;
+}
+
+.bundle-row .bundle-header,
+.bundle-row .bundle-row-inner {
+    padding: 10px;
+}
+
+.bundle-row.active .bundle-header {
+    background-color: #21759B;
+}
+
+.bundle-row .bundle-toggle {
+    color: #0074a2;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bundle-row.active .bundle-toggle {
     color: #fff;
-    background: #026187;
 }
 
 /* MultiSelect */
@@ -161,12 +143,4 @@ ins {
 del {
     text-decoration: none;
     background-color: #ffc6c6;
-}
-
-/* WordPress 3.8 */
-
-.wpcfm-content input,
-.wpcfm-content select,
-.wpcfm-content textarea {
-    font-size: 13px;
 }
