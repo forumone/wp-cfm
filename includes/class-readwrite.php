@@ -3,14 +3,21 @@
 class WPCFM_Readwrite
 {
     public $folder;
-
+    public $error;
 
     function __construct() {
 
         // Create the "wp-cfm" folder
-        $this->folder = WP_CONTENT_DIR . '/wp-cfm';
+        $this->folder = WP_CONTENT_DIR . '/config';
+
         if ( ! is_dir( $this->folder ) ) {
+            if ( ! is_writable( $this->folder ) ) {
+                $this->error = __( 'Create /wp-content/config/ and grant write access', 'wpcfm' );
+            }
             mkdir( $this->folder );
+        }
+        elseif ( ! is_writable( $this->folder ) ) {
+            $this->error = __( 'The /wp-content/config/ folder is not writable', 'wpcfm' );
         }
     }
 
@@ -40,17 +47,21 @@ class WPCFM_Readwrite
      * Compare the DB vs file versions
      */
     function compare_bundle( $bundle_name ) {
-        $file_bundle = var_export( $this->read_file( $bundle_name ), true );
-        $db_bundle = var_export( $this->read_db( $bundle_name ), true );
+
+        $return = array();
+        $file_bundle = $this->read_file( $bundle_name );
+        $db_bundle = $this->read_db( $bundle_name );
 
         if ( $file_bundle == $db_bundle ) {
-            $file_bundle = $db_bundle = __( 'Both versions are identical', 'wpcfm' );
+            $return['error'] = __( 'Both versions are identical', 'wpcfm' );
+        }
+        else {
+            $return['error'] = '';
+            $return['file'] = print_r( $file_bundle, true );
+            $return['db'] = print_r( $db_bundle, true );
         }
 
-        return array(
-            'file' => $file_bundle,
-            'db' => $db_bundle,
-        );
+        return $return;
     }
 
 

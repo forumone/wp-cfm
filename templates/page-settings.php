@@ -19,6 +19,10 @@ $namespaces = $this->registry->get_namespaces();
         Configuration Management <span>by <a href="http://forumone.com/" target="_blank">Forum One Communications</a></span>
     </h2>
 
+    <?php if ( !empty ( $this->readwrite->error ) ) : ?>
+    <div class="wpcfm-error"><?php echo $this->readwrite->error; ?></div>
+    <?php endif; ?>
+
     <div class="wpcfm-response"></div>
 
     <div class="wpcfm-bundles">
@@ -50,12 +54,12 @@ $namespaces = $this->registry->get_namespaces();
     <div style="display:none">
         <div id="mydiff">
             <div class="wpcfm-diff">
-                <div class="original"></div>
-                <div class="changed"></div>
-                <div class="diff"></div>
+                <pre class="original"></pre>
+                <pre class="changed"></pre>
+                <pre class="diff"></pre>
             </div>
         </div>
-        <a class="trigger-modal thickbox" href="#TB_inline?width=600&height=400&inlineId=mydiff" title="Original: file, Changed: database"></a>
+        <a class="trigger-modal thickbox" href="#TB_inline?width=600&height=400&inlineId=mydiff" title="Original (file); changed (database)"></a>
     </div>
 
     <!-- clone settings -->
