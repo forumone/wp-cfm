@@ -25,9 +25,8 @@ class WPCFM_Helper
     function get_bundle_names() {
         $output = array();
 
-        $opts = get_option( 'wpcfm_settings' );
-        $opts = json_decode( $opts, true );
-        foreach ( $opts['bundles'] as $bundle ) {
+        $bundles = $this->get_bundles();
+        foreach ( $bundles as $bundle ) {
             $output[] = $bundle['name'];
         }
 

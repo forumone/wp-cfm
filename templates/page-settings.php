@@ -50,8 +50,8 @@ $namespaces = $this->registry->get_namespaces();
     <div style="display:none">
         <div id="mydiff">
             <div class="wpcfm-diff">
-                <div class="original" style="display:none"></div>
-                <div class="changed" style="display:none"></div>
+                <div class="original"></div>
+                <div class="changed"></div>
                 <div class="diff"></div>
             </div>
         </div>

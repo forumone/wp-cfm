@@ -128,6 +128,11 @@ h2 span {
 
 /* Diff */
 
+.wpcfm-diff .original,
+.wpcfm-diff .changed {
+    display: none;
+}
+
 .wpcfm-diff .diff {
     background: #fff;
     padding: 10px;

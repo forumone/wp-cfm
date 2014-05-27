@@ -44,7 +44,7 @@ class WPCFM_Readwrite
         $db_bundle = var_export( $this->read_db( $bundle_name ), true );
 
         if ( $file_bundle == $db_bundle ) {
-            $file_bundle = $db_bundle = __( 'Both bundles are identical', 'wpcfm' );
+            $file_bundle = $db_bundle = __( 'Both versions are identical', 'wpcfm' );
         }
 
         return array(
@@ -124,7 +124,7 @@ class WPCFM_Readwrite
                 $callback = array( $this, 'callback_wp_options' );
                 $callback = apply_filters( 'wpcfm_pull_handler', $callback, $key );
                 $callback_params = array(
-                    'setting_name' => $key,
+                    'option_name' => $key,
                     'namespace' => $namespace,
                     'old_data' => $db_data[ $namespace ][ $key ],
                     'new_data' => $val,
@@ -149,7 +149,7 @@ class WPCFM_Readwrite
      * Default callback - write to wp_options table
      */
     function callback_wp_options( $params ) {
-        $option_name = $params['setting_name'];
+        $option_name = $params['option_name'];
         $option_value = maybe_unserialize( $params['new_data'] );
         update_option( $option_name, $option_value );
     }
