@@ -58,6 +58,11 @@ class WPCFM
         include( WPCFM_DIR . '/includes/class-helper.php' );
         include( WPCFM_DIR . '/includes/class-ajax.php' );
 
+        // WP-CLI
+        if ( defined( 'WP_CLI' ) && WP_CLI ) {
+            include( WPCFM_DIR . '/includes/class-wp-cli.php' );
+        }
+
         $this->readwrite = new WPCFM_Readwrite();
         $this->registry = new WPCFM_Registry();
         $this->helper = new WPCFM_Helper();
