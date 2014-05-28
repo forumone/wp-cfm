@@ -21,7 +21,7 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 ```php
 /**
- * 
+ * Register new configuration items
  */
 function my_configuration_items( $items ) {
     $items['cfs_field_groups'] = array(
