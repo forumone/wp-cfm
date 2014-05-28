@@ -67,6 +67,14 @@ class WPCFM
         $this->registry = new WPCFM_Registry();
         $this->helper = new WPCFM_Helper();
         $ajax = new WPCFM_Ajax();
+
+        // Third party integrations
+        $integrations = scandir( WPCFM_DIR . '/includes/integrations' );
+        foreach ( $integrations as $filename ) {
+            if ( '.' != substr( $filename, 0, 1 ) ) {
+                include( WPCFM_DIR . "/includes/integrations/$filename" );
+            }
+        }
     }
 
 
