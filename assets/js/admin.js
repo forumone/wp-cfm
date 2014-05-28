@@ -16,9 +16,9 @@
 
                 // Trigger jQuery Multi Select
                 $this.find('.bundle-select').multipleSelect({
-                    width: 500,
+                    width: 600,
                     multiple: true,
-                    multipleWidth: 220,
+                    multipleWidth: 280,
                     keepOpen: true,
                     isOpen: true
                 });
@@ -63,9 +63,9 @@
 
             var $row = $('.wpcfm-bundles .bundle-row:last');
             $row.find('.bundle-select').multipleSelect({
-                width: 500,
+                width: 600,
                 multiple: true,
-                multipleWidth: 220,
+                multipleWidth: 280,
                 keepOpen: true,
                 isOpen: true
             });

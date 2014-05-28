@@ -1,7 +1,7 @@
 <?php
 
 $configuration = $this->registry->get_configuration_items();
-$namespaces = $this->registry->get_namespaces();
+$configuration = $this->helper->group_items( $configuration );
 
 ?>
 
@@ -80,9 +80,9 @@ $namespaces = $this->registry->get_namespaces();
                 <input type="text" class="bundle-name" value="new_bundle" />
                 <div class="bundle-select-wrapper">
                     <select class="bundle-select" multiple="multiple">
-                    <?php foreach ( $configuration as $namespace => $settings ) : ?>
-                        <optgroup label="<?php echo $namespaces[ $namespace ]; ?>">
-                            <?php foreach ( $settings as $key => $val ) : ?>
+                    <?php foreach ( $configuration as $group => $config ) : ?>
+                        <optgroup label="<?php echo $group; ?>">
+                            <?php foreach ( $config as $key => $data ) : ?>
                             <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
                             <?php endforeach; ?>
                         </optgroup>

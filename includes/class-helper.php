@@ -32,4 +32,23 @@ class WPCFM_Helper
 
         return $output;
     }
+
+
+    /**
+     * Put configuration items into groups
+     */
+    function group_items( $items ) {
+
+        $output = array();
+
+        // Sort by array key
+        ksort( $items );
+
+        foreach ( $items as $key => $item ) {
+            $group = isset( $item['group'] ) ? $item['group'] : 'WP Options';
+            $output[ $group ][ $key ] = $item;
+        }
+
+        return $output;
+    }
 }

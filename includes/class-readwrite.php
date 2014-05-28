@@ -2,22 +2,26 @@
 
 class WPCFM_Readwrite
 {
+    public $registry;
     public $folder;
     public $error;
 
     function __construct() {
+
+        // Includes
+        $this->registry = new WPCFM_Registry();
 
         // Create the "wp-cfm" folder
         $this->folder = WP_CONTENT_DIR . '/config';
 
         if ( ! is_dir( $this->folder ) ) {
             if ( ! is_writable( $this->folder ) ) {
-                $this->error = __( 'Create /wp-content/config/ and grant write access', 'wpcfm' );
+                $this->error = __( 'Create wp-content/config/ and grant write access', 'wpcfm' );
             }
             mkdir( $this->folder );
         }
         elseif ( ! is_writable( $this->folder ) ) {
-            $this->error = __( 'The /wp-content/config/ folder is not writable', 'wpcfm' );
+            $this->error = __( 'The wp-content/config/ folder is not writable', 'wpcfm' );
         }
     }
 
@@ -93,8 +97,7 @@ class WPCFM_Readwrite
     function read_db( $bundle_name ) {
 
         $output = array();
-        $registry = new WPCFM_Registry();
-        $all_config = $registry->get_configuration_items();
+        $all_config = $this->registry->get_configuration_items();
 
         $opts = get_option( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
@@ -105,11 +108,9 @@ class WPCFM_Readwrite
             }
         }
 
-        foreach ( $all_config as $namespace => $config_items ) {
-            foreach ( $config_items as $key => $val ) {
-                if ( in_array( $key, $bundle_config ) ) {
-                    $output[ $namespace ][ $key ] = $val;
-                }
+        foreach ( $all_config as $key => $config ) {
+            if ( in_array( $key, $bundle_config ) ) {
+                $output[ $key ] = $config['value'];
             }
         }
 
@@ -119,35 +120,36 @@ class WPCFM_Readwrite
 
     /**
      * Save the bundle configuration data (to database)
-     * Figure out how to handle DB writes
-     * @todo support custom (3rd party) write handlers
+     * @param string $bundle_name
+     * @param array $file_data Array of configuration items
      */
     function write_db( $bundle_name, $file_data ) {
 
         $success = false;
-        $registry = new WPCFM_Registry();
-        $db_data = $registry->get_configuration_items();
+        $db_data = $this->registry->get_configuration_items();
 
-        foreach ( $file_data as $namespace => $config_items ) {
-            foreach ( $config_items as $key => $val ) {
+        foreach ( $file_data as $key => $val ) {
 
-                // Handle each input value
-                $callback = array( $this, 'callback_wp_options' );
-                $callback = apply_filters( 'wpcfm_pull_handler', $callback, $key );
-                $callback_params = array(
-                    'option_name' => $key,
-                    'namespace' => $namespace,
-                    'old_data' => $db_data[ $namespace ][ $key ],
-                    'new_data' => $val,
-                );
+            // Create the callback params
+            $callback_params = array(
+                'name' => $key,
+                'group' => $db_data[ $key ]['group'],
+                'old_value' => $db_data[ $key ]['value'],
+                'new_value' => $val,
+            );
 
-                if ( is_callable( $callback ) ) {
-                    if ( is_array( $callback ) ) {
-                        $success = $callback[0]->$callback[1]( $callback_params );
-                    }
-                    else {
-                        $success = $callback( $callback_params );
-                    }
+            // If no callback is defined, default to the "callback_wp_options" method
+            $callback = array( $this, 'callback_wp_options' );
+            if ( ! empty( $db_data[ $key ]['callback'] ) ) {
+                $callback = $db_data[ $key ]['callback'];
+            }
+
+            if ( is_callable( $callback ) ) {
+                if ( is_array( $callback ) ) {
+                    $success = $callback[0]->$callback[1]( $callback_params );
+                }
+                else {
+                    $success = $callback( $callback_params );
                 }
             }
         }
@@ -160,8 +162,8 @@ class WPCFM_Readwrite
      * Default callback - write to wp_options table
      */
     function callback_wp_options( $params ) {
-        $option_name = $params['option_name'];
-        $option_value = maybe_unserialize( $params['new_data'] );
+        $option_name = $params['name'];
+        $option_value = maybe_unserialize( $params['new_value'] );
         update_option( $option_name, $option_value );
     }
 }

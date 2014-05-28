@@ -27,22 +27,12 @@ class WPCFM_Registry
         $results = $wpdb->get_results( $sql );
 
         foreach ( $results as $result ) {
-            $items['wp_options'][ $result->option_name ] = $result->option_value;
+            $items[ $result->option_name ] = array(
+                'value' => $result->option_value
+            );
         }
 
         return apply_filters( 'wpcfm_configuration_items', $items );
-    }
-
-
-    /**
-     * Register namespaces
-     */
-    function get_namespaces() {
-        $namespaces = array(
-            'wp_options' => 'WP Options'
-        );
-
-        return apply_filters( 'wpcfm_namespaces', $namespaces );
     }
 
 
@@ -68,7 +58,7 @@ class WPCFM_Registry
         );
 
         foreach ( $disallowed_items as $row ) {
-            unset( $items['wp_options'][ $row ] );
+            unset( $items[ $row ] );
         }
 
         return $items;
