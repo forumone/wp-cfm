@@ -36,7 +36,7 @@ add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
 
 #### Is that it?
 
-Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then you'll need to use the above `callback` parameter to tell WP-CFM how to properly import (Pull) the configuration into the database. See below:
+Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then you'll need to use the above `callback` parameter to tell WP-CFM how to properly import (Pull) the configuration into the database. It accepts a function name (string) or method (array).
 
 ```php
 /**
