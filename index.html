@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="WP-CFM : WordPress Configuration Management" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>WP-CFM</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/forumone/wp-cfm">View on GitHub</a>
+
+          <h1 id="project_title">WP-CFM</h1>
+          <h2 id="project_tagline">WordPress Configuration Management</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/forumone/wp-cfm/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/forumone/wp-cfm/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h4>
+<a name="wp-cfm-configuration-management-for-wordpress" class="anchor" href="#wp-cfm-configuration-management-for-wordpress"><span class="octicon octicon-link"></span></a>WP-CFM: Configuration Management for WordPress</h4>
+
+<p>Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.</p>
+
+<p><img src="http://i.imgur.com/opQhDUa.png" alt="Admin Screen"></p>
+
+<h4>
+<a name="what-does-this-mean-for-me" class="anchor" href="#what-does-this-mean-for-me"><span class="octicon octicon-link"></span></a>What does this mean for me?</h4>
+
+<ul>
+<li>Less need to copy the database. If you make changes, <strong>Push</strong> your bundle to the filesystem. To load changes, <strong>Pull</strong> the bundle into your database.</li>
+<li>No need to manually apply database settings changes. No more "fire drills" where you're rushing to figure out which settings you forgot to change.</li>
+</ul><h4>
+<a name="terminology" class="anchor" href="#terminology"><span class="octicon octicon-link"></span></a>Terminology</h4>
+
+<ul>
+<li>
+<strong>Bundle</strong>: A group of settings to track. This could be a single setting, or all the site's available settings.</li>
+<li>
+<strong>Push</strong>: Export configuration from your database to the filesystem.</li>
+<li>
+<strong>Pull</strong>: Import configuration from the filesystem into your database.</li>
+</ul><h4>
+<a name="developer-hooks" class="anchor" href="#developer-hooks"><span class="octicon octicon-link"></span></a>Developer Hooks</h4>
+
+<ul>
+<li>
+<strong>wpcfm_configuration_items</strong> - Add your plugin's custom configuration</li>
+</ul><div class="highlight highlight-php"><pre><span class="sd">/**</span>
+<span class="sd"> * Register new configuration items</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">my_configuration_items</span><span class="p">(</span> <span class="nv">$items</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$items</span><span class="p">[</span><span class="s1">'cfs_field_groups'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'MY CONFIGURATION DATA'</span><span class="p">,</span>
+        <span class="s1">'group'</span> <span class="o">=&gt;</span> <span class="s1">'WP Options'</span><span class="p">,</span> <span class="c1">// optional</span>
+        <span class="s1">'callback'</span> <span class="o">=&gt;</span> <span class="s1">'my_pull_handler'</span><span class="p">,</span> <span class="c1">// optional</span>
+    <span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$items</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">add_filter</span><span class="p">(</span> <span class="s1">'wpcfm_configuration_items'</span><span class="p">,</span> <span class="s1">'my_configuration_items'</span> <span class="p">);</span>
+</pre></div>
+
+<h4>
+<a name="is-that-it" class="anchor" href="#is-that-it"><span class="octicon octicon-link"></span></a>Is that it?</h4>
+
+<p>Almost! WP-CFM automatically handles configuration within the <code>wp_options</code> table. If your plugin stores settings elsewhere, then you'll need to use the above <code>callback</code> parameter to tell WP-CFM how to properly import (Pull) the configuration into the database. It accepts a function name (string) or method (array).</p>
+
+<div class="highlight highlight-php"><pre><span class="sd">/**</span>
+<span class="sd"> * $params['name']          The option name</span>
+<span class="sd"> * $params['group']         The option group</span>
+<span class="sd"> * $params['old_value']     The current DB value that will get overwritten</span>
+<span class="sd"> * $params['new_value']     The new DB value</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">my_pull_handler</span><span class="p">(</span> <span class="nv">$params</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Save something</span>
+<span class="p">}</span>
+</pre></div>
+
+<h4>
+<a name="wp-cli-support" class="anchor" href="#wp-cli-support"><span class="octicon octicon-link"></span></a>WP-CLI Support</h4>
+
+<p>WP-CFM includes 2 custom WP-CLI commands for performing actions from the command-line.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">wp</span> <span class="nx">config</span> <span class="nx">pull</span> <span class="o">&lt;</span><span class="nx">bundle_name</span><span class="o">&gt;</span>
+<span class="nx">wp</span> <span class="nx">config</span> <span class="nx">push</span> <span class="o">&lt;</span><span class="nx">bundle_name</span><span class="o">&gt;</span>
+</pre></div>
+
+<p>You can optionally set <code>bundle_name</code> to "all" to push / pull all bundles at once.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">WP-CFM maintained by <a href="https://github.com/forumone">forumone</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
