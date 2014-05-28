@@ -18,7 +18,9 @@ class WPCFM_Readwrite
             if ( ! is_writable( $this->folder ) ) {
                 $this->error = __( 'Create wp-content/config/ and grant write access', 'wpcfm' );
             }
-            mkdir( $this->folder );
+            else {
+                mkdir( $this->folder );
+            }
         }
         elseif ( ! is_writable( $this->folder ) ) {
             $this->error = __( 'The wp-content/config/ folder is not writable', 'wpcfm' );
