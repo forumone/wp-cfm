@@ -3,6 +3,7 @@
 class WPCFM_Readwrite
 {
     public $registry;
+    public $helper;
     public $folder;
     public $error;
 
@@ -10,6 +11,7 @@ class WPCFM_Readwrite
 
         // Includes
         $this->registry = new WPCFM_Registry();
+        $this->helper = new WPCFM_Helper();
 
         // Create the "wp-cfm" folder
         $this->folder = WP_CONTENT_DIR . '/config';
@@ -55,8 +57,28 @@ class WPCFM_Readwrite
     function compare_bundle( $bundle_name ) {
 
         $return = array();
-        $file_bundle = $this->read_file( $bundle_name );
-        $db_bundle = $this->read_db( $bundle_name );
+        $db_bundle = array();
+        $file_bundle = array();
+
+        // Diff all bundles
+        if ( 'all' == $bundle_name ) {
+            $bundle_names = $this->helper->get_bundle_names();
+            foreach ( $bundle_names as $bundle_name ) {
+
+                // Retrieve each bundle
+                $temp_file = $this->read_file( $bundle_name );
+                $temp_db = $this->read_db( $bundle_name );
+
+                // Merge the bundle values
+                $file_bundle = array_merge( $file_bundle, $temp_file );
+                $db_bundle = array_merge( $db_bundle, $temp_db );
+            }
+        }
+        // Diff a single bundle
+        else {
+            $file_bundle = $this->read_file( $bundle_name );
+            $db_bundle = $this->read_db( $bundle_name );
+        }
 
         if ( $file_bundle == $db_bundle ) {
             $return['error'] = __( 'Both versions are identical', 'wpcfm' );
