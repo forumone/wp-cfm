@@ -59,4 +59,4 @@ wp config pull <bundle_name>
 wp config push <bundle_name>
 ```
 
-You can optionally set the bundle_name to "all" to push / pull all bundles at once.
+You can optionally set `bundle_name` to "all" to push / pull all bundles at once.
