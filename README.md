@@ -49,3 +49,14 @@ function my_pull_handler( $params ) {
     // Save something
 }
 ```
+
+#### WP-CLI Support
+
+WP-CFM includes 2 custom WP-CLI commands for performing actions from the command-line.
+
+```php
+wp config pull <bundle_name>
+wp config push <bundle_name>
+```
+
+You can optionally set the bundle_name to "all" to push / pull all bundles at once.
