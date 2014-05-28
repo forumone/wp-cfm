@@ -51,6 +51,7 @@
                 'action': 'wpcfm_save',
                 'data': JSON.stringify(data)
             }, function(response) {
+                $('.wpcfm-bundles .bundle-row').removeClass('unsaved');
                 $('.wpcfm-response').html(response);
             });
         });
@@ -69,6 +70,7 @@
                 keepOpen: true,
                 isOpen: true
             });
+            $row.addClass('unsaved');
             $row.find('.bundle-toggle').trigger('click');
         });
 
@@ -139,8 +141,16 @@
                         cleanup: true
                     });
                 }
-                $('.trigger-modal').click();
+                $('.media-modal').show();
+                $('.media-modal-backdrop').show();
             }, 'json');
+        });
+
+
+        // Close the Diff viewer
+        $(document).on('click', '.media-modal-close', function() {
+                $('.media-modal').hide();
+                $('.media-modal-backdrop').hide();
         });
 
 
@@ -153,6 +163,7 @@
             val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
             val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
             $(this).siblings('.bundle-name').val(val);
+            $(this).closest('.bundle-row').attr('data-bundle', val);
             $(this).closest('.bundle-row').find('.bundle-toggle').html(label);
         });
     });

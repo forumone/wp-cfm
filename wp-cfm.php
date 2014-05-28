@@ -50,6 +50,7 @@ class WPCFM
 
         // hooks
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
         // includes
         include( WPCFM_DIR . '/includes/class-readwrite.php' );
@@ -68,7 +69,17 @@ class WPCFM
      * Register the FacetWP settings page
      */
     function admin_menu() {
-        add_options_page( 'WP-CFM', 'WP-CFM', 'manage_options', 'wp-cfm', array( $this, 'settings_page' ) );
+        add_options_page( 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array( $this, 'settings_page' ) );
+    }
+
+
+    /**
+     * Enqueue media CSS
+     */
+    function admin_scripts( $hook ) {
+        if ( 'settings_page_wpcfm' == $hook ) {
+            wp_enqueue_style( 'media-views' );
+        }
     }
 
 

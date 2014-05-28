@@ -32,6 +32,7 @@ class WPCFM_Ajax
 
     /**
      * Save admin settings
+     * @todo delete unused file-based bundles
      */
     function save_settings() {
         if ( current_user_can( 'manage_options' ) ) {

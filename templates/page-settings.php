@@ -5,7 +5,6 @@ $configuration = $this->helper->group_items( $configuration );
 
 ?>
 
-<?php add_thickbox(); ?>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/admin.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/jquery.multiple.select.js"></script>
 <link href="<?php echo WPCFM_URL; ?>/assets/css/admin.css" rel="stylesheet">
@@ -49,25 +48,13 @@ $configuration = $this->helper->group_items( $configuration );
         </div>
     </div>
 
-    <!-- diff modal -->
-
-    <div style="display:none">
-        <div id="mydiff">
-            <div class="wpcfm-diff">
-                <pre class="original"></pre>
-                <pre class="changed"></pre>
-                <pre class="diff"></pre>
-            </div>
-        </div>
-        <a class="trigger-modal thickbox" href="#TB_inline?width=600&height=400&inlineId=mydiff" title="Original (file); changed (database)"></a>
-    </div>
-
     <!-- clone settings -->
 
     <div class="bundles-hidden">
-        <div class="bundle-row">
+        <div class="bundle-row" data-bundle="new_bundle">
             <div class="bundle-header">
                 <div class="bundle-actions">
+                    <span class="no-actions">Save to see actions</span>
                     <a class="button diff-bundle"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
                     <a class="button push-bundle"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
                     <a class="button pull-bundle"><?php _e( 'Pull', 'wpcfm' ); ?></a>
@@ -95,3 +82,30 @@ $configuration = $this->helper->group_items( $configuration );
         </div>
     </div>
 </div>
+
+<!-- diff modal -->
+
+<div class="media-modal">
+    <a class="media-modal-close"><span class="media-modal-icon"></span></a>
+    <div class="media-modal-content">
+        <div class="media-frame">
+            <div class="media-frame-title">
+                <h1>Diff Viewer</h1>
+            </div>
+            <div class="media-frame-router">
+                <div class="media-router">
+                    Compare file and the database versions. Changes marked in <span style="background:#c6ffc6">GREEN</span> exist in the database but not the filesystem.
+                </div>
+            </div>
+            <div class="media-frame-content">
+                <div class="wpcfm-diff">
+                    <pre class="original"></pre>
+                    <pre class="changed"></pre>
+                    <pre class="diff"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="media-modal-backdrop"></div>

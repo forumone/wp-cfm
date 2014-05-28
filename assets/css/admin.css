@@ -7,10 +7,6 @@ h2 span {
     display: inline-block;
 }
 
-.nav-tab-wrapper .nav-tab {
-    cursor: pointer;
-}
-
 .wpcfm-response {
     display: none;
     margin-top: 10px;
@@ -31,7 +27,6 @@ h2 span {
 .wpcfm-action-buttons {
     padding: 10px;
     background: #fafafa;
-    border-bottom: 1px solid #ccc;
 }
 
 .wpcfm-bundles {
@@ -46,24 +41,12 @@ h2 span {
     background: none;
 }
 
-.wpcfm-table {
-    width: 100%;
-}
-
-.wpcfm-table td {
-    padding: 0 0 10px 0;
-}
-
 .bundles-hidden {
     display: none;
 }
 
 .bundle-select-wrapper {
     height: 300px;
-}
-
-.wp-admin select.bundle-select {
-    height: 100%;
 }
 
 .remove-bundle {
@@ -82,22 +65,13 @@ h2 span {
 
 /* Bundle Actions */
 
-.bundle-row .bundle-name {
-    font-size: 14px;
-    padding-top: 5px;
+.bundle-row {
+    border-top: 1px solid #ccc;
+    background: #fff;
 }
 
 .bundle-row .bundle-actions {
     float: right;
-}
-
-.bundle-row {
-    border-bottom: 1px solid #ccc;
-    background: #fff;
-}
-
-.bundle-row:last-child {
-    border-bottom: none;
 }
 
 .bundle-row .bundle-row-inner {
@@ -114,6 +88,7 @@ h2 span {
 }
 
 .bundle-row.active .bundle-header {
+    color: #fff;
     background-color: #21759B;
 }
 
@@ -121,11 +96,24 @@ h2 span {
     color: #0074a2;
     font-size: 14px;
     font-weight: bold;
+    line-height: 24px;
     cursor: pointer;
 }
 
 .bundle-row.active .bundle-toggle {
     color: #fff;
+}
+
+.bundle-row .no-actions {
+    display: none;
+}
+
+.bundle-row.unsaved .bundle-actions .button {
+    display: none;
+}
+
+.bundle-row.unsaved .no-actions {
+    display: inline;
 }
 
 /* MultiSelect */
@@ -143,7 +131,7 @@ h2 span {
 
 .wpcfm-diff .diff {
     background: #fff;
-    padding: 10px;
+    padding: 16px;
     overflow: auto;
     font-family: "Courier New", sans-serif;
 }
@@ -156,4 +144,25 @@ ins {
 del {
     text-decoration: none;
     background-color: #ffc6c6;
+}
+
+/* Media modal hacks */
+
+.media-modal,
+.media-modal-backdrop {
+    display: none;
+}
+
+.media-frame-title,
+.media-frame-content {
+    left: 0;
+}
+
+.media-frame-router {
+    left: 10px;
+}
+
+.media-frame-content {
+    bottom: 0;
+    overflow: auto;
 }
