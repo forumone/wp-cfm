@@ -115,6 +115,14 @@ class WPCFM_Readwrite
 
 
     /**
+     * Delete a bundle file
+     */
+    function delete_file( $bundle_name ) {
+        return unlink( "$this->folder/$bundle_name.json" );
+    }
+
+
+    /**
      * Load the bundle (from database)
      * @return array
      */

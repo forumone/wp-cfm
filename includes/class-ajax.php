@@ -37,7 +37,20 @@ class WPCFM_Ajax
     function save_settings() {
         if ( current_user_can( 'manage_options' ) ) {
             $settings = stripslashes( $_POST['data'] );
+
+            // Store old bundle names for use later
+            $old_bundles = $this->helper->get_bundle_names();
+
+            // Save the option
             update_option( 'wpcfm_settings', $settings );
+
+            // Delete any unused bundle files
+            $new_bundles = $this->helper->get_bundle_names();
+            $to_delete = array_diff( $old_bundles, $new_bundles );
+            foreach ( $to_delete as $bundle_name ) {
+                $this->readwrite->delete_file( $bundle_name );
+            }
+
             echo __( 'Settings saved', 'wpcfm' );
         }
         exit;
