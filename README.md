@@ -2,7 +2,7 @@
 
 Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.
 
-![Admin Screen](http://i.imgur.com/EsdnMLJ.png)
+![Admin Screen](http://i.imgur.com/opQhDUa.png)
 
 #### What does this mean for me?
 
@@ -17,40 +17,35 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 #### Developer Hooks
 
-* **wpcfm_namespaces** - Register a custom namespace
+* **wpcfm_configuration_items** - Add your plugin's custom configuration
 
 ```php
-function my_custom_namespace( $namespaces ) {
-    $namespaces['custom_field_suite'] = 'Custom Field Suite';
-    return $namespaces;
-}
-add_filter( 'wpcfm_namespaces', 'my_custom_namespace' );
-```
-
-* **wpcfm_configuration_items** - Add custom configuration settings to the pile
-
-```php
-function my_custom_configuration_items( $items ) {
-    $items['custom_field_suite']['field_groups'] = 'SOME DATA';
+/**
+ * 
+ */
+function my_configuration_items( $items ) {
+    $items['cfs_field_groups'] = array(
+        'value' => 'MY CONFIGURATION DATA',
+        'group' => 'WP Options', // optional
+        'callback' => 'my_pull_handler', // optional
+    );
     return $items;
 }
-add_filter( 'wpcfm_configuration_items', 'my_custom_configuration_items' );
+add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
 ```
 
-* **wpcfm_pull_handler** - Determine how to import custom settings (settings outside of `wp_options`)
+#### Is that it?
+
+Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then you'll need to use the above `callback` parameter to tell WP-CFM how to properly import (Pull) the configuration into the database. See below:
 
 ```php
-/*
-$params['option_name'] - the option name
-$params['namespace'] - the option namespace
-$params['old_data'] - the current DB value
-$params['new_data'] - the current file value (which will overwrite the DB)
-*/
-function my_custom_pull_handler( $handler, $params ) {
-    if ( 'my_custom_option' == $params['option_name'] ) {
-        $handler = 'import_plugin_changes'; // a function name (string) or method name (array)
-    }
-    return $handler;
+/**
+ * $params['name']          The option name
+ * $params['group']         The option group
+ * $params['old_value']     The current DB value that will get overwritten
+ * $params['new_value']     The new DB value
+ */
+function my_pull_handler( $params ) {
+    // Save something
 }
-add_filter( 'wpcfm_pull_handler', 'my_custom_pull_handler' );
 ```
