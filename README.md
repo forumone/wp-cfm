@@ -4,6 +4,8 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 ![Admin Screen](http://i.imgur.com/opQhDUa.png)
 
+[Watch the introduction screencast (4 minutes)](http://screencast.com/t/HGmkd8S44P7s)
+
 #### What does this mean for me?
 
 * Less need to copy the database. If you make changes, **Push** your bundle to the filesystem. To load changes, **Pull** the bundle into your database.
@@ -17,7 +19,7 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 #### Developer Hooks
 
-* **wpcfm_configuration_items** - Add your plugin's custom configuration
+The `wpcfm_configuration_items` hook lets you register custom configuration items.
 
 ```php
 /**
@@ -36,7 +38,7 @@ add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
 
 #### Is that it?
 
-Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then you'll need to use the above `callback` parameter to tell WP-CFM how to properly import (Pull) the configuration into the database. It accepts a function name (string) or method (array).
+Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then you'll need to use the above `callback` parameter to tell WP-CFM how to properly import (Pull) configuration into the database. It accepts a function name (string) or method (array).
 
 ```php
 /**
@@ -50,9 +52,9 @@ function my_pull_handler( $params ) {
 }
 ```
 
-#### WP-CLI Support
+#### WP-CLI
 
-WP-CFM includes 2 custom WP-CLI commands for performing actions from the command-line.
+WP-CFM support pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
 
 ```php
 wp config pull <bundle_name>
