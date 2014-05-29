@@ -46,6 +46,7 @@
 <ul>
 <li>Less need to copy the database. If you make changes, <strong>Push</strong> your bundle to the filesystem. To load changes, <strong>Pull</strong> the bundle into your database.</li>
 <li>No need to manually apply database settings changes. No more "fire drills" where you're rushing to figure out which settings you forgot to change.</li>
+<li>Track and migrate configuration files using git, subversion, etc.</li>
 </ul><h4>
 <a name="terminology" class="anchor" href="#terminology"><span class="octicon octicon-link"></span></a>Terminology</h4>
 
@@ -61,10 +62,7 @@
 
 <p>The <code>wpcfm_configuration_items</code> hook lets you register custom configuration items.</p>
 
-<div class="highlight highlight-php"><pre><span class="sd">/**</span>
-<span class="sd"> * Register new configuration items</span>
-<span class="sd"> */</span>
-<span class="k">function</span> <span class="nf">my_configuration_items</span><span class="p">(</span> <span class="nv">$items</span> <span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-php"><pre><span class="k">function</span> <span class="nf">my_configuration_items</span><span class="p">(</span> <span class="nv">$items</span> <span class="p">)</span> <span class="p">{</span>
     <span class="nv">$items</span><span class="p">[</span><span class="s1">'cfs_field_groups'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
         <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'MY CONFIGURATION DATA'</span><span class="p">,</span>
         <span class="s1">'group'</span> <span class="o">=&gt;</span> <span class="s1">'WP Options'</span><span class="p">,</span> <span class="c1">// optional</span>
@@ -75,10 +73,19 @@
 <span class="nx">add_filter</span><span class="p">(</span> <span class="s1">'wpcfm_configuration_items'</span><span class="p">,</span> <span class="s1">'my_configuration_items'</span> <span class="p">);</span>
 </pre></div>
 
-<h4>
+<p>This filter contains an associative array of all configuration options. Each option has a unique key, and supports several parameters:</p>
+
+<ul>
+<li>
+<strong>value</strong>: (required) The configuration data to store.</li>
+<li>
+<strong>group</strong>: (optional) A group name, allowing multiple configuration options to be grouped together. This is only used in the admin UI. Default = "WP Options"</li>
+<li>
+<strong>callback</strong>: (optional) If the configuration data is <strong>not</strong> stored within <code>wp_options</code>, then WP-CFM needs to know how to Pull it into the database. This parameter accepts a (string) function name or (array) method. A <code>$params</code> array is passed into the callback function (see below).</li>
+</ul><h4>
 <a name="is-that-it" class="anchor" href="#is-that-it"><span class="octicon octicon-link"></span></a>Is that it?</h4>
 
-<p>Almost! WP-CFM automatically handles configuration within the <code>wp_options</code> table. If your plugin stores settings elsewhere, then you'll need to use the above <code>callback</code> parameter to tell WP-CFM how to properly import (Pull) configuration into the database. It accepts a function name (string) or method (array).</p>
+<p>Almost! WP-CFM automatically handles configuration within the <code>wp_options</code> table. If your plugin stores settings elsewhere, then use the above <code>callback</code> parameter to tell WP-CFM how to properly import (Pull) configuration into the database.</p>
 
 <div class="highlight highlight-php"><pre><span class="sd">/**</span>
 <span class="sd"> * $params['name']          The option name</span>
@@ -94,7 +101,7 @@
 <h4>
 <a name="wp-cli" class="anchor" href="#wp-cli"><span class="octicon octicon-link"></span></a>WP-CLI</h4>
 
-<p>WP-CFM support pulling / pushing bundles from the command-line using <a href="http://wp-cli.org/">WP-CLI</a>:</p>
+<p>WP-CFM supports pulling / pushing bundles from the command-line using <a href="http://wp-cli.org/">WP-CLI</a>:</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">wp</span> <span class="nx">config</span> <span class="nx">pull</span> <span class="o">&lt;</span><span class="nx">bundle_name</span><span class="o">&gt;</span>
 <span class="nx">wp</span> <span class="nx">config</span> <span class="nx">push</span> <span class="o">&lt;</span><span class="nx">bundle_name</span><span class="o">&gt;</span>
