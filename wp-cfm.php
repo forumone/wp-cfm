@@ -68,6 +68,7 @@ class WPCFM
         $this->helper = new WPCFM_Helper();
         $ajax = new WPCFM_Ajax();
 
+        /*
         // Third party integrations
         $integrations = scandir( WPCFM_DIR . '/includes/integrations' );
         foreach ( $integrations as $filename ) {
@@ -75,6 +76,7 @@ class WPCFM
                 include( WPCFM_DIR . "/includes/integrations/$filename" );
             }
         }
+        */
     }
 
 
