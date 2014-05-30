@@ -25,5 +25,8 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 == Changelog ==
 
+= 1.0.1 =
+* Custom Field Suite integration
+
 = 1.0 =
 * Initial release

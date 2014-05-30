@@ -44,11 +44,79 @@ function cfs_get_field_groups() {
 function cfs_import_field_groups( $params ) {
     global $cfs;
 
-    $import_code = json_decode( $params['new_value'], true );
+    $import_code = array();
+    $old_value = json_decode( $params['old_value'], true );
+    $new_value = json_decode( $params['new_value'], true );
+    $next_field_id = (int) get_option( 'cfs_next_field_id' );
 
-    /*
-    $cfs->field_group->import( array(
-        'import_code' => $import_code,
-    ) );
-    */
+    // Store old field names & IDs
+    $old_field_groups = array();
+
+    foreach ( $old_value as $field_group ) {
+        $old_fields = array();
+        foreach ( $field_group['cfs_fields'] as $field ) {
+            $old_fields[ $field['name'] ] = $field['id'];
+        }
+        $old_field_groups[ $field_group['post_name'] ] = $old_fields;
+    }
+
+    // Change the field IDs (if needed), then save
+    foreach ( $new_value as $field_group ) {
+        $group_name = $field_group['post_name'];
+
+        // The field group already exists
+        if ( isset( $old_field_groups[ $group_name ] ) ) {
+            foreach ( $field_group['cfs_fields'] as $key => $field ) {
+
+                // Preserve the old field's ID
+                $field_name = $field['name'];
+                if ( isset( $old_field_groups[ $group_name ][ $field_name ] ) ) {
+                    $field_id = $old_field_groups[ $group_name ][ $field_name ];
+                    $field_group['cfs_fields'][ $key ]['id'] = $field_id;
+                }
+                // Otherwise, increment the field ID counter
+                else {
+                    $field_group['cfs_fields'][ $key ]['id'] = $next_field_id;
+                    $next_field_id++;
+                }
+            }
+        }
+
+        cfs_save_field_group( $field_group );
+    }
+
+    update_option( 'cfs_next_field_id', $next_field_id );
+}
+
+
+/**
+ * Save a CFS field group
+ */
+function cfs_save_field_group( $field_group ) {
+    $args = array(
+        'name'              => $field_group['post_name'],
+        'post_type'         => 'cfs',
+        'posts_per_page'    => 1,
+        'fields'            => 'ids',
+    );
+
+    $posts = get_posts( $args );
+
+    if ( ! empty( $posts ) ) {
+        $post_id = $posts[0];
+    }
+    else {
+        $post_id = wp_insert_post( array(
+            'post_title'    => $field_group['post_title'],
+            'post_name'     => $field_group['post_name'],
+            'post_type'     => 'cfs',
+            'post_status'   => 'publish',
+            'post_content'  => '',
+        ) );
+    }
+
+    // Insert the postmeta settings
+    update_post_meta( $post_id, 'cfs_fields', $field_group['cfs_fields'] );
+    update_post_meta( $post_id, 'cfs_rules', $field_group['cfs_rules'] );
+    update_post_meta( $post_id, 'cfs_extras', $field_group['cfs_extras'] );
 }
