@@ -64,21 +64,18 @@ function cfs_import_field_groups( $params ) {
     foreach ( $new_value as $field_group ) {
         $group_name = $field_group['post_name'];
 
-        // The field group already exists
-        if ( isset( $old_field_groups[ $group_name ] ) ) {
-            foreach ( $field_group['cfs_fields'] as $key => $field ) {
+        foreach ( $field_group['cfs_fields'] as $key => $field ) {
+            $field_name = $field['name'];
 
-                // Preserve the old field's ID
-                $field_name = $field['name'];
-                if ( isset( $old_field_groups[ $group_name ][ $field_name ] ) ) {
-                    $field_id = $old_field_groups[ $group_name ][ $field_name ];
-                    $field_group['cfs_fields'][ $key ]['id'] = $field_id;
-                }
-                // Otherwise, increment the field ID counter
-                else {
-                    $field_group['cfs_fields'][ $key ]['id'] = $next_field_id;
-                    $next_field_id++;
-                }
+            // Preserve the old field ID
+            if ( isset( $old_field_groups[ $group_name ][ $field_name ] ) ) {
+                $field_id = $old_field_groups[ $group_name ][ $field_name ];
+                $field_group['cfs_fields'][ $key ]['id'] = $field_id;
+            }
+            // Otherwise, increment the field ID counter
+            else {
+                $field_group['cfs_fields'][ $key ]['id'] = $next_field_id;
+                $next_field_id++;
             }
         }
 
