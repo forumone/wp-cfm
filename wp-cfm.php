@@ -36,7 +36,7 @@ class WPCFM
         // setup variables
         define( 'WPCFM_VERSION', '1.0.2' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
-        define( 'WPCFM_URL', plugins_url( 'wp-cfm' ) );
+        define( 'WPCFM_URL', plugins_url( basename( dirname(__FILE__) ) ) );
 
         // WP is loaded
         add_action( 'init', array( $this, 'init' ) );
