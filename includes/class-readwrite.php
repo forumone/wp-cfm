@@ -98,7 +98,7 @@ class WPCFM_Readwrite
      * @return array
      */
     function read_file( $bundle_name ) {
-        if ( file_exists( "$this->folder/$bundle_name.json" ) ) {
+        if ( is_readable( "$this->folder/$bundle_name.json" ) ) {
             $contents = file_get_contents( "$this->folder/$bundle_name.json" );
             return json_decode( $contents, true );
         }
@@ -110,7 +110,16 @@ class WPCFM_Readwrite
      * Write the bundle to file
      */
     function write_file( $bundle_name, $data ) {
-        return file_put_contents( "$this->folder/$bundle_name.json", $data );
+        $filename = "$this->folder/$bundle_name.json";
+        if ( file_exists( $filename ) ) {
+            if ( is_writable( $filename ) ) {
+                return file_put_contents( $filename, $data );
+            }
+        }
+        elseif ( is_writable( $this->folder ) ) {
+            return file_put_contents( $filename, $data );
+        }
+        return false;
     }
 
 
@@ -118,7 +127,10 @@ class WPCFM_Readwrite
      * Delete a bundle file
      */
     function delete_file( $bundle_name ) {
-        return unlink( "$this->folder/$bundle_name.json" );
+        if ( is_writable( "$this->folder/$bundle_name.json" ) ) {
+            return unlink( "$this->folder/$bundle_name.json" );
+        }
+        return false;
     }
 
 
