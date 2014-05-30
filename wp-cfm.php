@@ -68,9 +68,10 @@ class WPCFM
         $this->helper = new WPCFM_Helper();
         $ajax = new WPCFM_Ajax();
 
-        // Third party integrations
+        // Make sure is_plugin_active() is available
         include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
+        // Third party integrations
         $integrations = scandir( WPCFM_DIR . '/includes/integrations' );
         foreach ( $integrations as $filename ) {
             if ( '.' != substr( $filename, 0, 1 ) ) {
