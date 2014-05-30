@@ -10,6 +10,7 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 * Less need to copy the database. If you make changes, **Push** your bundle to the filesystem. To load changes, **Pull** the bundle into your database.
 * No need to manually apply database settings changes. No more "fire drills" where you're rushing to figure out which settings you forgot to change.
+* Track and migrate configuration files using git, subversion, etc.
 
 #### Terminology
 
@@ -22,9 +23,6 @@ Deploying database changes in WordPress is hard, especially when working on team
 The `wpcfm_configuration_items` hook lets you register custom configuration items.
 
 ```php
-/**
- * Register new configuration items
- */
 function my_configuration_items( $items ) {
     $items['cfs_field_groups'] = array(
         'value' => 'MY CONFIGURATION DATA',
@@ -36,9 +34,15 @@ function my_configuration_items( $items ) {
 add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
 ```
 
+This filter contains an associative array of all configuration options. Each option has a unique key, and supports several parameters:
+
+* **value**: (required) The configuration data to store.
+* **group**: (optional) A group name, allowing multiple configuration options to be grouped together. This is only used in the admin UI. Default = "WP Options"
+* **callback**: (optional) If the configuration data is **not** stored within `wp_options`, then WP-CFM needs to know how to Pull it into the database. This parameter accepts a (string) function name or (array) method. A `$params` array is passed into the callback function (see below).
+
 #### Is that it?
 
-Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then you'll need to use the above `callback` parameter to tell WP-CFM how to properly import (Pull) configuration into the database. It accepts a function name (string) or method (array).
+Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then use the above `callback` parameter to tell WP-CFM how to properly import (Pull) configuration into the database.
 
 ```php
 /**
@@ -54,7 +58,7 @@ function my_pull_handler( $params ) {
 
 #### WP-CLI
 
-WP-CFM support pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
+WP-CFM supports pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
 
 ```php
 wp config pull <bundle_name>
