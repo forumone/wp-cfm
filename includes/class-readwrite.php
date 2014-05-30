@@ -188,6 +188,9 @@ class WPCFM_Readwrite
                 $callback = $db_data[ $key ]['callback'];
             }
 
+            // Allow for callback override
+            $callback = apply_filters( 'wpcfm_pull_callback', $callback, $callback_params );
+
             if ( is_callable( $callback ) ) {
                 if ( is_array( $callback ) ) {
                     $success = $callback[0]->$callback[1]( $callback_params );
