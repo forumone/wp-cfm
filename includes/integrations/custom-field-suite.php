@@ -1,5 +1,10 @@
 <?php
 
+// Skip if CFS isn't active
+if ( ! is_plugin_active( 'custom-field-suite/cfs.php' ) ) {
+    return;
+}
+
 // Registration hook
 add_filter( 'wpcfm_configuration_items', 'cfs_configuration_items' );
 

@@ -25,6 +25,9 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 == Changelog ==
 
+= 1.0.2 =
+* Fix: error when Custom Field Suite isn't active
+
 = 1.0.1 =
 * Custom Field Suite integration
 

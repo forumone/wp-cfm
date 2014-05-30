@@ -3,7 +3,7 @@
 Plugin Name: WP-CFM
 Plugin URI: http://forumone.com/
 Description: WordPress Configuration Management
-Version: 1.0.1
+Version: 1.0.2
 Author: Forum One Communications
 Author URI: http://forumone.com/
 License: GPLv2
@@ -34,7 +34,7 @@ class WPCFM
     function __construct() {
 
         // setup variables
-        define( 'WPCFM_VERSION', '1.0.0' );
+        define( 'WPCFM_VERSION', '1.0.2' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_URL', plugins_url( 'wp-cfm' ) );
 
@@ -69,6 +69,8 @@ class WPCFM
         $ajax = new WPCFM_Ajax();
 
         // Third party integrations
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
         $integrations = scandir( WPCFM_DIR . '/includes/integrations' );
         foreach ( $integrations as $filename ) {
             if ( '.' != substr( $filename, 0, 1 ) ) {
