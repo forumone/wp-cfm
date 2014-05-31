@@ -43,12 +43,15 @@ class WPCFM_Ajax
             // Save the option
             update_option( 'wpcfm_settings', $settings );
 
-            // Delete any unused bundle files
+            // Delete orphan bundles
             $new_bundles = $this->helper->get_bundle_names();
             $to_delete = array_diff( $old_bundles, $new_bundles );
             foreach ( $to_delete as $bundle_name ) {
                 $this->readwrite->delete_file( $bundle_name );
             }
+
+            // Store WP-CFM settings to file
+            $this->readwrite->write_file( '_bundles', $settings );
 
             echo __( 'Settings saved', 'wpcfm' );
         }

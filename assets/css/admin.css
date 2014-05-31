@@ -78,10 +78,6 @@ h2 span {
     display: none;
 }
 
-.bundle-row.active .bundle-row-inner {
-    display: block;
-}
-
 .bundle-row .bundle-header,
 .bundle-row .bundle-row-inner {
     padding: 10px;
@@ -98,6 +94,12 @@ h2 span {
     font-weight: bold;
     line-height: 24px;
     cursor: pointer;
+}
+
+.bundle-row.row-all .bundle-toggle {
+    color: inherit;
+    cursor: default;
+    font-weight: normal;
 }
 
 .bundle-row.active .bundle-toggle {
@@ -146,7 +148,7 @@ del {
     background-color: #ffc6c6;
 }
 
-/* Media modal hacks */
+/* Media modal */
 
 .media-modal,
 .media-modal-backdrop {

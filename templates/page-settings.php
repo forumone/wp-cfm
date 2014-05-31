@@ -33,7 +33,7 @@ $configuration = $this->helper->group_items( $configuration );
             <div class="clear"></div>
         </div>
 
-        <div class="bundle-row row-default" data-bundle="all">
+        <div class="bundle-row row-all" data-bundle="all">
             <div class="bundle-header">
                 <div class="bundle-actions">
                     <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
@@ -42,9 +42,6 @@ $configuration = $this->helper->group_items( $configuration );
                 </div>
                 <div class="bundle-toggle">All Bundles</div>
                 <div class="clear"></div>
-            </div>
-            <div class="bundle-row-inner">
-                No actions are available.
             </div>
         </div>
     </div>

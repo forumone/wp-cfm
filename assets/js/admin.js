@@ -35,7 +35,7 @@
                 'bundles': []
             };
 
-            $('.wpcfm-bundles .bundle-row:not(.row-default)').each(function() {
+            $('.wpcfm-bundles .bundle-row:not(.row-all)').each(function() {
                 var $this = $(this);
 
                 var obj = {
@@ -76,11 +76,10 @@
 
 
         // Toggle bundle details
-        $(document).on('click', '.bundle-toggle', function() {
+        $(document).on('click', '.bundle-row:not(.row-all) .bundle-toggle', function() {
             var $row = $(this).closest('.bundle-row');
-            var hasClass = $row.hasClass('active');
-            $('.bundle-row').removeClass('active');
-            hasClass ? $row.removeClass('active') : $row.addClass('active');
+            $row.toggleClass('active');
+            $row.find('.bundle-row-inner').animate({ height: 'toggle' }, 150);
         });
 
 
