@@ -32,22 +32,29 @@ class WPCFM_Readwrite
 
     /**
      * Move the file bundle to DB
-     * Pull is difficult; we need to figure out how to properly
-     * import each setting into the database
+     * @param string $bundle_name The bundle name (or "all")
      */
     function pull_bundle( $bundle_name ) {
-        $data = $this->read_file( $bundle_name );
-        $this->write_db( $bundle_name, $data );
+        $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
+
+        foreach ( $bundles as $bundle_name ) {
+            $data = $this->read_file( $bundle_name );
+            $this->write_db( $bundle_name, $data );
+        }
     }
 
 
     /**
      * Move the DB bundle to file
-     * Push is easy; we simply write data to file
+     * @param string $bundle_name The bundle name (or "all")
      */
     function push_bundle( $bundle_name ) {
-        $data = $this->read_db( $bundle_name );
-        $this->write_file( $bundle_name, json_encode( $data, JSON_PRETTY_PRINT ) );
+        $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
+
+        foreach ( $bundles as $bundle_name ) {
+            $data = $this->read_db( $bundle_name );
+            $this->write_file( $bundle_name, json_encode( $data, JSON_PRETTY_PRINT ) );
+        }
     }
 
 
