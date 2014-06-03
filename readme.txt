@@ -25,6 +25,14 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 == Changelog ==
 
+= 1.0.3 =
+* Added relative plugin URL (props @tormjens)
+* Added subtle admin screen animations
+* Better file error handling
+* CFS integration - each field group now has its own configuration item
+* Added `wpcfm_pull_callback` filter
+* Moved the "all" bundle handler from the ajax class to readwrite
+
 = 1.0.2 =
 * Fix: error when Custom Field Suite isn't active
 

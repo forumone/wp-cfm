@@ -51,7 +51,7 @@ class WPCFM_Ajax
             }
 
             // Store WP-CFM settings to file
-            $this->readwrite->write_file( '_bundles', $settings );
+            //$this->readwrite->write_file( '_bundles', $settings );
 
             echo __( 'Settings saved', 'wpcfm' );
         }
