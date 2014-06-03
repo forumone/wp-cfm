@@ -7,11 +7,11 @@ $configuration = $this->helper->group_items( $configuration );
 
 <script src="<?php echo WPCFM_URL; ?>/assets/js/admin.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/jquery.multiple.select.js"></script>
-<link href="<?php echo WPCFM_URL; ?>/assets/css/admin.css" rel="stylesheet">
-<link href="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/multiple-select.css" rel="stylesheet">
-
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/diff_match_patch.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/jquery.pretty-text-diff.js"></script>
+
+<link href="<?php echo WPCFM_URL; ?>/assets/css/admin.css" rel="stylesheet">
+<link href="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/multiple-select.css" rel="stylesheet">
 
 <div class="wrap">
     <h2>
@@ -92,7 +92,7 @@ $configuration = $this->helper->group_items( $configuration );
             </div>
             <div class="media-frame-router">
                 <div class="media-router">
-                    Compare file and the database versions. Changes marked in <span style="background:#c6ffc6">GREEN</span> exist in the database but not the filesystem.
+                    Compare file and database versions. Changes marked in <span style="background:#c6ffc6">GREEN</span> exist in the database but not the filesystem.
                 </div>
             </div>
             <div class="media-frame-content">
