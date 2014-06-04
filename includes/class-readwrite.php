@@ -53,7 +53,13 @@ class WPCFM_Readwrite
 
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_db( $bundle_name );
-            $this->write_file( $bundle_name, json_encode( $data, JSON_PRETTY_PRINT ) );
+
+            // JSON_PRETTY_PRINT is only for PHP 5.4+
+            $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
+                json_encode( $data, JSON_PRETTY_PRINT ) :
+                json_encode( $data );
+
+            $this->write_file( $bundle_name, $data );
         }
     }
 
@@ -181,10 +187,13 @@ class WPCFM_Readwrite
 
         foreach ( $file_data as $key => $val ) {
 
+            // Set a default group if needed
+            $group = isset( $db_data[ $key ]['group'] ) ? $db_data[ $key ]['group'] : __( 'WP Options', 'wpcfm' );
+
             // Create the callback params
             $callback_params = array(
                 'name' => $key,
-                'group' => $db_data[ $key ]['group'],
+                'group' => $group,
                 'old_value' => $db_data[ $key ]['value'],
                 'new_value' => $val,
             );

@@ -45,7 +45,7 @@ class WPCFM_Helper
         ksort( $items );
 
         foreach ( $items as $key => $item ) {
-            $group = isset( $item['group'] ) ? $item['group'] : 'WP Options';
+            $group = isset( $item['group'] ) ? $item['group'] : __( 'WP Options', 'wpcfm' );
             $output[ $group ][ $key ] = $item;
         }
 
