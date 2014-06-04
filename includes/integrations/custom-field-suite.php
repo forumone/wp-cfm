@@ -27,6 +27,10 @@ function cfs_configuration_items( $items ) {
         );
     }
 
+    // Exclude some CFS options
+    unset( $items['cfs_next_field_id'] );
+    unset( $items['cfs_version'] );
+
     return $items;
 }
 
