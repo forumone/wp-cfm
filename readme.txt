@@ -25,6 +25,9 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 == Changelog ==
 
+= 1.0.5 =
+* Synchronize bundle config options list with file during Pull
+
 = 1.0.4 =
 * Added i18n support
 * Fallback for JSON_PRETTY_PRINT when PHP < 5.4
