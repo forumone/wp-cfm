@@ -1,5 +1,7 @@
 #### WP-CFM: Configuration Management for WordPress
 
+[Download on WordPress.org](http://wordpress.org/plugins/wp-cfm/)
+
 Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.
 
 ![Admin Screen](http://i.imgur.com/opQhDUa.png)
