@@ -37,10 +37,26 @@ class WPCFM_Readwrite
     function pull_bundle( $bundle_name ) {
         $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
 
+        // Retrieve the settings
+        $settings = get_option( 'wpcfm_settings' );
+        $settings = json_decode( $settings, true );
+
+        // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
             $this->write_db( $bundle_name, $data );
+
+            // Update the bundle's config options (using the pull file)
+            foreach ( $settings['bundles'] as $key => $bundle_settings ) {
+                if ( $bundle_name == $bundle_settings['name'] ) {
+                    $settings['bundles'][ $key ]['config'] = array_keys( $data );
+                    break;
+                }
+            }
         }
+
+        // Write the settings
+        update_option( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
