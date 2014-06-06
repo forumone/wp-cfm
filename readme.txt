@@ -25,6 +25,12 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 == Changelog ==
 
+= 1.0.4 =
+* Added i18n support
+* Fallback for JSON_PRETTY_PRINT when PHP < 5.4
+* Fixed PHP notices when doing Pulls
+* Excluded some unnecessary CFS config options
+
 = 1.0.3 =
 * Added relative plugin URL (props @tormjens)
 * Added subtle admin screen animations
