@@ -68,7 +68,8 @@ $configuration = $this->helper->group_items( $configuration );
                     <?php foreach ( $configuration as $group => $config ) : ?>
                         <optgroup label="<?php echo $group; ?>">
                             <?php foreach ( $config as $key => $data ) : ?>
-                            <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
+                            <?php $label = isset( $data['label'] ) ? $data['label'] : $key ; ?>
+                            <option value="<?php echo $key; ?>"><?php echo $label; ?></option>
                             <?php endforeach; ?>
                         </optgroup>
                     <?php endforeach; ?>

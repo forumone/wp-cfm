@@ -22,8 +22,9 @@ function cfs_configuration_items( $items ) {
         $value = json_encode( $group );
         $items[ "cfs_field_group_$name" ] = array(
             'value'     => $value,
+            'label'     => $group['post_title'],
             'group'     => 'Custom Field Suite',
-            'callback'   => 'cfs_import_field_group',
+            'callback'  => 'cfs_import_field_group',
         );
     }
 
