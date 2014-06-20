@@ -4,11 +4,11 @@ Plugin Name: WP-CFM
 Plugin URI: http://forumone.com/
 Description: WordPress Configuration Management
 Version: 1.0.5
-Author: Forum One Communications
+Author: Forum One
 Author URI: http://forumone.com/
 License: GPLv2
 
-Copyright 2014 Forum One Communications
+Copyright 2014 Forum One
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

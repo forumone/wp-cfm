@@ -15,7 +15,7 @@ $configuration = $this->helper->group_items( $configuration );
 
 <div class="wrap">
     <h2>
-        Configuration Management <span>by <a href="http://forumone.com/" target="_blank">Forum One Communications</a></span>
+        Configuration Management <span>by <a href="http://forumone.com/" target="_blank">Forum One</a></span>
     </h2>
 
     <?php if ( !empty ( $this->readwrite->error ) ) : ?>
