@@ -15,13 +15,13 @@ WP-CFM is a plugin for tracking database configuration. It writes database confi
 
 It does the dirty work of deploying configuration changes so you don't have to.
 
-=== Terminology ===
+= Terminology =
 
 * Bundle - a group of configuration settings
 * Push - export database configuration to the filesystem
 * Pull - import file configuration into the database
 
-=== How does it work? ===
+= How does it work? =
 
 * Create some bundles within the admin screen.
 * Push the bundles to filesystem.
