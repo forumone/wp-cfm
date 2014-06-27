@@ -102,7 +102,7 @@
 
         // "Push" button
         $(document).on('click', '.push-bundle:not(.disabled)', function() {
-            $('.wpcfm-response').html('Pushing from DB to file...');
+            $('.wpcfm-response').html('Exporting to file...');
             $('.wpcfm-response').show();
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
@@ -118,7 +118,7 @@
         // "Pull" button
         $(document).on('click', '.pull-bundle:not(.disabled)', function() {
             if (confirm('Import file settings to DB?')) {
-                $('.wpcfm-response').html('Pulling from file into DB...');
+                $('.wpcfm-response').html('Importing into DB...');
                 $('.wpcfm-response').show();
                 var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
