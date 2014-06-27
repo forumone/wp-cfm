@@ -35,6 +35,23 @@ class WPCFM_Helper
 
 
     /**
+     * Get bundle by name
+     */
+    function get_bundle_by_name( $bundle_name ) {
+        $output = array();
+
+        $bundles = $this->get_bundles();
+        foreach ( $bundles as $bundle ) {
+            if ( $bundle['name'] == $bundle_name ) {
+                return $bundle;
+            }
+        }
+
+        return $output;
+    }
+
+
+    /**
      * Put configuration items into groups
      */
     function group_items( $items ) {
