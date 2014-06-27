@@ -12,7 +12,7 @@ class WPCFM_Helper
         $opts = get_option( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
-            $output[] = $bundle;
+            $output[ $bundle['name'] ] = $bundle;
         }
 
         return $output;
@@ -23,14 +23,7 @@ class WPCFM_Helper
      * Load all bundle names
      */
     function get_bundle_names() {
-        $output = array();
-
-        $bundles = $this->get_bundles();
-        foreach ( $bundles as $bundle ) {
-            $output[] = $bundle['name'];
-        }
-
-        return $output;
+        return array_keys( $this->get_bundles() );
     }
 
 
@@ -38,16 +31,8 @@ class WPCFM_Helper
      * Get bundle by name
      */
     function get_bundle_by_name( $bundle_name ) {
-        $output = array();
-
         $bundles = $this->get_bundles();
-        foreach ( $bundles as $bundle ) {
-            if ( $bundle['name'] == $bundle_name ) {
-                return $bundle;
-            }
-        }
-
-        return $output;
+        return $bundles[ $bundle_name ];
     }
 
 
