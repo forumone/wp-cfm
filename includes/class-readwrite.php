@@ -70,6 +70,10 @@ class WPCFM_Readwrite
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_db( $bundle_name );
 
+            // Append the bundle label
+            $bundle_meta = $this->helper->get_bundle_by_name( $bundle_name );
+            $data['.label'] = $bundle_meta['label'];
+
             // JSON_PRETTY_PRINT is only for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
                 json_encode( $data, JSON_PRETTY_PRINT ) :
