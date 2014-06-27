@@ -53,6 +53,7 @@ class WPCFM_Readwrite
             $exists = false;
             foreach ( $settings['bundles'] as $key => $bundle_settings ) {
                 if ( $bundle_name == $bundle_settings['name'] ) {
+                    $settings['bundles'][ $key ]['label'] = $bundle_label;
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
                     $exists = true;
                     break;
