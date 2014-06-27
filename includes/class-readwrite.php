@@ -44,14 +44,27 @@ class WPCFM_Readwrite
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
+            $bundle_label = $data['.label'];
+            unset( $data['.label'] );
+
             $this->write_db( $bundle_name, $data );
 
             // Update the bundle's config options (using the pull file)
+            $exists = false;
             foreach ( $settings['bundles'] as $key => $bundle_settings ) {
                 if ( $bundle_name == $bundle_settings['name'] ) {
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
+                    $exists = true;
                     break;
                 }
+            }
+
+            if ( ! $exists ) {
+                $settings['bundles'][] = array(
+                    'label' => $bundle_label,
+                    'name' => $bundle_name,
+                    'config' => array_keys( $data ),
+                );
             }
         }
 
@@ -112,6 +125,9 @@ class WPCFM_Readwrite
             $file_bundle = $this->read_file( $bundle_name );
             $db_bundle = $this->read_db( $bundle_name );
         }
+
+        // Remove the .label
+        unset( $file_bundle['.label'] );
 
         if ( $file_bundle == $db_bundle ) {
             $return['error'] = __( 'Both versions are identical', 'wpcfm' );
