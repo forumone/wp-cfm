@@ -32,7 +32,9 @@ class WPCFM_Helper
      */
     function get_bundle_by_name( $bundle_name ) {
         $bundles = $this->get_bundles();
-        return $bundles[ $bundle_name ];
+        return isset( $bundles[ $bundle_name ] ) ?
+            $bundles[ $bundle_name ] :
+            array();
     }
 
 
