@@ -15,6 +15,8 @@ WP-CFM is a plugin for tracking database configuration. It writes database confi
 
 It does the dirty work of deploying configuration changes so you don't have to.
 
+[See Screenshot](http://i.imgur.com/opQhDUa.png)
+
 = Terminology =
 
 * Bundle - a group of configuration settings
@@ -26,12 +28,20 @@ It does the dirty work of deploying configuration changes so you don't have to.
 * Create some bundles within the admin screen.
 * Push the bundles to filesystem.
 * Move the bundle files to your other site(s).
-* On the other site(s), run "Pull" to import the configuration.
+* On the other site(s), run "Pull" to import the configuration bundles.
 
-[See Screenshot](http://i.imgur.com/opQhDUa.png)
+= WP-CLI Support =
 
-= Documentation =
-[GitHub](http://forumone.github.io/wp-cfm/)
+WP-CFM supports pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
+
+`
+wp config pull <bundle_name>
+wp config push <bundle_name>
+`
+
+= Useful links =
+
+[Developer documentation](http://forumone.github.io/wp-cfm/)
 
 == Installation ==
 
