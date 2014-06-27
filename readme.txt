@@ -1,7 +1,7 @@
 === WP-CFM ===
 Contributors: mgibbs189
 Donate link: http://forumone.com/
-Tags: configuration, settings, configuration management, features
+Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 3.9
 Tested up to: 3.9.1
 Stable tag: trunk
@@ -11,7 +11,22 @@ WP-CFM: Configuration Management for WordPress
 
 == Description ==
 
-Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.
+WP-CFM is a plugin for tracking database configuration. It writes database configuration to the filesystem so it can be easily versioned and deployed (using Git).
+
+It does the dirty work of deploying configuration changes so you don't have to.
+
+=== Terminology ===
+
+* Bundle - a group of configuration settings
+* Push - export database configuration to the filesystem
+* Pull - import file configuration into the database
+
+=== How does it work? ===
+
+* Create some bundles within the admin screen.
+* Push the bundles to filesystem.
+* Move the bundle files to your other site(s).
+* On the other site(s), run "Pull" to import the configuration.
 
 [See Screenshot](http://i.imgur.com/opQhDUa.png)
 
@@ -24,6 +39,12 @@ Deploying database changes in WordPress is hard, especially when working on team
 2. Browse to `Settings > WP-CFM` to configure.
 
 == Changelog ==
+
+= 1.1 =
+* Added support for a config option label
+* Added `get_facet_by_name` helper method
+* Admin UI now recognizes file bundles
+* Better error handling
 
 = 1.0.5 =
 * Synchronize bundle config options list with file during Pull
