@@ -4,17 +4,58 @@ class WPCFM_Helper
 {
 
     /**
-     * Load all bundles
+     * Load all bundles (DB + file)
      */
     function get_bundles() {
         $output = array();
 
+        // Get DB bundles first
         $opts = get_option( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
+            $bundle['is_db'] = true;
+            $bundle['is_file'] = false;
             $output[ $bundle['name'] ] = $bundle;
         }
 
+        // Then merge file bundles
+        $file_bundles = $this->get_file_bundles();
+        foreach ( $file_bundles as $bundle_name => $bundle ) {
+            if ( isset( $output[ $bundle_name ] ) ) {
+                $output[ $bundle_name ]['is_file'] = true;
+            }
+            else {
+                $bundle['is_db'] = false;
+                $bundle['is_file'] = true;
+                $output[ $bundle_name ] = $bundle;
+            }
+        }
+
+        return $output;
+    }
+
+
+    /**
+     * Get file bundles
+     */
+    function get_file_bundles() {
+        $readwrite = new WPCFM_Readwrite();
+
+        $output = array();
+        $filenames = scandir( WPCFM_CONFIG_DIR );
+        $filenames = array_diff( $filenames, array( '.', '..' ) );
+        foreach ( $filenames as $filename ) {
+            $bundle_name = str_replace( '.json', '', $filename );
+            $bundle_data = $readwrite->read_file( $bundle_name );
+            $bundle_label = $bundle_data['.label'];
+            unset( $bundle_data['.label'] );
+
+            $output[ $bundle_name ] = array(
+                'label'     => $bundle_label,
+                'name'      => $bundle_name,
+                'config'    => $bundle_data,
+            );
+        }
         return $output;
     }
 

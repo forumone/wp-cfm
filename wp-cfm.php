@@ -37,6 +37,7 @@ class WPCFM
         // setup variables
         define( 'WPCFM_VERSION', '1.0.5' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
+        define( 'WPCFM_CONFIG_DIR', WP_CONTENT_DIR . '/config' );
         define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 
         // WP is loaded

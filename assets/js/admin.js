@@ -12,6 +12,14 @@
                 $this.find('.bundle-select').val(obj.config);
                 $this.find('.bundle-toggle').html(obj.label);
                 $this.attr('data-bundle', obj.name);
+
+                if (obj.is_file) {
+                    $this.find('.pull-bundle').removeClass('disabled');
+                }
+                if (obj.is_db) {
+                    $this.find('.push-bundle').removeClass('disabled');
+                }
+
                 $('.wpcfm-bundles').append($this);
 
                 // Trigger jQuery Multi Select
@@ -52,6 +60,7 @@
                 'data': JSON.stringify(data)
             }, function(response) {
                 $('.wpcfm-bundles .bundle-row').removeClass('unsaved');
+                $('.wpcfm-bundles .push-bundle').removeClass('disabled');
                 $('.wpcfm-response').html(response);
             });
         });
@@ -92,7 +101,7 @@
 
 
         // "Push" button
-        $(document).on('click', '.push-bundle', function() {
+        $(document).on('click', '.push-bundle:not(.disabled)', function() {
             $('.wpcfm-response').html('Pushing from DB to file...');
             $('.wpcfm-response').show();
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
@@ -107,7 +116,7 @@
 
 
         // "Pull" button
-        $(document).on('click', '.pull-bundle', function() {
+        $(document).on('click', '.pull-bundle:not(.disabled)', function() {
             if (confirm('Import file settings to DB?')) {
                 $('.wpcfm-response').html('Pulling from file into DB...');
                 $('.wpcfm-response').show();
@@ -124,7 +133,7 @@
 
 
         // "Diff" button
-        $(document).on('click', '.diff-bundle', function() {
+        $(document).on('click', '.diff-bundle:not(.disabled)', function() {
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
             $.post(ajaxurl, {
                 'action': 'wpcfm_diff',

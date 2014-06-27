@@ -24,7 +24,8 @@ class WPCFM_Ajax
      */
     function load_settings() {
         if ( current_user_can( 'manage_options' ) ) {
-            echo get_option( 'wpcfm_settings' );
+            $bundles = $this->helper->get_bundles();
+            echo json_encode( array( 'bundles' => $bundles ) );
         }
         exit;
     }

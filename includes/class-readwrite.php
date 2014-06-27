@@ -13,8 +13,8 @@ class WPCFM_Readwrite
         $this->registry = new WPCFM_Registry();
         $this->helper = new WPCFM_Helper();
 
-        // Create the "wp-cfm" folder
-        $this->folder = WP_CONTENT_DIR . '/config';
+        // Create the "config" folder
+        $this->folder = WPCFM_CONFIG_DIR;
 
         if ( ! is_dir( $this->folder ) ) {
             if ( ! is_writable( $this->folder ) ) {
@@ -185,9 +185,11 @@ class WPCFM_Readwrite
             }
         }
 
-        foreach ( $all_config as $key => $config ) {
-            if ( in_array( $key, $bundle_config ) ) {
-                $output[ $key ] = $config['value'];
+        if ( isset( $bundle_config ) ) {
+            foreach ( $all_config as $key => $config ) {
+                if ( in_array( $key, $bundle_config ) ) {
+                    $output[ $key ] = $config['value'];
+                }
             }
         }
 

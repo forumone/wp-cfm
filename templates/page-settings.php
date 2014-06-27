@@ -54,8 +54,8 @@ $configuration = $this->helper->group_items( $configuration );
                 <div class="bundle-actions">
                     <span class="no-actions">Save to see actions</span>
                     <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
-                    <a class="button push-bundle" title="Write database changes to the filesystem"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                    <a class="button pull-bundle" title="Import file changes into the database"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                    <a class="button push-bundle disabled" title="Write database changes to the filesystem"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
+                    <a class="button pull-bundle disabled" title="Import file changes into the database"><?php _e( 'Pull', 'wpcfm' ); ?></a>
                 </div>
                 <div class="bundle-toggle">New bundle</div>
                 <div class="clear"></div>
