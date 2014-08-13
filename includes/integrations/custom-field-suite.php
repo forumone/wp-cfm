@@ -85,9 +85,19 @@ function cfs_import_field_group( $params ) {
 
     // Store old field names & IDs
     $old_field_ids = array();
+    $old_parent_ids = array();
+
+    // key = old ID, value = new ID
+    $new_field_lookup = array();
+
     if ( ! empty( $old_value ) ) {
         foreach ( $old_value['cfs_fields'] as $field ) {
             $old_field_ids[ $field['name'] ] = $field['id'];
+
+            // Track parent IDs for loop sub-fields
+            if ( 0 < (int) $field['parent_id'] ) {
+                $old_parent_ids[ $field['id'] ] = $field['parent_id'];
+            }
         }
     }
 
@@ -101,11 +111,24 @@ function cfs_import_field_group( $params ) {
         if ( isset( $old_field_ids[ $field_name ] ) ) {
             $field_id = $old_field_ids[ $field_name ];
             $field_group['cfs_fields'][ $key ]['id'] = $field_id;
+
+            // Use the existing parent_id
+            if ( isset( $old_parent_ids[ $field_id ] ) ) {
+                $field_group['cfs_fields'][ $key ]['parent_id'] = $old_parent_ids[ $field_id ];
+            }
         }
         // Otherwise, increment the field ID counter
         else {
+            $prev_id = $field_group['cfs_fields'][ $key ]['id'];
+            $new_field_lookup[ $prev_id ] = $next_field_id;
             $field_group['cfs_fields'][ $key ]['id'] = $next_field_id;
             $next_field_id++;
+
+            // Use the new parent_id
+            $parent_id = (int) $field_group['cfs_fields'][ $key ]['parent_id'];
+            if ( 0 < $parent_id ) {
+                $field_group['cfs_fields'][ $key ]['parent_id'] = $new_field_lookup[ $parent_id ];
+            }
         }
     }
 
