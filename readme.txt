@@ -3,7 +3,7 @@ Contributors: mgibbs189
 Donate link: http://forumone.com/
 Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 3.9
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: trunk
 License: GPL2
 
@@ -49,6 +49,10 @@ wp config push <bundle_name>
 2. Browse to `Settings > WP-CFM` to configure.
 
 == Changelog ==
+
+= 1.2 =
+* Made "diff viewer" close button appear clickable
+* Fixed bug with Custom Field Suite and loop sub-fields
 
 = 1.1 =
 * Added support for a config option label
