@@ -20,7 +20,7 @@ class WPCFM_Registry
 
         $items = array();
 
-		if ( is_network_admin() ) {
+		if ( WPCFM_Options::network() ) {
 			$sql = "
 			SELECT meta_key as option_name, meta_value as option_value FROM $wpdb->sitemeta
 			WHERE meta_key NOT LIKE '_transient%' AND meta_key NOT LIKE '_site_transient%'
