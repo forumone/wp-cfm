@@ -10,7 +10,7 @@ class WPCFM_Helper
         $output = array();
 
         // Get DB bundles first
-        $opts = get_option( 'wpcfm_settings' );
+        $opts = WPCFM_Options::get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
             $bundle['is_db'] = true;

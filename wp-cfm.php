@@ -40,6 +40,8 @@ class WPCFM
         define( 'WPCFM_CONFIG_DIR', WP_CONTENT_DIR . '/config' );
         define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 
+ 		include( WPCFM_DIR . '/includes/class-options.php' );
+
         // WP is loaded
         add_action( 'init', array( $this, 'init' ) );
     }

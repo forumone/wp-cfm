@@ -38,7 +38,7 @@ class WPCFM_Readwrite
         $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
 
         // Retrieve the settings
-        $settings = get_option( 'wpcfm_settings' );
+        $settings = WPCFM_Options::get( 'wpcfm_settings' );
         $settings = json_decode( $settings, true );
 
         // Import each bundle into DB
@@ -70,7 +70,7 @@ class WPCFM_Readwrite
         }
 
         // Write the settings
-        update_option( 'wpcfm_settings', json_encode( $settings ) );
+		WPCFM_Options:update( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
@@ -193,7 +193,7 @@ class WPCFM_Readwrite
         $output = array();
         $all_config = $this->registry->get_configuration_items();
 
-        $opts = get_option( 'wpcfm_settings' );
+        $opts = WPCFM_Options::get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
             if ( $bundle['name'] == $bundle_name ) {
@@ -266,6 +266,6 @@ class WPCFM_Readwrite
     function callback_wp_options( $params ) {
         $option_name = $params['name'];
         $option_value = maybe_unserialize( $params['new_value'] );
-        update_option( $option_name, $option_value );
+		WPCFM_Options::update( $option_name, $option_value );
     }
 }
