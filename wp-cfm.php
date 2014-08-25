@@ -87,7 +87,7 @@ class WPCFM
 
 
     /**
-     * Register the FacetWP settings page
+     * Register the settings page
      */
     function admin_menu() {
         add_options_page( 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array( $this, 'settings_page' ) );
