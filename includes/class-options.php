@@ -9,9 +9,12 @@ function wpcfmlog($msg) {
 class WPCFM_Options
 {
 
+	public $networkflag;
+
 	function network() {
 		if ( is_network_admin() ) return true;
 		if (defined('DOING_AJAX') && DOING_AJAX && is_multisite() && preg_match('#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'])) return true;
+		if (defined('WP_CLI') && WP_CLI) return true;
 		return false;
 	}
 
