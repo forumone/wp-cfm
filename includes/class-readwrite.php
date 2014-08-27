@@ -41,6 +41,9 @@ class WPCFM_Readwrite
         $settings = WPCFM_Options::get( 'wpcfm_settings' );
         $settings = json_decode( $settings, true );
 
+		// Is this really needed (and is it a good place?)
+		if (!is_array($settings) || !isset($settings['bundles'])) $settings = array('bundles' => array());
+
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
@@ -68,9 +71,8 @@ class WPCFM_Readwrite
                 );
             }
         }
-
         // Write the settings
-		WPCFM_Options:update( 'wpcfm_settings', json_encode( $settings ) );
+		WPCFM_Options::update( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
