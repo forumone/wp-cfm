@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP-CFM\n"
-"POT-Creation-Date: 2014-06-04 16:31-0500\n"
-"PO-Revision-Date: 2014-06-04 16:31-0500\n"
+"POT-Creation-Date: 2014-08-27 09:03-0500\n"
+"PO-Revision-Date: 2014-08-27 09:03-0500\n"
 "Last-Translator: FacetWP <hello@uproot.us>\n"
 "Language-Team: Matt Gibbs <mgibbs@forumone.com>\n"
 "Language: en\n"
@@ -14,31 +14,31 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/class-ajax.php:56
+#: includes/class-ajax.php:47
 msgid "Settings saved"
 msgstr ""
 
-#: includes/class-ajax.php:78
+#: includes/class-ajax.php:69
 msgid "Push successful"
 msgstr ""
 
-#: includes/class-ajax.php:91
+#: includes/class-ajax.php:82
 msgid "Pull successful"
 msgstr ""
 
-#: includes/class-helper.php:48 includes/class-readwrite.php:191
+#: includes/class-helper.php:112 includes/class-readwrite.php:250
 msgid "WP Options"
 msgstr ""
 
-#: includes/class-readwrite.php:21
+#: includes/class-readwrite.php:17
 msgid "Create wp-content/config/ and grant write access"
 msgstr ""
 
-#: includes/class-readwrite.php:28
+#: includes/class-readwrite.php:24
 msgid "The wp-content/config/ folder is not writable"
 msgstr ""
 
-#: includes/class-readwrite.php:97
+#: includes/class-readwrite.php:132
 msgid "Both versions are identical"
 msgstr ""
 
@@ -62,6 +62,6 @@ msgstr ""
 msgid "Pull"
 msgstr ""
 
-#: templates/page-settings.php:77
+#: templates/page-settings.php:78
 msgid "Delete Bundle"
 msgstr ""
