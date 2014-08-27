@@ -3,34 +3,43 @@
 class WPCFM_Options
 {
 
-    // $network will be set to true if we are in the network admin, by wpcfmoptions_init.
-    // If called by wp-cli, with --network argument, class-wp-cli.php must also set $network to true.
-    public static $network = false;
+    public $is_network = false;
 
-    function get($option) {
-        if (WPCFM_Options::$network) {
-            $result = get_site_option($option);
-        } else {
-            $result = get_option($option);
+
+    function __construct() {
+
+        // Network admin
+        if ( is_network_admin() ) {
+            $this->is_network = true;
         }
-        return $result;
+
+        // Called by wp-cli with the --network argument
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX && is_multisite() ) {
+            if ( preg_match( '#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'] ) ) {
+                $this->is_network = true;
+            }
+        }
     }
 
-    function update($option, $value) {
-        if (WPCFM_Options::$network) {
-            $result = update_site_option($option, $value);
-        } else {
-            $result = update_option($option, $value);
-        }
-        return $result;
+
+    /**
+     * Get the WP-CFM settings (multi-site support)
+     * @since 1.3.0
+     */
+    function get( $option ) {
+        return ( $this->is_network ) ?
+            get_site_option( $option ) :
+            get_option( $option );
     }
 
-}
 
-// Set the network flag if we are working with "site options" not (blog) options:
-add_action( 'init', 'wpcfmoptions_init' );
-function wpcfmoptions_init() {
-    if ( is_network_admin() ) WPCFM_Options::$network = true;
-    if (defined('DOING_AJAX') && DOING_AJAX && is_multisite() && preg_match('#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'])) WPCFM_Options::$network = true;
+    /**
+     * Update the WP-CFM settings (multi-site support)
+     * @since 1.3.0
+     */
+    function update( $option, $value ) {
+        return ( $this->is_network ) ?
+            update_site_option( $option, $value ) :
+            update_option( $option, $value );
+    }
 }
-

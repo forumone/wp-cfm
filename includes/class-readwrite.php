@@ -2,16 +2,12 @@
 
 class WPCFM_Readwrite
 {
-    public $registry;
-    public $helper;
+
     public $folder;
     public $error;
 
-    function __construct() {
 
-        // Includes
-        $this->registry = new WPCFM_Registry();
-        $this->helper = new WPCFM_Helper();
+    function __construct() {
 
         // Create the "config" folder
         $this->folder = WPCFM_CONFIG_DIR;
@@ -35,10 +31,10 @@ class WPCFM_Readwrite
      * @param string $bundle_name The bundle name (or "all")
      */
     function pull_bundle( $bundle_name ) {
-        $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
+        $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
 
         // Retrieve the settings
-        $settings = WPCFM_Options::get( 'wpcfm_settings' );
+        $settings = WPCFM()->options->get( 'wpcfm_settings' );
         $settings = json_decode( $settings, true );
 
         // Is this really needed (and is it a good place?)
@@ -72,7 +68,7 @@ class WPCFM_Readwrite
             }
         }
         // Write the settings
-        WPCFM_Options::update( 'wpcfm_settings', json_encode( $settings ) );
+        WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
@@ -81,13 +77,13 @@ class WPCFM_Readwrite
      * @param string $bundle_name The bundle name (or "all")
      */
     function push_bundle( $bundle_name ) {
-        $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
+        $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
 
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_db( $bundle_name );
 
             // Append the bundle label
-            $bundle_meta = $this->helper->get_bundle_by_name( $bundle_name );
+            $bundle_meta = WPCFM()->helper->get_bundle_by_name( $bundle_name );
             $data['.label'] = $bundle_meta['label'];
 
             // JSON_PRETTY_PRINT is only for PHP 5.4+
@@ -111,7 +107,7 @@ class WPCFM_Readwrite
 
         // Diff all bundles
         if ( 'all' == $bundle_name ) {
-            $bundle_names = $this->helper->get_bundle_names();
+            $bundle_names = WPCFM()->helper->get_bundle_names();
             foreach ( $bundle_names as $bundle_name ) {
 
                 // Retrieve each bundle
@@ -151,15 +147,17 @@ class WPCFM_Readwrite
      */
 
     function bundle_filename($bundle_name) {
-        if (is_multisite ()) {
-            if (WPCFM_Options::$network) {
+        $filename = "$this->folder/$bundle_name.json";
+
+        if ( is_multisite() ) {
+            if ( WPCFM()->options->is_network ) {
                 $filename = "$this->folder/network-$bundle_name.json";
-            } else {
+            }
+            else {
                 $filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name.json";
             }
-        } else {
-            $filename = "$this->folder/$bundle_name.json";
         }
+
         return $filename;
     }
 
@@ -213,9 +211,9 @@ class WPCFM_Readwrite
     function read_db( $bundle_name ) {
 
         $output = array();
-        $all_config = $this->registry->get_configuration_items();
+        $all_config = WPCFM()->registry->get_configuration_items();
 
-        $opts = WPCFM_Options::get( 'wpcfm_settings' );
+        $opts = WPCFM()->options->get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
             if ( $bundle['name'] == $bundle_name ) {
@@ -244,7 +242,7 @@ class WPCFM_Readwrite
     function write_db( $bundle_name, $file_data ) {
 
         $success = false;
-        $db_data = $this->registry->get_configuration_items();
+        $db_data = WPCFM()->registry->get_configuration_items();
 
         foreach ( $file_data as $key => $val ) {
 
@@ -288,6 +286,6 @@ class WPCFM_Readwrite
     function callback_wp_options( $params ) {
         $option_name = $params['name'];
         $option_value = maybe_unserialize( $params['new_value'] );
-        WPCFM_Options::update( $option_name, $option_value );
+        WPCFM()->options->update( $option_name, $option_value );
     }
 }

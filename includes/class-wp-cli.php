@@ -5,12 +5,6 @@
  */
 class WPCFM_CLI_Command extends WP_CLI_Command
 {
-    public $readwrite;
-
-    function __construct() {
-        $this->readwrite = new WPCFM_Readwrite();
-    }
-
 
     /**
      * Push a bundle to the filesystem
@@ -30,11 +24,11 @@ class WPCFM_CLI_Command extends WP_CLI_Command
     function push( $args, $assoc_args ) {
 
         if ( isset( $assoc_args['network'] ) ) {
-            if ( !is_multisite() ) {
+            if ( ! is_multisite() ) {
                 WP_CLI::error('This is not a multisite install.');
                 exit(1);
             }
-            WPCFM_Options::$network = true;
+            WPCFM()->options->is_network = true;
         }
 
         $bundle_name = $args[0];
@@ -61,14 +55,14 @@ class WPCFM_CLI_Command extends WP_CLI_Command
     function pull( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
             if ( !is_multisite() ) {
-                WP_CLI::error('This is not a multisite install.');
-                exit(1);
+                WP_CLI::error( 'This is not a multisite install.' );
+                exit( 1 );
             }
-            WPCFM_Options::$network = true;
+            WPCFM()->options->is_network = true;
         }
 
         $bundle_name = $args[0];
-        $this->readwrite->pull_bundle( $bundle_name );
+        WPCFM()->readwrite->pull_bundle( $bundle_name );
         WP_CLI::success( 'The bundle has been pulled into the database.' );
     }
 }

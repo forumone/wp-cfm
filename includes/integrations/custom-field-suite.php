@@ -52,11 +52,11 @@ function cfs_pull_callback( $callback, $callback_params ) {
  * Load all field groups into a nice JSON string
  */
 function cfs_get_field_groups() {
-    global $cfs, $wpdb;
+    global $wpdb;
 
     $field_groups = array();
     $field_group_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'cfs'" );
-    $export = $cfs->field_group->export( array(
+    $export = CFS()->field_group->export( array(
         'field_groups' => $field_group_ids,
     ) );
 
@@ -76,7 +76,6 @@ function cfs_get_field_groups() {
  * @param string $params['new_value'] The new settings data
  */
 function cfs_import_field_group( $params ) {
-    global $cfs;
 
     $import_code = array();
     $old_value = json_decode( $params['old_value'], true );

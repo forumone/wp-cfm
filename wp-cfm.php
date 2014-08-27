@@ -24,13 +24,18 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) or exit;
 
 
-class WPCFM
+class WPCFM_Core
 {
+
     public $readwrite;
     public $registry;
+    public $options;
+    public $helper;
+    private static $instance;
+
 
     function __construct() {
 
@@ -40,10 +45,35 @@ class WPCFM
         define( 'WPCFM_CONFIG_DIR', WP_CONTENT_DIR . '/config' );
         define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 
-        include( WPCFM_DIR . '/includes/class-options.php' );
-
         // WP is loaded
         add_action( 'init', array( $this, 'init' ) );
+    }
+
+
+    /**
+     * Initialize the singleton
+     */
+    public static function instance() {
+        if ( ! isset( self::$instance ) ) {
+            self::$instance = new WPCFM_Core;
+        }
+        return self::$instance;
+    }
+
+
+    /**
+     * Prevent cloning
+     */
+    function __clone() {
+
+    }
+
+
+    /**
+     * Prevent unserializing
+     */
+    function __wakeup() {
+
     }
 
 
@@ -61,7 +91,7 @@ class WPCFM
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
         // includes
-        foreach ( array( 'readwrite', 'registry', 'helper', 'ajax' ) as $class ) {
+        foreach ( array( 'options', 'readwrite', 'registry', 'helper', 'ajax' ) as $class ) {
             include( WPCFM_DIR . "/includes/class-$class.php" );
         }
 
@@ -70,6 +100,7 @@ class WPCFM
             include( WPCFM_DIR . '/includes/class-wp-cli.php' );
         }
 
+        $this->options = new WPCFM_Options();
         $this->readwrite = new WPCFM_Readwrite();
         $this->registry = new WPCFM_Registry();
         $this->helper = new WPCFM_Helper();
@@ -95,9 +126,14 @@ class WPCFM
         add_options_page( 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array( $this, 'settings_page' ) );
     }
 
+
+    /**
+     * Register the multi-site settings page
+     */
     function network_admin_menu() {
-        add_submenu_page('settings.php', 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array($this, 'settings_page'));
+        add_submenu_page( 'settings.php', 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array( $this, 'settings_page' ) );
     }
+
 
     /**
      * Enqueue media CSS
@@ -133,4 +169,13 @@ class WPCFM
     }
 }
 
-$wp_cfm = new WPCFM();
+WPCFM();
+
+
+/**
+ * Allow direct access to WPCFM classes
+ * For example, use WPCFM()->options to access WPCFM_Options
+ */
+function WPCFM() {
+    return WPCFM_Core::instance();
+}

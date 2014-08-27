@@ -10,7 +10,7 @@ class WPCFM_Helper
         $output = array();
 
         // Get DB bundles first
-        $opts = WPCFM_Options::get( 'wpcfm_settings' );
+        $opts = WPCFM()->options->get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
             $bundle['is_db'] = true;
@@ -39,30 +39,34 @@ class WPCFM_Helper
      * Get file bundles
      */
     function get_file_bundles() {
-        $readwrite = new WPCFM_Readwrite();
 
         $output = array();
         $filenames = scandir( WPCFM_CONFIG_DIR );
         $filenames = array_diff( $filenames, array( '.', '..' ) );
         foreach ( $filenames as $filename ) {
 
-            if (is_multisite ()) {
-                $filename_parts = split('-', $filename, 2);
+            if ( is_multisite() ) {
+                $filename_parts = split( '-', $filename, 2 );
                 $bundle_name = str_replace( '.json', '', $filename_parts[1] );
 
-                if (WPCFM_Options::$network) {
-                    if ($filename_parts[0] != 'network') continue;
-                } else {
-                    if ($filename_parts[0] != 'blog' . get_current_blog_id()) continue;
+                if ( WPCFM()->options->is_network ) {
+                    if ( $filename_parts[0] != 'network' ) {
+                        continue;
+                    }
+                }
+                else {
+                    if ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
+                        continue;
+                    }
                 }
 
-            } else {
-
+            }
+            else {
                 $bundle_name = str_replace( '.json', '', $filename );
 
             }
 
-            $bundle_data = $readwrite->read_file( $bundle_name );
+            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
             $bundle_label = $bundle_data['.label'];
             unset( $bundle_data['.label'] );
 
@@ -99,7 +103,6 @@ class WPCFM_Helper
      * Put configuration items into groups
      */
     function group_items( $items ) {
-
         $output = array();
 
         // Sort by array key
