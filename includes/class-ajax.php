@@ -42,7 +42,7 @@ class WPCFM_Ajax
             $old_bundles = $this->helper->get_bundle_names();
 
             // Save the option
-			WPCFM_Options::update( 'wpcfm_settings', $settings );
+            WPCFM_Options::update( 'wpcfm_settings', $settings );
 
             // Delete orphan bundles
             $new_bundles = $this->helper->get_bundle_names();

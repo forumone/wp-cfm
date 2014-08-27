@@ -20,17 +20,17 @@ class WPCFM_Registry
 
         $items = array();
 
-		if ( WPCFM_Options::$network ) {
-			$sql = "
-			SELECT meta_key as option_name, meta_value as option_value FROM $wpdb->sitemeta
-			WHERE meta_key NOT LIKE '_transient%' AND meta_key NOT LIKE '_site_transient%'
-			ORDER BY meta_key";
-		} else {
-			$sql = "
-			SELECT option_name, option_value FROM $wpdb->options
-			WHERE option_name NOT LIKE '_transient%' AND option_name NOT LIKE '_site_transient%'
-			ORDER BY option_name";
-		}
+        if ( WPCFM_Options::$network ) {
+            $sql = "
+            SELECT meta_key as option_name, meta_value as option_value FROM $wpdb->sitemeta
+            WHERE meta_key NOT LIKE '_transient%' AND meta_key NOT LIKE '_site_transient%'
+            ORDER BY meta_key";
+        } else {
+            $sql = "
+            SELECT option_name, option_value FROM $wpdb->options
+            WHERE option_name NOT LIKE '_transient%' AND option_name NOT LIKE '_site_transient%'
+            ORDER BY option_name";
+        }
         $results = $wpdb->get_results( $sql );
 
         foreach ( $results as $result ) {

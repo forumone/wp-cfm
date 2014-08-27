@@ -29,13 +29,13 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      */
     function push( $args, $assoc_args ) {
 
-		if ( isset( $assoc_args['network'] ) ) {
-			if ( !is_multisite() ) {
-				WP_CLI::error('This is not a multisite install.');
-				exit(1);
-			}
-			WPCFM_Options::$network = true;
-		}
+        if ( isset( $assoc_args['network'] ) ) {
+            if ( !is_multisite() ) {
+                WP_CLI::error('This is not a multisite install.');
+                exit(1);
+            }
+            WPCFM_Options::$network = true;
+        }
 
         $bundle_name = $args[0];
         $this->readwrite->push_bundle( $bundle_name );
@@ -59,13 +59,13 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      * 
      */
     function pull( $args, $assoc_args ) {
-   		if ( isset( $assoc_args['network'] ) ) {
-			if ( !is_multisite() ) {
-				WP_CLI::error('This is not a multisite install.');
-				exit(1);
-			}
-			WPCFM_Options::$network = true;
-		}
+        if ( isset( $assoc_args['network'] ) ) {
+            if ( !is_multisite() ) {
+                WP_CLI::error('This is not a multisite install.');
+                exit(1);
+            }
+            WPCFM_Options::$network = true;
+        }
 
         $bundle_name = $args[0];
         $this->readwrite->pull_bundle( $bundle_name );
