@@ -160,7 +160,6 @@ class WPCFM_Readwrite
 		} else {
 	        $filename = "$this->folder/$bundle_name.json";
 		}
-		wpcfmlog('bundle_filename(' . $bundle_name . ') == ' . $filename);
 		return $filename;
 	}
 

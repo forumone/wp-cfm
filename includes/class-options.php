@@ -1,23 +1,17 @@
 <?php
 
-function wpcfmlog($msg) {
-	$fh = fopen('/tmp/wpcfm', 'a');
-	fwrite($fh, $msg . "\n");
-	fclose($fh);
-}
-
 class WPCFM_Options
 {
 
+	// $network will be set to true if we are in the network admin, by wpcfmoptions_init.
+	// If called by wp-cli, with --network argument, class-wp-cli.php must also set $network to true.
 	public static $network = false;
 
 	function get($option) {
 		if (WPCFM_Options::$network) {
 			$result = get_site_option($option);
-			wpcfmlog('get_site_option(' . $option . ') == ' . print_r($result, true));
 		} else {
 			$result = get_option($option);
-			wpcfmlog('get_option(' . $option . ') == ' . print_r($result, true));
 		}
 		return $result;
 	}
@@ -25,10 +19,8 @@ class WPCFM_Options
 	function update($option, $value) {
 		if (WPCFM_Options::$network) {
 			$result = update_site_option($option, $value);
-			wpcfmlog('update_site_option(' . $option . ', ' . $value . ') == ' . print_r($result, true));
 		} else {
 			$result = update_option($option, $value);
-			wpcfmlog('update_option(' . $option . ', ' . $value . ') == ' . print_r($result, true));
 		}
 		return $result;
 	}
