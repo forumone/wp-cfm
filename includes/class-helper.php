@@ -50,7 +50,7 @@ class WPCFM_Helper
 				$filename_parts = split('-', $filename, 2);
             	$bundle_name = str_replace( '.json', '', $filename_parts[1] );
 
-				if (WPCFM_Options::network()) {
+				if (WPCFM_Options::$network) {
 					if ($filename_parts[0] != 'network') continue;
 				} else {
 					if ($filename_parts[0] != 'blog' . get_current_blog_id()) continue;

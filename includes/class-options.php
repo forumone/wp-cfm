@@ -9,17 +9,10 @@ function wpcfmlog($msg) {
 class WPCFM_Options
 {
 
-	public $networkflag;
-
-	function network() {
-		if ( is_network_admin() ) return true;
-		if (defined('DOING_AJAX') && DOING_AJAX && is_multisite() && preg_match('#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'])) return true;
-		if (defined('WP_CLI') && WP_CLI) return true;
-		return false;
-	}
+	public static $network = false;
 
 	function get($option) {
-		if (WPCFM_Options::network()) {
+		if (WPCFM_Options::$network) {
 			$result = get_site_option($option);
 			wpcfmlog('get_site_option(' . $option . ') == ' . print_r($result, true));
 		} else {
@@ -30,7 +23,7 @@ class WPCFM_Options
 	}
 
 	function update($option, $value) {
-		if (WPCFM_Options::network()) {
+		if (WPCFM_Options::$network) {
 			$result = update_site_option($option, $value);
 			wpcfmlog('update_site_option(' . $option . ', ' . $value . ') == ' . print_r($result, true));
 		} else {
@@ -42,4 +35,10 @@ class WPCFM_Options
 
 }
 
+// Set the network flag if we are working with "site options" not (blog) options:
+add_action( 'init', 'wpcfmoptions_init' );
+function wpcfmoptions_init() {
+	if ( is_network_admin() ) WPCFM_Options::$network = true;
+	if (defined('DOING_AJAX') && DOING_AJAX && is_multisite() && preg_match('#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'])) WPCFM_Options::$network = true;
+}
 

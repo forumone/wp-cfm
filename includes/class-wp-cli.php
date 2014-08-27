@@ -34,6 +34,7 @@ class WPCFM_CLI_Command extends WP_CLI_Command
 				WP_CLI::error('This is not a multisite install.');
 				exit(1);
 			}
+			WPCFM_Options::$network = true;
 		}
 
         $bundle_name = $args[0];
@@ -63,6 +64,7 @@ class WPCFM_CLI_Command extends WP_CLI_Command
 				WP_CLI::error('This is not a multisite install.');
 				exit(1);
 			}
+			WPCFM_Options::$network = true;
 		}
 
         $bundle_name = $args[0];

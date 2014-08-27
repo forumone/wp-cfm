@@ -152,7 +152,7 @@ class WPCFM_Readwrite
 
 	function bundle_filename($bundle_name) {
 		if (is_multisite ()) {
-			if (WPCFM_Options::network()) {
+			if (WPCFM_Options::$network) {
 	        	$filename = "$this->folder/network-$bundle_name.json";
 			} else {
 				$filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name.json";
