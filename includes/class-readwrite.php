@@ -146,7 +146,7 @@ class WPCFM_Readwrite
      * @return string
      */
 
-    function bundle_filename($bundle_name) {
+    function bundle_filename( $bundle_name ) {
         $filename = "$this->folder/$bundle_name.json";
 
         if ( is_multisite() ) {
