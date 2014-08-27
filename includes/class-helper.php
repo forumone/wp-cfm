@@ -47,7 +47,7 @@ class WPCFM_Helper
         foreach ( $filenames as $filename ) {
 
 			if (is_multisite ()) {
-				$filename_parts = split('-', 2);
+				$filename_parts = split('-', $filename, 2);
             	$bundle_name = str_replace( '.json', '', $filename_parts[1] );
 
 				if (WPCFM_Options::network()) {
