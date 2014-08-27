@@ -10,7 +10,7 @@ class WPCFM_Helper
         $output = array();
 
         // Get DB bundles first
-        $opts = get_option( 'wpcfm_settings' );
+        $opts = WPCFM_Options::get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
             $bundle['is_db'] = true;
@@ -45,7 +45,23 @@ class WPCFM_Helper
         $filenames = scandir( WPCFM_CONFIG_DIR );
         $filenames = array_diff( $filenames, array( '.', '..' ) );
         foreach ( $filenames as $filename ) {
-            $bundle_name = str_replace( '.json', '', $filename );
+
+            if (is_multisite ()) {
+                $filename_parts = split('-', $filename, 2);
+                $bundle_name = str_replace( '.json', '', $filename_parts[1] );
+
+                if (WPCFM_Options::$network) {
+                    if ($filename_parts[0] != 'network') continue;
+                } else {
+                    if ($filename_parts[0] != 'blog' . get_current_blog_id()) continue;
+                }
+
+            } else {
+
+                $bundle_name = str_replace( '.json', '', $filename );
+
+            }
+
             $bundle_data = $readwrite->read_file( $bundle_name );
             $bundle_label = $bundle_data['.label'];
             unset( $bundle_data['.label'] );

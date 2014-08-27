@@ -44,7 +44,7 @@ This filter contains an associative array of all configuration options. Each opt
 
 #### Is that it?
 
-Almost! WP-CFM automatically handles configuration within the `wp_options` table. If your plugin stores settings elsewhere, then use the above `callback` parameter to tell WP-CFM how to properly import (Pull) configuration into the database.
+Almost! WP-CFM automatically handles configuration within the `wp_options` table, and `wp_options` for multisite network-wide site options. If your plugin stores settings elsewhere, then use the above `callback` parameter to tell WP-CFM how to properly import (Pull) configuration into the database.
 
 ```php
 /**
@@ -68,3 +68,12 @@ wp config push <bundle_name>
 ```
 
 You can optionally set `bundle_name` to "all" to push / pull all bundles at once.
+
+To pull multisite site options, append --network to the arguments:
+
+```php
+wp config pull <bundle_name> --network
+wp config push <bundle_name> --network
+```
+
+

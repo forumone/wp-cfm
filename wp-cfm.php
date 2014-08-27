@@ -40,6 +40,8 @@ class WPCFM
         define( 'WPCFM_CONFIG_DIR', WP_CONTENT_DIR . '/config' );
         define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 
+        include( WPCFM_DIR . '/includes/class-options.php' );
+
         // WP is loaded
         add_action( 'init', array( $this, 'init' ) );
     }
@@ -55,6 +57,7 @@ class WPCFM
 
         // hooks
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+        add_action( 'network_admin_menu', array( $this, 'network_admin_menu' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
         // includes
@@ -86,12 +89,15 @@ class WPCFM
 
 
     /**
-     * Register the FacetWP settings page
+     * Register the settings page
      */
     function admin_menu() {
         add_options_page( 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array( $this, 'settings_page' ) );
     }
 
+    function network_admin_menu() {
+        add_submenu_page('settings.php', 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array($this, 'settings_page'));
+    }
 
     /**
      * Enqueue media CSS

@@ -38,8 +38,11 @@ class WPCFM_Readwrite
         $bundles = ( 'all' == $bundle_name ) ? $this->helper->get_bundle_names() : array( $bundle_name );
 
         // Retrieve the settings
-        $settings = get_option( 'wpcfm_settings' );
+        $settings = WPCFM_Options::get( 'wpcfm_settings' );
         $settings = json_decode( $settings, true );
+
+        // Is this really needed (and is it a good place?)
+        if (!is_array($settings) || !isset($settings['bundles'])) $settings = array('bundles' => array());
 
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
@@ -68,9 +71,8 @@ class WPCFM_Readwrite
                 );
             }
         }
-
         // Write the settings
-        update_option( 'wpcfm_settings', json_encode( $settings ) );
+        WPCFM_Options::update( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
@@ -144,12 +146,32 @@ class WPCFM_Readwrite
 
 
     /**
+     * Returns the bundle filename.
+     * @return string
+     */
+
+    function bundle_filename($bundle_name) {
+        if (is_multisite ()) {
+            if (WPCFM_Options::$network) {
+                $filename = "$this->folder/network-$bundle_name.json";
+            } else {
+                $filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name.json";
+            }
+        } else {
+            $filename = "$this->folder/$bundle_name.json";
+        }
+        return $filename;
+    }
+
+
+    /**
      * Load the file bundle
      * @return array
      */
     function read_file( $bundle_name ) {
-        if ( is_readable( "$this->folder/$bundle_name.json" ) ) {
-            $contents = file_get_contents( "$this->folder/$bundle_name.json" );
+        $filename = $this->bundle_filename( $bundle_name );
+        if ( is_readable( $filename ) ) {
+            $contents = file_get_contents( $filename );
             return json_decode( $contents, true );
         }
         return array();
@@ -160,7 +182,7 @@ class WPCFM_Readwrite
      * Write the bundle to file
      */
     function write_file( $bundle_name, $data ) {
-        $filename = "$this->folder/$bundle_name.json";
+        $filename = $this->bundle_filename( $bundle_name );
         if ( file_exists( $filename ) ) {
             if ( is_writable( $filename ) ) {
                 return file_put_contents( $filename, $data );
@@ -193,7 +215,7 @@ class WPCFM_Readwrite
         $output = array();
         $all_config = $this->registry->get_configuration_items();
 
-        $opts = get_option( 'wpcfm_settings' );
+        $opts = WPCFM_Options::get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
         foreach ( $opts['bundles'] as $bundle ) {
             if ( $bundle['name'] == $bundle_name ) {
@@ -266,6 +288,6 @@ class WPCFM_Readwrite
     function callback_wp_options( $params ) {
         $option_name = $params['name'];
         $option_value = maybe_unserialize( $params['new_value'] );
-        update_option( $option_name, $option_value );
+        WPCFM_Options::update( $option_name, $option_value );
     }
 }
