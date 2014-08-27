@@ -39,6 +39,16 @@ wp config pull <bundle_name>
 wp config push <bundle_name>
 `
 
+You can optionally set `bundle_name` to "all" to push / pull all bundles at once.
+
+To pull multisite site options, append --network to the arguments:
+
+`
+wp config pull <bundle_name> --network
+wp config push <bundle_name> --network
+`
+
+
 = Useful links =
 
 [Developer documentation](http://forumone.github.io/wp-cfm/)
