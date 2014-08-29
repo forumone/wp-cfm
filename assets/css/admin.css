@@ -147,6 +147,9 @@ del {
     text-decoration: none;
     background-color: #ffc6c6;
 }
+.changedline {
+    background-color: #e6e6e6;
+}
 
 /* Media modal */
 
