@@ -47,6 +47,10 @@ class WPCFM_Helper
 
             if ( is_multisite() ) {
                 $filename_parts = split( '-', $filename, 2 );
+                if (count($filename_parts) != 2) {
+                    continue;
+                }
+
                 $bundle_name = str_replace( '.json', '', $filename_parts[1] );
 
                 if ( WPCFM()->options->is_network ) {
