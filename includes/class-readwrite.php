@@ -253,9 +253,11 @@ class WPCFM_Readwrite
             $callback_params = array(
                 'name' => $key,
                 'group' => $group,
-                'old_value' => $db_data[ $key ]['value'],
                 'new_value' => $val,
             );
+            if ( isset( $db_data[ $key ] ) && isset( $db_data[ $key ][ 'value' ] ) ) {
+                $callback_params[ 'old_value' ] = $db_data[ $key ][ 'value' ];
+            }
 
             // If no callback is defined, default to the "callback_wp_options" method
             $callback = array( $this, 'callback_wp_options' );
