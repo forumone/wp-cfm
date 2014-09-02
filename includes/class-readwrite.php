@@ -249,6 +249,11 @@ class WPCFM_Readwrite
             // Set a default group if needed
             $group = isset( $db_data[ $key ]['group'] ) ? $db_data[ $key ]['group'] : __( 'WP Options', 'wpcfm' );
 
+            // Make sure "old_value" exists
+            if ( empty( $db_data[ $key ]['value'] ) ) {
+                $db_data[ $key ]['value'] = '';
+            }
+
             // Create the callback params
             $callback_params = array(
                 'name' => $key,
