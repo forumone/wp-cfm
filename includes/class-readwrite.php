@@ -197,8 +197,9 @@ class WPCFM_Readwrite
      * Delete a bundle file
      */
     function delete_file( $bundle_name ) {
-        if ( is_writable( "$this->folder/$bundle_name.json" ) ) {
-            return unlink( "$this->folder/$bundle_name.json" );
+        $filename = $this->bundle_filename( $bundle_name );
+        if ( is_writable( $filename ) ) {
+            return unlink( $filename );
         }
         return false;
     }
