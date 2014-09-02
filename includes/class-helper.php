@@ -23,15 +23,26 @@ class WPCFM_Helper
         foreach ( $file_bundles as $bundle_name => $bundle ) {
             if ( isset( $output[ $bundle_name ] ) ) {
                 $output[ $bundle_name ]['is_file'] = true;
+                $output[ $bundle_name ]['url'] = $this->get_bundle_url( $bundle_name );
             }
             else {
                 $bundle['is_db'] = false;
                 $bundle['is_file'] = true;
+                $bundle['url'] = $this->get_bundle_url( $bundle_name );
                 $output[ $bundle_name ] = $bundle;
             }
         }
 
         return $output;
+    }
+
+
+    /**
+     * Get bundle URL
+     */
+
+    function get_bundle_url( $bundle_name ) {
+        return WPCFM_CONFIG_URL . '/' . basename( WPCFM()->readwrite->bundle_filename( $bundle_name ) );
     }
 
 
