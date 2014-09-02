@@ -76,6 +76,7 @@ $configuration = $this->helper->group_items( $configuration );
                     </select>
                 </div>
                 <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
+                <a class="download-bundle"><?php _e( 'Download Bundle', 'wpcfm' ); ?></a>
                 <div class="clear"></div>
             </div>
         </div>
