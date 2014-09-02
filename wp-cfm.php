@@ -43,6 +43,7 @@ class WPCFM_Core
         define( 'WPCFM_VERSION', '1.2' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', WP_CONTENT_DIR . '/config' );
+        define( 'WPCFM_CONFIG_URL', WP_CONTENT_URL . '/config' );
         define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 
         // WP is loaded

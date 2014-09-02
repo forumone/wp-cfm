@@ -15,6 +15,10 @@
 
                 if (obj.is_file) {
                     $this.find('.pull-bundle').removeClass('disabled');
+                    $this.find('.download-bundle').attr('href', obj.url);
+                    $this.find('.download-bundle').attr('download', obj.url.split('/').reverse()[0]);
+                } else {
+                    $this.find('.download-bundle').remove();
                 }
                 if (obj.is_db) {
                     $this.find('.push-bundle').removeClass('disabled');
