@@ -22,6 +22,17 @@ $configuration = $this->helper->group_items( $configuration );
     <div class="wpcfm-error"><?php echo $this->readwrite->error; ?></div>
     <?php endif; ?>
 
+    <div class="wpcfm-warnings">
+        <?php foreach ( $this->registry->get_dupes() as $option => $bundles ): ?>
+            <div class="wpcfm-warning">
+                <?php _e( 'Warning: ', 'wpcfm' ); ?>
+                <?php echo( $option ); ?>
+                <?php _e( 'is tracked by multiple bundles: ', 'wpcfm' ); ?>
+                <?php echo( implode( ', ', $bundles ) ); ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
     <div class="wpcfm-response"></div>
 
     <div class="wpcfm-bundles">
