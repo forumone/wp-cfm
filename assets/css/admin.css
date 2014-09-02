@@ -49,6 +49,7 @@ h2 span {
     background: none;
 }
 
+.hidden,
 .bundles-hidden {
     display: none;
 }

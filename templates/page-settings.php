@@ -23,13 +23,13 @@ $configuration = $this->helper->group_items( $configuration );
     <?php endif; ?>
 
     <div class="wpcfm-warnings">
-        <?php foreach ( $this->registry->get_dupes() as $option => $bundles ): ?>
-            <div class="wpcfm-warning">
-                <?php _e( 'Warning: ', 'wpcfm' ); ?>
-                <?php echo( $option ); ?>
-                <?php _e( 'is tracked by multiple bundles: ', 'wpcfm' ); ?>
-                <?php echo( implode( ', ', $bundles ) ); ?>
-            </div>
+        <?php foreach ( $this->registry->get_duplicates() as $option => $bundles ): ?>
+        <div class="wpcfm-warning">
+            <?php _e( 'Warning: ', 'wpcfm' ); ?>
+            <?php echo( $option ); ?>
+            <?php _e( 'is tracked by multiple bundles: ', 'wpcfm' ); ?>
+            <?php echo( implode( ', ', $bundles ) ); ?>
+        </div>
         <?php endforeach; ?>
     </div>
 
@@ -87,7 +87,7 @@ $configuration = $this->helper->group_items( $configuration );
                     </select>
                 </div>
                 <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
-                <a class="download-bundle"><?php _e( 'Download Bundle', 'wpcfm' ); ?></a>
+                <a class="download-bundle hidden"><?php _e( 'Download Bundle', 'wpcfm' ); ?></a>
                 <div class="clear"></div>
             </div>
         </div>

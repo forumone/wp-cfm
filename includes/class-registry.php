@@ -46,35 +46,6 @@ class WPCFM_Registry
 
 
     /**
-     * Get configuration options stored in multiple bundles.
-     */
-    function get_dupes() {
-        $settings = WPCFM()->options->get( 'wpcfm_settings' );
-        $settings = json_decode( $settings, true );
-        if ( !is_array( $settings ) || !isset( $settings[ 'bundles' ] ) ) return array();
-
-        $result = array();
-        foreach ( $settings[ 'bundles' ] as $bundle ) {
-            foreach ( $bundle[ 'config' ] as $option ) {
-                if ( !isset( $result[ $option ] ) ) {
-                    $result[ $option ] = array( $bundle[ 'name' ] );
-                } else {
-                    $result[ $option ][] = $bundle[ 'name' ];
-                }
-            }
-        }
-        foreach ( $result as $option => $bundles ) {
-            if (count ($bundles) == 1) {
-                unset( $result[ $option ] );
-            } else {
-                sort( $result[ $option ] );
-            }
-        }
-        return $result;
-    }
-
-
-    /**
      * Ignore certain configuration settings
      * 
      * @since 1.0.0
@@ -100,5 +71,41 @@ class WPCFM_Registry
         }
 
         return $items;
+    }
+
+
+    /**
+     * Get configuration options stored in multiple bundles
+     * @since 1.3
+     */
+    function get_duplicates() {
+        $settings = WPCFM()->options->get( 'wpcfm_settings' );
+        $settings = json_decode( $settings, true );
+
+        if ( empty( $settings['bundles'] ) ) {
+            return array();
+        }
+
+        $result = array();
+        foreach ( $settings['bundles'] as $bundle ) {
+            foreach ( $bundle['config'] as $option ) {
+                if ( empty( $result[ $option ] ) ) {
+                    $result[ $option ] = array( $bundle['name'] );
+                }
+                else {
+                    $result[ $option ][] = $bundle['name'];
+                }
+            }
+        }
+
+        foreach ( $result as $option => $bundles ) {
+            if ( 1 == count( $bundles ) ) {
+                unset( $result[ $option ] );
+            }
+            else {
+                sort( $result[ $option ] );
+            }
+        }
+        return $result;
     }
 }

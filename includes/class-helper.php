@@ -54,26 +54,30 @@ class WPCFM_Helper
         $output = array();
         $filenames = scandir( WPCFM_CONFIG_DIR );
         $filenames = array_diff( $filenames, array( '.', '..' ) );
+
         foreach ( $filenames as $filename ) {
+
+            // Default to single site bundle
+            $bundle_name = str_replace( '.json', '', $filename );
 
             if ( is_multisite() ) {
                 $filename_parts = explode( '-', $filename, 2 );
+
+                // Only accept multi-site bundles
+                if ( 2 > count( $filename_parts ) ) {
+                    continue;
+                }
+
                 $bundle_name = str_replace( '.json', '', $filename_parts[1] );
 
                 if ( WPCFM()->options->is_network ) {
-                    if ( $filename_parts[0] != 'network' ) {
+                    if ( 'network' != $filename_parts[0] ) {
                         continue;
                     }
                 }
-                else {
-                    if ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
-                        continue;
-                    }
+                elseif ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
+                    continue;
                 }
-
-            }
-            else {
-                $bundle_name = str_replace( '.json', '', $filename );
 
             }
 

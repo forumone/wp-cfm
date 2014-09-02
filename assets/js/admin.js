@@ -17,9 +17,9 @@
                     $this.find('.pull-bundle').removeClass('disabled');
                     $this.find('.download-bundle').attr('href', obj.url);
                     $this.find('.download-bundle').attr('download', obj.url.split('/').reverse()[0]);
-                } else {
-                    $this.find('.download-bundle').remove();
+                    $this.find('.download-bundle').removeClass('hidden');
                 }
+
                 if (obj.is_db) {
                     $this.find('.push-bundle').removeClass('disabled');
                 }
