@@ -42,6 +42,9 @@ class WPCFM_Helper
                 $bundle['is_file'] = false;
                 $bundle['url'] = $this->get_bundle_url( $bundle_name );
                 $output[ $bundle_name ] = $bundle;
+            } else {
+                // Always use the config from register_bundle().
+                $output[ $bundle_name ][ 'config' ] = $bundle[ 'config' ];
             }
         }
 
