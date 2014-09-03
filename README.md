@@ -22,6 +22,17 @@ Deploying database changes in WordPress is hard, especially when working on team
 
 #### Developer Hooks
 
+Plugins/themes can register bundles:
+
+```php
+function hotrest_register_bundles() {
+    WPCFM()->register_bundle('The front page', 'font_page', array('page_on_front', 'show_on_front'));
+}
+add_action('wpcfm_init', 'hotrest_register_bundles');
+```
+
+The `wpcfm_init` action will be executed when the WP-CFM plugin is initialized.
+
 The `wpcfm_configuration_items` hook lets you register custom configuration items.
 
 ```php
