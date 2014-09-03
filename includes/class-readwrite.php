@@ -34,11 +34,7 @@ class WPCFM_Readwrite
         $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
 
         // Retrieve the settings
-        $settings = WPCFM()->options->get( 'wpcfm_settings' );
-        $settings = json_decode( $settings, true );
-
-        // Is this really needed (and is it a good place?)
-        if (!is_array($settings) || !isset($settings['bundles'])) $settings = array('bundles' => array());
+        $settings = WPCFM()->helper->get_settings();
 
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
@@ -214,8 +210,7 @@ class WPCFM_Readwrite
         $output = array();
         $all_config = WPCFM()->registry->get_configuration_items();
 
-        $opts = WPCFM()->options->get( 'wpcfm_settings' );
-        $opts = json_decode( $opts, true );
+        $opts = WPCFM()->helper->get_settings();
         foreach ( $opts['bundles'] as $bundle ) {
             if ( $bundle['name'] == $bundle_name ) {
                 $bundle_config = $bundle['config'];

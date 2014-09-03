@@ -13,11 +13,7 @@ class WPCFM_Helper
         $output = array();
 
         // Get DB bundles first
-        $opts = WPCFM()->options->get( 'wpcfm_settings' );
-        $opts = json_decode( $opts, true );
-        if ( !is_array ($opts) ) {
-            $opts = array( 'bundles' => array () );
-        }
+        $opts = $this->get_settings();
         foreach ( $opts['bundles'] as $bundle ) {
             $bundle['is_db'] = true;
             $bundle['is_file'] = false;
@@ -61,6 +57,19 @@ class WPCFM_Helper
         return $output;
     }
 
+
+    /**
+     * Get settings
+     */
+
+    function get_settings() {
+        $settings = WPCFM()->options->get( 'wpcfm_settings' );
+        $settings = json_decode( $settings, true );
+        if ( !is_array( $settings ) ) {
+            $settings = array('bundles' => array () );
+        }
+        return $settings;
+    }
 
     /**
      * Plugins/themes may register pre-defined bundles.

@@ -79,12 +79,7 @@ class WPCFM_Registry
      * @since 1.3
      */
     function get_duplicates() {
-        $settings = WPCFM()->options->get( 'wpcfm_settings' );
-        $settings = json_decode( $settings, true );
-
-        if ( empty( $settings['bundles'] ) ) {
-            return array();
-        }
+        $settings = WPCFM()->helper->get_settings();
 
         $result = array();
         foreach ( $settings['bundles'] as $bundle ) {
