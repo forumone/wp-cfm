@@ -176,8 +176,8 @@ class WPCFM_Core
     /**
      * Plugins/themes may register pre-defined bundles.
      */
-    function register_bundle( $bundle_name, $options, $label = '' ) {
-        $this->helper->register_bundle( $bundle_name, $options, $label );
+    function register_bundle( $label, $bundle_name, $options ) {
+        $this->helper->register_bundle( $label, $bundle_name, $options );
     }
 
 }

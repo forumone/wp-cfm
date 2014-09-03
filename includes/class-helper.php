@@ -43,7 +43,7 @@ class WPCFM_Helper
         foreach ( $this->registered_bundles as $bundle_name => $bundle ) {
             if ( !isset( $output[ $bundle_name ] ) ) {
                 $bundle['is_db'] = false;
-                $bundle['is_file'] = true;
+                $bundle['is_file'] = false;
                 $bundle['url'] = $this->get_bundle_url( $bundle_name );
                 $output[ $bundle_name ] = $bundle;
             }
@@ -65,10 +65,10 @@ class WPCFM_Helper
     /**
      * Plugins/themes may register pre-defined bundles.
      */
-    function register_bundle( $bundle_name, $options, $label = '' ) {
-        if ( empty( $label ) ) $label = $bundle_name;
+    function register_bundle( $label, $bundle_name, $options ) {
         $this->registered_bundles[ $bundle_name ] = array(
             'label' => $label,
+            'name' => $bundle_name,
             'config' => $options 
         );
     }
