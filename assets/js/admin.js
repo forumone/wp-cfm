@@ -13,7 +13,17 @@
                 $this.find('.bundle-toggle').html(obj.label);
                 $this.attr('data-bundle', obj.name);
 
+                if (obj.is_file && obj.is_db) {
+                    $this.find('.diff-bundle').removeClass('disabled');
+                    $this.find('.pull-bundle').removeClass('disabled');
+                    $this.find('.push-bundle').removeClass('disabled');
+                    $this.find('.download-bundle').attr('href', obj.url);
+                    $this.find('.download-bundle').attr('download', obj.url.split('/').reverse()[0]);
+                    $this.find('.download-bundle').removeClass('hidden');
+                }
+
                 if (obj.is_file && !obj.is_db) {
+                    $this.find('.diff-bundle').removeClass('disabled');
                     $this.find('.pull-bundle').removeClass('disabled');
                     $this.find('.download-bundle').attr('href', obj.url);
                     $this.find('.download-bundle').attr('download', obj.url.split('/').reverse()[0]);
@@ -21,6 +31,7 @@
                 }
 
                 if (obj.is_db && !obj.is_file) {
+                    $this.find('.diff-bundle').removeClass('disabled');
                     $this.find('.push-bundle').removeClass('disabled');
                 }
 
