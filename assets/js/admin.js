@@ -34,6 +34,10 @@
                     keepOpen: true,
                     isOpen: true
                 });
+
+                if (obj.locked) {
+                    $this.find('input').prop('disabled', true);
+                }
             });
         }, 'json');
 

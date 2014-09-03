@@ -117,6 +117,9 @@ class WPCFM_Core
                 include( WPCFM_DIR . "/includes/integrations/$filename" );
             }
         }
+
+        // Registering bundles must happen at/after this action.
+        do_action( 'wpcfm_init' );
     }
 
 
@@ -168,6 +171,15 @@ class WPCFM_Core
             load_plugin_textdomain( 'wpcfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
     }
+
+
+    /**
+     * Plugins/themes may register pre-defined bundles.
+     */
+    function register_bundle( $bundle_name, $options, $label = '' ) {
+        $this->helper->register_bundle( $bundle_name, $options, $label );
+    }
+
 }
 
 WPCFM();
