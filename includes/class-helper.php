@@ -3,6 +3,9 @@
 class WPCFM_Helper
 {
 
+    var $registered_bundles = array();
+
+
     /**
      * Load all bundles (DB + file)
      */
@@ -10,8 +13,7 @@ class WPCFM_Helper
         $output = array();
 
         // Get DB bundles first
-        $opts = WPCFM()->options->get( 'wpcfm_settings' );
-        $opts = json_decode( $opts, true );
+        $opts = $this->get_settings();
         foreach ( $opts['bundles'] as $bundle ) {
             $bundle['is_db'] = true;
             $bundle['is_file'] = false;
@@ -33,7 +35,54 @@ class WPCFM_Helper
             }
         }
 
+        // Merge registered bundles
+        foreach ( $this->registered_bundles as $bundle_name => $bundle ) {
+            if ( !isset( $output[ $bundle_name ] ) ) {
+                $bundle['is_db'] = false;
+                $bundle['is_file'] = false;
+                $bundle['url'] = $this->get_bundle_url( $bundle_name );
+                $output[ $bundle_name ] = $bundle;
+            } else {
+                // Always use the config from register_bundle().
+                $output[ $bundle_name ][ 'config' ] = $bundle[ 'config' ];
+            }
+        }
+
+        // Lock down registered bundles.
+        foreach ( $output as $bundle_name => $bundle ) {
+            if ( isset( $this->registered_bundles[ $bundle_name ] ) ) {
+                $output[ $bundle_name ][ 'locked' ] = true;
+            } else {
+                $output[ $bundle_name ][ 'locked' ] = false;
+            }
+        }
+
         return $output;
+    }
+
+
+    /**
+     * Get settings
+     */
+
+    function get_settings() {
+        $settings = WPCFM()->options->get( 'wpcfm_settings' );
+        $settings = json_decode( $settings, true );
+        if ( !is_array( $settings ) ) {
+            $settings = array('bundles' => array () );
+        }
+        return $settings;
+    }
+
+    /**
+     * Plugins/themes may register pre-defined bundles.
+     */
+    function register_bundle( $label, $bundle_name, $options ) {
+        $this->registered_bundles[ $bundle_name ] = array(
+            'label' => $label,
+            'name' => $bundle_name,
+            'config' => $options 
+        );
     }
 
 
