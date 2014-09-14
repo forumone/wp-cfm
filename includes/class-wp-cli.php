@@ -32,7 +32,7 @@ class WPCFM_CLI_Command extends WP_CLI_Command
         }
 
         $bundle_name = $args[0];
-        $this->readwrite->push_bundle( $bundle_name );
+        WPCFM()->readwrite->push_bundle( $bundle_name );
         WP_CLI::success( 'The bundle has been written to file.' );
     }
 
