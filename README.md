@@ -1,12 +1,10 @@
 #### WP-CFM: Configuration Management for WordPress
 
-[Download on WordPress.org](http://wordpress.org/plugins/wp-cfm/)
+WP-CFM allows you to copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's [Features](https://www.drupal.org/project/features) module.
 
 ![Admin Screen](http://i.imgur.com/opQhDUa.png)
 
-[Watch the introduction screencast (4 minutes)](http://screencast.com/t/HGmkd8S44P7s)
-
-#### How will WP-CFM make my life easier?
+#### How will WP-CFM benefit me?
 
 * Less need to copy over the entire database.
 * No more rushing to figure out which settings you forgot to change.
@@ -40,10 +38,6 @@ This filter contains an associative array of all configuration options. Each opt
 * **group**: (optional) A group name, allowing multiple configuration options to be grouped together. This is only used in the admin UI. Default = "WP Options"
 * **callback**: (optional) If the configuration data is **not** stored within `wp_options`, then WP-CFM needs to know how to Pull it into the database. This parameter accepts a (string) function name or (array) method. A `$params` array is passed into the callback function (see below).
 
-#### Is that it?
-
-Almost! WP-CFM automatically handles configuration within the `wp_options` table, and `wp_options` for multisite network-wide site options. If your plugin stores settings elsewhere, then use the above `callback` parameter to tell WP-CFM how to properly import (Pull) configuration into the database.
-
 ```php
 /**
  * $params['name']          The option name
@@ -56,6 +50,10 @@ function my_pull_handler( $params ) {
 }
 ```
 
+#### Which configuration does WP-CFM support?
+
+Out-of-the-box, WP-CFM supports the `wp_options` table (incl. multisite).
+
 #### WP-CLI
 
 WP-CFM supports pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
@@ -65,13 +63,8 @@ wp config pull <bundle_name>
 wp config push <bundle_name>
 ```
 
-You can optionally set `bundle_name` to "all" to push / pull all bundles at once.
+You can optionally set `bundle_name` to "all" to include all bundles. Also, append the `--network` flag to include multisite bundles.
 
-To pull multisite site options, append --network to the arguments:
+### Download
 
-```php
-wp config pull <bundle_name> --network
-wp config push <bundle_name> --network
-```
-
-
+[Download on WordPress.org](http://wordpress.org/plugins/wp-cfm/)
