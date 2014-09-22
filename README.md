@@ -65,6 +65,6 @@ wp config push <bundle_name>
 
 You can optionally set `bundle_name` to "all" to include all bundles. Also, append the `--network` flag to include multisite bundles.
 
-### Download
+#### Download
 
 [Download on WordPress.org](http://wordpress.org/plugins/wp-cfm/)

@@ -7,51 +7,75 @@ Tested up to: 4.0
 Stable tag: trunk
 License: GPL2
 
-WP-CFM: Configuration Management for WordPress
+Manage and deploy WordPress configuration changes
 
 == Description ==
 
-WP-CFM is a plugin for tracking database configuration. It writes database configuration to the filesystem so it can be easily versioned and deployed (using Git).
-
+WP-CFM lets you copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's Features module.
 It does the dirty work of deploying configuration changes so you don't have to.
 
-[See Screenshot](http://i.imgur.com/opQhDUa.png)
+[Admin Screen](http://i.imgur.com/opQhDUa.png)
+
+= How will WP-CFM benefit me? =
+
+* Less need to copy over the entire database.
+* No more rushing to figure out which settings you forgot to change.
+* Easily track and version configuration changes via git, subversion, etc.
 
 = Terminology =
 
-* Bundle - a group of configuration settings
-* Push - export database configuration to the filesystem
-* Pull - import file configuration into the database
+* Bundle - A group of (one or more) settings to track
+* Push - Export database settings to the filesystem
+* Pull - Import file-based settings into the database
 
-= How does it work? =
+= How to add custom configuration =
 
-* Create some bundles within the admin screen.
-* Push the bundles to filesystem.
-* Move the bundle files to your other site(s).
-* On the other site(s), run "Pull" to import the configuration bundles.
+The `wpcfm_configuration_items` hook lets you register custom configuration items.
 
-= WP-CLI Support =
+<pre>
+function my_configuration_items( $items ) {
+    $items['cfs_field_groups'] = array(
+        'value' => 'MY CONFIGURATION DATA',
+        'group' => 'WP Options', // optional
+        'callback' => 'my_pull_handler', // optional
+    );
+    return $items;
+}
+add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
+</pre>
+
+This filter contains an associative array of all configuration options. Each option has a unique key, and supports several parameters:
+
+* **value**: (required) The configuration data to store.
+* **group**: (optional) A group name, allowing multiple configuration options to be grouped together. This is only used in the admin UI. Default = "WP Options"
+* **callback**: (optional) If the configuration data is **not** stored within `wp_options`, then WP-CFM needs to know how to Pull it into the database. This parameter accepts a (string) function name or (array) method. A `$params` array is passed into the callback function (see below).
+
+<pre>
+/**
+ * $params['name']          The option name
+ * $params['group']         The option group
+ * $params['old_value']     The current DB value that will get overwritten
+ * $params['new_value']     The new DB value
+ */
+function my_pull_handler( $params ) {
+    // Save something
+}
+</pre>
+
+= Which configuration does WP-CFM support? =
+
+Out-of-the-box, WP-CFM supports the `wp_options` table (incl. multisite).
+
+= WP-CLI =
 
 WP-CFM supports pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
 
-`
+<pre>
 wp config pull <bundle_name>
 wp config push <bundle_name>
-`
+</pre>
 
-You can optionally set `bundle_name` to "all" to push / pull all bundles at once.
-
-To pull multisite site options, append --network to the arguments:
-
-`
-wp config pull <bundle_name> --network
-wp config push <bundle_name> --network
-`
-
-
-= Useful links =
-
-[Developer documentation](http://forumone.github.io/wp-cfm/)
+You can optionally set `bundle_name` to "all" to include all bundles. Also, append the `--network` flag to include multisite bundles.
 
 == Installation ==
 
@@ -59,6 +83,14 @@ wp config push <bundle_name> --network
 2. Browse to `Settings > WP-CFM` to configure.
 
 == Changelog ==
+
+= 1.3 =
+* Multisite support (props @alfreddatakillen)
+* Added download link for each bundle (props @alfreddatakillen)
+* Notification when the same option is stored in multiple bundles
+* Subclasses can be accessed as base class variables
+* Fix: ensure that "old_value" exists
+* Updated translations
 
 = 1.2 =
 * Made "diff viewer" close button appear clickable
