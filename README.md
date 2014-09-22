@@ -1,6 +1,6 @@
 #### WP-CFM: Configuration Management for WordPress
 
-WP-CFM allows you to copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's [Features](https://www.drupal.org/project/features) module.
+WP-CFM lets you copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's [Features](https://www.drupal.org/project/features) module.
 
 ![Admin Screen](http://i.imgur.com/opQhDUa.png)
 
