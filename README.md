@@ -2,25 +2,23 @@
 
 [Download on WordPress.org](http://wordpress.org/plugins/wp-cfm/)
 
-Deploying database changes in WordPress is hard, especially when working on teams with multiple developers. This project aims at solving this problem by storing database configuration in the filesystem. It's like Drupal's "Features" module for WordPress.
-
 ![Admin Screen](http://i.imgur.com/opQhDUa.png)
 
 [Watch the introduction screencast (4 minutes)](http://screencast.com/t/HGmkd8S44P7s)
 
-#### What does this mean for me?
+#### How will WP-CFM make my life easier?
 
-* Less need to copy the database. If you make changes, **Push** your bundle to the filesystem. To load changes, **Pull** the bundle into your database.
-* No need to manually apply database settings changes. No more "fire drills" where you're rushing to figure out which settings you forgot to change.
-* Track and migrate configuration files using git, subversion, etc.
+* Less need to copy over the entire database.
+* No more rushing to figure out which settings you forgot to change.
+* Easily track and version configuration changes via git, subversion, etc.
 
 #### Terminology
 
-* **Bundle**: A group of settings to track. This could be a single setting, or all the site's available settings.
-* **Push**: Export configuration from your database to the filesystem.
-* **Pull**: Import configuration from the filesystem into your database.
+* **Bundle**: A group of (one or more) settings to track.
+* **Push**: Export database settings to the filesystem.
+* **Pull**: Import file-based settings into the database.
 
-#### Developer Hooks
+#### How to add custom configuration
 
 The `wpcfm_configuration_items` hook lets you register custom configuration items.
 
