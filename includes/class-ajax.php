@@ -31,17 +31,17 @@ class WPCFM_Ajax
         if ( current_user_can( 'manage_options' ) ) {
             $settings = stripslashes( $_POST['data'] );
 
-            // Store old bundle names for use later
-            $old_bundles = WPCFM()->helper->get_bundle_names();
-
             // Save the option
             WPCFM()->options->update( 'wpcfm_settings', $settings );
 
             // Delete orphan bundles
-            $new_bundles = WPCFM()->helper->get_bundle_names();
-            $to_delete = array_diff( $old_bundles, $new_bundles );
-            foreach ( $to_delete as $bundle_name ) {
-                WPCFM()->readwrite->delete_file( $bundle_name );
+            $file_bundles = array_keys( WPCFM()->helper->get_file_bundles() );
+            $new_bundles = WPCFM()->helper->get_bundles();
+
+            foreach ( $file_bundles as $bundle_name ) {
+                if ( ! isset( $new_bundles[ $bundle_name ] ) || false === $new_bundles[ $bundle_name ]['is_db'] ) {
+                    WPCFM()->readwrite->delete_file( $bundle_name );
+                }
             }
 
             echo __( 'Settings saved', 'wpcfm' );
