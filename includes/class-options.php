@@ -8,16 +8,13 @@ class WPCFM_Options
 
     function __construct() {
 
-        // Network admin
-        if ( is_network_admin() ) {
-            $this->is_network = true;
-        }
+        // WP-CLI --network handler
+        $argv = isset( $_SERVER['argv'] ) ? $_SERVER['argv'] : array();
+        $has_network_flag = ( false !== array_search( '--network', $argv ) );
 
-        // Called by wp-cli with the --network argument
-        if ( defined( 'DOING_AJAX' ) && DOING_AJAX && is_multisite() ) {
-            if ( preg_match( '#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'] ) ) {
-                $this->is_network = true;
-            }
+        // Network admin
+        if ( is_network_admin() || $has_network_flag ) {
+            $this->is_network = true;
         }
     }
 
