@@ -22,17 +22,11 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      * 
      */
     function push( $args, $assoc_args ) {
-
         if ( isset( $assoc_args['network'] ) ) {
-            if ( ! is_multisite() ) {
-                WP_CLI::error('This is not a multisite install.');
-                exit(1);
-            }
             WPCFM()->options->is_network = true;
         }
 
-        $bundle_name = $args[0];
-        WPCFM()->readwrite->push_bundle( $bundle_name );
+        WPCFM()->readwrite->push_bundle( $args[0] );
         WP_CLI::success( 'The bundle has been written to file.' );
     }
 
@@ -54,16 +48,31 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      */
     function pull( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
-            if ( !is_multisite() ) {
-                WP_CLI::error( 'This is not a multisite install.' );
-                exit( 1 );
-            }
             WPCFM()->options->is_network = true;
         }
 
-        $bundle_name = $args[0];
-        WPCFM()->readwrite->pull_bundle( $bundle_name );
+        WPCFM()->readwrite->pull_bundle( $args[0] );
         WP_CLI::success( 'The bundle has been pulled into the database.' );
+    }
+
+
+    /**
+     * Compare bundle differences
+     * 
+     * ## OPTIONS
+     * 
+     * <bundle_name>
+     * : The bundle name to compare (or use "all")
+     * 
+     * ## EXAMPLES
+     * 
+     * wp config diff bundle_name
+     * 
+     * @synopsis <bundle_name>
+     * 
+     */
+    function diff( $args, $assoc_args ) {
+
     }
 }
 
