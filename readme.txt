@@ -3,7 +3,7 @@ Contributors: mgibbs189
 Donate link: http://forumone.com/
 Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 3.9
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 License: GPL2
 
@@ -83,6 +83,12 @@ You can optionally set `bundle_name` to "all" to include all bundles. Also, appe
 2. Browse to `Settings > WP-CFM` to configure.
 
 == Changelog ==
+
+= 1.3.1 =
+* Fix for bundle deletion
+* Better WP-CLI network support
+* Now using "wp_mkdir_p" to check for writable config folder
+* Updated translations
 
 = 1.3 =
 * Multisite support (props @alfreddatakillen)

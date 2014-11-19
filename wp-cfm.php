@@ -3,7 +3,7 @@
 Plugin Name: WP-CFM
 Plugin URI: http://forumone.com/
 Description: WordPress Configuration Management
-Version: 1.3
+Version: 1.3.1
 Author: Forum One
 Author URI: http://forumone.com/
 License: GPLv2
