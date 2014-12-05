@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>WP-CFM by forumone</title>
+    <meta name="description" content="WP-CFM : WordPress Configuration Management">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>WP-CFM</title>
   </head>
 
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>WP-CFM</h1>
-          <h2>WordPress Configuration Management</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/forumone/wp-cfm">View on GitHub</a>
+
+          <h1 id="project_title">WP-CFM</h1>
+          <h2 id="project_tagline">WordPress Configuration Management</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/forumone/wp-cfm/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/forumone/wp-cfm/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
+    </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/forumone/wp-cfm/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/forumone/wp-cfm/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/forumone/wp-cfm" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h4>
-<a name="wp-cfm-configuration-management-for-wordpress" class="anchor" href="#wp-cfm-configuration-management-for-wordpress"><span class="octicon octicon-link"></span></a>WP-CFM: Configuration Management for WordPress</h4>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h4>
+<a id="wp-cfm-configuration-management-for-wordpress" class="anchor" href="#wp-cfm-configuration-management-for-wordpress" aria-hidden="true"><span class="octicon octicon-link"></span></a>WP-CFM: Configuration Management for WordPress</h4>
 
 <p><a href="http://wordpress.org/plugins/wp-cfm/">Download on WordPress.org</a></p>
 
@@ -43,14 +43,16 @@
 <p><a href="http://screencast.com/t/HGmkd8S44P7s">Watch the introduction screencast (4 minutes)</a></p>
 
 <h4>
-<a name="what-does-this-mean-for-me" class="anchor" href="#what-does-this-mean-for-me"><span class="octicon octicon-link"></span></a>What does this mean for me?</h4>
+<a id="what-does-this-mean-for-me" class="anchor" href="#what-does-this-mean-for-me" aria-hidden="true"><span class="octicon octicon-link"></span></a>What does this mean for me?</h4>
 
 <ul>
 <li>Less need to copy the database. If you make changes, <strong>Push</strong> your bundle to the filesystem. To load changes, <strong>Pull</strong> the bundle into your database.</li>
 <li>No need to manually apply database settings changes. No more "fire drills" where you're rushing to figure out which settings you forgot to change.</li>
 <li>Track and migrate configuration files using git, subversion, etc.</li>
-</ul><h4>
-<a name="terminology" class="anchor" href="#terminology"><span class="octicon octicon-link"></span></a>Terminology</h4>
+</ul>
+
+<h4>
+<a id="terminology" class="anchor" href="#terminology" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terminology</h4>
 
 <ul>
 <li>
@@ -59,21 +61,22 @@
 <strong>Push</strong>: Export configuration from your database to the filesystem.</li>
 <li>
 <strong>Pull</strong>: Import configuration from the filesystem into your database.</li>
-</ul><h4>
-<a name="developer-hooks" class="anchor" href="#developer-hooks"><span class="octicon octicon-link"></span></a>Developer Hooks</h4>
+</ul>
+
+<h4>
+<a id="developer-hooks" class="anchor" href="#developer-hooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developer Hooks</h4>
 
 <p>The <code>wpcfm_configuration_items</code> hook lets you register custom configuration items.</p>
 
-<div class="highlight highlight-php"><pre><span class="k">function</span> <span class="nf">my_configuration_items</span><span class="p">(</span> <span class="nv">$items</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$items</span><span class="p">[</span><span class="s1">'cfs_field_groups'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'MY CONFIGURATION DATA'</span><span class="p">,</span>
-        <span class="s1">'group'</span> <span class="o">=&gt;</span> <span class="s1">'WP Options'</span><span class="p">,</span> <span class="c1">// optional</span>
-        <span class="s1">'callback'</span> <span class="o">=&gt;</span> <span class="s1">'my_pull_handler'</span><span class="p">,</span> <span class="c1">// optional</span>
-    <span class="p">);</span>
-    <span class="k">return</span> <span class="nv">$items</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nx">add_filter</span><span class="p">(</span> <span class="s1">'wpcfm_configuration_items'</span><span class="p">,</span> <span class="s1">'my_configuration_items'</span> <span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-st">function</span> <span class="pl-en">my_configuration_items</span>( <span class="pl-vo">$items</span> ) {</span>
+<span class="pl-s2">    <span class="pl-vo">$items</span>[<span class="pl-s1"><span class="pl-pds">'</span>cfs_field_groups<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s3">array</span>(</span>
+<span class="pl-s2">        <span class="pl-s1"><span class="pl-pds">'</span>value<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>MY CONFIGURATION DATA<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2">        <span class="pl-s1"><span class="pl-pds">'</span>group<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>WP Options<span class="pl-pds">'</span></span>, <span class="pl-c">// optional</span></span>
+<span class="pl-s2">        <span class="pl-s1"><span class="pl-pds">'</span>callback<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>my_pull_handler<span class="pl-pds">'</span></span>, <span class="pl-c">// optional</span></span>
+<span class="pl-s2">    );</span>
+<span class="pl-s2">    <span class="pl-k">return</span> <span class="pl-vo">$items</span>;</span>
+<span class="pl-s2">}</span>
+<span class="pl-s2">add_filter( <span class="pl-s1"><span class="pl-pds">'</span>wpcfm_configuration_items<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>my_configuration_items<span class="pl-pds">'</span></span> );</span></pre></div>
 
 <p>This filter contains an associative array of all configuration options. Each option has a unique key, and supports several parameters:</p>
 
@@ -84,51 +87,54 @@
 <strong>group</strong>: (optional) A group name, allowing multiple configuration options to be grouped together. This is only used in the admin UI. Default = "WP Options"</li>
 <li>
 <strong>callback</strong>: (optional) If the configuration data is <strong>not</strong> stored within <code>wp_options</code>, then WP-CFM needs to know how to Pull it into the database. This parameter accepts a (string) function name or (array) method. A <code>$params</code> array is passed into the callback function (see below).</li>
-</ul><h4>
-<a name="is-that-it" class="anchor" href="#is-that-it"><span class="octicon octicon-link"></span></a>Is that it?</h4>
+</ul>
+
+<h4>
+<a id="is-that-it" class="anchor" href="#is-that-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>Is that it?</h4>
 
 <p>Almost! WP-CFM automatically handles configuration within the <code>wp_options</code> table. If your plugin stores settings elsewhere, then use the above <code>callback</code> parameter to tell WP-CFM how to properly import (Pull) configuration into the database.</p>
 
-<div class="highlight highlight-php"><pre><span class="sd">/**</span>
-<span class="sd"> * $params['name']          The option name</span>
-<span class="sd"> * $params['group']         The option group</span>
-<span class="sd"> * $params['old_value']     The current DB value that will get overwritten</span>
-<span class="sd"> * $params['new_value']     The new DB value</span>
-<span class="sd"> */</span>
-<span class="k">function</span> <span class="nf">my_pull_handler</span><span class="p">(</span> <span class="nv">$params</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Save something</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-c">/**</span></span>
+<span class="pl-s2"><span class="pl-c"> * $params['name']          The option name</span></span>
+<span class="pl-s2"><span class="pl-c"> * $params['group']         The option group</span></span>
+<span class="pl-s2"><span class="pl-c"> * $params['old_value']     The current DB value that will get overwritten</span></span>
+<span class="pl-s2"><span class="pl-c"> * $params['new_value']     The new DB value</span></span>
+<span class="pl-s2"><span class="pl-c"> */</span></span>
+<span class="pl-s2"><span class="pl-st">function</span> <span class="pl-en">my_pull_handler</span>( <span class="pl-vo">$params</span> ) {</span>
+<span class="pl-s2">    <span class="pl-c">// Save something</span></span>
+<span class="pl-s2">}</span></pre></div>
 
 <h4>
-<a name="wp-cli" class="anchor" href="#wp-cli"><span class="octicon octicon-link"></span></a>WP-CLI</h4>
+<a id="wp-cli" class="anchor" href="#wp-cli" aria-hidden="true"><span class="octicon octicon-link"></span></a>WP-CLI</h4>
 
 <p>WP-CFM supports pulling / pushing bundles from the command-line using <a href="http://wp-cli.org/">WP-CLI</a>:</p>
 
-<div class="highlight highlight-php"><pre><span class="nx">wp</span> <span class="nx">config</span> <span class="nx">pull</span> <span class="o">&lt;</span><span class="nx">bundle_name</span><span class="o">&gt;</span>
-<span class="nx">wp</span> <span class="nx">config</span> <span class="nx">push</span> <span class="o">&lt;</span><span class="nx">bundle_name</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-c1">wp</span> <span class="pl-c1">config</span> <span class="pl-c1">pull</span> <span class="pl-k">&lt;</span><span class="pl-c1">bundle_name</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s2"><span class="pl-c1">wp</span> <span class="pl-c1">config</span> <span class="pl-c1">push</span> <span class="pl-k">&lt;</span><span class="pl-c1">bundle_name</span><span class="pl-k">&gt;</span></span></pre></div>
 
 <p>You can optionally set <code>bundle_name</code> to "all" to push / pull all bundles at once.</p>
-        </section>
+      </section>
+    </div>
 
-        <footer>
-          WP-CFM is maintained by <a href="https://github.com/forumone">forumone</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">WP-CFM maintained by <a href="https://github.com/forumone">forumone</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
 
-                  <script type="text/javascript">
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
           <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("UA-51457218-1");
+              var pageTracker = _gat._getTracker("UA-138081-15");
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
 
-      </div>
-    </div>
+
   </body>
 </html>
