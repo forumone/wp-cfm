@@ -130,8 +130,8 @@ class WPCFM_Readwrite
         }
         else {
             $return['error'] = '';
-            $return['file'] = print_r( $file_bundle, true );
-            $return['db'] = print_r( $db_bundle, true );
+            $return['file'] = $file_bundle;
+            $return['db'] = $db_bundle;
         }
 
         return $return;
