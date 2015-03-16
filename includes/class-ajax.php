@@ -53,7 +53,15 @@ class WPCFM_Ajax
     function load_diff() {
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
-            echo json_encode( WPCFM()->readwrite->compare_bundle( $bundle_name ) );
+            $comparison = WPCFM()->readwrite->compare_bundle( $bundle_name );
+            // The pretty-text-diff.js will do its best on these print_r()s.
+            if ( isset( $comparison['file'] ) ) {
+                $comparison['file'] = print_r( $comparison['file'], true );
+            }
+            if ( isset( $comparison['db'] ) ) {
+                $comparison['db'] = print_r( $comparison['db'], true );
+            }
+            echo json_encode( $comparison );
         }
         exit;
     }
