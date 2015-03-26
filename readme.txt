@@ -68,11 +68,14 @@ Out-of-the-box, WP-CFM supports the `wp_options` table (incl. multisite).
 
 = WP-CLI =
 
-WP-CFM supports pulling / pushing bundles from the command-line using [WP-CLI](http://wp-cli.org/):
+WP-CFM supports [pull / push / diff] of bundles from the command-line using [WP-CLI](http://wp-cli.org/):
 
 <pre>
 wp config pull <bundle_name>
 wp config push <bundle_name>
+wp config diff <bundle_name>
+wp config bundles
+wp config show_bundle <bundle_name>
 </pre>
 
 You can optionally set `bundle_name` to "all" to include all bundles. Also, append the `--network` flag to include multisite bundles.
@@ -83,6 +86,11 @@ You can optionally set `bundle_name` to "all" to include all bundles. Also, appe
 2. Browse to `Settings > WP-CFM` to configure.
 
 == Changelog ==
+
+= 1.3.2 =
+* wp-cli diff support (props @joshkoenig)
+* wp-cli show bundles support (props @joshkoenig)
+* wp-cli get bundle details (props @joshkoenig)
 
 = 1.3.1 =
 * Fix for bundle deletion
