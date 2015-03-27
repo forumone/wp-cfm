@@ -1,35 +1,10 @@
 
 /* Admin - Settings page */
 
-h2 span {
-    font-size: 13px;
-    margin-left: 5px;
-    display: inline-block;
-}
-
 .wpcfm-response {
-    display: none;
-    margin-top: 10px;
-    padding: 10px 12px;
-    background-color: #fff;
-    border-left: 4px solid #7ad03a;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-
-.wpcfm-warning {
-    margin-top: 10px;
-    padding: 10px 12px;
-    background-color: #fff;
-    border-left: 4px solid #eeee3d;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-
-.wpcfm-error {
-    margin-top: 10px;
-    padding: 10px 12px;
-    background-color: #fff;
-    border-left: 4px solid #dd3d36;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    display: inline-block;
+    padding: 5px 20px 0 0;
+    vertical-align: top;
 }
 
 .wpcfm-action-buttons {
@@ -40,7 +15,7 @@ h2 span {
 .wpcfm-bundles {
     font-size: 13px;
     border: 1px solid #ccc;
-    margin-top: 10px;
+    margin: 10px 0 20px 0;
 }
 
 .wpcfm-bundles .bundle-name {
@@ -156,6 +131,7 @@ del {
     text-decoration: none;
     background-color: #ffc6c6;
 }
+
 .changedline {
     background-color: #e6e6e6;
 }

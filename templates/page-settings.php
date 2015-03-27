@@ -14,9 +14,7 @@ $configuration = $this->helper->group_items( $configuration );
 <link href="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/multiple-select.css" rel="stylesheet">
 
 <div class="wrap">
-    <h2>
-        Configuration Management <span>by <a href="http://forumone.com/" target="_blank">Forum One</a></span>
-    </h2>
+    <h2>WP-CFM</h2>
 
     <?php if ( !empty ( $this->readwrite->error ) ) : ?>
     <div class="wpcfm-error"><?php echo $this->readwrite->error; ?></div>
@@ -33,11 +31,10 @@ $configuration = $this->helper->group_items( $configuration );
         <?php endforeach; ?>
     </div>
 
-    <div class="wpcfm-response"></div>
-
     <div class="wpcfm-bundles">
         <div class="wpcfm-action-buttons">
             <div style="float:right">
+                <span class="wpcfm-response"></span>
                 <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wpcfm' ); ?></a>
             </div>
             <a class="button add-bundle"><?php _e( 'Add Bundle', 'wpcfm' ); ?></a>
@@ -55,6 +52,10 @@ $configuration = $this->helper->group_items( $configuration );
                 <div class="clear"></div>
             </div>
         </div>
+    </div>
+
+    <div class="attribution">
+        Created by <a href="http://forumone.com/" target="_blank">Forum One</a>
     </div>
 
     <!-- clone settings -->

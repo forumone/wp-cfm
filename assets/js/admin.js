@@ -41,7 +41,6 @@
         // Save
         $(document).on('click', '.wpcfm-save', function() {
             $('.wpcfm-response').html('Saving...');
-            $('.wpcfm-response').show();
 
             var data = {
                 'bundles': []
@@ -107,7 +106,6 @@
         // "Push" button
         $(document).on('click', '.push-bundle:not(.disabled)', function() {
             $('.wpcfm-response').html('Exporting to file...');
-            $('.wpcfm-response').show();
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
             $.post(ajaxurl, {
@@ -123,7 +121,6 @@
         $(document).on('click', '.pull-bundle:not(.disabled)', function() {
             if (confirm('Import file settings to DB?')) {
                 $('.wpcfm-response').html('Importing into DB...');
-                $('.wpcfm-response').show();
                 var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
                 $.post(ajaxurl, {
