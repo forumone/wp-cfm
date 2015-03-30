@@ -48,24 +48,25 @@ class WPCFM_Taxonomy
      */
     function import_terms( $params ) {
 
+        // Lookup based on old terms
         $lookup = array();
+
+        // Slug lookup based on new terms
+        $slug_lookup = array();
+
         $taxonomy_name = str_replace( 'tax/', '', $params['name'] );
         $old_terms = json_decode( $params['old_value'], true );
         $new_terms = json_decode( $params['new_value'], true );
 
         // Create a lookup array to compare differences
         foreach ( $old_terms as $term ) {
-            $term_id = $term['term_id'];
-            unset( $term['term_id'] );
-            $lookup['old']['slug'][ $term['slug'] ] = $term;
-            $lookup['old']['id'][ $term['term_id'] ] = $term;
+            $lookup['slug'][ $term['slug'] ] = $term;
+            $lookup['id'][ $term['term_id'] ] = $term;
         }
 
+        // Create slug lookup array
         foreach ( $new_terms as $term ) {
-            $term_id = $term['term_id'];
-            unset( $term['term_id'] );
-            $lookup['new']['slug'][ $term['slug'] ] = $term;
-            $lookup['new']['id'][ $term['term_id'] ] = $term;
+            $slug_lookup[ $term['slug'] ] = $term['term_id'];
         }
 
         // Loop through the "desired" terms
@@ -81,15 +82,15 @@ class WPCFM_Taxonomy
              * Find the parent ID (it could have changed)
              */
             if ( 0 < $parent_id ) {
-                $old_parent_slug = $lookup['old']['id'][ $parent_id ]['slug'];
-                $parent_id = (int) $lookup['new']['slug'][ $old_parent_slug ]['term_id'];
+                $old_parent_slug = $lookup['id'][ $parent_id ]['slug'];
+                $parent_id = (int) $slug_lookup[ $old_parent_slug ];
             }
 
             /**
              * Scenario A: the term ID exists
              */
-            if ( isset( $lookup['old']['id'][ $term_id ] ) ) {
-                $old_term = $lookup['old']['id'][ $term_id ];
+            if ( isset( $lookup['id'][ $term_id ] ) ) {
+                $old_term = $lookup['id'][ $term_id ];
 
                 // If the slug is the same, simply update term details
                 if ( $old_term['slug'] == $slug ) {
@@ -106,8 +107,8 @@ class WPCFM_Taxonomy
             /**
              * Scenario B: the same slug exists
              */
-            if ( isset( $lookup['old']['slug'][ $slug ] ) ) {
-                $old_term = $lookup['old']['slug'][ $slug ];
+            if ( isset( $lookup['slug'][ $slug ] ) ) {
+                $old_term = $lookup['slug'][ $slug ];
 
                 wp_update_term( $term_id, $taxonomy_name, array(
                     'name'          => $term['name'],
