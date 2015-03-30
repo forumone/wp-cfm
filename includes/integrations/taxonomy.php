@@ -82,8 +82,8 @@ class WPCFM_Taxonomy
              * Find the parent ID (it could have changed)
              */
             if ( 0 < $parent_id ) {
-                $old_parent_slug = $lookup['id'][ $parent_id ]['slug'];
-                $parent_id = (int) $slug_lookup[ $old_parent_slug ];
+                $old_parent_slug = $lookup['id'][ $parent_id ]['slug']; // get the old term slug
+                $parent_id = (int) $slug_lookup[ $old_parent_slug ]; // lookup the slug from the new terms
             }
 
             /**
