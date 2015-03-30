@@ -43,8 +43,8 @@ class WPCFM_Taxonomy
      * Import (overwrite) taxonomies into the DB
      * @param string $params['name']
      * @param string $params['group']
-     * @param string $params['old_value'] The previous settings data
-     * @param string $params['new_value'] The new settings data
+     * @param string $params['old_value'] The old settings (DB)
+     * @param string $params['new_value'] The new settings (file)
      */
     function import_terms( $params ) {
 
@@ -66,25 +66,17 @@ class WPCFM_Taxonomy
 
         // Create slug lookup array
         foreach ( $new_terms as $term ) {
-            $slug_lookup[ $term['slug'] ] = $term['term_id'];
+            $slug_lookup[ $term['slug'] ] = (int) $term['term_id'];
         }
 
         // Loop through the "desired" terms
         foreach ( $new_terms as $term ) {
             $term_id = (int) $term['term_id'];
-            $parent_id = (int) $term['parent_id'];
+            $parent = (int) $term['parent'];
             $slug = $term['slug'];
 
             // Defaults
             $create_term = true;
-
-            /**
-             * Find the parent ID (it could have changed)
-             */
-            if ( 0 < $parent_id ) {
-                $old_parent_slug = $lookup['id'][ $parent_id ]['slug']; // get the old term slug
-                $parent_id = (int) $slug_lookup[ $old_parent_slug ]; // lookup the new parent ID
-            }
 
             /**
              * SCENARIO: the term ID and slug are unchanged
@@ -99,25 +91,48 @@ class WPCFM_Taxonomy
              * ACTION: update the term
              */
             if ( isset( $lookup['slug'][ $slug ] ) ) {
+                $term_id = (int) $lookup['slug'][ $slug ]['term_id'];
+                $parent = (int) $lookup['slug'][ $slug ]['parent'];
                 $create_term = false;
             }
+
+            /**
+             * Get the parent term's slug
+             * We need this to map to the correct parent ID
+             */
+            if ( 0 < $parent ) {
+
+                // Get the slug from the (old) parent ID
+                $old_parent_slug = $lookup['id'][ $parent ]['slug'];
+
+                // Get the (new) parent ID from the slug
+                if ( isset( $slug_lookup[ $old_parent_slug ] ) ) {
+                    $parent = (int) $slug_lookup[ $old_parent_slug ];
+                }
+            }
+
+            continue;
 
             /**
              * Create or update the term
              */
             if ( $create_term ) {
-                wp_insert_term( $term['name'], $taxonomy_name, array(
+                $response = wp_insert_term( $term['name'], $taxonomy_name, array(
                     'description'   => $term['description'],
-                    'parent'        => $parent_id,
+                    'parent'        => $parent,
                     'slug'          => $slug,
                 ) );
+
+                $slug_lookup[ $slug ] = $response['term_id'];
             }
             else {
-                wp_update_term( $term_id, $taxonomy_name, array(
+                $response = wp_update_term( $term_id, $taxonomy_name, array(
                     'description'   => $term['description'],
-                    'parent'        => $parent_id,
+                    'parent'        => $parent,
                     'name'          => $term['name'],
                 ) );
+
+                $slug_lookup[ $slug ] = $response['term_id'];
             }
         }
     }
