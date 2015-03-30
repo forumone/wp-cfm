@@ -63,22 +63,6 @@ class WPCFM_Core
 
 
     /**
-     * Prevent cloning
-     */
-    function __clone() {
-
-    }
-
-
-    /**
-     * Prevent unserializing
-     */
-    function __wakeup() {
-
-    }
-
-
-    /**
      * Initialize classes and WP hooks
      */
     function init() {
