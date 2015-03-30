@@ -75,7 +75,7 @@ class WPCFM_Taxonomy
             $parent_id = (int) $term['parent_id'];
             $slug = $term['slug'];
 
-            // By default, create the new term
+            // Defaults
             $create_term = true;
 
             /**
@@ -83,44 +83,27 @@ class WPCFM_Taxonomy
              */
             if ( 0 < $parent_id ) {
                 $old_parent_slug = $lookup['id'][ $parent_id ]['slug']; // get the old term slug
-                $parent_id = (int) $slug_lookup[ $old_parent_slug ]; // lookup the slug from the new terms
+                $parent_id = (int) $slug_lookup[ $old_parent_slug ]; // lookup the new parent ID
             }
 
             /**
-             * Scenario A: the term ID exists
+             * SCENARIO: the term ID and slug are unchanged
+             * ACTION: update the term
              */
-            if ( isset( $lookup['id'][ $term_id ] ) ) {
-                $old_term = $lookup['id'][ $term_id ];
-
-                // If the slug is the same, simply update term details
-                if ( $old_term['slug'] == $slug ) {
-                    wp_update_term( $term_id, $taxonomy_name, array(
-                        'name'          => $term['name'],
-                        'description'   => $term['description'],
-                        'parent'        => $parent_id,
-                    ) );
-
-                    $create_term = false;
-                }
-            }
-
-            /**
-             * Scenario B: the same slug exists
-             */
-            if ( isset( $lookup['slug'][ $slug ] ) ) {
-                $old_term = $lookup['slug'][ $slug ];
-
-                wp_update_term( $term_id, $taxonomy_name, array(
-                    'name'          => $term['name'],
-                    'description'   => $term['description'],
-                    'parent'        => $parent_id,
-                ) );
-
+            if ( isset( $lookup['id'][ $term_id ] ) && $slug == $lookup['id'][ $term_id ]['slug'] ) {
                 $create_term = false;
             }
 
             /**
-             * Scenario C: the term is new
+             * SCENARIO: the slug exists
+             * ACTION: update the term
+             */
+            if ( isset( $lookup['slug'][ $slug ] ) ) {
+                $create_term = false;
+            }
+
+            /**
+             * Create or update the term
              */
             if ( $create_term ) {
                 wp_insert_term( $term['name'], $taxonomy_name, array(
@@ -129,9 +112,14 @@ class WPCFM_Taxonomy
                     'slug'          => $slug,
                 ) );
             }
+            else {
+                wp_update_term( $term_id, $taxonomy_name, array(
+                    'description'   => $term['description'],
+                    'parent'        => $parent_id,
+                    'name'          => $term['name'],
+                ) );
+            }
         }
-
-        exit;
     }
 }
 
