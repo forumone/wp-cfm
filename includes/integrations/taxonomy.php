@@ -95,7 +95,9 @@ class WPCFM_Taxonomy
              * ACTION: update the term
              */
             if ( isset( $lookup['slug'][ $slug ] ) ) {
+                $old_term_id = $term_id;
                 $term_id = (int) $lookup['slug'][ $slug ]['term_id'];
+                $term_id_mapping[ $old_term_id ] = $term_id;
                 $create_term = false;
             }
 
@@ -125,8 +127,6 @@ class WPCFM_Taxonomy
                     'parent'        => $parent,
                     'name'          => $term['name'],
                 ) );
-
-                $term_id_mapping[ $term_id ] = (int) $response['term_id'];
             }
         }
     }
