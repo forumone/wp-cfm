@@ -18,8 +18,19 @@ class WPCFM_Taxonomy
         foreach ( $taxonomies as $tax ) {
             $terms = get_terms( $tax->name, array( 'hide_empty' => false ) );
 
+            $values = array();
+            foreach ( $terms as $term ) {
+                $values[] = array(
+                    'term_id'       => $term->term_id,
+                    'name'          => $term->name,
+                    'slug'          => $term->slug,
+                    'description'   => $term->description,
+                    'parent'        => $term->parent,
+                );
+            }
+
             $items[ 'tax/' . $tax->name ] = array(
-                'value' => json_encode( $terms ),
+                'value' => json_encode( $values ),
                 'label' => $tax->label,
                 'group' => 'Taxonomy Terms',
             );
@@ -48,11 +59,9 @@ class WPCFM_Taxonomy
      */
     function import_terms( $params ) {
 
-        // Lookup based on old terms
+        // Lookup arrays
         $lookup = array();
-
-        // Slug lookup based on new terms
-        $slug_lookup = array();
+        $term_id_mapping = array();
 
         $taxonomy_name = str_replace( 'tax/', '', $params['name'] );
         $old_terms = json_decode( $params['old_value'], true );
@@ -62,11 +71,6 @@ class WPCFM_Taxonomy
         foreach ( $old_terms as $term ) {
             $lookup['slug'][ $term['slug'] ] = $term;
             $lookup['id'][ $term['term_id'] ] = $term;
-        }
-
-        // Create slug lookup array
-        foreach ( $new_terms as $term ) {
-            $slug_lookup[ $term['slug'] ] = (int) $term['term_id'];
         }
 
         // Loop through the "desired" terms
@@ -92,7 +96,6 @@ class WPCFM_Taxonomy
              */
             if ( isset( $lookup['slug'][ $slug ] ) ) {
                 $term_id = (int) $lookup['slug'][ $slug ]['term_id'];
-                $parent = (int) $lookup['slug'][ $slug ]['parent'];
                 $create_term = false;
             }
 
@@ -100,18 +103,9 @@ class WPCFM_Taxonomy
              * Get the parent term's slug
              * We need this to map to the correct parent ID
              */
-            if ( 0 < $parent ) {
-
-                // Get the slug from the (old) parent ID
-                $old_parent_slug = $lookup['id'][ $parent ]['slug'];
-
-                // Get the (new) parent ID from the slug
-                if ( isset( $slug_lookup[ $old_parent_slug ] ) ) {
-                    $parent = (int) $slug_lookup[ $old_parent_slug ];
-                }
+            if ( 0 < $parent && isset( $term_id_mapping[ $parent ] ) ) {
+                $parent = $term_id_mapping[ $parent ];
             }
-
-            continue;
 
             /**
              * Create or update the term
@@ -123,7 +117,7 @@ class WPCFM_Taxonomy
                     'slug'          => $slug,
                 ) );
 
-                $slug_lookup[ $slug ] = $response['term_id'];
+                $term_id_mapping[ $term_id ] = (int) $response['term_id'];
             }
             else {
                 $response = wp_update_term( $term_id, $taxonomy_name, array(
@@ -132,7 +126,7 @@ class WPCFM_Taxonomy
                     'name'          => $term['name'],
                 ) );
 
-                $slug_lookup[ $slug ] = $response['term_id'];
+                $term_id_mapping[ $term_id ] = (int) $response['term_id'];
             }
         }
     }
