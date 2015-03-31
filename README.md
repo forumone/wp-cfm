@@ -1,6 +1,6 @@
 #### WP-CFM: Configuration Management for WordPress
 
-WP-CFM lets you copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's [Features](https://www.drupal.org/project/features) module.
+WP-CFM is a deployment tool for WordPress. It lets you deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's [Features](https://www.drupal.org/project/features) module.
 
 ![Admin Screen](http://i.imgur.com/opQhDUa.png)
 
@@ -52,7 +52,7 @@ function my_pull_handler( $params ) {
 
 #### Which configuration does WP-CFM support?
 
-Out-of-the-box, WP-CFM supports the `wp_options` table (incl. multisite).
+Out-of-the-box, WP-CFM supports `wp_options` (incl. multisite) and taxonomy terms.
 
 #### WP-CLI
 
@@ -61,6 +61,9 @@ WP-CFM supports pulling / pushing bundles from the command-line using [WP-CLI](h
 ```php
 wp config pull <bundle_name>
 wp config push <bundle_name>
+wp config diff <bundle_name>
+wp config bundles
+wp config show_bundle <bundle_name>
 ```
 
 You can optionally set `bundle_name` to "all" to include all bundles. Also, append the `--network` flag to include multisite bundles.
