@@ -126,7 +126,7 @@
 .wpcfm-diff .diff {
     background: #fff;
     padding: 16px;
-    overflow: auto;
+    word-wrap: break-word;
     font-family: "Courier New", sans-serif;
 }
 
