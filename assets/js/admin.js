@@ -27,13 +27,7 @@
                 $('.wpcfm-bundles').append($this);
 
                 // Trigger jQuery Multi Select
-                $this.find('.bundle-select').multipleSelect({
-                    width: 600,
-                    multiple: true,
-                    multipleWidth: 280,
-                    keepOpen: true,
-                    isOpen: true
-                });
+                $this.find('.bundle-select').multiSelect();
             });
         }, 'json');
 
@@ -52,7 +46,7 @@
                 var obj = {
                     'label': $this.find('.bundle-label').val(),
                     'name': $this.find('.bundle-name').val(),
-                    'config': $this.find('.bundle-select').multipleSelect('getSelects')
+                    'config': $this.find('.bundle-select').val()
                 };
 
                 data.bundles.push(obj);
@@ -75,13 +69,7 @@
             $('.wpcfm-bundles').append(html);
 
             var $row = $('.wpcfm-bundles .bundle-row:last');
-            $row.find('.bundle-select').multipleSelect({
-                width: 600,
-                multiple: true,
-                multipleWidth: 280,
-                keepOpen: true,
-                isOpen: true
-            });
+            $row.find('.bundle-select').multiSelect();
             $row.addClass('unsaved');
             $row.find('.bundle-toggle').trigger('click');
         });

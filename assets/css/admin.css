@@ -30,7 +30,7 @@
 }
 
 .bundle-select-wrapper {
-    height: 300px;
+    --height: 300px;
 }
 
 .remove-bundle {
@@ -104,8 +104,20 @@
 
 /* MultiSelect */
 
-.ms-parent .ms-choice {
-    display: none;
+.multiselect {
+    height: 200px;
+    margin: 20px 0;
+    overflow: auto;
+}
+
+.multiselect .optgroup-label {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.multiselect .opt {
+    display: inline-block;
+    width: 33%;
 }
 
 /* Diff */

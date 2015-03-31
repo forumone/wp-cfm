@@ -6,12 +6,10 @@ $configuration = $this->helper->group_items( $configuration );
 ?>
 
 <script src="<?php echo WPCFM_URL; ?>/assets/js/admin.js"></script>
-<script src="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/jquery.multiple.select.js"></script>
+<script src="<?php echo WPCFM_URL; ?>/assets/js/multiselect/jquery.multiselect.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/diff_match_patch.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/jquery.pretty-text-diff.js"></script>
-
 <link href="<?php echo WPCFM_URL; ?>/assets/css/admin.css" rel="stylesheet">
-<link href="<?php echo WPCFM_URL; ?>/assets/js/multiple-select/multiple-select.css" rel="stylesheet">
 
 <div class="wrap">
     <h2>WP-CFM</h2>
@@ -88,7 +86,7 @@ $configuration = $this->helper->group_items( $configuration );
                     </select>
                 </div>
                 <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
-                <a class="download-bundle hidden"><?php _e( 'Download Bundle', 'wpcfm' ); ?></a>
+                <a class="download-bundle hidden"><?php _e( 'Download', 'wpcfm' ); ?></a>
                 <div class="clear"></div>
             </div>
         </div>

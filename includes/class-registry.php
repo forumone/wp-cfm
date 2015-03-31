@@ -88,7 +88,7 @@ class WPCFM_Registry
 
         $result = array();
         foreach ( $settings['bundles'] as $bundle ) {
-            foreach ( $bundle['config'] as $option ) {
+            foreach ( (array) $bundle['config'] as $option ) {
                 if ( empty( $result[ $option ] ) ) {
                     $result[ $option ] = array( $bundle['name'] );
                 }
