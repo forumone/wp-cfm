@@ -102,8 +102,7 @@ class WPCFM_Taxonomy
             }
 
             /**
-             * Get the parent term's slug
-             * We need this to map to the correct parent ID
+             * Get the parent term ID (from the mapping array)
              */
             if ( 0 < $parent && isset( $term_id_mapping[ $parent ] ) ) {
                 $parent = $term_id_mapping[ $parent ];
