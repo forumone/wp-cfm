@@ -90,6 +90,13 @@ You can optionally set `bundle_name` to "all" to include all bundles. Also, appe
 
 == Changelog ==
 
+= 1.4 =
+* New: support for taxonomy terms
+* Improved: better usability for response messages
+* Improved: replaced multiselect UI tool
+* Fixed: diff viewer highlighting issues
+* Added screenshots
+
 = 1.3.2 =
 * wp-cli diff support (props @joshkoenig)
 * wp-cli show bundles support (props @joshkoenig)
