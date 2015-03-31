@@ -3,7 +3,7 @@ Contributors: mgibbs189
 Donate link: http://forumone.com/
 Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 3.9
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: trunk
 License: GPL2
 
@@ -13,8 +13,6 @@ Manage and deploy WordPress configuration changes
 
 WP-CFM lets you copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's Features module.
 It does the dirty work of deploying configuration changes so you don't have to.
-
-[Admin Screen](http://i.imgur.com/opQhDUa.png)
 
 = How will WP-CFM benefit me? =
 
@@ -84,6 +82,11 @@ You can optionally set `bundle_name` to "all" to include all bundles. Also, appe
 
 1. Download and activate the plugin.
 2. Browse to `Settings > WP-CFM` to configure.
+
+== Screenshots ==
+1. The admin management interface
+2. Editing a configuration "bundle"
+3. Diff viewer to track changes within a bundle
 
 == Changelog ==
 
