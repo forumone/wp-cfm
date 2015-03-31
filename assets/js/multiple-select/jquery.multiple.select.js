@@ -12,7 +12,7 @@
     function MultipleSelect($el, options) {
         var that = this,
             name = $el.attr('name') || options.name || '',
-            elWidth = $el.outerWidth();
+            elWidth = $el.width();
 
         this.$el = $el.hide();
         this.options = options;
@@ -28,7 +28,10 @@
         if (this.$el.prop('disabled')) {
             this.$choice.addClass('disabled');
         }
-        this.$parent.css('width', options.width || elWidth);
+        this.$choice.css('width', elWidth + 'px');
+        this.$drop.css({
+            width: (options.width || elWidth) + 'px'
+        });
 
         if (!this.options.keepOpen) {
             $('body').click(function(e) {
@@ -76,7 +79,7 @@
             $.each(this.$el.children(), function(i, elm) {
                 html.push(that.optionToHtml(i, elm));
             });
-            html.push('<li class="ms-no-results">' + this.options.noMatchesFound + '</li>');
+            html.push('<li class="ms-no-results">No matches found</li>');
             html.push('</ul>');
             this.$drop.html(html.join(''));
             this.$drop.find('ul').css('max-height', this.options.maxHeight + 'px');
@@ -107,32 +110,22 @@
             if ($elm.is('option')) {
                 var value = $elm.val(),
                     text = $elm.text(),
-                    selected = (that.$el.attr('multiple') != undefined) ? $elm.prop('selected') : ($elm.attr('selected') == 'selected'),
+                    selected = $elm.prop('selected'),
                     style = this.options.styler(value) ? ' style="' + this.options.styler(value) + '"' : '';
 
                 disabled = groupDisabled || $elm.prop('disabled');
-                if ((this.options.blockSeperator>"") && (this.options.blockSeperator==$elm.val())) {
-	                html.push(
-		                    '<li' + (multiple ? ' class="multiple"' : '') + style + '>',
-		                        '<label class="' + this.options.blockSeperator + (disabled ? 'disabled' : '') + '">',
-		                            text,
-		                        '</label>',
-		                    '</li>'
-	                );                	
-                } else {
-	                html.push(
-		                    '<li' + (multiple ? ' class="multiple"' : '') + style + '>',
-		                        '<label' + (disabled ? ' class="disabled"' : '') + '>',
-		                            '<input type="' + type + '" ' + this.selectItemName + ' value="' + value + '"' +
-		                                (selected ? ' checked="checked"' : '') +
-		                                (disabled ? ' disabled="disabled"' : '') +
-		                                (group ? ' data-group="' + group + '"' : '') +
-		                                '/> ',
-		                            text,
-		                        '</label>',
-		                    '</li>'
-	                );
-                }
+                html.push(
+                    '<li' + (multiple ? ' class="multiple"' : '') + style + '>',
+                        '<label' + (disabled ? ' class="disabled"' : '') + '>',
+                            '<input type="' + type + '" ' + this.selectItemName + ' value="' + value + '"' +
+                                (selected ? ' checked="checked"' : '') +
+                                (disabled ? ' disabled="disabled"' : '') +
+                                (group ? ' data-group="' + group + '"' : '') +
+                                '/> ',
+                            text,
+                        '</label>',
+                    '</li>'
+                );
             } else if (!group && $elm.is('optgroup')) {
                 var _group = 'group_' + i,
                     label = $elm.attr('label');
@@ -208,10 +201,6 @@
                     value: $(this).val(),
                     checked: $(this).prop('checked')
                 });
-
-                if (that.options.single && that.options.isOpen && !that.options.keepOpen) {
-                    that.close();
-                }
             });
         },
 
@@ -222,11 +211,6 @@
             this.options.isOpen = true;
             this.$choice.find('>div').addClass('open');
             this.$drop.show();
-
-            // fix filter bug: no results show
-            this.$selectAll.parent().show();
-            this.$noResults.hide();
-
             if (this.options.container) {
                 var offset = this.$drop.offset();
                 this.$drop.appendTo($(this.options.container));
@@ -248,13 +232,13 @@
                 this.$drop.css({
                     'top': 'auto',
                     'left': 'auto'
-                });
+                })
             }
             this.options.onClose();
         },
 
         update: function() {
-            var selects = this.getSelects(),
+            var selects = this.getSelects('text'),
                 $span = this.$choice.find('>span');
             if (selects.length === this.$selectItems.length + this.$disableItems.length && this.options.allSelected) {
                 $span.removeClass('placeholder').html(this.options.allSelected);
@@ -263,7 +247,7 @@
                     .replace('#', selects.length)
                     .replace('%', this.$selectItems.length + this.$disableItems.length));
             } else if (selects.length) {
-                $span.removeClass('placeholder').html(this.getSelects('text').join(', '));
+                $span.removeClass('placeholder').html(selects.join(', '));
             } else {
                 $span.addClass('placeholder').html(this.options.placeholder);
             }
@@ -458,7 +442,6 @@
         allSelected: 'All selected',
         minumimCountSelected: 3,
         countSelected: '# of % selected',
-        noMatchesFound: 'No matches found',
         multiple: false,
         multipleWidth: 80,
         single: false,
@@ -468,7 +451,6 @@
         container: null,
         position: 'bottom',
         keepOpen: false,
-        blockSeperator: '',
 
         styler: function() {return false;},
 

@@ -165,8 +165,8 @@
 
         // Close the Diff viewer
         $(document).on('click', '.media-modal-close', function() {
-                $('.media-modal').hide();
-                $('.media-modal-backdrop').hide();
+            $('.media-modal').hide();
+            $('.media-modal-backdrop').hide();
         });
 
 
