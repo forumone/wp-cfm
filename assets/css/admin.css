@@ -29,10 +29,6 @@
     display: none;
 }
 
-.bundle-select-wrapper {
-    --height: 300px;
-}
-
 .remove-bundle {
     float: right;
     color: #a00;

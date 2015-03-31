@@ -134,9 +134,8 @@
                 else {
                     $('.wpcfm-diff .original').text(response.file);
                     $('.wpcfm-diff .changed').text(response.db);
-                    $('.wpcfm-diff').prettyTextDiff({
-                        cleanup: true
-                    });
+                    $('.wpcfm-diff').prettyTextDiff();
+                    /*
                     var lines = $('.wpcfm-diff').html().split('<br>');
                     for (var i = 0; i < lines.length; i++) {
                         if (lines[i].indexOf('<del>') !== -1 || lines[i].indexOf('<ins>') !== -1) {
@@ -144,6 +143,7 @@
                         }
                     }
                     $('.wpcfm-diff').html(lines.join('<br>'));
+                    */
                 }
                 $('.media-modal').show();
                 $('.media-modal-backdrop').show();

@@ -62,6 +62,7 @@ class WPCFM_Ajax
             if ( isset( $comparison['db'] ) ) {
                 $comparison['db'] = print_r( $comparison['db'], true );
             }
+
             echo json_encode( $comparison );
         }
         exit;
