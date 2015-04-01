@@ -34,11 +34,11 @@ Out-of-the-box, WP-CFM supports `wp_options` (incl. multisite) and taxonomy term
 WP-CFM supports [pull / push / diff] of bundles from the command-line using [WP-CLI](http://wp-cli.org/):
 
 <pre>
-wp config pull < bundle_name >
-wp config push < bundle_name >
-wp config diff < bundle_name >
+wp config pull [bundle_name]
+wp config push [bundle_name]
+wp config diff [bundle_name]
 wp config bundles
-wp config show_bundle < bundle_name >
+wp config show_bundle [bundle_name]
 </pre>
 
 You can optionally set `bundle_name` to "all" to include all bundles.
