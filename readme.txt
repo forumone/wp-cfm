@@ -12,7 +12,6 @@ Manage and deploy WordPress configuration changes
 == Description ==
 
 WP-CFM lets you copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's Features module.
-It does the dirty work of deploying configuration changes so you don't have to.
 
 = How will WP-CFM benefit me? =
 
@@ -20,11 +19,31 @@ It does the dirty work of deploying configuration changes so you don't have to.
 * No more rushing to figure out which settings you forgot to change.
 * Easily track and version configuration changes via git, subversion, etc.
 
+= Which configuration does WP-CFM support? =
+
+Out-of-the-box, WP-CFM supports `wp_options` (incl. multisite) and taxonomy terms.
+
 = Terminology =
 
 * Bundle - A group of (one or more) settings to track
 * Push - Export database settings to the filesystem
 * Pull - Import file-based settings into the database
+
+= WP-CLI =
+
+WP-CFM supports [pull / push / diff] of bundles from the command-line using [WP-CLI](http://wp-cli.org/):
+
+<pre>
+wp config pull < bundle_name >
+wp config push < bundle_name >
+wp config diff < bundle_name >
+wp config bundles
+wp config show_bundle < bundle_name >
+</pre>
+
+You can optionally set `bundle_name` to "all" to include all bundles.
+
+Append the `--network` flag to include multisite bundles.
 
 = How to add custom configuration =
 
@@ -59,24 +78,6 @@ function my_pull_handler( $params ) {
     // Save something
 }
 </pre>
-
-= Which configuration does WP-CFM support? =
-
-Out-of-the-box, WP-CFM supports the `wp_options` table (incl. multisite).
-
-= WP-CLI =
-
-WP-CFM supports [pull / push / diff] of bundles from the command-line using [WP-CLI](http://wp-cli.org/):
-
-<pre>
-wp config pull <bundle_name>
-wp config push <bundle_name>
-wp config diff <bundle_name>
-wp config bundles
-wp config show_bundle <bundle_name>
-</pre>
-
-You can optionally set `bundle_name` to "all" to include all bundles. Also, append the `--network` flag to include multisite bundles.
 
 == Installation ==
 
