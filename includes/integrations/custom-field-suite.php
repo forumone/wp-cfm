@@ -5,7 +5,6 @@ class WPCFM_Custom_Field_Suite
 
     function __construct() {
         add_filter( 'wpcfm_configuration_items', array( $this, 'configuration_items' ) );
-        add_filter( 'wpcfm_pull_callback', array( $this, 'pull_callback' ), 10, 2 );
     }
 
 
@@ -17,9 +16,10 @@ class WPCFM_Custom_Field_Suite
 
         foreach ( $field_groups as $name => $group ) {
             $items[ "cfs_field_group_$name" ] = array(
-                'value' => json_encode( $group ),
-                'label' => $group['post_title'],
-                'group' => 'Custom Field Suite',
+                'value'     => json_encode( $group ),
+                'label'     => $group['post_title'],
+                'group'     => 'Custom Field Suite',
+                'callback'  => array( $this, 'cfs_pull' )
             );
         }
 
@@ -31,24 +31,13 @@ class WPCFM_Custom_Field_Suite
 
 
     /**
-     * Tell WP-CFM how to import the field groups into the DB
-     */
-    function pull_callback( $callback, $callback_params ) {
-        if ( false !== strpos( $callback_params['name'], 'cfs_field_group' ) ) {
-            $callback = 'cfs_import_field_group';
-        }
-        return $callback;
-    }
-
-
-    /**
      * Import (overwrite) field groups into DB
      * @param string $params['name']
      * @param string $params['group']
      * @param string $params['old_value'] The previous settings data
      * @param string $params['new_value'] The new settings data
      */
-    function import_field_group( $params ) {
+    function cfs_pull( $params ) {
 
         $import_code = array();
         $old_value = json_decode( $params['old_value'], true );
@@ -117,7 +106,7 @@ class WPCFM_Custom_Field_Suite
         global $wpdb;
 
         $field_groups = array();
-        $field_group_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'cfs'" );
+        $field_group_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'cfs' AND post_status = 'publish'" );
         $export = CFS()->field_group->export( array( 'field_groups' => $field_group_ids ) );
 
         foreach ( $export as $field_group ) {
@@ -161,7 +150,7 @@ class WPCFM_Custom_Field_Suite
     }
 }
 
-// Run if CFS is active
+// Requires CFS
 if ( is_plugin_active( 'custom-field-suite/cfs.php' ) ) {
     new WPCFM_Custom_Field_Suite();
 }
