@@ -103,15 +103,15 @@ class WPCFM_Advanced_Custom_Fields
         foreach ( $fields as $index => $field ) {
 
             // add parent
-            if ( empty($field['parent']) ) {
+            if ( empty( $field['parent'] ) ) {
                 $field['parent'] = $field_group['ID'];
             }
-            else if ( isset ( $ref[ $field['parent'] ] ) ) {
+            else if ( isset( $ref[ $field['parent'] ] ) ) {
                 $field['parent'] = $ref[ $field['parent'] ];
             }
 
             // add field menu_order
-            if ( ! isset($order[ $field['parent'] ] ) ) {
+            if ( ! isset( $order[ $field['parent'] ] ) ) {
                 $order[ $field['parent'] ] = 0;
             }
 
