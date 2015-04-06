@@ -19,9 +19,13 @@ WP-CFM lets you copy database configuration to / from the filesystem. Easily dep
 * No more rushing to figure out which settings you forgot to change.
 * Easily track and version configuration changes via git, subversion, etc.
 
-= Which configuration does WP-CFM support? =
+= Which data does WP-CFM support? =
 
-Out-of-the-box, WP-CFM supports `wp_options` (incl. multisite) and taxonomy terms.
+* WP settings (`wp_options` table)
+* Multisite settings (`wp_sitemeta` table)
+* Taxonomy terms
+* Custom Field Suite field groups
+* Coming soon: Advanced Custom Fields support
 
 = Terminology =
 
