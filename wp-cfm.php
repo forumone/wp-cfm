@@ -56,7 +56,7 @@ class WPCFM_Core
      */
     public static function instance() {
         if ( ! isset( self::$instance ) ) {
-            self::$instance = new WPCFM_Core;
+            self::$instance = new self;
         }
         return self::$instance;
     }
