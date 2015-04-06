@@ -47,6 +47,7 @@ class WPCFM_Taxonomy
         if ( 'tax/' == substr( $callback_params['name'], 0, 4 ) ) {
             return array( $this, 'import_terms' );
         }
+        return $callback;
     }
 
 
