@@ -5,6 +5,7 @@ class WPCFM_Custom_Field_Suite
 
     function __construct() {
         add_filter( 'wpcfm_configuration_items', array( $this, 'configuration_items' ) );
+        add_filter( 'wpcfm_pull_callback', array( $this, 'pull_callback' ), 10, 2 );
     }
 
 
@@ -16,10 +17,9 @@ class WPCFM_Custom_Field_Suite
 
         foreach ( $field_groups as $name => $group ) {
             $items[ "cfs_field_group_$name" ] = array(
-                'value'     => json_encode( $group ),
-                'label'     => $group['post_title'],
-                'group'     => 'Custom Field Suite',
-                'callback'  => array( $this, 'cfs_pull' )
+                'value' => json_encode( $group ),
+                'label' => $group['post_title'],
+                'group' => 'Custom Field Suite',
             );
         }
 
@@ -27,6 +27,17 @@ class WPCFM_Custom_Field_Suite
         unset( $items['cfs_next_field_id'] );
         unset( $items['cfs_version'] );
         return $items;
+    }
+
+
+    /**
+     * Tell WP-CFM to use cfs_pull() for field groups
+     */
+    function pull_callback( $callback, $callback_params ) {
+        if ( 0 === strpos( $callback_params['name'], 'cfs_field_group_' ) ) {
+            return array( $this, 'cfs_pull' );
+        }
+        return $callback;
     }
 
 
