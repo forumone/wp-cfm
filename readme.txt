@@ -91,6 +91,11 @@ function my_pull_handler( $params ) {
 
 == Changelog ==
 
+= 1.4.1 =
+* Wrapped CFS integration into a class
+* Removed unnecessary diff code
+* Code formatting tweaks
+
 = 1.4 =
 * New: support for taxonomy terms
 * Improved: better usability for response messages
