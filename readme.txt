@@ -95,6 +95,11 @@ function my_pull_handler( $params ) {
 
 == Changelog ==
 
+= 1.4.2 =
+* Fixed: pulls broken due to taxonomy bug
+* Fixed: Custom Field Suite support
+* Improved: code formatting
+
 = 1.4.1 =
 * Wrapped CFS integration into a class
 * Removed unnecessary diff code
