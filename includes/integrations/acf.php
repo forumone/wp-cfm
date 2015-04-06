@@ -139,8 +139,10 @@ class WPCFM_Advanced_Custom_Fields
 }
 
 // Reqires ACF 5.0+
+/*
 if ( is_plugin_active( 'advanced-custom-fields/acf.php' ) ) {
     if ( class_exists( 'acf_settings_export' ) ) {
         new WPCFM_Advanced_Custom_Fields();
     }
 }
+*/
