@@ -35,7 +35,9 @@ class WPCFM_Readwrite
         $settings = json_decode( $settings, true );
 
         // Is this really needed (and is it a good place?)
-        if (!is_array($settings) || !isset($settings['bundles'])) $settings = array('bundles' => array());
+        if ( ! is_array( $settings ) || ! isset( $settings['bundles'] ) ) {
+            $settings = array( 'bundles' => array() );
+        }
 
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
@@ -58,12 +60,13 @@ class WPCFM_Readwrite
 
             if ( ! $exists ) {
                 $settings['bundles'][] = array(
-                    'label' => $bundle_label,
-                    'name' => $bundle_name,
-                    'config' => array_keys( $data ),
+                    'label'     => $bundle_label,
+                    'name'      => $bundle_name,
+                    'config'    => array_keys( $data ),
                 );
             }
         }
+
         // Write the settings
         WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
     }
@@ -83,7 +86,7 @@ class WPCFM_Readwrite
             $bundle_meta = WPCFM()->helper->get_bundle_by_name( $bundle_name );
             $data['.label'] = $bundle_meta['label'];
 
-            // JSON_PRETTY_PRINT is only for PHP 5.4+
+            // JSON_PRETTY_PRINT for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
                 json_encode( $data, JSON_PRETTY_PRINT ) :
                 json_encode( $data );
@@ -254,10 +257,10 @@ class WPCFM_Readwrite
 
             // Create the callback params
             $callback_params = array(
-                'name' => $key,
-                'group' => $group,
-                'old_value' => $db_data[ $key ]['value'],
-                'new_value' => $val,
+                'name'          => $key,
+                'group'         => $group,
+                'old_value'     => $db_data[ $key ]['value'],
+                'new_value'     => $val,
             );
 
             // If no callback is defined, default to the "callback_wp_options" method
