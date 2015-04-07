@@ -80,8 +80,10 @@ function my_configuration_items( $items ) {
  * $params['old_value']     The current DB value that will get overwritten
  * $params['new_value']     The new DB value
  */
-function my_pull_handler( $params ) {
-    // Import the data
+function my_pull_callback( $params ) {
+    if ( 'myprefix_data' == $params['name'] ) {
+        // Import the data
+    }
 }
 </pre>
 
