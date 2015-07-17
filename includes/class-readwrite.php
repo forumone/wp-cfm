@@ -167,7 +167,13 @@ class WPCFM_Readwrite
      * @return array
      */
     function read_file( $bundle_name ) {
-        $filename = $this->bundle_filename( $bundle_name );
+        $source = WPCFM()->options->source;
+        if ($source) {
+            $filename = $source . '/' . $bundle_name . '.json';
+        }
+        else {
+            $filename = $this->bundle_filename( $bundle_name );
+        }
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
             return json_decode( $contents, true );
