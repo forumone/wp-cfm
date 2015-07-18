@@ -28,6 +28,7 @@ class WPCFM_Readwrite
      * @param string $bundle_name The bundle name (or "all")
      */
     function pull_bundle( $bundle_name ) {
+        $source = WPCFM()->options->source;
         $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
 
         // Retrieve the settings
@@ -53,6 +54,7 @@ class WPCFM_Readwrite
                 if ( $bundle_name == $bundle_settings['name'] ) {
                     $settings['bundles'][ $key ]['label'] = $bundle_label;
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
+                    $settings['bundles'][ $key ]['source'] = $source;
                     $exists = true;
                     break;
                 }
@@ -63,6 +65,7 @@ class WPCFM_Readwrite
                     'label'     => $bundle_label,
                     'name'      => $bundle_name,
                     'config'    => array_keys( $data ),
+                    'source'    => $source,
                 );
             }
         }
