@@ -124,6 +124,10 @@ class WPCFM_Readwrite
         }
         // Diff a single bundle
         else {
+            $bundle = WPCFM()->helper->get_bundle_by_name( $bundle_name );
+            if (isset($bundle['source'])) {
+                $this->folder = $bundle['source'];
+            }
             $file_bundle = $this->read_file( $bundle_name );
             $db_bundle = $this->read_db( $bundle_name );
         }
