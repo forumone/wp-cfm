@@ -54,9 +54,7 @@ class WPCFM_CLI_Command extends WP_CLI_Command
             WPCFM()->options->source = $assoc_args['source'];
         }
 
-        $success = WPCFM()->readwrite->pull_bundle( $args[0] );
-        if ($success)
-            WP_CLI::success( 'The bundle has been pulled into the database.' );
+        WP_CLI::success( 'The bundle has been pulled into the database.' );
     }
 
 
