@@ -59,16 +59,16 @@ class WPCFM_Readwrite
             }
 
             if ( ! $exists ) {
-                    $bundle = array(
+                    $new_bundle = array(
                     'label'     => $bundle_label,
                     'name'      => $bundle_name,
                     'source'    => $this->folder,
                     'config'    => array_keys( $data ),
                 );
                 if ($this->folder == WPCFM_CONFIG_DIR) {
-                    unset ($bundle['source']);
+                    unset ($new_bundle['source']);
                 }
-                $settings['bundles'][] = $bundle;
+                $settings['bundles'][] = $new_bundle;
             }
         }
 
