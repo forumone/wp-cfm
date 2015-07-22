@@ -54,6 +54,10 @@ class WPCFM_Readwrite
                     $settings['bundles'][ $key ]['label'] = $bundle_label;
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
                     $exists = true;
+
+                    if ($this->folder != WPCFM_CONFIG_DIR) {
+                        $settings['bundles'][$key]['source'] = $this->folder;
+                    }
                     break;
                 }
             }
