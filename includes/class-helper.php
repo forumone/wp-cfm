@@ -68,7 +68,7 @@ class WPCFM_Helper
     function get_file_bundles() {
 
         $output = array();
-        $filenames = scandir( WPCFM_CONFIG_DIR );
+        $filenames = scandir( WPCFM()->readwrite->folder );
         $filenames = array_diff( $filenames, array( '.', '..' ) );
 
         foreach ( $filenames as $filename ) {
