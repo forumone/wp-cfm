@@ -54,16 +54,24 @@ class WPCFM_Readwrite
                     $settings['bundles'][ $key ]['label'] = $bundle_label;
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
                     $exists = true;
+
+                    if ($this->folder != WPCFM_CONFIG_DIR) {
+                        $settings['bundles'][$key]['source'] = $this->folder;
+                    }
                     break;
                 }
             }
 
             if ( ! $exists ) {
-                $settings['bundles'][] = array(
+                    $new_bundle = array(
                     'label'     => $bundle_label,
                     'name'      => $bundle_name,
                     'config'    => array_keys( $data ),
                 );
+                if ($this->folder != WPCFM_CONFIG_DIR) {
+                    $new_bundle['source'] = $this->folder;
+                }
+                $settings['bundles'][] = $new_bundle;
             }
         }
 
@@ -147,7 +155,14 @@ class WPCFM_Readwrite
      */
 
     function bundle_filename( $bundle_name ) {
-        $filename = "$this->folder/$bundle_name.json";
+        $sources = WPCFM()->helper->get_bundle_sources();
+
+        if ($sources[$bundle_name]) {
+            $filename = "$sources[$bundle_name]/$bundle_name.json";
+        } else {
+            $filename = "$this->folder/$bundle_name.json";
+        }
+
 
         if ( is_multisite() ) {
             if ( WPCFM()->options->is_network ) {
@@ -171,6 +186,9 @@ class WPCFM_Readwrite
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
             return json_decode( $contents, true );
+        }
+        else {
+            WP_CLI::error('Could not find bundle');
         }
         return array();
     }

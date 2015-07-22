@@ -43,12 +43,15 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      *
      * wp config pull bundle_name
      *
-     * @synopsis <bundle_name> [--network]
+     * @synopsis <bundle_name> [--network] [--source]
      *
      */
     function pull( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
             WPCFM()->options->is_network = true;
+        }
+        if ( isset( $assoc_args['source'] ) ) {
+            WPCFM()->readwrite->folder = $assoc_args['source'];
         }
 
         WPCFM()->readwrite->pull_bundle( $args[0] );
