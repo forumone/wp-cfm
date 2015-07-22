@@ -36,6 +36,22 @@ class WPCFM_Helper
         return $output;
     }
 
+    /**
+     * Get bundle sources.
+     */
+    function get_bundle_sources() {
+        $opts = WPCFM()->options->get( 'wpcfm_settings' );
+        $opts = json_decode( $opts, true );
+
+        $sources = array();
+        foreach ($opts['bundles'] as $bundle) {
+            if (isset($bundle['source'])) {
+                $sources[$bundle['name']] = $bundle['source'];
+            }
+        }
+
+        return $sources;
+    }
 
     /**
      * Get bundle URL

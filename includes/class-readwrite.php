@@ -152,7 +152,14 @@ class WPCFM_Readwrite
      */
 
     function bundle_filename( $bundle_name ) {
-        $filename = "$this->folder/$bundle_name.json";
+        $sources = WPCFM()->helper->get_bundle_sources();
+
+        if ($sources[$bundle_name]) {
+            $filename = "$sources[$bundle_name]/$bundle_name.json";
+        } else {
+            $filename = "$this->folder/$bundle_name.json";
+        }
+
 
         if ( is_multisite() ) {
             if ( WPCFM()->options->is_network ) {
