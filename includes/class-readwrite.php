@@ -28,10 +28,6 @@ class WPCFM_Readwrite
      * @param string $bundle_name The bundle name (or "all")
      */
     function pull_bundle( $bundle_name ) {
-        $source = WPCFM()->options->source;
-        if ($source) {
-            $this->folder = $source;
-        }
         $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
 
         // Retrieve the settings
@@ -45,12 +41,6 @@ class WPCFM_Readwrite
 
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
-            if (empty($source)) {
-                $bundle = WPCFM()->helper->get_bundle_by_name( $bundle_name );
-                if (isset($bundle['source'])) {
-                    $this->folder = $bundle['source'];
-                }
-            }
             $data = $this->read_file( $bundle_name );
             $bundle_label = $data['.label'];
             unset( $data['.label'] );
@@ -63,7 +53,6 @@ class WPCFM_Readwrite
                 if ( $bundle_name == $bundle_settings['name'] ) {
                     $settings['bundles'][ $key ]['label'] = $bundle_label;
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
-                    $settings['bundles'][ $key ]['source'] = !empty($source) ? $source : $bundle_settings['source'];
                     $exists = true;
                     break;
                 }
@@ -74,7 +63,6 @@ class WPCFM_Readwrite
                     'label'     => $bundle_label,
                     'name'      => $bundle_name,
                     'config'    => array_keys( $data ),
-                    'source'    => !empty($source) ? $source : NULL,
                 );
             }
         }
@@ -133,10 +121,6 @@ class WPCFM_Readwrite
         }
         // Diff a single bundle
         else {
-            $bundle = WPCFM()->helper->get_bundle_by_name( $bundle_name );
-            if (isset($bundle['source'])) {
-                $this->folder = $bundle['source'];
-            }
             $file_bundle = $this->read_file( $bundle_name );
             $db_bundle = $this->read_db( $bundle_name );
         }
@@ -183,19 +167,10 @@ class WPCFM_Readwrite
      * @return array
      */
     function read_file( $bundle_name ) {
-        $source = WPCFM()->options->source;
-        if ($source) {
-            $filename = $source . '/' . $bundle_name . '.json';
-        }
-        else {
-            $filename = $this->bundle_filename( $bundle_name );
-        }
+        $filename = $this->bundle_filename( $bundle_name );
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
             return json_decode( $contents, true );
-        }
-        else {
-            WP_CLI::error('Could not find bundle');
         }
         return array();
     }
