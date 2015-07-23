@@ -188,7 +188,7 @@ class WPCFM_Readwrite
             return json_decode( $contents, true );
         }
         else {
-            WP_CLI::error('Could not find bundle');
+            WP_CLI::error("Could not find bundle: $bundle_name");
         }
         return array();
     }
