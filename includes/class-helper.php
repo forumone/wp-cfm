@@ -134,7 +134,12 @@ class WPCFM_Helper
      * Load all bundle names
      */
     function get_bundle_names() {
-        return array_keys( $this->get_bundles() );
+        if (WPCFM()->readwrite->folder != WPCFM_CONFIG_DIR) {
+            return array_keys($this->get_file_bundles());
+        }
+        else {
+            return array_keys( $this->get_bundles() );
+        }
     }
 
 
