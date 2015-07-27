@@ -114,6 +114,7 @@ class WPCFM_Helper
      * Get file bundles with specified source.
      */
     function get_source_file_bundles() {
+        $output = array();
         $source_bundles = $this->get_bundle_sources();
         foreach ($source_bundles as $bundle_name => $bundle_source) {
             $bundle_data = WPCFM()->readwrite->read_file( $bundle_name);
