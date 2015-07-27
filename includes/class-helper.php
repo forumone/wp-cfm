@@ -19,8 +19,7 @@ class WPCFM_Helper
         }
 
         // Then merge file bundles
-        $file_bundles = $this->get_file_bundles();
-        $file_bundles += $this->get_source_file_bundles();
+        $file_bundles = array_merge($this->get_file_bundles(), $this->get_source_file_bundles());
         foreach ( $file_bundles as $bundle_name => $bundle ) {
             if ( isset( $output[ $bundle_name ] ) ) {
                 $output[ $bundle_name ]['is_file'] = true;
