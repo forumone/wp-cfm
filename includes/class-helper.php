@@ -19,8 +19,7 @@ class WPCFM_Helper
         }
 
         // Then merge file bundles
-        $file_bundles = $this->get_file_bundles();
-        $file_bundles += $this->get_source_file_bundles();
+        $file_bundles = array_merge($this->get_file_bundles(), $this->get_source_file_bundles());
         foreach ( $file_bundles as $bundle_name => $bundle ) {
             if ( isset( $output[ $bundle_name ] ) ) {
                 $output[ $bundle_name ]['is_file'] = true;
@@ -115,9 +114,10 @@ class WPCFM_Helper
      * Get file bundles with specified source.
      */
     function get_source_file_bundles() {
+        $output = array();
         $source_bundles = $this->get_bundle_sources();
         foreach ($source_bundles as $bundle_name => $bundle_source) {
-            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name);
+            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
             $bundle_label = $bundle_data['.label'];
             unset( $bundle_data['.label'] );
             $output[ $bundle_name ] = array(
@@ -134,7 +134,12 @@ class WPCFM_Helper
      * Load all bundle names
      */
     function get_bundle_names() {
-        return array_keys( $this->get_bundles() );
+        if (WPCFM()->readwrite->folder != WPCFM_CONFIG_DIR) {
+            return array_keys($this->get_file_bundles());
+        }
+        else {
+            return array_keys( $this->get_bundles() );
+        }
     }
 
 
