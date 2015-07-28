@@ -117,7 +117,7 @@ class WPCFM_Helper
         $output = array();
         $source_bundles = $this->get_bundle_sources();
         foreach ($source_bundles as $bundle_name => $bundle_source) {
-            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name);
+            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
             $bundle_label = $bundle_data['.label'];
             unset( $bundle_data['.label'] );
             $output[ $bundle_name ] = array(
