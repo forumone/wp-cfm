@@ -42,6 +42,9 @@ class WPCFM_Readwrite
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
+            if( empty( $data ) ) {
+                WP_CLI::error("Could not find bundle: $bundle_name");
+            }
             $bundle_label = $data['.label'];
             unset( $data['.label'] );
 
@@ -186,9 +189,6 @@ class WPCFM_Readwrite
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
             return json_decode( $contents, true );
-        }
-        else {
-            WP_CLI::error("Could not find bundle: $bundle_name");
         }
         return array();
     }
