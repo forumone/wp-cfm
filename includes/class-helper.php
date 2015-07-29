@@ -130,9 +130,9 @@ class WPCFM_Helper
             $bundle_label = $bundle_data['.label'];
             unset( $bundle_data['.label'] );
             $output[ $bundle_name ] = array(
-                'label' => $bundle_label,
-                'name' => $bundle_name,
-                'config' => $bundle_data
+                'label'     => $bundle_label,
+                'name'      => $bundle_name,
+                'config'    => $bundle_data,
             );
         }
         return $output;
