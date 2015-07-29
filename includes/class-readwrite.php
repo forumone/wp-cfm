@@ -160,7 +160,8 @@ class WPCFM_Readwrite
     function bundle_filename( $bundle_name ) {
         $sources = WPCFM()->helper->get_bundle_sources();
 
-        if ( $sources[$bundle_name] ) {
+        // Use stored path if it was previously specified.
+        if ( $sources[$bundle_name] && $this->folder == $sources[$bundle_name]) {
             $filename = "$sources[$bundle_name]/$bundle_name.json";
         } else {
             $filename = "$this->folder/$bundle_name.json";
