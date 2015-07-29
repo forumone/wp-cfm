@@ -99,7 +99,7 @@ class WPCFM_Readwrite
             unset($bundle_meta['label']);
 
             $settings['bundles'][] = array(
-                '.label'    => $data['.label'],
+                'label'    => $data['.label'],
                 'name'      => $bundle_name,
                 'config'    => $bundle_meta['config'],
                 'source'    => $this->folder,
