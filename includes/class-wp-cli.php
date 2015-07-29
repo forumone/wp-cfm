@@ -18,12 +18,15 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      *
      * wp config push bundle_name
      *
-     * @synopsis <bundle_name> [--network]
+     * @synopsis <bundle_name> [--network] [--destination]
      *
      */
     function push( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
             WPCFM()->options->is_network = true;
+        }
+        if ( isset( $assoc_args['destination'] ) ) {
+            WPCFM()->readwrite->folder = $assoc_args['destination'];
         }
 
         WPCFM()->readwrite->push_bundle( $args[0] );
