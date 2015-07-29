@@ -89,8 +89,19 @@ class WPCFM_Readwrite
      */
     function push_bundle( $bundle_name ) {
         $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
+        // Retrieve the settings
+        $settings = WPCFM()->options->get( 'wpcfm_settings' );
+        $settings = json_decode( $settings, true );
 
         foreach ( $bundles as $bundle_name ) {
+
+            foreach ( $settings['bundles'] as $key => $bundle ) {
+                if ( $bundle['name'] == $bundle_name ) {
+                    unset($settings['bundles'][$key]);
+                    break;
+                }
+            }
+
             $data = $this->read_db( $bundle_name );
 
             // Append the bundle label
