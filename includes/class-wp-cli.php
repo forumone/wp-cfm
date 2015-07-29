@@ -134,10 +134,10 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      */
     function bundles() {
         $bundles = WPCFM()->helper->get_bundles();
-        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Configs' );
+        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Source', 'Configs' );
         $table = new \cli\Table( $header, array() );
         foreach( $bundles as $bundle ) {
-            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'] );
+            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'], $bundle['source'] );
             $row[] = implode( ', ', $bundle['config'] );
             $table->addrow( $row );
         }
