@@ -96,6 +96,14 @@ class WPCFM_Readwrite
             // Append the bundle label
             $bundle_meta = WPCFM()->helper->get_bundle_by_name( $bundle_name );
             $data['.label'] = $bundle_meta['label'];
+            unset($bundle_meta['label']);
+
+            $settings['bundles'][] = array(
+                '.label'    => $data['.label'],
+                'name'      => $bundle_name,
+                'config'    => $bundle_meta['config'],
+                'source'    => $this->folder,
+            );
 
             // JSON_PRETTY_PRINT for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
@@ -104,6 +112,8 @@ class WPCFM_Readwrite
 
             $this->write_file( $bundle_name, $data );
         }
+
+        WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
