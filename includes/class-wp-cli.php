@@ -18,12 +18,15 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      *
      * wp config push bundle_name
      *
-     * @synopsis <bundle_name> [--network]
+     * @synopsis <bundle_name> [--network] [--destination]
      *
      */
     function push( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
             WPCFM()->options->is_network = true;
+        }
+        if ( isset( $assoc_args['destination'] ) ) {
+            WPCFM()->readwrite->folder = $assoc_args['destination'];
         }
 
         WPCFM()->readwrite->push_bundle( $args[0] );
@@ -98,7 +101,7 @@ class WPCFM_CLI_Command extends WP_CLI_Command
                     $only_file_rows[] = array( $key, $value );
                 }
                 elseif ( $value !== $compare['db'][$key] ) {
-                    $diff_rows[$key] = array( $key, $compare['file'][$key], $value );
+                    $diff_rows[$key] = array( $key, $compare['db'][$key], $value );
                 }
             }
             if ( count( $only_file_rows) > 0 ) {
@@ -112,7 +115,7 @@ class WPCFM_CLI_Command extends WP_CLI_Command
                 $db->display();
             }
             if ( count( $diff_rows ) > 0 ) {
-                $diff = new \cli\Table( array( 'Option', 'File value', 'DB value' ), $diff_rows);
+                $diff = new \cli\Table( array( 'Option', 'DB value', 'File value' ), $diff_rows);
                 WP_CLI::line( 'Options in both the database and in files.' );
                 $diff->display();
             }
@@ -131,10 +134,10 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      */
     function bundles() {
         $bundles = WPCFM()->helper->get_bundles();
-        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Configs' );
+        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Source', 'Configs' );
         $table = new \cli\Table( $header, array() );
         foreach( $bundles as $bundle ) {
-            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'] );
+            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'], $bundle['source'] );
             $row[] = implode( ', ', $bundle['config'] );
             $table->addrow( $row );
         }
