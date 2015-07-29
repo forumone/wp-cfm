@@ -78,7 +78,7 @@ class WPCFM_Helper
                 $bundle_name = str_replace( '.json', '', $filename );
 
                 // read_file checks if .json file has .label.
-                if (WPCFM()->readwrite->read_file( $bundle_name )) {
+                if ($bundle_data = WPCFM()->readwrite->read_file( $bundle_name )) {
                     if ( is_multisite() ) {
                         $filename_parts = explode( '-', $filename, 2 );
 
@@ -100,18 +100,14 @@ class WPCFM_Helper
 
                     }
 
-                    $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
+                    $bundle_label = $bundle_data['.label'];
+                    unset( $bundle_data['.label'] );
 
-                    if ( isset( $bundle_data ) ) {
-                        $bundle_label = $bundle_data['.label'];
-                        unset( $bundle_data['.label'] );
-
-                        $output[ $bundle_name ] = array(
-                            'label'     => $bundle_label,
-                            'name'      => $bundle_name,
-                            'config'    => $bundle_data,
-                        );
-                    }
+                    $output[ $bundle_name ] = array(
+                        'label'     => $bundle_label,
+                        'name'      => $bundle_name,
+                        'config'    => $bundle_data,
+                    );
                 }
             }
         }
