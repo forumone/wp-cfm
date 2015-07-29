@@ -188,7 +188,10 @@ class WPCFM_Readwrite
         $filename = $this->bundle_filename( $bundle_name );
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
-            return json_decode( $contents, true );
+            $contents = json_decode( $contents, true );
+            if (isset($contents['.label'])) {
+                return $contents;
+            }
         }
         return array();
     }
