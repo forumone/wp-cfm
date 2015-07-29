@@ -160,7 +160,7 @@ class WPCFM_Readwrite
     function bundle_filename( $bundle_name ) {
         $sources = WPCFM()->helper->get_bundle_sources();
 
-        if ($sources[$bundle_name]) {
+        if ( $sources[$bundle_name] ) {
             $filename = "$sources[$bundle_name]/$bundle_name.json";
         } else {
             $filename = "$this->folder/$bundle_name.json";
@@ -188,7 +188,12 @@ class WPCFM_Readwrite
         $filename = $this->bundle_filename( $bundle_name );
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
-            return json_decode( $contents, true );
+            $contents = json_decode( $contents, true );
+
+            // Check if valid bundle.
+            if (isset($contents['.label'])) {
+                return $contents;
+            }
         }
         return array();
     }

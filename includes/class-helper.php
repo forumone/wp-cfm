@@ -72,40 +72,44 @@ class WPCFM_Helper
         $filenames = array_diff( $filenames, array( '.', '..' ) );
 
         foreach ( $filenames as $filename ) {
+            // Check is .json file
+            if ( stripos( $filename, '.json')) {
+                // Default to single site bundle
+                $bundle_name = str_replace( '.json', '', $filename );
 
-            // Default to single site bundle
-            $bundle_name = str_replace( '.json', '', $filename );
+                // read_file checks if .json file has .label.
+                if ($bundle_data = WPCFM()->readwrite->read_file( $bundle_name )) {
+                    if ( is_multisite() ) {
+                        $filename_parts = explode( '-', $filename, 2 );
 
-            if ( is_multisite() ) {
-                $filename_parts = explode( '-', $filename, 2 );
+                        // Only accept multi-site bundles
+                        if ( 2 > count( $filename_parts ) ) {
+                            continue;
+                        }
 
-                // Only accept multi-site bundles
-                if ( 2 > count( $filename_parts ) ) {
-                    continue;
-                }
+                        $bundle_name = str_replace( '.json', '', $filename_parts[1] );
 
-                $bundle_name = str_replace( '.json', '', $filename_parts[1] );
+                        if ( WPCFM()->options->is_network ) {
+                            if ( 'network' != $filename_parts[0] ) {
+                                continue;
+                            }
+                        }
+                        elseif ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
+                            continue;
+                        }
 
-                if ( WPCFM()->options->is_network ) {
-                    if ( 'network' != $filename_parts[0] ) {
-                        continue;
                     }
-                }
-                elseif ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
-                    continue;
-                }
 
+                    $bundle_label = $bundle_data['.label'];
+                    unset( $bundle_data['.label'] );
+
+                    $output[ $bundle_name ] = array(
+                        'label'     => $bundle_label,
+                        'name'      => $bundle_name,
+                        'config'    => $bundle_data,
+                    );
+                }
             }
-
-            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
-            $bundle_label = $bundle_data['.label'];
-            unset( $bundle_data['.label'] );
-
-            $output[ $bundle_name ] = array(
-                'label'     => $bundle_label,
-                'name'      => $bundle_name,
-                'config'    => $bundle_data,
-            );
         }
         return $output;
     }
