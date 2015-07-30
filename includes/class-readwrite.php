@@ -88,7 +88,7 @@ class WPCFM_Readwrite
      * @param string $bundle_name The bundle name (or "all")
      */
     function push_bundle( $bundle_name ) {
-        $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
+        $bundles = ( 'all' == $bundle_name ) ? array_keys(WPCFM()->helper->get_bundles()) : array( $bundle_name );
         // Retrieve the settings
         $settings = WPCFM()->options->get( 'wpcfm_settings' );
         $settings = json_decode( $settings, true );
