@@ -61,6 +61,9 @@ class WPCFM_Readwrite
                     if ($this->folder != WPCFM_CONFIG_DIR) {
                         $settings['bundles'][$key]['source'] = $this->folder;
                     }
+                    else {
+                        unset ($settings['bundles'][$key]['source']);
+                    }
                     break;
                 }
             }
