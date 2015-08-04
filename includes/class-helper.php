@@ -56,11 +56,10 @@ class WPCFM_Helper
     /**
      * Get bundle URL
      */
-
     function get_bundle_url( $bundle_name ) {
-        $sources = $this->get_bundle_sources();
-        if ($sources[$bundle_name]) {
-            return $sources[$bundle_name] . '/' . basename( WPCFM()->readwrite->bundle_filename( $bundle_name ) );
+        $paths = $this->get_bundle_paths();
+        if ($paths[$bundle_name]) {
+            return $paths[$bundle_name] . '/' . basename( WPCFM()->readwrite->bundle_filename( $bundle_name ) );
         }
 
         return WPCFM_CONFIG_URL . '/' . basename( WPCFM()->readwrite->bundle_filename( $bundle_name ) );
