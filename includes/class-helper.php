@@ -37,16 +37,16 @@ class WPCFM_Helper
     }
 
     /**
-     * Get bundle sources.
+     * Get bundle paths.
      */
-    function get_bundle_sources() {
+    function get_bundle_paths() {
         $opts = WPCFM()->options->get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
 
         $sources = array();
         foreach ($opts['bundles'] as $bundle) {
-            if (isset($bundle['source'])) {
-                $sources[$bundle['name']] = $bundle['source'];
+            if (isset($bundle['path'])) {
+                $sources[$bundle['name']] = $bundle['path'];
             }
         }
 
