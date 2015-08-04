@@ -26,6 +26,9 @@ class WPCFM_CLI_Command extends WP_CLI_Command
             WPCFM()->options->is_network = true;
         }
         if ( isset( $assoc_args['destination'] ) ) {
+            if ( substr( $assoc_args['destination'], 0, 1 ) === '/' ) {
+                WP_CLI::error( 'Path must be relative to the site root directory.' );
+            }
             WPCFM()->readwrite->folder = $assoc_args['destination'];
         }
 
@@ -54,6 +57,9 @@ class WPCFM_CLI_Command extends WP_CLI_Command
             WPCFM()->options->is_network = true;
         }
         if ( isset( $assoc_args['source'] ) ) {
+            if ( substr( $assoc_args['source'], 0, 1 ) === '/' ) {
+                WP_CLI::error( 'Path must be relative to the site root directory.' );
+            }
             WPCFM()->readwrite->folder = $assoc_args['source'];
         }
 
