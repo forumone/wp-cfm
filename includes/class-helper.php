@@ -123,8 +123,8 @@ class WPCFM_Helper
      */
     function get_source_file_bundles() {
         $output = array();
-        $source_bundles = $this->get_bundle_sources();
-        foreach ($source_bundles as $bundle_name => $bundle_source) {
+        $paths = $this->get_bundle_paths();
+        foreach ($paths as $bundle_name => $bundle_path) {
             $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
             if ( !empty( $bundle_data ) ) {
                 $bundle_label = $bundle_data['.label'];
