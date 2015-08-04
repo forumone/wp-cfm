@@ -118,9 +118,18 @@ class WPCFM_Readwrite
                 'config'    => $bundle_meta['config'],
             );
             $path = str_replace(get_home_path(), '', $this->folder);
+            // Check if specified dir is different from default dir.
             if ( $path != str_replace(get_home_path(), '', WPCFM_CONFIG_DIR) ) {
                 $bundle['source'] = $path;
             }
+            // Check if bundle has a stored source.
+            else {
+                $sources = WPCFM()->helper->get_bundle_sources();
+                if ($sources[$bundle_name]) {
+                    $bundle['source'] = $sources[$bundle_name];
+                }
+            }
+
 
             $settings['bundles'][] = $bundle;
 
