@@ -124,9 +124,9 @@ class WPCFM_Readwrite
             }
             // Check if bundle has a stored source.
             else {
-                $sources = WPCFM()->helper->get_bundle_sources();
-                if ($sources[$bundle_name]) {
-                    $bundle['source'] = $sources[$bundle_name];
+                $paths = WPCFM()->helper->get_bundle_paths();
+                if ($paths[$bundle_name]) {
+                    $bundle['source'] = $paths[$bundle_name];
                 }
             }
 
