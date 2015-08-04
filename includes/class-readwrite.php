@@ -190,7 +190,7 @@ class WPCFM_Readwrite
         $sources = WPCFM()->helper->get_bundle_sources();
 
         if ( $sources[$bundle_name] && $this->folder == WPCFM_CONFIG_DIR) {
-            $filename = "$sources[$bundle_name]/$bundle_name.json";
+            $filename = get_home_path() . "$sources[$bundle_name]/$bundle_name.json";
         } else {
             $filename = "$this->folder/$bundle_name.json";
         }
