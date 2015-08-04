@@ -119,9 +119,9 @@ class WPCFM_Helper
     }
 
     /**
-     * Get file bundles with specified source.
+     * Get file bundles with specified path.
      */
-    function get_source_file_bundles() {
+    function get_path_file_bundles() {
         $output = array();
         $paths = $this->get_bundle_paths();
         foreach ($paths as $bundle_name => $bundle_path) {
