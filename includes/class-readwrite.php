@@ -59,10 +59,10 @@ class WPCFM_Readwrite
                     $exists = true;
 
                     if ($this->folder != WPCFM_CONFIG_DIR) {
-                        $settings['bundles'][$key]['source'] = $this->folder;
+                        $settings['bundles'][$key]['path'] = $this->folder;
                     }
                     else {
-                        unset ($settings['bundles'][$key]['source']);
+                        unset ($settings['bundles'][$key]['path']);
                     }
                     break;
                 }
@@ -75,7 +75,7 @@ class WPCFM_Readwrite
                     'config'    => array_keys( $data ),
                 );
                 if ($this->folder != WPCFM_CONFIG_DIR) {
-                    $new_bundle['source'] = $this->folder;
+                    $new_bundle['path'] = $this->folder;
                 }
                 $settings['bundles'][] = $new_bundle;
             }
@@ -120,13 +120,13 @@ class WPCFM_Readwrite
             $path = str_replace(get_home_path(), '', $this->folder);
             // Check if specified dir is different from default dir.
             if ( $path != str_replace(get_home_path(), '', WPCFM_CONFIG_DIR) ) {
-                $bundle['source'] = $path;
+                $bundle['path'] = $path;
             }
-            // Check if bundle has a stored source.
+            // Check if bundle has a stored path.
             else {
                 $paths = WPCFM()->helper->get_bundle_paths();
                 if ($paths[$bundle_name]) {
-                    $bundle['source'] = $paths[$bundle_name];
+                    $bundle['path'] = $paths[$bundle_name];
                 }
             }
 

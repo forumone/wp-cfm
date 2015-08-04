@@ -43,14 +43,14 @@ class WPCFM_Helper
         $opts = WPCFM()->options->get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
 
-        $sources = array();
+        $paths = array();
         foreach ($opts['bundles'] as $bundle) {
             if (isset($bundle['path'])) {
-                $sources[$bundle['name']] = $bundle['path'];
+                $paths[$bundle['name']] = $bundle['path'];
             }
         }
 
-        return $sources;
+        return $paths;
     }
 
     /**

@@ -10,7 +10,7 @@
                 $this.find('.bundle-label').val(obj.label);
                 $this.find('.bundle-name').val(obj.name);
                 $this.find('.bundle-select').val(obj.config);
-                $this.find('.bundle-source').html(obj.source);
+                $this.find('.bundle-path').html(obj.path);
                 $this.find('.bundle-toggle').html(obj.label);
                 $this.attr('data-bundle', obj.name);
 
