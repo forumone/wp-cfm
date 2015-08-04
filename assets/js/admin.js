@@ -48,7 +48,7 @@
                     'label': $this.find('.bundle-label').val(),
                     'name': $this.find('.bundle-name').val(),
                     'config': $this.find('.bundle-select').val(),
-                    'source': $this.find('.bundle-source').val()
+                    'path': $this.find('.bundle-path').text()
                 };
 
                 data.bundles.push(obj);
