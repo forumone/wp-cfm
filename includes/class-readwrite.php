@@ -61,6 +61,9 @@ class WPCFM_Readwrite
                     if ($this->folder != WPCFM_CONFIG_DIR) {
                         $settings['bundles'][$key]['source'] = $this->folder;
                     }
+                    else {
+                        unset ($settings['bundles'][$key]['source']);
+                    }
                     break;
                 }
             }
@@ -109,12 +112,26 @@ class WPCFM_Readwrite
             $data['.label'] = $bundle_meta['label'];
             unset($bundle_meta['label']);
 
-            $settings['bundles'][] = array(
+            $bundle = array(
                 'label'    => $data['.label'],
                 'name'      => $bundle_name,
                 'config'    => $bundle_meta['config'],
-                'source'    => $this->folder,
             );
+            $path = str_replace(get_home_path(), '', $this->folder);
+            // Check if specified dir is different from default dir.
+            if ( $path != str_replace(get_home_path(), '', WPCFM_CONFIG_DIR) ) {
+                $bundle['source'] = $path;
+            }
+            // Check if bundle has a stored source.
+            else {
+                $sources = WPCFM()->helper->get_bundle_sources();
+                if ($sources[$bundle_name]) {
+                    $bundle['source'] = $sources[$bundle_name];
+                }
+            }
+
+
+            $settings['bundles'][] = $bundle;
 
             // JSON_PRETTY_PRINT for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
@@ -182,7 +199,7 @@ class WPCFM_Readwrite
         $sources = WPCFM()->helper->get_bundle_sources();
 
         if ( $sources[$bundle_name] && $this->folder == WPCFM_CONFIG_DIR) {
-            $filename = "$sources[$bundle_name]/$bundle_name.json";
+            $filename = get_home_path() . "$sources[$bundle_name]/$bundle_name.json";
         } else {
             $filename = "$this->folder/$bundle_name.json";
         }
