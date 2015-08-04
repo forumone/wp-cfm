@@ -112,12 +112,17 @@ class WPCFM_Readwrite
             $data['.label'] = $bundle_meta['label'];
             unset($bundle_meta['label']);
 
-            $settings['bundles'][] = array(
+            $bundle = array(
                 'label'    => $data['.label'],
                 'name'      => $bundle_name,
                 'config'    => $bundle_meta['config'],
-                'source'    => $this->folder,
             );
+            $path = str_replace(get_home_path(), '', $this->folder);
+            if ( $path != str_replace(get_home_path(), '', WPCFM_CONFIG_DIR) ) {
+                $bundle['source'] = $path;
+            }
+
+            $settings['bundles'][] = $bundle;
 
             // JSON_PRETTY_PRINT for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
