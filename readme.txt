@@ -2,8 +2,8 @@
 Contributors: mgibbs189
 Donate link: http://forumone.com/
 Tags: configuration, settings, configuration management, features, drupal
-Requires at least: 3.9
-Tested up to: 4.2
+Requires at least: 4.0
+Tested up to: 4.3
 Stable tag: trunk
 License: GPL2
 
@@ -98,6 +98,9 @@ function my_pull_callback( $params ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.4.3 =
+* Fixed: WP-CLI diff (props @mortana42)
 
 = 1.4.2 =
 * Fixed: pulls broken due to taxonomy bug
