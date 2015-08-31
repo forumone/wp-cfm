@@ -73,6 +73,7 @@ $configuration = $this->helper->group_items( $configuration );
             <div class="bundle-row-inner">
                 <input type="text" class="bundle-label" value="New bundle" />
                 <input type="text" class="bundle-name" value="new_bundle" />
+                Path: <a class="bundle-path"></a>
                 <div class="bundle-select-wrapper">
                     <select class="bundle-select" multiple="multiple">
                     <?php foreach ( $configuration as $group => $config ) : ?>

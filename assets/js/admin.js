@@ -10,6 +10,7 @@
                 $this.find('.bundle-label').val(obj.label);
                 $this.find('.bundle-name').val(obj.name);
                 $this.find('.bundle-select').val(obj.config);
+                $this.find('.bundle-path').html(obj.path);
                 $this.find('.bundle-toggle').html(obj.label);
                 $this.attr('data-bundle', obj.name);
 
@@ -46,7 +47,8 @@
                 var obj = {
                     'label': $this.find('.bundle-label').val(),
                     'name': $this.find('.bundle-name').val(),
-                    'config': $this.find('.bundle-select').val()
+                    'config': $this.find('.bundle-select').val(),
+                    'path': $this.find('.bundle-path').text()
                 };
 
                 data.bundles.push(obj);
