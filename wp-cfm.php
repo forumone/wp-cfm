@@ -42,8 +42,8 @@ class WPCFM_Core
         // setup variables
         define( 'WPCFM_VERSION', '1.4.3' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
-        define( 'WPCFM_CONFIG_DIR', WP_CONTENT_DIR . '/config' );
-        define( 'WPCFM_CONFIG_URL', WP_CONTENT_URL . '/config' );
+        define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_content_dir', WP_CONTENT_DIR . '/config' ) );
+        define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_content_url', WP_CONTENT_URL . '/config' ) );
         define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 
         // WP is loaded
