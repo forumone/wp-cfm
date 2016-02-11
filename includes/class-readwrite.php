@@ -334,7 +334,8 @@ class WPCFM_Readwrite
 
             if ( is_callable( $callback ) ) {
                 if ( is_array( $callback ) ) {
-                    $success = $callback[0]->$callback[1]( $callback_params );
+                    $function = $callback[1];
+                    $success = $callback[0]->$function( $callback_params );
                 }
                 else {
                     $success = $callback( $callback_params );
