@@ -53,9 +53,13 @@ class WPCFM_Helper
 
         $output = array();
         $filenames = scandir( WPCFM_CONFIG_DIR );
-        $filenames = array_diff( $filenames, array( '.', '..' ) );
 
         foreach ( $filenames as $filename ) {
+
+            // Ignore dot files
+            if ( '.' == substr( $filename, 0, 1 ) ) {
+                continue;
+            }
 
             // Default to single site bundle
             $bundle_name = str_replace( '.json', '', $filename );
