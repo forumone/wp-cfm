@@ -19,7 +19,7 @@ class WPCFM_Helper
         }
 
         // Then merge file bundles
-        $file_bundles = array_merge($this->get_file_bundles(), $this->get_path_file_bundles());
+        $file_bundles = $this->get_file_bundles();
         foreach ( $file_bundles as $bundle_name => $bundle ) {
             if ( isset( $output[ $bundle_name ] ) ) {
                 $output[ $bundle_name ]['is_file'] = true;
@@ -36,32 +36,12 @@ class WPCFM_Helper
         return $output;
     }
 
-    /**
-     * Get bundle paths.
-     */
-    function get_bundle_paths() {
-        $opts = WPCFM()->options->get( 'wpcfm_settings' );
-        $opts = json_decode( $opts, true );
-
-        $paths = array();
-        foreach ($opts['bundles'] as $bundle) {
-            if (isset($bundle['path'])) {
-                $paths[$bundle['name']] = $bundle['path'];
-            }
-        }
-
-        return $paths;
-    }
 
     /**
      * Get bundle URL
      */
-    function get_bundle_url( $bundle_name ) {
-        $paths = $this->get_bundle_paths();
-        if ($paths[$bundle_name]) {
-            return $paths[$bundle_name] . '/' . basename( WPCFM()->readwrite->bundle_filename( $bundle_name ) );
-        }
 
+    function get_bundle_url( $bundle_name ) {
         return WPCFM_CONFIG_URL . '/' . basename( WPCFM()->readwrite->bundle_filename( $bundle_name ) );
     }
 
@@ -72,69 +52,44 @@ class WPCFM_Helper
     function get_file_bundles() {
 
         $output = array();
-        $filenames = scandir( WPCFM()->readwrite->folder );
+        $filenames = scandir( WPCFM_CONFIG_DIR );
         $filenames = array_diff( $filenames, array( '.', '..' ) );
 
         foreach ( $filenames as $filename ) {
-            // Check is .json file
-            if ( stripos( $filename, '.json')) {
-                // Default to single site bundle
-                $bundle_name = str_replace( '.json', '', $filename );
 
-                // read_file checks if .json file has .label.
-                if ($bundle_data = WPCFM()->readwrite->read_file( $bundle_name )) {
-                    if ( is_multisite() ) {
-                        $filename_parts = explode( '-', $filename, 2 );
+            // Default to single site bundle
+            $bundle_name = str_replace( '.json', '', $filename );
 
-                        // Only accept multi-site bundles
-                        if ( 2 > count( $filename_parts ) ) {
-                            continue;
-                        }
+            if ( is_multisite() ) {
+                $filename_parts = explode( '-', $filename, 2 );
 
-                        $bundle_name = str_replace( '.json', '', $filename_parts[1] );
-
-                        if ( WPCFM()->options->is_network ) {
-                            if ( 'network' != $filename_parts[0] ) {
-                                continue;
-                            }
-                        }
-                        elseif ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
-                            continue;
-                        }
-
-                    }
-
-                    $bundle_label = $bundle_data['.label'];
-                    unset( $bundle_data['.label'] );
-
-                    $output[ $bundle_name ] = array(
-                        'label'     => $bundle_label,
-                        'name'      => $bundle_name,
-                        'config'    => $bundle_data,
-                    );
+                // Only accept multi-site bundles
+                if ( 2 > count( $filename_parts ) ) {
+                    continue;
                 }
-            }
-        }
-        return $output;
-    }
 
-    /**
-     * Get file bundles with specified path.
-     */
-    function get_path_file_bundles() {
-        $output = array();
-        $paths = $this->get_bundle_paths();
-        foreach ($paths as $bundle_name => $bundle_path) {
-            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
-            if ( !empty( $bundle_data ) ) {
-                $bundle_label = $bundle_data['.label'];
-                unset( $bundle_data['.label'] );
-                $output[ $bundle_name ] = array(
-                    'label'     => $bundle_label,
-                    'name'      => $bundle_name,
-                    'config'    => $bundle_data,
-                );
+                $bundle_name = str_replace( '.json', '', $filename_parts[1] );
+
+                if ( WPCFM()->options->is_network ) {
+                    if ( 'network' != $filename_parts[0] ) {
+                        continue;
+                    }
+                }
+                elseif ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
+                    continue;
+                }
+
             }
+
+            $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
+            $bundle_label = $bundle_data['.label'];
+            unset( $bundle_data['.label'] );
+
+            $output[ $bundle_name ] = array(
+                'label'     => $bundle_label,
+                'name'      => $bundle_name,
+                'config'    => $bundle_data,
+            );
         }
         return $output;
     }
@@ -144,12 +99,7 @@ class WPCFM_Helper
      * Load all bundle names
      */
     function get_bundle_names() {
-        if (WPCFM()->readwrite->folder != WPCFM_CONFIG_DIR) {
-            return array_keys($this->get_file_bundles());
-        }
-        else {
-            return array_keys( $this->get_bundles() );
-        }
+        return array_keys( $this->get_bundles() );
     }
 
 

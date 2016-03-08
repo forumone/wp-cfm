@@ -42,9 +42,6 @@ class WPCFM_Readwrite
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
-            if( empty( $data ) ) {
-                WP_CLI::error("Could not find bundle: $bundle_name");
-            }
             $bundle_label = $data['.label'];
             unset( $data['.label'] );
 
@@ -57,27 +54,16 @@ class WPCFM_Readwrite
                     $settings['bundles'][ $key ]['label'] = $bundle_label;
                     $settings['bundles'][ $key ]['config'] = array_keys( $data );
                     $exists = true;
-
-                    if ($this->folder != WPCFM_CONFIG_DIR) {
-                        $settings['bundles'][$key]['path'] = $this->folder;
-                    }
-                    else {
-                        unset ($settings['bundles'][$key]['path']);
-                    }
                     break;
                 }
             }
 
             if ( ! $exists ) {
-                    $new_bundle = array(
+                $settings['bundles'][] = array(
                     'label'     => $bundle_label,
                     'name'      => $bundle_name,
                     'config'    => array_keys( $data ),
                 );
-                if ($this->folder != WPCFM_CONFIG_DIR) {
-                    $new_bundle['path'] = $this->folder;
-                }
-                $settings['bundles'][] = $new_bundle;
             }
         }
 
@@ -91,47 +77,14 @@ class WPCFM_Readwrite
      * @param string $bundle_name The bundle name (or "all")
      */
     function push_bundle( $bundle_name ) {
-        $bundles = ( 'all' == $bundle_name ) ? array_keys(WPCFM()->helper->get_bundles()) : array( $bundle_name );
-        // Retrieve the settings
-        $settings = WPCFM()->options->get( 'wpcfm_settings' );
-        $settings = json_decode( $settings, true );
+        $bundles = ( 'all' == $bundle_name ) ? WPCFM()->helper->get_bundle_names() : array( $bundle_name );
 
         foreach ( $bundles as $bundle_name ) {
-
-            foreach ( $settings['bundles'] as $key => $bundle ) {
-                if ( $bundle['name'] == $bundle_name ) {
-                    unset($settings['bundles'][$key]);
-                    break;
-                }
-            }
-
             $data = $this->read_db( $bundle_name );
 
             // Append the bundle label
             $bundle_meta = WPCFM()->helper->get_bundle_by_name( $bundle_name );
             $data['.label'] = $bundle_meta['label'];
-            unset($bundle_meta['label']);
-
-            $bundle = array(
-                'label'    => $data['.label'],
-                'name'      => $bundle_name,
-                'config'    => $bundle_meta['config'],
-            );
-            $path = str_replace(get_home_path(), '', $this->folder);
-            // Check if specified dir is different from default dir.
-            if ( $path != str_replace(get_home_path(), '', WPCFM_CONFIG_DIR) ) {
-                $bundle['path'] = $path;
-            }
-            // Check if bundle has a stored path.
-            else {
-                $paths = WPCFM()->helper->get_bundle_paths();
-                if ($paths[$bundle_name]) {
-                    $bundle['path'] = $paths[$bundle_name];
-                }
-            }
-
-
-            $settings['bundles'][] = $bundle;
 
             // JSON_PRETTY_PRINT for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
@@ -140,8 +93,6 @@ class WPCFM_Readwrite
 
             $this->write_file( $bundle_name, $data );
         }
-
-        WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
     }
 
 
@@ -196,13 +147,7 @@ class WPCFM_Readwrite
      */
 
     function bundle_filename( $bundle_name ) {
-        $paths = WPCFM()->helper->get_bundle_paths();
-
-        if ( $paths[$bundle_name] && $this->folder == WPCFM_CONFIG_DIR) {
-            $filename = get_home_path() . "$paths[$bundle_name]/$bundle_name.json";
-        } else {
-            $filename = "$this->folder/$bundle_name.json";
-        }
+        $filename = "$this->folder/$bundle_name.json";
 
         if ( is_multisite() ) {
             if ( WPCFM()->options->is_network ) {
@@ -225,12 +170,7 @@ class WPCFM_Readwrite
         $filename = $this->bundle_filename( $bundle_name );
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
-            $contents = json_decode( $contents, true );
-
-            // Check if valid bundle.
-            if (isset($contents['.label'])) {
-                return $contents;
-            }
+            return json_decode( $contents, true );
         }
         return array();
     }
