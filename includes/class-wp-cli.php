@@ -18,18 +18,12 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      *
      * wp config push bundle_name
      *
-     * @synopsis <bundle_name> [--network] [--destination]
+     * @synopsis <bundle_name> [--network]
      *
      */
     function push( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
             WPCFM()->options->is_network = true;
-        }
-        if ( isset( $assoc_args['destination'] ) ) {
-            if ( substr( $assoc_args['destination'], 0, 1 ) === '/' ) {
-                WP_CLI::error( 'Path must be relative to the site root directory.' );
-            }
-            WPCFM()->readwrite->folder = $assoc_args['destination'];
         }
 
         WPCFM()->readwrite->push_bundle( $args[0] );
@@ -49,18 +43,12 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      *
      * wp config pull bundle_name
      *
-     * @synopsis <bundle_name> [--network] [--source]
+     * @synopsis <bundle_name> [--network]
      *
      */
     function pull( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
             WPCFM()->options->is_network = true;
-        }
-        if ( isset( $assoc_args['source'] ) ) {
-            if ( substr( $assoc_args['source'], 0, 1 ) === '/' ) {
-                WP_CLI::error( 'Path must be relative to the site root directory.' );
-            }
-            WPCFM()->readwrite->folder = $assoc_args['source'];
         }
 
         WPCFM()->readwrite->pull_bundle( $args[0] );
@@ -140,10 +128,10 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      */
     function bundles() {
         $bundles = WPCFM()->helper->get_bundles();
-        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Path', 'Configs' );
+        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Configs' );
         $table = new \cli\Table( $header, array() );
         foreach( $bundles as $bundle ) {
-            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'], $bundle['path'] );
+            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'] );
             $row[] = implode( ', ', $bundle['config'] );
             $table->addrow( $row );
         }
