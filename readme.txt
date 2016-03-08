@@ -3,7 +3,7 @@ Contributors: mgibbs189
 Donate link: http://forumone.com/
 Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 4.0
-Tested up to: 4.3
+Tested up to: 4.5
 Stable tag: trunk
 License: GPL2
 
@@ -98,6 +98,12 @@ function my_pull_callback( $params ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.4.4 =
+* New: `wpcfm_config_dir` filter (customize config dir)
+* New: `wpcfm_config_url` filter (customize config url)
+* Fix: issue with .dot files in config directory
+* Fix: PHP7 warning
 
 = 1.4.3 =
 * Fixed: WP-CLI diff (props @mortana42)
