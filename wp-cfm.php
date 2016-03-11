@@ -44,7 +44,7 @@ class WPCFM_Core
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
-        define( 'WPCFM_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
+        define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
         add_action( 'init', array( $this, 'init' ) );
