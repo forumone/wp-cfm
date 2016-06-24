@@ -35,8 +35,8 @@ class WPCFM_Taxonomy
                 'group' => 'Taxonomy Terms',
             );
 
-            return $items;
         }
+        return $items;
     }
 
 
