@@ -12,10 +12,13 @@ class WPCFM_Helper
         // Get DB bundles first
         $opts = WPCFM()->options->get( 'wpcfm_settings' );
         $opts = json_decode( $opts, true );
-        foreach ( $opts['bundles'] as $bundle ) {
-            $bundle['is_db'] = true;
-            $bundle['is_file'] = false;
-            $output[ $bundle['name'] ] = $bundle;
+
+        if ( isset( $opts['bundles'] ) ) {
+            foreach ( $opts['bundles'] as $bundle ) {
+                $bundle['is_db'] = true;
+                $bundle['is_file'] = false;
+                $output[ $bundle['name'] ] = $bundle;
+            }
         }
 
         // Then merge file bundles
