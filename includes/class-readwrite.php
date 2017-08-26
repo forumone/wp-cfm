@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
 class WPCFM_Readwrite
 {
 
@@ -86,10 +87,26 @@ class WPCFM_Readwrite
             $bundle_meta = WPCFM()->helper->get_bundle_by_name( $bundle_name );
             $data['.label'] = $bundle_meta['label'];
 
+            if (WPCFM_CONFIG_FORMAT == 'json') {
             // JSON_PRETTY_PRINT for PHP 5.4+
             $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
                 json_encode( $data, JSON_PRETTY_PRINT ) :
                 json_encode( $data );
+            }
+            elseif (in_array(WPCFM_CONFIG_FORMAT, ['yaml', 'yml'])) {
+              foreach ($data as $key => &$value) {
+                $jsonDecoded = json_decode($value, true);
+                if (is_array($jsonDecoded)) {
+                  $value = $jsonDecoded;
+                  $data['.' . $key . '_format'] = 'json';
+                }
+                elseif (is_serialized($value)) {
+                  $value = unserialize($value);
+                  $data['.' . $key . '_format'] = 'serialized';
+                }
+              }
+              $data = Yaml::dump($data, 10);
+            }
 
             $this->write_file( $bundle_name, $data );
         }
@@ -147,14 +164,14 @@ class WPCFM_Readwrite
      */
 
     function bundle_filename( $bundle_name ) {
-        $filename = "$this->folder/$bundle_name.json";
+        $filename = "$this->folder/$bundle_name." . WPCFM_CONFIG_FORMAT;
 
         if ( is_multisite() ) {
             if ( WPCFM()->options->is_network ) {
-                $filename = "$this->folder/network-$bundle_name.json";
+                $filename = "$this->folder/network-$bundle_name." . WPCFM_CONFIG_FORMAT;
             }
             else {
-                $filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name.json";
+                $filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name." . WPCFM_CONFIG_FORMAT;
             }
         }
 
@@ -170,7 +187,27 @@ class WPCFM_Readwrite
         $filename = $this->bundle_filename( $bundle_name );
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
+            if (WPCFM_CONFIG_FORMAT == 'json') {
             return json_decode( $contents, true );
+            }
+            elseif (in_array(WPCFM_CONFIG_FORMAT, ['yaml', 'yml'])) {
+              $array = Yaml::parse($contents);
+              foreach ($array as $key => $value) {
+                $format = [];
+                if (preg_match('/\.(.*)_format/i', $key, $format)) {
+                  switch ($array[$format[0]]) {
+                    case 'serialized':
+                      $array[$format[1]] = serialize($array[$format[1]]);
+                      break;
+                    case 'json':
+                      $array[$format[1]] = json_encode($array[$format[1]]);
+                      break;
+                  }
+                  unset($array[$format[0]]);
+                }
+              }
+              return $array;
+            }
         }
         return array();
     }

@@ -26,6 +26,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 defined( 'ABSPATH' ) or exit;
 
+require_once __DIR__ . '/vendor/autoload.php';
 
 class WPCFM_Core
 {
@@ -44,6 +45,7 @@ class WPCFM_Core
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
+        define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
         define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
