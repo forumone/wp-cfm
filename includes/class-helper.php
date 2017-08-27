@@ -65,7 +65,7 @@ class WPCFM_Helper
             }
 
             // Default to single site bundle
-            $bundle_name = str_replace( '.json', '', $filename );
+            $bundle_name = str_replace( '.' . WPCFM_CONFIG_FORMAT, '', $filename );
 
             if ( is_multisite() ) {
                 $filename_parts = explode( '-', $filename, 2 );
