@@ -5,6 +5,9 @@ class WPCFM_Registry
 
     function __construct() {
         add_filter( 'wpcfm_configuration_items', array( $this, 'disallowed_items' ) );
+        if (WPCFM_HIDE_ALREADY_REGISTERED) {
+          add_filter( 'wpcfm_configuration_items', array( $this, 'hide_already_registered' ), 1000 );
+        }
     }
 
 
@@ -107,5 +110,23 @@ class WPCFM_Registry
             }
         }
         return $result;
+    }
+   /**
+   * Hide already registered items
+   */
+    function hide_already_registered($items) {
+      $settings = WPCFM()->options->get( 'wpcfm_settings' );
+      $settings = json_decode( $settings, true );
+      if ( empty( $settings['bundles'] ) ) {
+        return $items;
+      }
+      foreach ( $settings['bundles'] as $bundle ) {
+        foreach ( (array) $bundle['config'] as $option ) {
+          if (array_key_exists($option, $items)) {
+            unset($items[$option]);
+          }
+        }
+      }
+      return $items;
     }
 }
