@@ -46,6 +46,7 @@ class WPCFM_Core
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
         define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
+        define( 'WPCFM_HIDE_ALREADY_REGISTERED', apply_filters( 'wpcfm_config_hide_already_registered', false));
         define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
