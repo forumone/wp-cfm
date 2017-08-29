@@ -93,7 +93,7 @@ class WPCFM_Readwrite
                 json_encode( $data, JSON_PRETTY_PRINT ) :
                 json_encode( $data );
             }
-            elseif (in_array(WPCFM_CONFIG_FORMAT, ['yaml', 'yml'])) {
+            elseif (in_array(WPCFM_CONFIG_FORMAT, array('yaml', 'yml'))) {
               foreach ($data as $key => &$value) {
                 $jsonDecoded = json_decode($value, true);
                 if (is_array($jsonDecoded)) {
@@ -190,10 +190,10 @@ class WPCFM_Readwrite
             if (WPCFM_CONFIG_FORMAT == 'json') {
             return json_decode( $contents, true );
             }
-            elseif (in_array(WPCFM_CONFIG_FORMAT, ['yaml', 'yml'])) {
+            elseif (in_array(WPCFM_CONFIG_FORMAT, array('yaml', 'yml'))) {
               $array = Yaml::parse($contents);
               foreach ($array as $key => $value) {
-                $format = [];
+                $format = array();
                 if (preg_match('/\.(.*)_format/i', $key, $format)) {
                   switch ($array[$format[0]]) {
                     case 'serialized':
