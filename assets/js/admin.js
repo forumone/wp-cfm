@@ -74,6 +74,22 @@
             $row.find('.bundle-toggle').trigger('click');
         });
 
+        $(document).on('click', '.hide-registered', function(e) {
+          e.preventDefault();
+          var $row = $(this).closest('.bundle-row');
+          $('.wpcfm-bundles').find('input[type=checkbox]:checked').each(function() {
+            $row.find('input[type=checkbox][value="'+this.value+'"]').not(':checked').parent().hide();
+          });
+          $row.find('.hide-registered').hide();
+          $row.find('.show-all').show();
+        });
+        $(document).on('click', '.show-all', function(e) {
+          e.preventDefault();
+          var $row = $(this).closest('.bundle-row');
+          $row.find('input[type=checkbox]').parent().show();
+          $row.find('.hide-registered').show();
+          $row.find('.show-all').hide();
+        });
 
         // Toggle bundle details
         $(document).on('click', '.bundle-row:not(.row-all) .bundle-toggle', function() {
