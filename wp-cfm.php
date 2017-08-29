@@ -26,7 +26,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 defined( 'ABSPATH' ) or exit;
 
-require_once __DIR__ . '/vendor/autoload.php';
+if (PHP_VERSION_ID >= 506040) {
+  require_once __DIR__ . '/vendor/autoload.php';
+}
 
 class WPCFM_Core
 {
