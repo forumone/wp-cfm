@@ -49,6 +49,7 @@ class WPCFM_Core
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
         if (PHP_VERSION_ID < 506040) {
           define( 'WPCFM_CONFIG_FORMAT', 'json');
+          define( 'WPCFM_CONFIG_FORMAT_REQUESTED',  apply_filters( 'wpcfm_config_format', 'json'));
         } else {
           define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
         }
