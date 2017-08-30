@@ -32,6 +32,7 @@ class WPCFM_Helper
                 $bundle['is_db'] = false;
                 $bundle['is_file'] = true;
                 $bundle['url'] = $this->get_bundle_url( $bundle_name );
+                $bundle['config'] = array_keys($bundle['config']);
                 $output[ $bundle_name ] = $bundle;
             }
         }
