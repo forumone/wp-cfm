@@ -40,6 +40,7 @@ class WPCFM_Readwrite
             $settings = array( 'bundles' => array() );
         }
 
+        $dontUpdateSettings = false;
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
@@ -47,6 +48,14 @@ class WPCFM_Readwrite
             unset( $data['.label'] );
 
             $this->write_db( $bundle_name, $data );
+
+            // If we import wpcfm settings don't update it
+            if (!$dontUpdateSettings) {
+              $dontUpdateSettings = $bundle_name == 'wpcfm';
+            }
+            if ($dontUpdateSettings) {
+              continue;
+            }
 
             // Update the bundle's config options (using the pull file)
             $exists = false;
@@ -69,7 +78,9 @@ class WPCFM_Readwrite
         }
 
         // Write the settings
-        WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
+        if (!$dontUpdateSettings) {
+          WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
+        }
     }
 
 
