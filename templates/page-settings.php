@@ -14,7 +14,7 @@ $configuration = $this->helper->group_items( $configuration );
 <div class="wrap">
     <h2>WP-CFM</h2>
 
-    <?php if (in_array(WPCFM_CONFIG_FORMAT_REQUESTED, array('yml', 'yaml'))): ?>
+    <?php if (defined('WPCFM_CONFIG_FORMAT_REQUESTED') && in_array(WPCFM_CONFIG_FORMAT_REQUESTED, array('yml', 'yaml'))): ?>
       <div class="wpcfm-error">Your PHP version is not compatible with Yaml export format. Upgrade to at least PHP 5.6.4.</div>
     <?php endif; ?>
 
