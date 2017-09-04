@@ -330,6 +330,16 @@ class WPCFM_Readwrite
     function callback_wp_options( $params ) {
         $option_name = $params['name'];
         $option_value = maybe_unserialize( $params['new_value'] );
+        $option_db_value = maybe_unserialize( $params['old_value'] );
+
+        // Ensure that all serialized options will still exist
+        if (defined('WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT') && WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT) {
+            foreach ( $option_db_value as $key => $value ) {
+                if ( ! array_key_exists( $key, $option_value ) ) {
+                    $option_value[ $key ] = $value;
+                }
+            }
+        }
         WPCFM()->options->update( $option_name, $option_value );
     }
 }

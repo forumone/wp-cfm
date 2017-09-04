@@ -53,6 +53,8 @@ class WPCFM_Core
         } else {
           define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
         }
+
+        define( 'WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT', apply_filters( 'wpcfm_config_keep_missing_options_on_import', false));
         define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
