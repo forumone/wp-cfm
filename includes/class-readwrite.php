@@ -333,7 +333,7 @@ class WPCFM_Readwrite
         $option_db_value = maybe_unserialize( $params['old_value'] );
 
         // Ensure that all serialized options will still exist
-        if (defined('WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT') && WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT) {
+        if (defined('WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT') && WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT && is_array($option_db_value) && is_array($option_value)) {
             foreach ( $option_db_value as $key => $value ) {
                 if ( ! array_key_exists( $key, $option_value ) ) {
                     $option_value[ $key ] = $value;
