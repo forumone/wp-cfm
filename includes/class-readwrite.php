@@ -105,20 +105,8 @@ class WPCFM_Readwrite
                 json_encode( $data );
             }
             elseif (in_array(WPCFM_CONFIG_FORMAT, array('yaml', 'yml'))) {
-              foreach ($data as $key => &$value) {
-                $jsonDecoded = json_decode($value, true);
-                if (is_array($jsonDecoded)) {
-                  $value = $jsonDecoded;
-                  $data['.' . $key . '_format'] = 'json';
-                }
-                elseif (is_serialized($value)) {
-                  $value = unserialize($value);
-                  $data['.' . $key . '_format'] = 'serialized';
-                }
-              }
-              $data = Yaml::dump($data, 10);
+                $data = WPCFM_Helper::convert_to_yaml($data);
             }
-
             $this->write_file( $bundle_name, $data );
         }
     }
@@ -155,6 +143,12 @@ class WPCFM_Readwrite
 
         // Remove the .label
         unset( $file_bundle['.label'] );
+
+        // Convert to YAML for better readability if PHP version is compatible
+        if (PHP_VERSION_ID >= 50604 && WPCFM_CONFIG_USE_YAML_DIFF) {
+            $file_bundle = WPCFM_Helper::convert_to_yaml($file_bundle, false);
+            $db_bundle   = WPCFM_Helper::convert_to_yaml($db_bundle, false);
+        }
 
         if ( $file_bundle == $db_bundle ) {
             $return['error'] = __( 'Both versions are identical', 'wpcfm' );

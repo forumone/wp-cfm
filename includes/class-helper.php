@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
 class WPCFM_Helper
 {
 
@@ -138,4 +139,32 @@ class WPCFM_Helper
 
         return $output;
     }
+
+    /**
+     * Convert array to yaml
+     *
+     * @param $data array
+     * @param $saveFormat boolean
+     *
+     * @return mixed
+     */
+    static function convert_to_yaml($data, $saveFormat = true) {
+        foreach ($data as $key => &$value) {
+            $jsonDecoded = json_decode($value, true);
+            if (is_array($jsonDecoded)) {
+                $value = $jsonDecoded;
+                if ($saveFormat) {
+                    $data['.' . $key . '_format'] = 'json';
+                }
+            }
+            elseif (is_serialized($value)) {
+                $value = unserialize($value);
+                if ($saveFormat) {
+                    $data['.' . $key . '_format'] = 'serialized';
+                }
+            }
+        }
+        return Yaml::dump($data, 10);
+    }
+
 }
