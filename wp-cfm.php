@@ -26,7 +26,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 defined( 'ABSPATH' ) or exit;
 
-if (PHP_VERSION_ID >= 506040) {
+if (PHP_VERSION_ID >= 50604) {
   require_once __DIR__ . '/vendor/autoload.php';
 }
 
@@ -47,14 +47,17 @@ class WPCFM_Core
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
-        if (PHP_VERSION_ID < 506040) {
-          define( 'WPCFM_CONFIG_FORMAT', 'json');
-          define( 'WPCFM_CONFIG_FORMAT_REQUESTED',  apply_filters( 'wpcfm_config_format', 'json'));
-        } else {
-          define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
+
+        if ( PHP_VERSION_ID < 50604 ) {
+            define( 'WPCFM_CONFIG_FORMAT', 'json' );
+            define( 'WPCFM_CONFIG_FORMAT_REQUESTED',  apply_filters( 'wpcfm_config_format', 'json' ) );
+        }
+        else {
+            define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json' ) );
         }
 
-        define( 'WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT', apply_filters( 'wpcfm_config_keep_missing_options_on_import', false));
+        define( 'WPCFM_CONFIG_KEEP_MISSING_OPTIONS_ON_IMPORT', apply_filters( 'wpcfm_config_keep_missing_options_on_import', false ) );
+        define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true ) );
         define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
