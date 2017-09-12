@@ -51,15 +51,15 @@ class WPCFM_CLI_Command extends WP_CLI_Command
             WPCFM()->options->is_network = true;
         }
 
-        $bundle_name = $args[0]?:'all';
+        $bundle_name = $args[0] ?: 'all';
 
-        if ($bundle_name != 'all') {
-            if (!in_array($bundle_name, WPCFM()->helper->get_bundle_names())) {
-                WP_CLI::error('Bundle file for "' . $bundle_name . '" can\'t be found');
+        if ( 'all' != $bundle_name ) {
+            if ( ! in_array( $bundle_name, WPCFM()->helper->get_bundle_names() ) ) {
+                WP_CLI::error( "Bundle file for `$bundle_name` cannot be found." );
             }
         }
 
-        WPCFM()->readwrite->pull_bundle($bundle_name);
+        WPCFM()->readwrite->pull_bundle( $bundle_name );
         WP_CLI::success( 'The bundle has been pulled into the database.' );
     }
 
