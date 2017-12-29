@@ -162,6 +162,6 @@ class WPCFM_Custom_Field_Suite
 }
 
 // Requires CFS
-if ( is_plugin_active( 'custom-field-suite/cfs.php' ) ) {
+if ( class_exists( 'Custom_Field_Suite' ) ) {
     new WPCFM_Custom_Field_Suite();
 }
