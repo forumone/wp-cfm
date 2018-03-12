@@ -1,5 +1,5 @@
 === WP-CFM ===
-Contributors: mgibbs189, elvismdev
+Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Requires at least: 4.0
 Tested up to: 4.9.4
@@ -97,6 +97,9 @@ function my_pull_callback( $params ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.5 =
+* New: Toggle to show/hide already registered options (props @mickaelperrin)
 
 = 1.4.5 =
 * Fix: only the first taxonomy was showing in the admin UI (props @Rebenton)
