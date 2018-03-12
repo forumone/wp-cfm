@@ -1,11 +1,11 @@
 === WP-CFM ===
-Contributors: mgibbs189
-Donate link: http://forumone.com/
-Tags: configuration, settings, configuration management, features, drupal
+Contributors: mgibbs189, elvismdev
+Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Requires at least: 4.0
-Tested up to: 4.5.3
-Stable tag: trunk
-License: GPL2
+Tested up to: 4.9.4
+Stable tag: 1.5
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Manage and deploy WordPress configuration changes
 
