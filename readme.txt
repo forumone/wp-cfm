@@ -1,11 +1,13 @@
 === WP-CFM ===
 Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
+Donate link: http://forumone.com/
 Requires at least: 4.0
 Tested up to: 4.9.4
+Requires PHP: 5.6
 Stable tag: 1.5
-License: GPLv3
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Manage and deploy WordPress configuration changes
 
@@ -84,6 +86,17 @@ function my_pull_callback( $params ) {
         // Import the data
     }
 }
+
+
+/**
+ * Changes WP-CFM configuration files to YAML format instead of JSON.
+ * @param string $format The default 'json' format.
+ * @return string
+ */
+add_filter( 'wpcfm_config_format', function( $format ) {
+    $format = 'yaml';   // Value can be 'yaml' or 'yml'.
+    return $format;
+} );
 </pre>
 
 == Installation ==
