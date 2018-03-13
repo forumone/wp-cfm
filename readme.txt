@@ -101,6 +101,12 @@ function my_pull_callback( $params ) {
 = 1.5 =
 * New: Toggle to show/hide already registered options (props @mickaelperrin)
 * New: `wpcfm_config_format` filter allow export configuration as YAML files (props @mickaelperrin)
+* New: Check configuration file exist before import (props @mickaelperrin)
+* Fix: File bundle properties are not checked (props @mickaelperrin)
+* Fix: Import wp-cfm settings (props @mickaelperrin)
+* Fix: Bad PHP Version comparison (props @mickaelperrin)
+* Fix: Undefined constant WPCFM_CONFIG_FORMAT_REQUESTED (props @mickaelperrin)
+* Improved: Better Custom Field Suite plugin detection (props @s3ththompson)
 
 = 1.4.5 =
 * Fix: only the first taxonomy was showing in the admin UI (props @Rebenton)
