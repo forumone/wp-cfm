@@ -1,0 +1,25 @@
+app:
+  image: dz0ny/wpbox
+  links:
+    - db:mysql
+  ports:
+    - 80:80
+  volumes:
+   - ./src:/var/www/html/wp-content/plugins/cfm:ro
+
+db:
+  image: mariadb
+  ports:
+    - 3306
+  environment:
+    MYSQL_DATABASE: wordpress
+    MYSQL_ROOT_PASSWORD: wordpress
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  links:
+    - db:db
+  environment:
+   - PMA_ARBITRARY=1
+  ports:
+    - 81:80
