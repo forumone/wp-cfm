@@ -1,5 +1,5 @@
 VERSION := 1.0.16
-PLUGINSLUG := spiderblocker
+PLUGINSLUG := wpcfm
 MAINFILE := index.php
 SRCPATH := $(shell pwd)/src
 SVNUSER := niteoweb

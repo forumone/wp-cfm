@@ -47,8 +47,8 @@ $configuration = $this->helper->group_items( $configuration );
             <div class="bundle-header">
                 <div class="bundle-actions">
                     <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
-                    <a class="button push-bundle" title="Write database changes to the filesystem"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                    <a class="button pull-bundle" title="Import file changes into the database"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                    <a class="button push-bundle" title="Write database changes to the filesystem"><?php _e( 'Export', 'wpcfm' ); ?></a> &nbsp;
+                    <a class="button pull-bundle" title="Import file changes into the database"><?php _e( 'Import', 'wpcfm' ); ?></a>
                 </div>
                 <div class="bundle-toggle">All Bundles</div>
                 <div class="clear"></div>
@@ -68,8 +68,8 @@ $configuration = $this->helper->group_items( $configuration );
                 <div class="bundle-actions">
                     <span class="no-actions">Save to see actions</span>
                     <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
-                    <a class="button push-bundle disabled" title="Write database changes to the filesystem"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                    <a class="button pull-bundle disabled" title="Import file changes into the database"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                    <a class="button push-bundle disabled" title="Write database changes to the filesystem"><?php _e( 'Export', 'wpcfm' ); ?></a> &nbsp;
+                    <a class="button pull-bundle disabled" title="Import file changes into the database"><?php _e( 'Import', 'wpcfm' ); ?></a>
                 </div>
                 <div class="bundle-toggle">New bundle</div>
                 <div class="clear"></div>
@@ -92,7 +92,7 @@ $configuration = $this->helper->group_items( $configuration );
                     </select>
                 </div>
                 <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
-                <a class="download-bundle hidden"><?php _e( 'Download', 'wpcfm' ); ?></a>
+                <a class="download-bundle hidden"><?php _e( 'Download YAML', 'wpcfm' ); ?></a>
                 <div class="clear"></div>
             </div>
         </div>

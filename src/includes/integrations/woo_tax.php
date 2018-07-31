@@ -49,10 +49,69 @@ class WOO_Tax
 
     public function pull_callback($callback, $callback_params)
     {
-        if ('wootax/' == substr($callback_params['name'], 0, 4)) {
-            return array($this, 'import_terms');
+        if ('wootax/' == substr($callback_params['name'], 0, 6)) {
+            return array($this, 'import_tax');
         }
         return $callback;
+    }
+
+    /**
+     * Import (overwrite) taxonomies into the DB
+     * @param string $params['name']
+     * @param string $params['group']
+     * @param string $params['old_value'] The old settings (DB)
+     * @param string $params['new_value'] The new settings (file)
+     */
+    public function import_tax($params)
+    {
+        global $wpdb;
+        $id = intval(str_replace('wootax/', '', $params['name']));
+        $data = $params['new_value'];
+        $wpdb->replace(
+            "{$wpdb->prefix}woocommerce_tax_rates",
+            array(
+                'tax_rate_id' => $id,
+                'tax_rate_country' => $data->country,
+                'tax_rate_state' => $data->state,
+                'tax_rate_country' => $data->country,
+                'tax_rate' => $data->rate,
+                'tax_rate_name' => $data->name,
+                'tax_rate_priority' => $data->priority,
+                'tax_rate_compound' => $data->compound,
+                'tax_rate_shipping' => $data->shipping,
+                'tax_rate_orderrder' => $data->order,
+                'tax_rate_class' => $data->class,
+            ),
+            array(
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+            )
+        );
+        foreach ($data->locations as $location) {
+            $wpdb->replace(
+                "{$wpdb->prefix}woocommerce_tax_rate_locations",
+                array(
+                    'tax_rate_id' => $id,
+                    'location_code' => $location->location_code,
+                    'location_type' => $location->location_type,
+                ),
+                array(
+                    '%d',
+                    '%s',
+                    '%s',
+                )
+            );
+
+        }
     }
 
 }

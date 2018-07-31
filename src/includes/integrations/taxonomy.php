@@ -29,7 +29,7 @@ class WPCFM_Taxonomy
                 );
             }
 
-            $items[ 'tax/' . $tax->name ] = array(
+            $items[ 'taxonomy/' . $tax->name ] = array(
                 'value' => json_encode( $values ),
                 'label' => $tax->label,
                 'group' => 'Taxonomy Terms',
@@ -44,7 +44,7 @@ class WPCFM_Taxonomy
      * Tell WP-CFM to use import_terms() for taxonomy items
      */
     function pull_callback( $callback, $callback_params ) {
-        if ( 'tax/' == substr( $callback_params['name'], 0, 4 ) ) {
+        if ( 'taxonomy/' == substr( $callback_params['name'], 0, 4 ) ) {
             return array( $this, 'import_terms' );
         }
         return $callback;

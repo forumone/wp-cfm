@@ -56,6 +56,47 @@ class WOO_Shipping
         return $callback;
     }
 
+        /**
+     * Import (overwrite) taxonomies into the DB
+     * @param string $params['name']
+     * @param string $params['group']
+     * @param string $params['old_value'] The old settings (DB)
+     * @param string $params['new_value'] The new settings (file)
+     */
+    public function import_terms($params)
+    {
+        $wpdb->replace(
+    "{$wpdb->prefix}woocommerce_tax_rates",
+    array(
+        'tax_rate_id' => $id,
+        'tax_rate_country' => $data->country,
+        'tax_rate_state' => $data->state,
+        'tax_rate_country' => $data->country,
+        'tax_rate' => $data->rate,
+        'tax_rate_name' => $data->name,
+        'tax_rate_priority' => $data->priority,
+        'tax_rate_compound' => $data->compound,
+        'tax_rate_shipping' => $data->shipping,
+        'tax_rate_orderrder' => $data->order,
+        'tax_rate_class' => $data->class,
+    ),
+    array(
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+    )
+);
+
+    }
+
 }
 
 new WOO_Shipping();

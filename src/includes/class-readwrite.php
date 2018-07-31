@@ -150,14 +150,11 @@ class WPCFM_Readwrite
             $db_bundle   = WPCFM_Helper::convert_to_yaml($db_bundle, false);
         }
 
-        if ( $file_bundle == $db_bundle ) {
-            $return['error'] = __( 'Both versions are identical', 'wpcfm' );
-        }
-        else {
-            $return['error'] = '';
-            $return['file'] = $file_bundle;
-            $return['db'] = $db_bundle;
-        }
+
+        $return['error'] = '';
+        $return['file'] = $file_bundle;
+        $return['db'] = $db_bundle;
+
 
         return $return;
     }

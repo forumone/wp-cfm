@@ -1,28 +1,29 @@
 <?php
 
-class WOO_Options
+class WP_Options
 {
+
     public function __construct()
     {
         add_filter('wpcfm_configuration_items', array($this, 'get_configuration_items'));
+        add_filter('wpcfm_pull_callback', array($this, 'pull_callback'), 10, 2);
     }
 
     public function get_configuration_items($items)
     {
         global $wpdb;
 
-        $query = "
-        SELECT option_name, option_value FROM $wpdb->options
+        $query = "SELECT option_name, option_value FROM $wpdb->options
         WHERE option_name NOT LIKE '_transient%' AND option_name NOT LIKE '_site_transient%'
-        AND option_name LIKE 'woocommerce_%'
+        AND option_name NOT LIKE 'woocommerce_%'
         ORDER BY option_name";
 
         $results = $wpdb->get_results($query);
         foreach ($results as $op) {
-            $items['woo/' . $op->option_name] = array(
-                'value' => "$op->option_value",
+            $items["wp/$op->option_name"] = array(
+                'value' => $op->option_value,
                 'label' => "$op->option_name",
-                'group' => 'WooCommerce Options',
+                'group' => 'WordPress Options',
             );
         }
         return $items;
@@ -34,7 +35,7 @@ class WOO_Options
      */
     public function pull_callback($callback, $callback_params)
     {
-        if ('woo/' == substr($callback_params['name'], 0, 3)) {
+        if ('wp/' == substr($callback_params['name'], 0, 2)) {
             return array($this, 'import_terms');
         }
         return $callback;
@@ -53,4 +54,4 @@ class WOO_Options
     }
 }
 
-new WOO_Options;
+new WP_Options();
