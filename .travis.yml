@@ -1,0 +1,18 @@
+language: php
+secure: amBIQvCiCh/DsyOUTLXkMQ4EGj0TIRKyAb/qwIGKTIT3MEmXbUfnP5AXT3rRXmbtVc9oBUmpZmckPfooOOwv6AdC4w6qvjux2WXzsMPgDXt/IhoaxJaNFBKdkln90arWHclJbUs2XHhkGte+SI5sweOYK92Ida9d97nqwMZQGNk=
+sudo: false
+dist: trusty
+matrix:
+  fast_finish: true
+cache:
+- vendor
+- bin
+php:
+- 7.2
+before_script:
+- composer install
+- mkdir -p build/logs
+- touch /tmp/.htaccess
+script: bin/phpunit
+after_script:
+- bin/coveralls -v
