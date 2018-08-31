@@ -7,3 +7,4 @@ build
 .idea
 *~
 *.zip
+.DS_Store

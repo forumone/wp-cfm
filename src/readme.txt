@@ -1,10 +1,9 @@
 === WP-CFM ===
 Contributors: mgibbs189
-Donate link: http://forumone.com/
 Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 4.0
-Tested up to: 4.5.3
-Stable tag: trunk
+Tested up to: 4.9.8
+Stable tag: 1.0.0
 License: GPL2
 
 Manage and deploy WordPress configuration changes
@@ -51,8 +50,8 @@ Append the `--network` flag to include multisite bundles.
 = How to add custom configuration =
 
 <pre>
-add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
-add_filter( 'wpcfm_pull_callback', 'my_pull_callback' );
+add_filter( 'wcd_configuration_items', 'my_configuration_items' );
+add_filter( 'wcd_pull_callback', 'my_pull_callback' );
 
 
 /**
@@ -102,8 +101,8 @@ function my_pull_callback( $params ) {
 * Fix: only the first taxonomy was showing in the admin UI (props @Rebenton)
 
 = 1.4.4 =
-* New: `wpcfm_config_dir` filter (customize config dir)
-* New: `wpcfm_config_url` filter (customize config url)
+* New: `wcd_config_dir` filter (customize config dir)
+* New: `wcd_config_url` filter (customize config url)
 * Fix: issue with .dot files in config directory
 * Fix: PHP7 warning
 
@@ -170,7 +169,7 @@ function my_pull_callback( $params ) {
 * Added subtle admin screen animations
 * Better file error handling
 * CFS integration - each field group now has its own configuration item
-* Added `wpcfm_pull_callback` filter
+* Added `wcd_pull_callback` filter
 * Moved the "all" bundle handler from the ajax class to readwrite
 
 = 1.0.2 =

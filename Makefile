@@ -1,6 +1,6 @@
-VERSION := 1.0.16
-PLUGINSLUG := wpcfm
-MAINFILE := index.php
+VERSION := 1.0.0
+PLUGINSLUG := woocart-defaults
+MAINFILE := woocart-defaults.php
 SRCPATH := $(shell pwd)/src
 SVNUSER := niteoweb
 
