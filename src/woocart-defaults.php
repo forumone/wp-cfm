@@ -25,7 +25,10 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
     die();
 }
 
-if (PHP_VERSION_ID >= 50604) {
+/**
+ * Include composer autoloader.
+ */
+if ( PHP_VERSION_ID >= 50604 ) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
@@ -198,4 +201,4 @@ WCD();
 /**
  * On plugin activation.
  */
-// register_activation_hook( __FILE__, array( 'WCD', 'activate_plugin' ) );
+// register_activation_hook( __FILE__, array( 'WooCartDefaults', 'activate_plugin' ) );
