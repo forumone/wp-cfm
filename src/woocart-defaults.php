@@ -25,6 +25,10 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
     die();
 }
 
+if (PHP_VERSION_ID >= 50604) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
 /**
  * WooCartDefaults class where all the action happens.
  *
@@ -103,7 +107,7 @@ class WooCartDefaults {
 
         // WP-CLI.
         if ( defined( 'WP_CLI' ) && WP_CLI ) {
-            include WCD_DIR . '/includes/class-wcd_cli.php';
+            include WCD_DIR . '/framework/classes/class-wcd_cli.php';
         }
 
         // Make sure is_plugin_active() is available.
@@ -178,10 +182,10 @@ class WooCartDefaults {
 
 /**
  * Allow direct access to the classes
- * For example, use woocart_defaults()->options to access WCD_Options
+ * For example, use WCD()->options to access WCD_Options
  */
-if ( ! function_exists( 'woocart_defaults' ) ) :
-function woocart_defaults() {
+if ( ! function_exists( 'WCD' ) ) :
+function WCD() {
     return WooCartDefaults::instance();
 }
 endif;
@@ -189,9 +193,9 @@ endif;
 /**
  * Get the instance.
  */
-woocart_defaults();
+WCD();
 
 /**
  * On plugin activation.
  */
-register_activation_hook( __FILE__, array( 'woocart_defaults', 'activate_plugin' ) );
+// register_activation_hook( __FILE__, array( 'WCD', 'activate_plugin' ) );

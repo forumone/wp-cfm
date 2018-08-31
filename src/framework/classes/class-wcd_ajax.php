@@ -1,4 +1,7 @@
 <?php
+
+namespace WooCart\WooCartDefaults;
+
 /**
  * Class for hnadling AJAX requests.
  *

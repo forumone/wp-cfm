@@ -24,10 +24,10 @@ class WCD_CLI_Command extends WP_CLI_Command {
      */
     public function push( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
-            WCD()->options->is_network = true;
+            WooCart\WooCartDefaults\WCD()->options->is_network = true;
         }
 
-        WCD()->readwrite->push_bundle( $args[0] );
+        WooCart\WooCartDefaults\WCD()->readwrite->push_bundle( $args[0] );
         WP_CLI::success( 'The bundle has been written to file.' );
     }
 
@@ -49,18 +49,18 @@ class WCD_CLI_Command extends WP_CLI_Command {
      */
     public function pull( $args, $assoc_args ) {
         if ( isset( $assoc_args['network'] ) ) {
-            WCD()->options->is_network = true;
+            WooCart\WooCartDefaults\WCD()->options->is_network = true;
         }
 
         $bundle_name = $args[0] ?: 'all';
 
         if ( 'all' != $bundle_name ) {
-            if ( ! in_array( $bundle_name, WCD()->helper->get_bundle_names() ) ) {
+            if ( ! in_array( $bundle_name, WooCart\WooCartDefaults\WCD()->helper->get_bundle_names() ) ) {
                 WP_CLI::error( "Bundle file for `$bundle_name` cannot be found." );
             }
         }
 
-        WCD()->readwrite->pull_bundle( $bundle_name );
+        WooCart\WooCartDefaults\WCD()->readwrite->pull_bundle( $bundle_name );
         WP_CLI::success( 'The bundle has been pulled into the database.' );
     }
 
@@ -81,7 +81,7 @@ class WCD_CLI_Command extends WP_CLI_Command {
      * @access public
      */
     public function diff( $args, $assoc_args ) {
-        $compare = WCD()->readwrite->compare_bundle( $args[0] );
+        $compare = WooCart\WooCartDefaults\WCD()->readwrite->compare_bundle( $args[0] );
 
         if ( $compare['error'] !== '' ) {
             WP_CLI::warning( $compare['error'] );
@@ -141,7 +141,7 @@ class WCD_CLI_Command extends WP_CLI_Command {
      * @access public
      */
     public function bundles() {
-        $bundles    = WCD()->helper->get_bundles();
+        $bundles    = WooCart\WooCartDefaults\WCD()->helper->get_bundles();
         $header     = array( 'Bundle', 'Label', 'In File', 'In DB', 'Configs' );
         $table      = new \cli\Table( $header, array() );
 
@@ -171,8 +171,8 @@ class WCD_CLI_Command extends WP_CLI_Command {
      * @access public
      */
     public function show_bundle( $args, $assoc_args ) {
-        $file_bundle    = WCD()->readwrite->read_file( $args[0] );
-        $db_bundle      = WCD()->readwrite->read_db( $args[0] );
+        $file_bundle    = WooCart\WooCartDefaults\WCD()->readwrite->read_file( $args[0] );
+        $db_bundle      = WooCart\WooCartDefaults\WCD()->readwrite->read_db( $args[0] );
         $header         = array( 'Config', 'File value', 'DB value' );
         $rows           = array();
 

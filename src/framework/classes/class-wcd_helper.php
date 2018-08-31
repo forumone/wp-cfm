@@ -1,4 +1,7 @@
 <?php
+
+namespace WooCart\WooCartDefaults;
+
 /**
  * Helper class for YAML data.
  *
@@ -142,7 +145,7 @@ class WCD_Helper {
         ksort( $items );
 
         foreach ( $items as $key => $item ) {
-            $group = isset( $item['group'] ) ? $item['group'] : __( 'WP Options', 'woocart-defaults' );
+            $group = isset( $item['group'] ) ? $item['group'] : esc_html__( 'WP Options', 'woocart-defaults' );
             $output[ $group ][ $key ] = $item;
         }
 

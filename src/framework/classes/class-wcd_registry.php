@@ -1,4 +1,7 @@
 <?php
+
+namespace WooCart\WooCartDefaults;
+
 /**
  * Registry class.
  *

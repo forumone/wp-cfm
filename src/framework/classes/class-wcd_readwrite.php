@@ -1,4 +1,7 @@
 <?php
+
+namespace WooCart\WooCartDefaults;
+
 /**
  * Class for handling options.
  *
@@ -118,7 +121,7 @@ class WCD_Readwrite {
                 json_encode( $data, JSON_PRETTY_PRINT ) :
                 json_encode( $data );
             } elseif ( in_array( WCD_CONFIG_FORMAT, array( 'yaml', 'yml' ) ) ) {
-                $data = WCD_Helper::convert_to_yaml( $data );
+                $data = WCD_Helper::convert_to_yaml( $data, true );
             }
 
             $this->write_file( $bundle_name, $data );
