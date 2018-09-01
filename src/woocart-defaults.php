@@ -90,18 +90,12 @@ class WooCartDefaults {
         // i18n.
         $this->load_textdomain();
 
-        // Hooks.
-        add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
-        add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ) );
-        add_action( 'admin_enqueue_scripts', array( &$this, 'admin_scripts' ) );
-
         // Required classes.
         $classes = array(
             'wcd_options',
             'wcd_readwrite',
             'wcd_registry',
-            'wcd_helper',
-            'wcd_ajax'
+            'wcd_helper'
         );
 
         foreach ( $classes as $class ) {
@@ -129,41 +123,6 @@ class WooCartDefaults {
         $this->readwrite    = new WCD_Readwrite();
         $this->registry     = new WCD_Registry();
         $this->helper       = new WCD_Helper();
-        $ajax               = new WCD_Ajax();
-    }
-
-    /**
-     * Register the settings page.
-     */
-    public function admin_menu()
-    {
-        add_options_page('WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array($this, 'settings_page'));
-    }
-
-    /**
-     * Register the multi-site settings page
-     */
-    public function network_admin_menu()
-    {
-        add_submenu_page('settings.php', 'WP-CFM', 'WP-CFM', 'manage_options', 'wpcfm', array($this, 'settings_page'));
-    }
-
-    /**
-     * Enqueue media CSS
-     */
-    public function admin_scripts($hook)
-    {
-        if ('settings_page_wpcfm' == $hook) {
-            wp_enqueue_style('media-views');
-        }
-    }
-
-    /**
-     * Route to the correct edit screen
-     */
-    public function settings_page()
-    {
-        include WCD_DIR . '/templates/page-settings.php';
     }
 
     /**
@@ -176,7 +135,7 @@ class WooCartDefaults {
     /**
      * Attached to the activation hook.
      */
-    public function activate_plugin() {
+    public static function activate_plugin() {
         // Add to `wp_options` table.
         update_option( self::OPTIONNAME, WP_CONTENT_DIR . '/config' );
     }
@@ -201,4 +160,4 @@ WCD();
 /**
  * On plugin activation.
  */
-// register_activation_hook( __FILE__, array( 'WooCartDefaults', 'activate_plugin' ) );
+register_activation_hook( __FILE__, array( 'WooCartDefaults', 'activate_plugin' ) );
