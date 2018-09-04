@@ -1,0 +1,53 @@
+{
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "10up/wp_mock": "*",
+        "antecedent/patchwork": "*",
+        "wordpress": "*",
+        "php-coveralls/php-coveralls": "*",
+        "squizlabs/php_codesniffer": "*",
+        "wp-coding-standards/wpcs": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "\"bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+        ],
+        "post-update-cmd": [
+            "\"bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+        ]
+    },
+    "extra": {
+        "installer-paths": {
+            "vendor/{$name}/": [
+                "wordpress"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "wordpress",
+                "version": "4.9.8",
+                "type": "wordpress-plugin",
+                "dist": {
+                    "url": "https://wordpress.org/wordpress-4.9.8.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
+
+    "minimum-stability": "stable",
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
