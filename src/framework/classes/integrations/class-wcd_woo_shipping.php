@@ -65,7 +65,7 @@ class WOO_Shipping {
      * @access public
      */
 	public function pull_callback( $callback, $callback_params ) {
-		if ( 'wooship/' == substr( $callback_params['name'], 0, 4 ) ) {
+		if ( 'wooship/' == substr( $callback_params['name'], 0, 7 ) ) {
 			return array( $this, 'import_terms' );
 		}
 

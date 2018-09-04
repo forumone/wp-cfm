@@ -41,7 +41,8 @@ if ( PHP_VERSION_ID >= 50604 ) {
  */
 class WooCartDefaults {
 
-    const OPTIONNAME = 'WooCartDefaults.Path';
+    const OPTIONNAME    = 'WooCartDefaults.Path';
+    const SETTINGNAME   = 'WooCartDefaults.Settings';
 
     public $readwrite;
     public $registry;
@@ -123,6 +124,38 @@ class WooCartDefaults {
         $this->readwrite    = new WCD_Readwrite();
         $this->registry     = new WCD_Registry();
         $this->helper       = new WCD_Helper();
+
+        /**
+         * Check database option & update as required.
+         */
+        $bundle = esc_html( get_option( self::SETTINGNAME ) );
+
+        if ( ! $bundle ) {
+            /**
+             * Let's prepare our bundle :)
+             */
+            $data = (object) array(
+                'bundles' => array(
+                    (object) array(
+                        'label'     => 'WooCart',
+                        'name'      => 'woocart',
+                        'config'    => array()
+                    )
+                )
+            );
+
+            $items = apply_filters( 'wcd_configuration_items', array() );
+
+            /**
+             * 1. Get all the items.
+             * 2. Loop through items and store only keys in the database.
+             */
+            foreach ( $items as $key => $value ) {
+                $data->bundles[0]->config[] = $key;
+            }
+
+            update_option( self::SETTINGNAME, stripslashes( json_encode( $data ) ) );
+        }
     }
 
     /**
@@ -137,7 +170,7 @@ class WooCartDefaults {
      */
     public static function activate_plugin() {
         // Add to `wp_options` table.
-        update_option( self::OPTIONNAME, WP_CONTENT_DIR . '/config' );
+        update_option( 'WooCartDefaults.Path', WP_CONTENT_DIR . '/config' );
     }
 
 }
@@ -160,4 +193,4 @@ WCD();
 /**
  * On plugin activation.
  */
-register_activation_hook( __FILE__, array( 'WooCartDefaults', 'activate_plugin' ) );
+register_activation_hook( __FILE__, array( 'WooCart\WooCartDefaults\WooCartDefaults', 'activate_plugin' ) );
