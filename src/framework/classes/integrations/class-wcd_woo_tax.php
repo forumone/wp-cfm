@@ -4,7 +4,6 @@
  *
  * @package woocart-defaults
  */
-
 class WOO_Tax {
 
     /**

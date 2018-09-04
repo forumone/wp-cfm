@@ -4,7 +4,6 @@
  *
  * @package woocart-defaults
  */
-
 class WP_Options {
 
     /**

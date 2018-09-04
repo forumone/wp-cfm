@@ -83,35 +83,57 @@ class WOO_Shipping {
      * @access public
 	 */
 	public function import_terms( $params ) {
+		global $wpdb;
+
+        $id     = intval(str_replace( 'wooship/', '', $params['name'] ) );
+        $data   = $params['new_value'];
 		$wpdb->replace(
-			"{$wpdb->prefix}woocommerce_tax_rates",
+			"{$wpdb->prefix}woocommerce_shipping_zones",
 			array(
-				'tax_rate_id'        => $id,
-				'tax_rate_country'   => $data->country,
-				'tax_rate_state'     => $data->state,
-				'tax_rate_country'   => $data->country,
-				'tax_rate'           => $data->rate,
-				'tax_rate_name'      => $data->name,
-				'tax_rate_priority'  => $data->priority,
-				'tax_rate_compound'  => $data->compound,
-				'tax_rate_shipping'  => $data->shipping,
-				'tax_rate_orderrder' => $data->order,
-				'tax_rate_class'     => $data->class,
+				'zone_id' 		=> $id,
+				'zone_name' 	=> $data->name,
+				'zone_order' 	=> $data->order
 			),
 			array(
 				'%d',
 				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
+				'%d'
 			)
 		);
+
+		foreach ( $data->locations as $location ) {
+			$wpdb->replace(
+                "{$wpdb->prefix}woocommerce_shipping_zone_locations",
+                array(
+                    'zone_id'   	=> $id,
+                    'location_code' => $location->location_code,
+                    'location_type' => $location->location_type
+                ),
+                array(
+                    '%d',
+                    '%s',
+                    '%s'
+                )
+            );
+		}
+
+		foreach ( $data->methods as $method ) {
+			$wpdb->replace(
+                "{$wpdb->prefix}woocommerce_shipping_zone_methods",
+                array(
+                    'zone_id'   	=> $id,
+                    'method_id' 	=> $method->method_id,
+                    'method_order' 	=> $method->method_order,
+                    'is_enabled' 	=> $method->is_enabled
+                ),
+                array(
+                	'%d',
+                    '%s',
+                    '%d',
+                    '%d'
+                )
+            );
+		}
 	}
 
 }
