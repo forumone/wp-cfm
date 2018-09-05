@@ -18,7 +18,7 @@ class WOO_Shipping {
 	}
 
 	/**
-	 * Register the taxonomies in WCD.
+	 * Register the shipping zones in WCD.
      *
      * @access public
 	 */
@@ -73,7 +73,7 @@ class WOO_Shipping {
 	}
 
 	/**
-	 * Import (overwrite) taxonomies into the DB
+	 * Import (overwrite) shipping zones into the DB
 	 *
 	 * @param string $params['name']
 	 * @param string $params['group']

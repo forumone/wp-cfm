@@ -18,7 +18,7 @@ class WOO_Tax {
     }
 
     /**
-     * Register the taxonomies in WCD.
+     * Register the tax rates in WCD.
      *
      * @access public
      */
@@ -73,7 +73,7 @@ class WOO_Tax {
     }
 
     /**
-     * Import (overwrite) taxonomies into the DB
+     * Import (overwrite) tax rates into the DB
      *
      * @param string $params['name']
      * @param string $params['group']
