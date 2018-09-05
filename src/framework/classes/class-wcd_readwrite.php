@@ -42,9 +42,7 @@ class WCD_Readwrite {
      * @param string $bundle_name The bundle name (or "all")
      * @access public
      */
-    public function pull_bundle( $bundle_name ) {
-        $bundles = ( 'all' == $bundle_name ) ? WCD()->helper->get_bundle_names() : array( $bundle_name );
-
+    public function pull_bundle( $bundle_name, $file_path ) {
         // Retrieve the settings.
         $settings = WCD()->options->get( self::SETTINGNAME );
         $settings = json_decode( $settings, true );
@@ -55,48 +53,14 @@ class WCD_Readwrite {
         }
 
         $dontUpdateSettings = false;
-        // Import each bundle into DB.
-        foreach ( $bundles as $bundle_name ) {
-            $data           = $this->read_file( $bundle_name );
-            $bundle_label   = $data['.label'];
-            unset( $data['.label'] );
 
-            $this->write_db( $bundle_name, $data );
+        // Import bundle into DB.
+        $data = $this->read_file( $bundle_name, $file_path );
 
-            // If we import wcd settings don't update it
-            if ( ! $dontUpdateSettings ) {
-                $dontUpdateSettings = $bundle_name == 'wcd';
-            }
-
-            if ( $dontUpdateSettings ) {
-                continue;
-            }
-
-            // Update the bundle's config options (using the pull file).
-            $exists = false;
-
-            foreach ( $settings['bundles'] as $key => $bundle_settings ) {
-                if ( $bundle_name == $bundle_settings['name'] ) {
-                    $settings['bundles'][ $key ]['label']   = $bundle_label;
-                    $settings['bundles'][ $key ]['config']  = array_keys( $data );
-                    $exists                                 = true;
-                    break;
-                }
-            }
-
-            if ( ! $exists ) {
-                $settings['bundles'][] = array(
-                    'label'     => $bundle_label,
-                    'name'      => $bundle_name,
-                    'config'    => array_keys( $data ),
-                );
-            }
-        }
-
-        // Write the settings.
-        if ( ! $dontUpdateSettings ) {
-          WCD()->options->update( self::SETTINGNAME, json_encode( $settings ) );
-        }
+        // We received something :)
+        if ( ! empty( $data ) ) {
+            $this->write_db( $data );
+        }        
     }
 
     /**
@@ -105,27 +69,21 @@ class WCD_Readwrite {
      * @param string $bundle_name The bundle name (or "all")
      * @access public
      */
-    public function push_bundle( $bundle_name ) {
-        $bundles = ( 'all' == $bundle_name ) ? WCD()->helper->get_bundle_names() : array( $bundle_name );
+    public function push_bundle( $bundle_name, $file_path ) {
+        $data = $this->read_db( $bundle_name );
 
-        foreach ( $bundles as $bundle_name ) {
-            $data = $this->read_db( $bundle_name );
+        // Append the bundle label
+        $bundle_meta    = WCD()->helper->get_bundle_by_name( $bundle_name );
+        $data['.label'] = $bundle_meta['label'];
 
-            // Append the bundle label
-            $bundle_meta    = WCD()->helper->get_bundle_by_name( $bundle_name );
-            $data['.label'] = $bundle_meta['label'];
-
-            if ( WCD_CONFIG_FORMAT == 'json' ) {
+        if ( WCD_CONFIG_FORMAT == 'json' ) {
             // JSON_PRETTY_PRINT for PHP 5.4+
-            $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
-                json_encode( $data, JSON_PRETTY_PRINT ) :
-                json_encode( $data );
-            } elseif ( in_array( WCD_CONFIG_FORMAT, array( 'yaml', 'yml' ) ) ) {
-                $data = WCD_Helper::convert_to_yaml( $data, true );
-            }
-
-            $this->write_file( $bundle_name, $data );
+            $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ? json_encode( $data, JSON_PRETTY_PRINT ) : json_encode( $data );
+        } elseif ( in_array( WCD_CONFIG_FORMAT, array( 'yaml', 'yml' ) ) ) {
+            $data = WCD_Helper::convert_to_yaml( $data, true );
         }
+
+        $this->write_file( $bundle_name, $file_path, $data );
     }
 
     /**
@@ -180,16 +138,7 @@ class WCD_Readwrite {
      * @access public
      */
     public function bundle_filename( $bundle_name ) {
-        $filename = "$this->folder/$bundle_name." . WCD_CONFIG_FORMAT;
-
-        if ( is_multisite() ) {
-            if ( WCD()->options->is_network ) {
-                $filename = "$this->folder/network-$bundle_name." . WCD_CONFIG_FORMAT;
-            } else {
-                $filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name." . WCD_CONFIG_FORMAT;
-            }
-        }
-
+        $filename = $bundle_name . '.' . WCD_CONFIG_FORMAT;
         return $filename;
     }
 
@@ -199,35 +148,37 @@ class WCD_Readwrite {
      * @return array
      * @access public
      */
-    public function read_file( $bundle_name ) {
+    public function read_file( $bundle_name, $file_path ) {
         $filename = $this->bundle_filename( $bundle_name );
 
-        if ( is_readable( $filename ) ) {
-            $contents = file_get_contents( $filename );
+        if ( file_exists( $file_path . $filename ) ) {
+            if ( is_readable( $file_path . $filename ) ) {
+                $contents = file_get_contents( $file_path . $filename );
 
-            if ( WCD_CONFIG_FORMAT == 'json' ) {
-                return json_decode( $contents, true );
-            } elseif ( in_array( WCD_CONFIG_FORMAT, array( 'yaml', 'yml' ) ) ) {
-                $array = Yaml::parse( $contents );
+                if ( WCD_CONFIG_FORMAT == 'json' ) {
+                    return json_decode( $contents, true );
+                } elseif ( in_array( WCD_CONFIG_FORMAT, array( 'yaml', 'yml' ) ) ) {
+                    $array = Yaml::parse( $contents );
 
-                foreach ( $array as $key => $value ) {
-                    $format = array();
+                    foreach ( $array as $key => $value ) {
+                        $format = array();
 
-                    if ( preg_match('/\.(.*)_format/i', $key, $format ) ) {
-                        switch ( $array[$format[0]] ) {
-                            case 'serialized':
-                                $array[$format[1]] = serialize( $array[$format[1]] );
-                                break;
-                            case 'json':
-                                $array[$format[1]] = json_encode( $array[$format[1]] );
-                                break;
+                        if ( preg_match('/\.(.*)_format/i', $key, $format ) ) {
+                            switch ( $array[$format[0]] ) {
+                                case 'serialized':
+                                    $array[$format[1]] = serialize( $array[$format[1]] );
+                                    break;
+                                case 'json':
+                                    $array[$format[1]] = json_encode( $array[$format[1]] );
+                                    break;
+                            }
+
+                            unset( $array[$format[0]] );
                         }
-
-                        unset( $array[$format[0]] );
                     }
-                }
 
-                return $array;
+                    return $array;
+                }
             }
         }
 
@@ -239,15 +190,15 @@ class WCD_Readwrite {
      *
      * @access public
      */
-    public function write_file( $bundle_name, $data ) {
+    public function write_file( $bundle_name, $file_path, $data ) {
         $filename = $this->bundle_filename( $bundle_name );
 
-        if ( file_exists( $filename ) ) {
-            if ( is_writable( $filename ) ) {
-                return file_put_contents( $filename, $data );
+        if ( file_exists( $file_path . $filename ) ) {
+            if ( is_writable( $file_path . $filename ) ) {
+                return file_put_contents( $file_path . $filename, $data );
             }
-        } elseif ( is_writable( $this->folder ) ) {
-            return file_put_contents( $filename, $data );
+        } elseif ( is_writable( $file_path ) ) {
+            return file_put_contents( $file_path . $filename, $data );
         }
 
         return false;
@@ -275,11 +226,10 @@ class WCD_Readwrite {
      * @access public
      */
     public function read_db( $bundle_name ) {
-        $output     = array();
-        $all_config = WCD()->registry->get_configuration_items();
-
-        $opts       = WCD()->options->get( self::SETTINGNAME );
-        $opts       = json_decode( $opts, true );
+        $output = array();
+        $config = WCD()->registry->get_configuration_items();
+        $opts   = WCD()->options->get( self::SETTINGNAME );
+        $opts   = json_decode( $opts, true );
 
         foreach ( $opts['bundles'] as $bundle ) {
             if ( $bundle['name'] == $bundle_name ) {
@@ -289,9 +239,9 @@ class WCD_Readwrite {
         }
 
         if ( isset( $bundle_config ) ) {
-            foreach ( $all_config as $key => $config ) {
+            foreach ( $config as $key => $value ) {
                 if ( in_array( $key, $bundle_config ) ) {
-                    $output[ $key ] = $config['value'];
+                    $output[ $key ] = $value['value'];
                 }
             }
         }
@@ -306,13 +256,13 @@ class WCD_Readwrite {
      * @param array $file_data Array of configuration items
      * @access public
      */
-    public function write_db( $bundle_name, $file_data ) {
+    public function write_db( $file_data ) {
         $success = false;
         $db_data = WCD()->registry->get_configuration_items();
 
         foreach ( $file_data as $key => $val ) {
             // Set a default group if needed.
-            $group = isset( $db_data[ $key ]['group'] ) ? $db_data[ $key ]['group'] : esc_html__( 'WP Options', 'woocart-defaults' );
+            $group = isset( $db_data[ $key ]['group'] ) ? $db_data[ $key ]['group'] : esc_html__( 'WooCart Options', 'woocart-defaults' );
 
             // Make sure "old_value" exists.
             if ( empty( $db_data[ $key ]['value'] ) ) {

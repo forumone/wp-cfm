@@ -18,7 +18,7 @@ class WCD_CLI_Command extends WP_CLI_Command {
      *
      * wp config push bundle_name
      *
-     * @synopsis <bundle_name> [--network]
+     * @synopsis <bundle_name> <path_with_trailing_slash> [--network]
      *
      * @access public
      */
@@ -27,8 +27,12 @@ class WCD_CLI_Command extends WP_CLI_Command {
             WooCart\WooCartDefaults\WCD()->options->is_network = true;
         }
 
-        WooCart\WooCartDefaults\WCD()->readwrite->push_bundle( $args[0] );
-        WP_CLI::success( 'The bundle has been written to file.' );
+        if ( isset( $args[0] ) && isset( $args[1] ) ) {
+            WooCart\WooCartDefaults\WCD()->readwrite->push_bundle( $args[0], $args[1] );
+            WP_CLI::success( 'The bundle has been written to the filesystem.' );
+        } else {
+            WP_CLI::error( 'Bundle name and path are required to push data to the filesystem.' );
+        }
     }
 
     /**
@@ -43,7 +47,7 @@ class WCD_CLI_Command extends WP_CLI_Command {
      *
      * wp config pull bundle_name
      *
-     * @synopsis <bundle_name> [--network]
+     * @synopsis <bundle_name> <path_with_trailing_slash> [--network]
      *
      * @access public
      */
@@ -52,16 +56,12 @@ class WCD_CLI_Command extends WP_CLI_Command {
             WooCart\WooCartDefaults\WCD()->options->is_network = true;
         }
 
-        $bundle_name = $args[0] ?: 'all';
-
-        if ( 'all' != $bundle_name ) {
-            if ( ! in_array( $bundle_name, WooCart\WooCartDefaults\WCD()->helper->get_bundle_names() ) ) {
-                WP_CLI::error( "Bundle file for `$bundle_name` cannot be found." );
-            }
+        if ( isset( $args[0] ) && isset( $args[1] ) ) {
+            WooCart\WooCartDefaults\WCD()->readwrite->pull_bundle( $args[0], $args[1] );
+            WP_CLI::success( 'The bundle has been pulled into the database.' );
+        } else {
+            WP_CLI::error( 'Bundle name and path are required to pull data from the filesystem.' );
         }
-
-        WooCart\WooCartDefaults\WCD()->readwrite->pull_bundle( $bundle_name );
-        WP_CLI::success( 'The bundle has been pulled into the database.' );
     }
 
     /**
