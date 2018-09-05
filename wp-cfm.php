@@ -86,7 +86,7 @@ class WPCFM_Core
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
         // includes
-        foreach ( array( 'options', 'readwrite', 'registry', 'helper', 'ajax' ) as $class ) {
+        foreach ( array( 'options', 'readwrite', 'upload', 'registry', 'helper', 'ajax' ) as $class ) {
             include( WPCFM_DIR . "/includes/class-$class.php" );
         }
 
@@ -97,6 +97,7 @@ class WPCFM_Core
 
         $this->options = new WPCFM_Options();
         $this->readwrite = new WPCFM_Readwrite();
+        $this->upload = new WPCFM_Upload();
         $this->registry = new WPCFM_Registry();
         $this->helper = new WPCFM_Helper();
         $ajax = new WPCFM_Ajax();

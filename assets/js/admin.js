@@ -152,16 +152,16 @@
                     $('.wpcfm-diff .changed').text(response.db);
                     $('.wpcfm-diff').prettyTextDiff();
                 }
-                $('.media-modal').show();
-                $('.media-modal-backdrop').show();
+                $('.media-modal.diff').show();
+                $('.media-modal-backdrop.diff').show();
             }, 'json');
         });
 
 
         // Close the Diff viewer
         $(document).on('click', '.media-modal-close', function() {
-            $('.media-modal').hide();
-            $('.media-modal-backdrop').hide();
+            $('.media-modal.diff').hide();
+            $('.media-modal-backdrop.diff').hide();
         });
 
 
@@ -177,5 +177,64 @@
             $(this).closest('.bundle-row').attr('data-bundle', val);
             $(this).closest('.bundle-row').find('.bundle-toggle').html(label);
         });
+
+
+        // "Upload" button
+        $(document).on('click', '.upload-bundle:not(.disabled)', function() {
+            var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
+            $('.media-modal.upload').show();
+            $('.media-modal-backdrop.upload').show();
+            $('.media-modal.upload #bundle_name').val(bundle_name);
+            $('.media-modal.upload .errormsg').html("");
+            $('.uploading').hide();
+        });
+
+
+        // "Submit" button for upload
+        $(document).on('click', '.submit-upload', function() {
+            var bundle_name = $('#bundle_name').val();
+            var fileInputElement = document.getElementById("file");
+            var file = fileInputElement.files[0];
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                if (ev.target.readyState != 2)
+                    return;
+                if (ev.target.error) {
+                    alert("Error while reading file " + file.name + ": " + ev.target.error);
+                    return;
+                }
+
+                var data = {
+                    "action": "upload_bundle",
+                    "bundle_name": bundle_name,
+                    "file_content": ev.target.result
+                };
+
+                jQuery.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: data
+                }).done(function(response) {
+                    $('.uploading').hide();
+                    $('.media-modal.upload').hide();
+                    $('.media-modal-backdrop.upload').hide();
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                  // TODO: Better error handling/reporting
+                  console.log("XHR", jqXHR);
+                  $('.media-modal.upload .errormsg').html(textStatus);
+                });
+                $('.uploading').show();
+            };
+            reader.readAsText(file);
+        });
+
+
+        // Close the upload modal
+        $(document).on('click', '.media-modal-close', function() {
+            $('.media-modal.upload').hide();
+            $('.media-modal-backdrop.upload').hide();
+        });
+
+
     });
 })(jQuery);
