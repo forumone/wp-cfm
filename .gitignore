@@ -1,2 +1,10 @@
-.svn/
+vendor
+bin
+cover
+composer.lock
+tmp
+build
+.idea
+*~
+*.zip
 .DS_Store

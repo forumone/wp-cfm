@@ -1,0 +1,16 @@
+{
+  "name": "forumone/wp-cfm",
+  "description": "Manage and deploy WordPress configuration changes",
+  "keywords": ["WordPress", "plugin"],
+  "authors":[
+    {
+      "name": "Matt Gibbs",
+      "homepage": "https://facetwp.com/"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.6.4",
+    "symfony/yaml": "^3.3"
+  }
+}
