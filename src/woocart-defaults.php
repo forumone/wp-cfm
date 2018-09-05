@@ -41,7 +41,6 @@ if ( PHP_VERSION_ID >= 50604 ) {
  */
 class WooCartDefaults {
 
-    const OPTIONNAME    = 'WooCartDefaults.Path';
     const SETTINGNAME   = 'WooCartDefaults.Settings';
 
     public $readwrite;
@@ -165,14 +164,6 @@ class WooCartDefaults {
         load_plugin_textdomain( 'woocart-defaults', false, dirname( plugin_basename( __FILE__ ) ) . '/framework/langs/' );
     }
 
-    /**
-     * Attached to the activation hook.
-     */
-    public static function activate_plugin() {
-        // Add to `wp_options` table.
-        update_option( 'WooCartDefaults.Path', WP_CONTENT_DIR . '/config' );
-    }
-
 }
 
 /**
@@ -189,8 +180,3 @@ endif;
  * Get the instance.
  */
 WCD();
-
-/**
- * On plugin activation.
- */
-register_activation_hook( __FILE__, array( 'WooCart\WooCartDefaults\WooCartDefaults', 'activate_plugin' ) );
