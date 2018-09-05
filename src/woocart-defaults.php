@@ -59,7 +59,7 @@ class WooCartDefaults {
         define( 'WCD_VERSION', '1.0.0' );
         define( 'WCD_DIR', dirname(__FILE__) );
 
-        define( 'WCD_CONFIG_DIR', apply_filters( 'wcd_config_dir', esc_url( get_theme_mod( self::OPTIONNAME, WP_CONTENT_DIR . '/config' ) ) ) );
+        define( 'WCD_CONFIG_DIR', apply_filters( 'wcd_config_dir', esc_url( WP_CONTENT_DIR . '/config' ) ) );
         define( 'WCD_CONFIG_URL', apply_filters( 'wcd_config_url', WP_CONTENT_URL . '/config' ) );
 
         define( 'WCD_CONFIG_FORMAT', apply_filters( 'wcd_config_format', 'yaml' ) );
