@@ -7,9 +7,8 @@ namespace WooCart\WooCartDefaults;
  *
  * @package woocart-defaults
  */
-class WCD_Registry {
-
-    const SETTINGNAME = 'WooCartDefaults.Settings';
+class WCD_Registry
+{
 
     /**
      * Class Constructor.
@@ -17,8 +16,9 @@ class WCD_Registry {
      * @access public
      * @since  1.0.0 
      */
-    public function __construct() {
-        add_filter( 'wcd_configuration_items', array( &$this, 'disallowed_items' ) );
+    public function __construct()
+    {
+        add_filter('wcd_configuration_items', array( &$this, 'disallowed_items' ));
     }
 
     /**
@@ -28,11 +28,12 @@ class WCD_Registry {
      *
      * @access public
      */
-    public function get_configuration_items() {
+    public function get_configuration_items()
+    {
         global $wpdb;
 
         $items = array();
-        return apply_filters( 'wcd_configuration_items', $items );
+        return apply_filters('wcd_configuration_items', $items);
     }
 
     /**
@@ -40,7 +41,8 @@ class WCD_Registry {
      *
      * @access public
      */
-    public function disallowed_items( $items ) {
+    public function disallowed_items( $items )
+    {
         $disallowed_items = array(
             'auth_key',
             'auth_salt',
@@ -57,46 +59,10 @@ class WCD_Registry {
         );
 
         foreach ( $disallowed_items as $row ) {
-            unset( $items[$row] );
+            unset($items[$row]);
         }
 
         return $items;
-    }
-
-    /**
-     * Get configuration options stored in multiple bundles.
-     *
-     * @access public
-     */
-    public function get_duplicates() {
-        $settings = WCD()->options->get( self::SETTINGNAME );
-        $settings = json_decode( $settings, true );
-
-        if ( empty( $settings['bundles'] ) ) {
-            return array();
-        }
-
-        $result = array();
-
-        foreach ( $settings['bundles'] as $bundle ) {
-            foreach ( (array) $bundle['config'] as $option ) {
-                if ( empty( $result[$option] ) ) {
-                    $result[$option]    = array( $bundle['name'] );
-                } else {
-                    $result[$option][]  = $bundle['name'];
-                }
-            }
-        }
-
-        foreach ( $result as $option => $bundles ) {
-            if ( 1 == count( $bundles ) ) {
-                unset( $result[$option] );
-            } else {
-                sort( $result[$option] );
-            }
-        }
-
-        return $result;
     }
 
 }

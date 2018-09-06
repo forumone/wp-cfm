@@ -16,10 +16,10 @@ namespace WooCart\WooCartDefaults;
 /**
  * Checks for PHP version and stop the plugin if the version is < 5.3.0.
  */
-if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+if (version_compare(PHP_VERSION, '5.3.0', '<') ) {
     ?>
     <div id="error-page">
-        <p><?php esc_html_e( 'This plugin requires PHP 5.3.0 or higher. Please contact your hosting provider about upgrading your server software. Your PHP version is', 'woocart-defaults' ); ?> <b><?php echo esc_html( PHP_VERSION ); ?></b></p>
+        <p><?php esc_html_e('This plugin requires PHP 5.3.0 or higher. Please contact your hosting provider about upgrading your server software. Your PHP version is', 'woocart-defaults'); ?> <b><?php echo esc_html(PHP_VERSION); ?></b></p>
     </div>
     <?php
     die();
@@ -28,24 +28,22 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 /**
  * Include composer autoloader.
  */
-if ( PHP_VERSION_ID >= 50604 ) {
-    require_once __DIR__ . '/vendor/autoload.php';
+if (PHP_VERSION_ID >= 50604 ) {
+    include_once __DIR__ . '/vendor/autoload.php';
 }
 
 /**
  * WooCartDefaults class where all the action happens.
  *
- * @package WordPress
+ * @package    WordPress
  * @subpackage woocart-defaults
- * @since 1.0.0
+ * @since      1.0.0
  */
-class WooCartDefaults {
-
-    const OPTIONNAME = 'WooCartDefaults.Path';
+class WooCartDefaults
+{
 
     public $readwrite;
     public $registry;
-    public $options;
     public $helper;
     private static $instance;
 
@@ -55,28 +53,24 @@ class WooCartDefaults {
      * @access public
      * @since  1.0.0 
      */
-    public function __construct() {
-        define( 'WCD_VERSION', '1.0.0' );
-        define( 'WCD_DIR', dirname(__FILE__) );
-
-        define( 'WCD_CONFIG_DIR', apply_filters( 'wcd_config_dir', esc_url( get_theme_mod( self::OPTIONNAME, WP_CONTENT_DIR . '/config' ) ) ) );
-        define( 'WCD_CONFIG_URL', apply_filters( 'wcd_config_url', WP_CONTENT_URL . '/config' ) );
-
-        define( 'WCD_CONFIG_FORMAT', apply_filters( 'wcd_config_format', 'yaml' ) );
-        define( 'WCD_CONFIG_USE_YAML_DIFF', apply_filters( 'wcd_config_use_yaml_diff', true ) );
-        define( 'WCD_URL', plugins_url( '', __FILE__ ) );
+    public function __construct()
+    {
+        define('WCD_DIR', dirname(__FILE__));
+        define('WCD_URL', plugins_url('', __FILE__));
+        define('WCD_CONFIG_FORMAT', apply_filters('wcd_config_format', 'yaml'));
 
         /**
          * It's time for action :)
          */
-        add_action( 'init', array( &$this, 'init' ) );
+        add_action('init', array( &$this, 'init' ));
     }
 
     /**
      * Initialize the singleton.
      */
-    public static function instance() {
-        if ( ! isset( self::$instance ) ) {
+    public static function instance()
+    {
+        if (! isset(self::$instance) ) {
             self::$instance = new self;
         }
 
@@ -86,13 +80,13 @@ class WooCartDefaults {
     /**
      * Initialize classes and WP hooks.
      */
-    public function init() {
+    public function init()
+    {
         // i18n.
         $this->load_textdomain();
 
         // Required classes.
         $classes = array(
-            'wcd_options',
             'wcd_readwrite',
             'wcd_registry',
             'wcd_helper'
@@ -103,7 +97,7 @@ class WooCartDefaults {
         }
 
         // WP-CLI.
-        if ( defined( 'WP_CLI' ) && WP_CLI ) {
+        if (defined('WP_CLI') && WP_CLI ) {
             include WCD_DIR . '/framework/classes/class-wcd_cli.php';
         }
 
@@ -111,15 +105,14 @@ class WooCartDefaults {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
         // Third party integrations.
-        $integrations = scandir( WCD_DIR . '/framework/classes/integrations' );
+        $integrations = scandir(WCD_DIR . '/framework/classes/integrations');
 
         foreach ( $integrations as $filename ) {
-            if ( '.' != substr( $filename, 0, 1) ) {
+            if ('.' != substr($filename, 0, 1) ) {
                 include WCD_DIR . "/framework/classes/integrations/{$filename}";
             }
         }
 
-        $this->options      = new WCD_Options();
         $this->readwrite    = new WCD_Readwrite();
         $this->registry     = new WCD_Registry();
         $this->helper       = new WCD_Helper();
@@ -128,36 +121,25 @@ class WooCartDefaults {
     /**
      * i18n support.
      */
-    public function load_textdomain() {
-        load_plugin_textdomain( 'woocart-defaults', false, dirname( plugin_basename( __FILE__ ) ) . '/framework/langs/' );
-    }
-
-    /**
-     * Attached to the activation hook.
-     */
-    public static function activate_plugin() {
-        // Add to `wp_options` table.
-        update_option( self::OPTIONNAME, WP_CONTENT_DIR . '/config' );
+    public function load_textdomain()
+    {
+        load_plugin_textdomain('woocart-defaults', false, dirname(plugin_basename(__FILE__)) . '/framework/langs/');
     }
 
 }
 
 /**
  * Allow direct access to the classes
- * For example, use WCD()->options to access WCD_Options
+ * For example, use WCD()->readwrite to access WCD_Readwrite
  */
-if ( ! function_exists( 'WCD' ) ) :
-function WCD() {
-    return WooCartDefaults::instance();
-}
+if (! function_exists('WCD') ) :
+    function WCD()
+    {
+        return WooCartDefaults::instance();
+    }
 endif;
 
 /**
  * Get the instance.
  */
 WCD();
-
-/**
- * On plugin activation.
- */
-register_activation_hook( __FILE__, array( 'WooCartDefaults', 'activate_plugin' ) );

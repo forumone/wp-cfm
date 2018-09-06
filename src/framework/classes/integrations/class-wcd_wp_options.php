@@ -4,8 +4,8 @@
  *
  * @package woocart-defaults
  */
-
-class WP_Options {
+class WP_Options
+{
 
     /**
      * Class Constructor.
@@ -13,9 +13,10 @@ class WP_Options {
      * @access public
      * @since  1.0.0 
      */
-    public function __construct() {
-        add_filter( 'wcd_configuration_items', array( &$this, 'get_configuration_items' ) );
-        add_filter( 'wcd_pull_callback', array( &$this, 'pull_callback' ), 10, 2 );
+    public function __construct()
+    {
+        add_filter('wcd_configuration_items', array( &$this, 'get_configuration_items' ));
+        add_filter('wcd_pull_callback', array( &$this, 'pull_callback' ), 10, 2);
     }
 
     /**
@@ -23,7 +24,8 @@ class WP_Options {
      *
      * @access public
      */
-    public function get_configuration_items( $items ) {
+    public function get_configuration_items( $items )
+    {
         global $wpdb;
 
         $query = "SELECT option_name, option_value FROM $wpdb->options
@@ -31,12 +33,12 @@ class WP_Options {
         AND option_name NOT LIKE 'woocommerce_%'
         ORDER BY option_name";
 
-        $results = $wpdb->get_results( $query );
+        $results = $wpdb->get_results($query);
 
         foreach ( $results as $op ) {
-            $items["wp/$op->option_name"] = array(
+            $items['wp/' . $op->option_name] = array(
                 'value' => $op->option_value,
-                'label' => "$op->option_name",
+                'label' => $op->option_name,
                 'group' => 'WordPress Options',
             );
         }
@@ -49,9 +51,10 @@ class WP_Options {
      *
      * @access public
      */
-    public function pull_callback( $callback, $callback_params ) {
-        if ( 'wp/' == substr( $callback_params['name'], 0, 2 ) ) {
-            return array( $this, 'import_terms' );
+    public function pull_callback( $callback, $callback_params )
+    {
+        if ('wp/' == substr($callback_params['name'], 0, 3) ) {
+            return array( &$this, 'import_terms' );
         }
 
         return $callback;
@@ -67,8 +70,10 @@ class WP_Options {
      *
      * @access public
      */
-    public function import_terms( $params ) {
-        update_option( $params["name"], $params["new_value"] );
+    public function import_terms( $params )
+    {
+        $new_value = str_replace('wp/', '', $params['name']);
+        update_option($new_value, $params['new_value']);
     }
 
 }
