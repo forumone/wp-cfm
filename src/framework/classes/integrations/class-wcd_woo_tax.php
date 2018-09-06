@@ -4,7 +4,8 @@
  *
  * @package woocart-defaults
  */
-class WOO_Tax {
+class WOO_Tax
+{
 
     /**
      * Class Constructor.
@@ -12,9 +13,10 @@ class WOO_Tax {
      * @access public
      * @since  1.0.0 
      */
-    public function __construct() {
-        add_filter( 'wcd_configuration_items', array( &$this, 'configuration_items' ) );
-        add_filter( 'wcd_pull_callback', array( &$this, 'pull_callback' ), 10, 2 );
+    public function __construct()
+    {
+        add_filter('wcd_configuration_items', array( &$this, 'configuration_items' ));
+        add_filter('wcd_pull_callback', array( &$this, 'pull_callback' ), 10, 2);
     }
 
     /**
@@ -22,18 +24,23 @@ class WOO_Tax {
      *
      * @access public
      */
-    public function configuration_items( $items ) {
+    public function configuration_items( $items )
+    {
         global $wpdb;
 
         $query      = "SELECT * FROM {$wpdb->prefix}woocommerce_tax_rates";
-        $tax_rates  = $wpdb->get_results( $query );
+        $tax_rates  = $wpdb->get_results($query);
 
         foreach ( $tax_rates as $tax ) {
-            $locations  = $wpdb->get_results( $wpdb->prepare( "
+            $locations  = $wpdb->get_results(
+                $wpdb->prepare(
+                    "
 				SELECT location_code, location_type
 				FROM {$wpdb->prefix}woocommerce_tax_rate_locations
 				WHERE tax_rate_id = %d
-            ", $tax->tax_rate_id ), "ARRAY_A" );
+            ", $tax->tax_rate_id 
+                ), "ARRAY_A" 
+            );
 
             $values     = array(
                 'country'   => $tax->tax_rate_country,
@@ -49,7 +56,7 @@ class WOO_Tax {
             );
 
             $items['wootax/' . $tax->tax_rate_id] = array(
-                'value' => json_encode( $values ),
+                'value' => json_encode($values),
                 'label' => "$tax->tax_rate_country - $tax->tax_rate_name - $tax->tax_rate $tax_rate_class",
                 'group' => 'WooCommerce Tax Rates',
             );
@@ -64,8 +71,9 @@ class WOO_Tax {
      *
      * @access public
      */
-    public function pull_callback( $callback, $callback_params ) {
-        if ( 'wootax/' == substr( $callback_params['name'], 0, 7 ) ) {
+    public function pull_callback( $callback, $callback_params )
+    {
+        if ('wootax/' == substr($callback_params['name'], 0, 7) ) {
             return array( &$this, 'import_tax' );
         }
 
@@ -82,10 +90,11 @@ class WOO_Tax {
      *
      * @access public
      */
-    public function import_tax( $params ) {
+    public function import_tax( $params )
+    {
         global $wpdb;
 
-        $id     = intval(str_replace( 'wootax/', '', $params['name'] ) );
+        $id     = intval(str_replace('wootax/', '', $params['name']));
         $data   = $params['new_value'];
         $wpdb->replace(
             "{$wpdb->prefix}woocommerce_tax_rates",
