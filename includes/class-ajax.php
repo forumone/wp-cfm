@@ -102,8 +102,14 @@ class WPCFM_Ajax
     function upload_bundle() {
       if ( current_user_can( 'manage_options' ) ) {
           $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
-          WPCFM()->upload->upload_bundle( $bundle_name );
-          echo __( 'Upload successful', 'wpcfm' );
+          $file_content = stripslashed( $_POST['file_content'] );
+          WPCFM()->upload->upload_bundle( $bundle_name, $file_content );
+          if(WPCFM()->upload->error) {
+              echo WPCFM()->upload->error;
+          }
+          else {
+              echo __( 'Upload successful', 'wpcfm' );
+          }
       }
       exit;
     }
