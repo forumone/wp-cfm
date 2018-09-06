@@ -1,15 +1,15 @@
 <?php
 
-class WPCFM_Ajax
+class WPCFM_RESTAPI
 {
 
     function __construct() {
-        add_action( 'wp_ajax_wpcfm_load', array( $this, 'load_settings' ) );
-        add_action( 'wp_ajax_wpcfm_save', array( $this, 'save_settings' ) );
-        add_action( 'wp_ajax_wpcfm_push', array( $this, 'push_settings' ) );
-        add_action( 'wp_ajax_wpcfm_pull', array( $this, 'pull_settings' ) );
-        add_action( 'wp_ajax_wpcfm_diff', array( $this, 'load_diff' ) );
-        add_action( 'wp_ajax_wpcfm_upload', array( $this, 'upload_bundle' ) );
+        add_action( 'rest_api_init', function () {
+            register_rest_route( 'wpcfm/v1', '/bundle/(?P<name>[\\w-_]+)', array(
+                'methods' => 'POST',
+                'callback' => array($this, 'upload_bundle'),
+            ) );
+        } );
     }
 
 
@@ -86,6 +86,7 @@ class WPCFM_Ajax
     /**
      * Pull settings into DB
      */
+
     function pull_settings() {
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
@@ -99,12 +100,13 @@ class WPCFM_Ajax
     /**
      * Accept uploaded bundle to filesystem
      */
-    function upload_bundle() {
-      if ( current_user_can( 'manage_options' ) ) {
-          $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
-          WPCFM()->upload->upload_bundle( $bundle_name );
-          echo __( 'Upload successful', 'wpcfm' );
-      }
-      exit;
+    function upload_bundle($request) {
+        if ( current_user_can( 'manage_options' ) ) {
+            $bundle_name = $request['name'];
+            $file_content = $request['file_content'];
+            self::_upload_bundle($bundle_name, $file_content);
+            return __( 'Upload successful', 'wpcfm' );;
+        }
+        //return a 403;
     }
 }

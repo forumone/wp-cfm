@@ -86,7 +86,7 @@ class WPCFM_Core
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
         // includes
-        foreach ( array( 'options', 'readwrite', 'upload', 'registry', 'helper', 'ajax' ) as $class ) {
+        foreach ( array( 'options', 'readwrite', 'upload', 'registry', 'helper', 'ajax', 'rest-api' ) as $class ) {
             include( WPCFM_DIR . "/includes/class-$class.php" );
         }
 
@@ -101,6 +101,7 @@ class WPCFM_Core
         $this->registry = new WPCFM_Registry();
         $this->helper = new WPCFM_Helper();
         $ajax = new WPCFM_Ajax();
+        $rest = new WPCFM_RESTAPI();
 
         // Make sure is_plugin_active() is available
         include_once( ABSPATH . 'wp-admin/includes/plugin.php' );

@@ -205,7 +205,7 @@
                 }
 
                 var data = {
-                    "action": "upload_bundle",
+                    "action": "wpcfm_upload",
                     "bundle_name": bundle_name,
                     "file_content": ev.target.result
                 };
