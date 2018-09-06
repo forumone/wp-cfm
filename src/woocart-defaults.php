@@ -41,11 +41,8 @@ if ( PHP_VERSION_ID >= 50604 ) {
  */
 class WooCartDefaults {
 
-    const SETTINGNAME   = 'WooCartDefaults.Settings';
-
     public $readwrite;
     public $registry;
-    public $options;
     public $helper;
     private static $instance;
 
@@ -56,15 +53,9 @@ class WooCartDefaults {
      * @since  1.0.0 
      */
     public function __construct() {
-        define( 'WCD_VERSION', '1.0.0' );
         define( 'WCD_DIR', dirname(__FILE__) );
-
-        define( 'WCD_CONFIG_DIR', apply_filters( 'wcd_config_dir', esc_url( WP_CONTENT_DIR . '/config' ) ) );
-        define( 'WCD_CONFIG_URL', apply_filters( 'wcd_config_url', WP_CONTENT_URL . '/config' ) );
-
-        define( 'WCD_CONFIG_FORMAT', apply_filters( 'wcd_config_format', 'yaml' ) );
-        define( 'WCD_CONFIG_USE_YAML_DIFF', apply_filters( 'wcd_config_use_yaml_diff', true ) );
         define( 'WCD_URL', plugins_url( '', __FILE__ ) );
+        define( 'WCD_CONFIG_FORMAT', apply_filters( 'wcd_config_format', 'yaml' ) );
 
         /**
          * It's time for action :)
@@ -92,7 +83,6 @@ class WooCartDefaults {
 
         // Required classes.
         $classes = array(
-            'wcd_options',
             'wcd_readwrite',
             'wcd_registry',
             'wcd_helper'
@@ -119,42 +109,9 @@ class WooCartDefaults {
             }
         }
 
-        $this->options      = new WCD_Options();
         $this->readwrite    = new WCD_Readwrite();
         $this->registry     = new WCD_Registry();
         $this->helper       = new WCD_Helper();
-
-        /**
-         * Check database option & update as required.
-         */
-        $bundle = esc_html( get_option( self::SETTINGNAME ) );
-
-        if ( ! $bundle ) {
-            /**
-             * Let's prepare our bundle :)
-             */
-            $data = (object) array(
-                'bundles' => array(
-                    (object) array(
-                        'label'     => 'WooCart',
-                        'name'      => 'woocart',
-                        'config'    => array()
-                    )
-                )
-            );
-
-            $items = apply_filters( 'wcd_configuration_items', array() );
-
-            /**
-             * 1. Get all the items.
-             * 2. Loop through items and store only keys in the database.
-             */
-            foreach ( $items as $key => $value ) {
-                $data->bundles[0]->config[] = $key;
-            }
-
-            update_option( self::SETTINGNAME, stripslashes( json_encode( $data ) ) );
-        }
     }
 
     /**
@@ -168,7 +125,7 @@ class WooCartDefaults {
 
 /**
  * Allow direct access to the classes
- * For example, use WCD()->options to access WCD_Options
+ * For example, use WCD()->readwrite to access WCD_Readwrite
  */
 if ( ! function_exists( 'WCD' ) ) :
 function WCD() {

@@ -4,6 +4,7 @@
  *
  * @package woocart-defaults
  */
+
 class WOO_Shipping {
 
     /**
@@ -50,7 +51,7 @@ class WOO_Shipping {
 
 			$items[ 'wooship/' . $zone->zone_id ] = array(
 				'value' => json_encode( $value ),
-				'label' => "$zone->zone_name",
+				'label' => $zone->zone_name,
 				'group' => 'WooCommerce Shipping Zones',
 			);
 
@@ -65,8 +66,8 @@ class WOO_Shipping {
      * @access public
      */
 	public function pull_callback( $callback, $callback_params ) {
-		if ( 'wooship/' == substr( $callback_params['name'], 0, 7 ) ) {
-			return array( $this, 'import_terms' );
+		if ( 'wooship/' == substr( $callback_params['name'], 0, 8 ) ) {
+			return array( &$this, 'import_terms' );
 		}
 
 		return $callback;
@@ -85,14 +86,14 @@ class WOO_Shipping {
 	public function import_terms( $params ) {
 		global $wpdb;
 
-        $id     = intval(str_replace( 'wooship/', '', $params['name'] ) );
+        $id     = intval( str_replace( 'wooship/', '', $params['name'] ) );
         $data   = $params['new_value'];
 		$wpdb->replace(
 			"{$wpdb->prefix}woocommerce_shipping_zones",
 			array(
 				'zone_id' 		=> $id,
-				'zone_name' 	=> $data->name,
-				'zone_order' 	=> $data->order
+				'zone_name' 	=> $data['name'],
+				'zone_order' 	=> $data['order']
 			),
 			array(
 				'%d',
@@ -101,13 +102,13 @@ class WOO_Shipping {
 			)
 		);
 
-		foreach ( $data->locations as $location ) {
+		foreach ( $data['locations'] as $location ) {
 			$wpdb->replace(
                 "{$wpdb->prefix}woocommerce_shipping_zone_locations",
                 array(
                     'zone_id'   	=> $id,
-                    'location_code' => $location->location_code,
-                    'location_type' => $location->location_type
+                    'location_code' => $location['location_code'],
+                    'location_type' => $location['location_type']
                 ),
                 array(
                     '%d',
@@ -117,14 +118,14 @@ class WOO_Shipping {
             );
 		}
 
-		foreach ( $data->methods as $method ) {
+		foreach ( $data['methods'] as $method ) {
 			$wpdb->replace(
                 "{$wpdb->prefix}woocommerce_shipping_zone_methods",
                 array(
                     'zone_id'   	=> $id,
-                    'method_id' 	=> $method->method_id,
-                    'method_order' 	=> $method->method_order,
-                    'is_enabled' 	=> $method->is_enabled
+                    'method_id' 	=> $method['method_id'],
+                    'method_order' 	=> $method['method_order'],
+                    'is_enabled' 	=> $method['is_enabled']
                 ),
                 array(
                 	'%d',

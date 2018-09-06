@@ -65,8 +65,8 @@ class WOO_Tax {
      * @access public
      */
     public function pull_callback( $callback, $callback_params ) {
-        if ( 'wootax/' == substr( $callback_params['name'], 0, 6 ) ) {
-            return array( $this, 'import_tax' );
+        if ( 'wootax/' == substr( $callback_params['name'], 0, 7 ) ) {
+            return array( &$this, 'import_tax' );
         }
 
         return $callback;
@@ -91,16 +91,16 @@ class WOO_Tax {
             "{$wpdb->prefix}woocommerce_tax_rates",
             array(
                 'tax_rate_id'           => $id,
-                'tax_rate_country'      => $data->country,
-                'tax_rate_state'        => $data->state,
-                'tax_rate_country'      => $data->country,
-                'tax_rate'              => $data->rate,
-                'tax_rate_name'         => $data->name,
-                'tax_rate_priority'     => $data->priority,
-                'tax_rate_compound'     => $data->compound,
-                'tax_rate_shipping'     => $data->shipping,
-                'tax_rate_orderrder'    => $data->order,
-                'tax_rate_class'        => $data->class
+                'tax_rate_country'      => $data['country'],
+                'tax_rate_state'        => $data['state'],
+                'tax_rate_country'      => $data['country'],
+                'tax_rate'              => $data['rate'],
+                'tax_rate_name'         => $data['name'],
+                'tax_rate_priority'     => $data['priority'],
+                'tax_rate_compound'     => $data['compound'],
+                'tax_rate_shipping'     => $data['shipping'],
+                'tax_rate_orderrder'    => $data['order'],
+                'tax_rate_class'        => $data['class']
             ),
             array(
                 '%d',
@@ -117,13 +117,13 @@ class WOO_Tax {
             )
         );
 
-        foreach ( $data->locations as $location ) {
+        foreach ( $data['locations'] as $location ) {
             $wpdb->replace(
                 "{$wpdb->prefix}woocommerce_tax_rate_locations",
                 array(
                     'tax_rate_id'   => $id,
-                    'location_code' => $location->location_code,
-                    'location_type' => $location->location_type
+                    'location_code' => $location['location_code'],
+                    'location_type' => $location['location_type']
                 ),
                 array(
                     '%d',

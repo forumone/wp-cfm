@@ -9,8 +9,6 @@ namespace WooCart\WooCartDefaults;
  */
 class WCD_Registry {
 
-    const SETTINGNAME = 'WooCartDefaults.Settings';
-
     /**
      * Class Constructor.
      *
@@ -61,42 +59,6 @@ class WCD_Registry {
         }
 
         return $items;
-    }
-
-    /**
-     * Get configuration options stored in multiple bundles.
-     *
-     * @access public
-     */
-    public function get_duplicates() {
-        $settings = WCD()->options->get( self::SETTINGNAME );
-        $settings = json_decode( $settings, true );
-
-        if ( empty( $settings['bundles'] ) ) {
-            return array();
-        }
-
-        $result = array();
-
-        foreach ( $settings['bundles'] as $bundle ) {
-            foreach ( (array) $bundle['config'] as $option ) {
-                if ( empty( $result[$option] ) ) {
-                    $result[$option]    = array( $bundle['name'] );
-                } else {
-                    $result[$option][]  = $bundle['name'];
-                }
-            }
-        }
-
-        foreach ( $result as $option => $bundles ) {
-            if ( 1 == count( $bundles ) ) {
-                unset( $result[$option] );
-            } else {
-                sort( $result[$option] );
-            }
-        }
-
-        return $result;
     }
 
 }

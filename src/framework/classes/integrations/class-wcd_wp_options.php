@@ -33,9 +33,9 @@ class WP_Options {
         $results = $wpdb->get_results( $query );
 
         foreach ( $results as $op ) {
-            $items["wp/$op->option_name"] = array(
+            $items['wp/' . $op->option_name] = array(
                 'value' => $op->option_value,
-                'label' => "$op->option_name",
+                'label' => $op->option_name,
                 'group' => 'WordPress Options',
             );
         }
@@ -49,8 +49,8 @@ class WP_Options {
      * @access public
      */
     public function pull_callback( $callback, $callback_params ) {
-        if ( 'wp/' == substr( $callback_params['name'], 0, 2 ) ) {
-            return array( $this, 'import_terms' );
+        if ( 'wp/' == substr( $callback_params['name'], 0, 3 ) ) {
+            return array( &$this, 'import_terms' );
         }
 
         return $callback;
@@ -67,7 +67,8 @@ class WP_Options {
      * @access public
      */
     public function import_terms( $params ) {
-        update_option( $params["name"], $params["new_value"] );
+        $new_value = str_replace( 'wp/', '', $params['name'] );
+        update_option( $new_value, $params['new_value'] );
     }
 
 }

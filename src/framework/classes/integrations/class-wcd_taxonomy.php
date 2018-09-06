@@ -56,8 +56,8 @@ class WCD_Taxonomy {
      * @access public
 	 */
 	public function pull_callback( $callback, $callback_params ) {
-		if ( 'taxonomy/' == substr( $callback_params['name'], 0, 4 ) ) {
-			return array( $this, 'import_terms' );
+		if ( 'taxonomy/' == substr( $callback_params['name'], 0, 9 ) ) {
+			return array( &$this, 'import_terms' );
 		}
 
 		return $callback;

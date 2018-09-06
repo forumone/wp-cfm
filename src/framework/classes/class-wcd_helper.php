@@ -4,6 +4,7 @@ namespace WooCart\WooCartDefaults;
 
 /**
  * Helper class for YAML data.
+ * (Not required currently but these might be helpful in future)
  *
  * @package woocart-defaults
  */
@@ -11,127 +12,6 @@ namespace WooCart\WooCartDefaults;
 use Symfony\Component\Yaml\Yaml;
 
 class WCD_Helper {
-
-    const SETTINGNAME = 'WooCartDefaults.Settings';
-
-    /**
-     * Load all bundles (DB + file).
-     *
-     * @access public
-     */
-    public function get_bundles() {
-        $output = array();
-
-        // Get DB bundles first.
-        $opts   = WCD()->options->get( self::SETTINGNAME );
-        $opts   = json_decode( $opts, true );
-
-        if ( isset( $opts['bundles'] ) ) {
-            foreach ( $opts['bundles'] as $bundle ) {
-                $bundle['is_db']            = true;
-                $bundle['is_file']          = false;
-                $output[ $bundle['name'] ]  = $bundle;
-            }
-        }
-
-        // Then merge file bundles.
-        $file_bundles = $this->get_file_bundles();
-
-        foreach ( $file_bundles as $bundle_name => $bundle ) {
-            if ( isset( $output[ $bundle_name ] ) ) {
-                $output[ $bundle_name ]['is_file']  = true;
-                $output[ $bundle_name ]['url']      = $this->get_bundle_url( $bundle_name );
-            } else {
-                $bundle['is_db']        = false;
-                $bundle['is_file']      = true;
-                $bundle['url']          = $this->get_bundle_url( $bundle_name );
-                $bundle['config']       = array_keys( $bundle['config'] );
-                $output[ $bundle_name ] = $bundle;
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * Get bundle URL.
-     *
-     * @access public
-     */
-    public function get_bundle_url( $bundle_name ) {
-        return WCD_CONFIG_URL . '/' . basename( WCD()->readwrite->bundle_filename( $bundle_name ) );
-    }
-
-    /**
-     * Get file bundles.
-     *
-     * @access public
-     */
-    public function get_file_bundles() {
-        $output     = array();
-        $filenames  = scandir( WCD_CONFIG_DIR );
-
-        foreach ( $filenames as $filename ) {
-            // Ignore dot files.
-            if ( '.' == substr( $filename, 0, 1 ) ) {
-                continue;
-            }
-
-            // Default to single site bundle.
-            $bundle_name = str_replace( '.' . WCD_CONFIG_FORMAT, '', $filename );
-
-            if ( is_multisite() ) {
-                $filename_parts = explode( '-', $filename, 2 );
-
-                // Only accept multi-site bundles.
-                if ( 2 > count( $filename_parts ) ) {
-                    continue;
-                }
-
-                $bundle_name = str_replace( '.json', '', $filename_parts[1] );
-
-                if ( WCD()->options->is_network ) {
-                    if ( 'network' != $filename_parts[0] ) {
-                        continue;
-                    }
-                } elseif ( $filename_parts[0] != 'blog' . get_current_blog_id() ) {
-                    continue;
-                }
-            }
-
-            $bundle_data    = WCD()->readwrite->read_file( $bundle_name );
-            $bundle_label   = $bundle_data['.label'];
-
-            unset( $bundle_data['.label'] );
-
-            $output[ $bundle_name ] = array(
-                'label'     => $bundle_label,
-                'name'      => $bundle_name,
-                'config'    => $bundle_data
-            );
-        }
-
-        return $output;
-    }
-
-    /**
-     * Load all bundle names.
-     *
-     * @access public
-     */
-    public function get_bundle_names() {
-        return array_keys( $this->get_bundles() );
-    }
-
-    /**
-     * Get bundle by name.
-     *
-     * @access public
-     */
-    public function get_bundle_by_name( $bundle_name ) {
-        $bundles = $this->get_bundles();
-        return isset( $bundles[ $bundle_name ] ) ? $bundles[ $bundle_name ] : array();
-    }
 
     /**
      * Put configuration items into groups.
@@ -145,8 +25,9 @@ class WCD_Helper {
         ksort( $items );
 
         foreach ( $items as $key => $item ) {
-            $group = isset( $item['group'] ) ? $item['group'] : esc_html__( 'WP Options', 'woocart-defaults' );
-            $output[ $group ][ $key ] = $item;
+            if ( isset( $item['group'] ) ) {
+                $output[ $group ][ $key ] = $item;
+            }
         }
 
         return $output;
@@ -164,6 +45,7 @@ class WCD_Helper {
     public static function convert_to_yaml( $data, $saveFormat = true ) {
         foreach ( $data as $key => &$value ) {
             $jsonDecoded = json_decode( $value, true );
+
             if ( is_array( $jsonDecoded ) ) {
                 $value = $jsonDecoded;
 

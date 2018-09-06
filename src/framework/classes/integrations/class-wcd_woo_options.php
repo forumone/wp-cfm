@@ -4,6 +4,7 @@
  *
  * @package woocart-defaults
  */
+
 class WOO_Options {
 
     /**
@@ -34,8 +35,8 @@ class WOO_Options {
 
 		foreach ( $results as $op ) {
 			$items[ 'woo/' . $op->option_name ] = array(
-				'value' => "$op->option_value",
-				'label' => "$op->option_name",
+				'value' => $op->option_value,
+				'label' => $op->option_name,
 				'group' => 'WooCommerce Options',
 			);
 		}
@@ -49,8 +50,8 @@ class WOO_Options {
      * @access public
 	 */
 	public function pull_callback( $callback, $callback_params ) {
-		if ( 'woo/' == substr( $callback_params['name'], 0, 3 ) ) {
-			return array( $this, 'import_terms' );
+		if ( 'woo/' == substr( $callback_params['name'], 0, 4 ) ) {
+			return array( &$this, 'import_terms' );
 		}
 
 		return $callback;
@@ -67,7 +68,8 @@ class WOO_Options {
      * @access public
 	 */
 	public function import_terms( $params ) {
-		update_option( $params['name'], $params['new_value'] );
+		$new_value = str_replace( 'woo/', '', $params['name'] );
+		update_option( $new_value, $params['new_value'] );
 	}
 
 }
