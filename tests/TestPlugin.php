@@ -66,7 +66,9 @@ class TestPlugin extends \PHPUnit\Framework\TestCase {
     public function test_woo_options_integration() {
         $class = new WOO_Options();
 
-        \WP_Mock::expectFilterAdded( 'wcd_configuration_items', array( $class, 'get_configuration_items' ) );
+        \WP_Mock::expectFilterAdded( 'wcd_configuration_items', array( $class, 'configuration_items' ) );
+        \WP_Mock::expectFilterAdded( 'wcd_pull_callback', array
+            ( $class, 'pull_callback' ), 10, 2 );
 
         $class->__construct();
         \WP_Mock::assertHooksAdded();
