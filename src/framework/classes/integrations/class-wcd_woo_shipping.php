@@ -138,4 +138,6 @@ class WOO_Shipping {
 
 }
 
-new WOO_Shipping();
+if ( ! defined( 'WCD_TESTS' ) ) {
+	new WOO_Shipping();
+}

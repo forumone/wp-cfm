@@ -148,4 +148,6 @@ class WCD_Taxonomy {
 	}
 }
 
-new WCD_Taxonomy();
+if ( ! defined( 'WCD_TESTS' ) ) {
+	new WCD_Taxonomy();
+}

@@ -140,4 +140,6 @@ class WOO_Tax {
 
 }
 
-new WOO_Tax();
+if ( ! defined( 'WCD_TESTS' ) ) {
+	new WOO_Tax();
+}

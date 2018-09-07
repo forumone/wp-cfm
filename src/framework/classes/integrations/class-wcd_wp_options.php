@@ -73,4 +73,6 @@ class WP_Options {
 
 }
 
-new WP_Options();
+if ( ! defined( 'WCD_TESTS' ) ) {
+	new WP_Options();
+}

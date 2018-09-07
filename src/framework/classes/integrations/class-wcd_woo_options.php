@@ -73,4 +73,6 @@ class WOO_Options {
 
 }
 
-new WOO_Options();
+if ( ! defined( 'WCD_TESTS' ) ) {
+	new WOO_Options();
+}

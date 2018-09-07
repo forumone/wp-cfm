@@ -28,7 +28,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 /**
  * Include composer autoloader.
  */
-if ( PHP_VERSION_ID >= 50604 ) {
+if ( PHP_VERSION_ID >= 50604 && ! defined( 'WCD_TESTS' ) ) {
 	include_once __DIR__ . '/vendor/autoload.php';
 }
 
@@ -53,9 +53,14 @@ class WooCartDefaults {
 	 * @since  1.0.0
 	 */
 	public function __construct() {
-		define( 'WCD_DIR', dirname( __FILE__ ) );
-		define( 'WCD_URL', plugins_url( '', __FILE__ ) );
-		define( 'WCD_CONFIG_FORMAT', apply_filters( 'wcd_config_format', 'yaml' ) );
+		/**
+		 * Plugin constants.
+		 */
+		if ( ! defined( 'WCD_TESTS' ) ) {
+			define( 'WCD_DIR', dirname( __FILE__ ) );
+			define( 'WCD_URL', plugins_url( '', __FILE__ ) );
+			define( 'WCD_CONFIG_FORMAT', apply_filters( 'wcd_config_format', 'yaml' ) );
+		}
 
 		/**
 		 * It's time for action :)
@@ -136,4 +141,6 @@ endif;
 /**
  * Get the instance.
  */
-WCD();
+if ( ! defined( 'WCD_TESTS' ) ) {
+	WCD();
+}
