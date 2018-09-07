@@ -108,7 +108,7 @@ class TestPlugin extends \PHPUnit\Framework\TestCase {
     public function test_wp_options_integration() {
         $class = new WP_Options();
 
-        \WP_Mock::expectFilterAdded( 'wcd_configuration_items', array( $class, 'get_configuration_items' ) );
+        \WP_Mock::expectFilterAdded( 'wcd_configuration_items', array( $class, 'configuration_items' ) );
         \WP_Mock::expectFilterAdded( 'wcd_pull_callback', array
             ( $class, 'pull_callback' ), 10, 2 );
 

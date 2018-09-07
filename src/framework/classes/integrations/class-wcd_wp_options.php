@@ -13,7 +13,7 @@ class WP_Options {
 	 * @since  1.0.0
 	 */
 	public function __construct() {
-		add_filter( 'wcd_configuration_items', array( &$this, 'get_configuration_items' ) );
+		add_filter( 'wcd_configuration_items', array( &$this, 'configuration_items' ) );
 		add_filter( 'wcd_pull_callback', array( &$this, 'pull_callback' ), 10, 2 );
 	}
 
@@ -22,7 +22,7 @@ class WP_Options {
 	 *
 	 * @access public
 	 */
-	public function get_configuration_items( $items ) {
+	public function configuration_items( $items ) {
 		global $wpdb;
 
 		$query = "SELECT option_name, option_value FROM $wpdb->options
