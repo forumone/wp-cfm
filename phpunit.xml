@@ -20,4 +20,7 @@
             <directory>./vendor/</directory>
         </blacklist>
     </filter>
+    <php>
+         <ini name="display_errors" value="true"/>
+    </php>
 </phpunit>
