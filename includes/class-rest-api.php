@@ -22,17 +22,17 @@ class WPCFM_RESTAPI
             ) );
             register_rest_route( 'wpcfm/v1', '/push/(?P<name>[\\w-_]+)', array(
                 'methods' => 'GET',
-                'callback' => array($this, 'push_bundle'),
+                'callback' => array($this, 'push_settings'),
                 'permission_callback' => array($this, '_perms_cb'),
             ) );
             register_rest_route( 'wpcfm/v1', '/pull/(?P<name>[\\w-_]+)', array(
                 'methods' => 'GET',
-                'callback' => array($this, 'pull_bundle'),
+                'callback' => array($this, 'pull_settings'),
                 'permission_callback' => array($this, '_perms_cb'),
             ) );
             register_rest_route( 'wpcfm/v1', '/bundle/(?P<name>[\\w-_]+)', array(
                 'methods' => 'POST',
-                'callback' => array($this, 'upload_bundle'),
+                'callback' => array($this, 'upload_settings'),
                 'permission_callback' => array($this, '_perms_cb'),
             ) );
         } );
@@ -116,7 +116,7 @@ class WPCFM_RESTAPI
     /**
      * Accept uploaded bundle to filesystem
      */
-    function upload_bundle($request) {
+    function upload_settings($request) {
         $bundle_name = $request['name'];
         $file_content = $request['file_content'];
         WPCFM()->upload->upload_bundle( $bundle_name, $file_content );
