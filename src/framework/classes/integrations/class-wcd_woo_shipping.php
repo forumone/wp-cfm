@@ -6,6 +6,7 @@
  */
 class WOO_Shipping {
 
+
 	/**
 	 * Class Constructor.
 	 *
@@ -31,14 +32,18 @@ class WOO_Shipping {
 		foreach ( $zones as $zone ) {
 			$locations = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT location_code, location_type FROM {$wpdb->prefix}woocommerce_shipping_zone_locations WHERE zone_id = %d", $zone->zone_id
-				), 'ARRAY_A'
+					"SELECT location_code, location_type FROM {$wpdb->prefix}woocommerce_shipping_zone_locations WHERE zone_id = %d",
+					$zone->zone_id
+				),
+				'ARRAY_A'
 			);
 
 			$methods = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT method_id, method_order, is_enabled FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE zone_id = %d", $zone->zone_id
-				), 'ARRAY_A'
+					"SELECT method_id, method_order, is_enabled FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE zone_id = %d",
+					$zone->zone_id
+				),
+				'ARRAY_A'
 			);
 
 			$value = array(

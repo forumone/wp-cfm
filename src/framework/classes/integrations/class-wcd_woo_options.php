@@ -6,6 +6,7 @@
  */
 class WOO_Options {
 
+
 	/**
 	 * Class Constructor.
 	 *

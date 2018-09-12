@@ -6,6 +6,7 @@
  */
 class WCD_Taxonomy {
 
+
 	/**
 	 * Class Constructor.
 	 *
@@ -127,7 +128,9 @@ class WCD_Taxonomy {
 			 */
 			if ( $create_term ) {
 				$response = wp_insert_term(
-					$term['name'], $taxonomy_name, array(
+					$term['name'],
+					$taxonomy_name,
+					array(
 						'description' => $term['description'],
 						'parent'      => $parent,
 						'slug'        => $slug,
@@ -137,7 +140,9 @@ class WCD_Taxonomy {
 				$term_id_mapping[ $term_id ] = (int) $response['term_id'];
 			} else {
 				$response = wp_update_term(
-					$term_id, $taxonomy_name, array(
+					$term_id,
+					$taxonomy_name,
+					array(
 						'description' => $term['description'],
 						'parent'      => $parent,
 						'name'        => $term['name'],

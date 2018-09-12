@@ -9,6 +9,7 @@ namespace WooCart\WooCartDefaults;
  */
 class WCD_Registry {
 
+
 	/**
 	 * Class Constructor.
 	 *

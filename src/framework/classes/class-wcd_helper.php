@@ -13,6 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class WCD_Helper {
 
+
 	/**
 	 * Put configuration items into groups.
 	 *

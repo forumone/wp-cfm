@@ -6,6 +6,7 @@
  */
 class WCD_CLI_Command extends WP_CLI_Command {
 
+
 	/**
 	 * Pull a bundle into the database
 	 *

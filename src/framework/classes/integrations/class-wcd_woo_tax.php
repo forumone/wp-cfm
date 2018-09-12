@@ -6,6 +6,7 @@
  */
 class WOO_Tax {
 
+
 	/**
 	 * Class Constructor.
 	 *
@@ -35,8 +36,10 @@ class WOO_Tax {
 				SELECT location_code, location_type
 				FROM {$wpdb->prefix}woocommerce_tax_rate_locations
 				WHERE tax_rate_id = %d
-            ", $tax->tax_rate_id
-				), 'ARRAY_A'
+            ",
+					$tax->tax_rate_id
+				),
+				'ARRAY_A'
 			);
 
 			$values = array(

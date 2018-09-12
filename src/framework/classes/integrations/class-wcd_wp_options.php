@@ -6,6 +6,7 @@
  */
 class WP_Options {
 
+
 	/**
 	 * Class Constructor.
 	 *

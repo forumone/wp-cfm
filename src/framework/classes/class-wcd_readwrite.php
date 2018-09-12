@@ -12,6 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class WCD_Readwrite {
 
+
 	/**
 	 * Move the file bundle to DB.
 	 *
@@ -120,7 +121,7 @@ class WCD_Readwrite {
 			$callback = array( &$this, 'callback_wp_options' );
 
 			if ( ! empty( $db_data[ $key ]['callback'] ) ) {
-				$callback = $db_data[ $key ]['callback'];
+				   $callback = $db_data[ $key ]['callback'];
 			}
 
 			// Allow for callback override
