@@ -15,8 +15,17 @@ class WOOOptionsTest extends TestCase
             \Mockery::getContainer()->mockery_getExpectationCount()
         );
         \WP_Mock::tearDown();
+        \Mockery::close();
     }
 
+    /**
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::import
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptionsValue::setValue
+     * @covers \Niteo\WooCart\Defaults\Value::__construct
+     * @covers \Niteo\WooCart\Defaults\Value::getStrippedName
+     * @covers \Niteo\WooCart\Defaults\Value::getValue
+     * @covers \Niteo\WooCart\Defaults\Value::setName
+     */
     public function testImport()
     {
         \WP_Mock::userFunction("update_option", [
@@ -30,6 +39,14 @@ class WOOOptionsTest extends TestCase
         $o->import($value);
     }
 
+    /**
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::items
+     * @covers \Niteo\WooCart\Defaults\Value::__construct
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptionsValue::setValue
+     * @covers \Niteo\WooCart\Defaults\Value::getName
+     * @covers \Niteo\WooCart\Defaults\Value::getStrippedName
+     * @covers \Niteo\WooCart\Defaults\Value::setName
+     */
     public function testItems()
     {
         global $wpdb;

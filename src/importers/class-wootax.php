@@ -36,12 +36,25 @@ namespace Niteo\WooCart\Defaults\Importers {
 		}
 
 		/**
+		 * Return Locations array.
+		 *
+		 * @return iterable
+		 */
+		public function getLocations(): iterable {
+            foreach ($this->getTax()->locations as $location) {
+                $location = Location::fromArray((array) $location);
+                $location->tax_rate_id = $this->getID();
+                yield $location;
+			}
+		}
+
+		/**
 		 * Get tax id that was used in DB.
 		 *
 		 * @return int
 		 */
 		public function getID(): int {
-			return intval( $this->getName() );
+			return intval( $this->getStrippedName() );
 		}
 
 		/**
