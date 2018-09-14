@@ -7,3 +7,4 @@ build
 *~
 *.zip
 .DS_Store
+*.phar

@@ -1,4 +1,4 @@
-VERSION := 1.0.0
+VERSION := 1.0.1
 PLUGINSLUG := woocart-defaults
 SRCPATH := $(shell pwd)/src
 
@@ -8,12 +8,12 @@ bin/linux/amd64/github-release:
 	chmod +x bin/linux/amd64/github-release
 	rm linux-amd64-github-release.tar.bz2
 
-ensure:
+ensure: vendor
 vendor: src/vendor
 	composer install
 
-tests: vendor
-	bin/phpunit
+test: vendor
+	bin/phpunit --coverage-clover=./reports/clover.xml --coverage-html=./reports
 
 src/vendor:
 	cd src && composer install
@@ -46,10 +46,12 @@ release:
 
 fmt: ensure
 	bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
-	bin/phpcbf --standard=WordPress src/framework
-	bin/phpcbf --standard=WordPress src/index.php
+	bin/phpcbf --standard=WordPress src --ignore=src/vendor
 
 lint: ensure
 	bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
-	bin/phpcs --standard=WordPress src/framework
-	bin/phpcs --standard=WordPress src/index.php
+	bin/phpcs --standard=WordPress src --ignore=src/vendor
+
+psr: src/vendor
+	composer dump-autoload -a
+	cd src && composer dump-autoload -a
