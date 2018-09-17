@@ -6,11 +6,14 @@
         "phpunit/phpunit": "*",
         "10up/wp_mock": "0.3.0",
         "antecedent/patchwork": "*",
-        "php-coveralls/php-coveralls": "*",
+        "php-coveralls/php-coveralls": "^2.1",
         "squizlabs/php_codesniffer": "*",
         "wp-coding-standards/wpcs": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
-        "wp-cli/wp-cli": "^2.0"
+        "wp-cli/wp-cli": "^2.0",
+        "edsonmedina/php_testability": "dev-master",
+        "rregeer/phpunit-coverage-check": "^0.1.6",
+        "phpunit/phpcov": "^5.0"
     },
     "scripts": {
         "post-install-cmd": [

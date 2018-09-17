@@ -12,6 +12,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class WooTaxesValue extends Value {
 
 
+
 		/**
 		 *  Group name used in UI or tables.
 		 */
@@ -41,10 +42,10 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * @return iterable
 		 */
 		public function getLocations(): iterable {
-            foreach ($this->getTax()->locations as $location) {
-                $location = Location::fromArray((array) $location);
-                $location->tax_rate_id = $this->getID();
-                yield $location;
+			foreach ( $this->getTax()->locations as $location ) {
+				$location              = Location::fromArray( (array) $location );
+				$location->tax_rate_id = $this->getID();
+				yield $location;
 			}
 		}
 
@@ -54,7 +55,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * @return int
 		 */
 		public function getID(): int {
-			return intval( $this->getStrippedName() );
+			return intval( $this->getStrippedKey() );
 		}
 
 		/**
@@ -76,6 +77,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class Tax {
+
 
 		use FromArray;
 		use ToArray;
@@ -129,6 +131,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 */
 	class Location {
 
+
 		use FromArray;
 		use ToArray;
 
@@ -152,6 +155,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class WooTaxes implements Configuration {
+
 
 
 		/**
@@ -195,7 +199,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 					'locations' => $locations,
 				);
 				$value  = new WooTaxesValue( self::namespace );
-				$value->setName( $tax->tax_rate_id );
+				$value->setKey( $tax->tax_rate_id );
 				$value->setTax( $values );
 				yield $value;
 			}
@@ -262,24 +266,15 @@ namespace Niteo\WooCart\Defaults\Importers {
 		}
 
 		/**
-		 * Namespace of this importer.
-		 *
-		 * @return string This objects namespace.
-		 */
-		public function getNamespace(): string {
-			return self::namespace;
-		}
-
-		/**
 		 * Return importer specific Value instance.
 		 *
 		 * @param string $key Name of the kv pair.
 		 * @param array  $value Value of the kv pair.
 		 * @return WooTaxesValue
 		 */
-		public function toValue( string $key, $value ): WooTaxesValue {
+		static function toValue( string $key, $value ): WooTaxesValue {
 			$val = new WooTaxesValue( self::namespace );
-			$val->setName( $key );
+			$val->setKey( $key );
 			$val->setValue( $value );
 			return $val;
 		}

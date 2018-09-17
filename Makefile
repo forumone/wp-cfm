@@ -10,13 +10,16 @@ bin/linux/amd64/github-release:
 
 ensure: vendor
 vendor: src/vendor
-	composer install
+	composer install --dev
+	composer dump-autoload -a
 
 test: vendor
-	bin/phpunit --coverage-clover=./reports/clover.xml --coverage-html=./reports
+	rm -rf src/vendor
+	bin/phpunit --coverage-html=./reports
 
 src/vendor:
-	cd src && composer install
+	cd src && composer install --dev
+	cd src && composer dump-autoload -a
 
 build: ensure
 	sed -i "s/@##VERSION##@/${VERSION}/" src/index.php

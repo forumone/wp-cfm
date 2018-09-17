@@ -21,30 +21,6 @@ namespace Niteo\WooCart\Defaults {
 	 */
 	class Importer {
 
-
-		/**
-		 * Convert array|serialized to yaml.
-		 *
-		 * @param $data array
-		 * @return mixed
-		 * @access public
-		 */
-		public static function convert_to_yaml( $data ) {
-			foreach ( $data as $key => &$value ) {
-				$jsonDecoded = json_decode( $value, true );
-
-				if ( is_array( $jsonDecoded ) ) {
-					$value                          = $jsonDecoded;
-					$data[ '.' . $key . '_format' ] = 'json';
-				} elseif ( is_serialized( $value ) ) {
-					$value                          = unserialize( $value );
-					$data[ '.' . $key . '_format' ] = 'serialized';
-				}
-			}
-
-			return Yaml::dump( $data, 10 );
-		}
-
 		/**
 		 * Move the file bundle to DB.
 		 *
@@ -106,15 +82,15 @@ namespace Niteo\WooCart\Defaults {
 		 * @return Configuration
 		 * @throws \Exception when importer is not found.
 		 */
-		private function resolve( $key ): Configuration {
+		public function resolve( $key ): Configuration {
 			$importers = ConfigsRegistry::get();
 			foreach ( $importers as $importer ) {
-				if ( explode( '/', $key )[0] === $importer->getNamespace() ) {
+				if ( explode( '/', $key )[0] === $importer::namespace ) {
 					return $importer;
 				}
 			}
 
-			throw new \Exception( "Importer for $key nto found" );
+			throw new \Exception( "Importer for $key is not found." );
 		}
 
 	}

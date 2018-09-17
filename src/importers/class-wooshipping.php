@@ -5,11 +5,168 @@ namespace Niteo\WooCart\Defaults\Importers {
 	use Niteo\WooCart\Defaults\Value;
 
 	/**
+	 * Class WooTaxesValue
+	 *
+	 * @package Niteo\WooCart\Defaults\Importers
+	 */
+	class WooShippingZone extends Value {
+
+
+
+		/**
+		 *  Group name used in UI or tables.
+		 */
+		const group = 'WooCommerce Shipping Zones';
+
+		/**
+		 * Sets value of WooCommerce tax option.
+		 *
+		 * @param array $values value to store in yaml file.
+		 */
+		public function setValue( array $values ) {
+			$this->value = $values;
+		}
+
+		/**
+		 * Return zone like object.
+		 *
+		 * @return ShippingZone
+		 */
+		public function getZone(): ShippingZone {
+			return ShippingZone::fromArray( $this->value );
+		}
+
+		/**
+		 * Return ShippingLocation array.
+		 *
+		 * @return iterable
+		 */
+		public function getLocations(): iterable {
+			foreach ( $this->getZone()->locations as $location ) {
+				$location          = ShippingLocation::fromArray( (array) $location );
+				$location->zone_id = $this->getID();
+				yield $location;
+			}
+		}
+		/**
+		 * Return ShippingMethod array.
+		 *
+		 * @return iterable
+		 */
+		public function getMethods(): iterable {
+			foreach ( $this->getZone()->methods as $method ) {
+				$method          = ShippingMethod::fromArray( (array) $method );
+				$method->zone_id = $this->getID();
+				yield $method;
+			}
+		}
+
+		/**
+		 * Get tax id that was used in DB.
+		 *
+		 * @return int
+		 */
+		public function getID(): int {
+			return intval( $this->getStrippedKey() );
+		}
+
+		/**
+		 * Enforce Zone structure by casting in and to array.
+		 *
+		 * @param array $values
+		 */
+		public function setZone( array $values ) {
+			$zone = ShippingZone::fromArray( $values );
+			$this->setValue( $zone->toArray() );
+		}
+
+	}
+
+	/**
+	 * Class ShippingLocation
+	 *
+	 * @package Niteo\WooCart\Defaults\Importers
+	 */
+	class ShippingLocation {
+
+		use FromArray;
+		use ToArray;
+
+		/**
+		 * @var int
+		 */
+		public $zone_id;
+		/**
+		 * @var string
+		 */
+		public $location_code;
+		/**
+		 * @var string
+		 */
+		public $location_type;
+	}
+	/**
+	 * Class ShippingLocation
+	 *
+	 * @package Niteo\WooCart\Defaults\Importers
+	 */
+	class ShippingMethod {
+
+		use FromArray;
+		use ToArray;
+
+		/**
+		 * @var int
+		 */
+		public $zone_id;
+		/**
+		 * @var int
+		 */
+		public $method_order;
+		/**
+		 * @var bool
+		 */
+		public $is_enabled;
+	}
+	/**
+	 * Class ShippingZone
+	 *
+	 * @package Niteo\WooCart\Defaults\Importers
+	 */
+	class ShippingZone {
+
+		use FromArray;
+		use ToArray;
+
+		/**
+		 * @var int
+		 */
+		public $zone_id;
+		/**
+		 * @var string
+		 */
+		public $name;
+		/**
+		 * @var int
+		 */
+		public $order;
+		/**
+		 * @var array
+		 */
+		public $locations;
+		/**
+		 * @var array
+		 */
+		public $methods;
+	}
+
+	/**
 	 * WooCommerce shipping integration.
 	 *
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class WooShipping implements Configuration {
+
 
 		const namespace = 'wooship';
 
@@ -24,7 +181,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 
 			$query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}woocommerce_shipping_zones" );
 			$zones = $wpdb->get_results( $query );
-			$items = [];
 			foreach ( $zones as $zone ) {
 				$locations = $wpdb->get_results(
 					$wpdb->prepare(
@@ -42,43 +198,41 @@ namespace Niteo\WooCart\Defaults\Importers {
 					'ARRAY_A'
 				);
 
-				$value = array(
+				$values = array(
 					'name'      => $zone->zone_name,
 					'order'     => $zone->zone_order,
 					'locations' => $locations,
 					'methods'   => $methods,
 				);
 
-				$items[ $zone->zone_id ] = array(
-					'value' => json_encode( $value ),
-					'label' => $zone->zone_name,
-					'group' => 'WooCommerce Shipping Zones',
-				);
-
+				$value = new WooShippingZone( self::namespace );
+				$value->setKey( $zone->zone_id );
+				$value->setZone( $values );
+				yield $value;
 			}
 
-			return $items;
 		}
 
 
 		/**
 		 * Import (overwrite) shipping zones into the DB
 		 *
-		 * @param Value $params
+		 * @param WooShippingZone $data
 		 *
 		 * @access public
 		 */
-		public function import( $params ) {
+		public function import( $data ) {
 			global $wpdb;
 
-			$id   = intval( str_replace( 'wooship/', '', $params['name'] ) );
-			$data = $params['new_value'];
-			$wpdb->replace(
+			$id   = $data->getID();
+			$zone = $data->getZone();
+
+			$wpdb->insert(
 				"{$wpdb->prefix}woocommerce_shipping_zones",
 				array(
 					'zone_id'    => $id,
-					'zone_name'  => $data['name'],
-					'zone_order' => $data['order'],
+					'zone_name'  => $zone->name,
+					'zone_order' => $zone->order,
 				),
 				array(
 					'%d',
@@ -87,13 +241,13 @@ namespace Niteo\WooCart\Defaults\Importers {
 				)
 			);
 
-			foreach ( $data['locations'] as $location ) {
-				$wpdb->replace(
+			foreach ( $data->getLocations() as $location ) {
+				$wpdb->insert(
 					"{$wpdb->prefix}woocommerce_shipping_zone_locations",
 					array(
 						'zone_id'       => $id,
-						'location_code' => $location['location_code'],
-						'location_type' => $location['location_type'],
+						'location_code' => $location->location_code,
+						'location_type' => $location->location_type,
 					),
 					array(
 						'%d',
@@ -103,14 +257,13 @@ namespace Niteo\WooCart\Defaults\Importers {
 				);
 			}
 
-			foreach ( $data['methods'] as $method ) {
-				$wpdb->replace(
+			foreach ( $data->getMethods() as $method ) {
+				$wpdb->insert(
 					"{$wpdb->prefix}woocommerce_shipping_zone_methods",
 					array(
 						'zone_id'      => $id,
-						'method_id'    => $method['method_id'],
-						'method_order' => $method['method_order'],
-						'is_enabled'   => $method['is_enabled'],
+						'method_order' => $method->method_order,
+						'is_enabled'   => $method->is_enabled,
 					),
 					array(
 						'%d',
@@ -120,27 +273,18 @@ namespace Niteo\WooCart\Defaults\Importers {
 					)
 				);
 			}
-		}
-
-		/**
-		 * Namespace of this importer.
-		 *
-		 * @return string This objects namespace.
-		 */
-		public function getNamespace(): string {
-			return self::namespace;
 		}
 
 		/**
 		 * Return importer specific Value instance.
 		 *
 		 * @param string $key Name of the kv pair.
-		 * @param string $value Value of the kv pair.
-		 * @return WooOptionsValue
+		 * @param array  $value Value of the kv pair.
+		 * @return WooShippingZone
 		 */
-		public function toValue( string $key, $value ): WooOptionsValue {
-			$val = new WooOptionsValue( self::namespace );
-			$val->setName( $key );
+		static function toValue( string $key, $value ): WooShippingZone {
+			$val = new WooShippingZone( self::namespace );
+			$val->setKey( $key );
 			$val->setValue( $value );
 			return $val;
 		}

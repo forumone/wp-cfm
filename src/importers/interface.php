@@ -22,20 +22,13 @@ namespace Niteo\WooCart\Defaults\Importers {
 		public function import( $item);
 
 		/**
-		 * Namespace of this importer.
-		 *
-		 * @return string This objects namespace.
-		 */
-		public function getNamespace(): string;
-
-		/**
 		 * Return importer specific Value instance.
 		 *
 		 * @param string $key Name of the kv pair.
 		 * @param mixed  $value Value of the kv pair.
 		 * @return mixed
 		 */
-		public function toValue( string $key, $value);
+		static function toValue( string $key, $value);
 	}
 
 	trait FromArray {

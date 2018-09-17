@@ -39,6 +39,7 @@ namespace Niteo\WooCart\Defaults {
 		 *
 		 *     wp wcd import /my/bundle.yaml
 		 *
+		 * @codeCoverageIgnore
 		 * @when after_wp_load
 		 * @param $args array list of command line arguments.
 		 * @param $assoc_args array of named command line keys.

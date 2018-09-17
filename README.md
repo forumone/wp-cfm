@@ -1,5 +1,6 @@
-#### Manage and deploy WordPress configuration changes
+[![Coverage Status](https://coveralls.io/repos/github/woocart/woocart-defaults/badge.svg?branch=master)](https://coveralls.io/github/woocart/woocart-defaults?branch=master)
 
-WP-CFM lets you copy database configuration to / from the filesystem. Easily deploy configuration changes without needing to copy the entire database. WP-CFM is similar to Drupal's Features module.
+# Manage and deploy WooCommerce configuration changes
 
-[See WP-CFM on WordPress.org](http://wordpress.org/plugins/wp-cfm/)
+WooCart-Deafults lets you copy database configuration to / from the filesystem. 
+

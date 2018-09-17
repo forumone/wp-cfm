@@ -60,7 +60,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 
 			foreach ( $results as $op ) {
 				$value = new WooOptionsValue( self::namespace );
-				$value->setName( $op->option_name );
+				$value->setKey( $op->option_name );
 				$value->setValue( $op->option_value );
 				yield $value;
 			}
@@ -74,14 +74,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * @access public
 		 */
 		public function import( $value ) {
-			update_option( $value->getStrippedName(), $value->getValue() );
-		}
-
-		/**
-		 * @return string This objects namespace.
-		 */
-		public function getNamespace(): string {
-			return self::namespace;
+			update_option( $value->getStrippedKey(), $value->getValue() );
 		}
 
 		/**
@@ -91,9 +84,9 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * @param string $value Value of the kv pair.
 		 * @return WooOptionsValue
 		 */
-		public function toValue( string $key, $value ): WooOptionsValue {
+		static function toValue( string $key, $value ): WooOptionsValue {
 			$val = new WooOptionsValue( self::namespace );
-			$val->setName( $key );
+			$val->setKey( $key );
 			$val->setValue( $value );
 			return $val;
 		}

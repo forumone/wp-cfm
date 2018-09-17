@@ -1,0 +1,7 @@
+wp/test_name: test_value
+wp/test_php: 123456
+wp/test_json: ["abc"]
+
+
+.wp/test_json_format: json
+.wp/test_php_format: serialized

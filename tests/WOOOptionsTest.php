@@ -21,10 +21,11 @@ class WOOOptionsTest extends TestCase
     /**
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::import
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptionsValue::setValue
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::toValue
      * @covers \Niteo\WooCart\Defaults\Value::__construct
-     * @covers \Niteo\WooCart\Defaults\Value::getStrippedName
+     * @covers \Niteo\WooCart\Defaults\Value::getStrippedKey
      * @covers \Niteo\WooCart\Defaults\Value::getValue
-     * @covers \Niteo\WooCart\Defaults\Value::setName
+     * @covers \Niteo\WooCart\Defaults\Value::setKey
      */
     public function testImport()
     {
@@ -32,9 +33,7 @@ class WOOOptionsTest extends TestCase
             'return' => true,
             'args' => ["test_name", "test_value"],
         ]);
-        $value = new WooOptionsValue("woo");
-        $value->setName("test_name");
-        $value->setValue("test_value");
+        $value = WooOptions::toValue("test_name", "test_value");
         $o = new WooOptions();
         $o->import($value);
     }
@@ -43,9 +42,9 @@ class WOOOptionsTest extends TestCase
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::items
      * @covers \Niteo\WooCart\Defaults\Value::__construct
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptionsValue::setValue
-     * @covers \Niteo\WooCart\Defaults\Value::getName
-     * @covers \Niteo\WooCart\Defaults\Value::getStrippedName
-     * @covers \Niteo\WooCart\Defaults\Value::setName
+     * @covers \Niteo\WooCart\Defaults\Value::getKey
+     * @covers \Niteo\WooCart\Defaults\Value::getStrippedKey
+     * @covers \Niteo\WooCart\Defaults\Value::setKey
      */
     public function testItems()
     {
@@ -63,8 +62,8 @@ class WOOOptionsTest extends TestCase
         $o = new WooOptions();
         $this->assertCount(4, $o->items());
         $value = $o->items()->current();
-        $this->assertEquals( "woo/test_name", $value->getName());
-        $this->assertEquals( "test_name", $value->getStrippedName());
+        $this->assertEquals( "test_name", $value->getKey());
+        $this->assertEquals( "test_name", $value->getStrippedKey());
 
     }
 }

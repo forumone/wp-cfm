@@ -8,3 +8,5 @@ build
 *.zip
 .DS_Store
 *.phar
+reports
+clover.xml

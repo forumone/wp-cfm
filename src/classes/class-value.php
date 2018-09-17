@@ -23,7 +23,7 @@ namespace Niteo\WooCart\Defaults {
 		/**
 		 * @var string name of the value with namespace.
 		 */
-		protected $name;
+		protected $key;
 
 
 		/**
@@ -51,8 +51,11 @@ namespace Niteo\WooCart\Defaults {
 		 *
 		 * @return string
 		 */
-		public function getStrippedName(): string {
-			return substr( $this->name, strlen( $this->namespace ) + 1 );
+		public function getStrippedKey(): string {
+			if ( stristr( $this->key, '/' ) ) {
+				return substr( $this->key, strlen( $this->namespace ) + 1 );
+			}
+			return $this->key;
 		}
 
 		/**
@@ -67,17 +70,17 @@ namespace Niteo\WooCart\Defaults {
 		 *
 		 * @return string
 		 */
-		public function getName(): string {
-			return $this->name;
+		public function getKey(): string {
+			return $this->key;
 		}
 
 		/**
 		 * Sets naem of the value.
 		 *
-		 * @param string $name name of the key in kv pair.
+		 * @param string $key name of the key in kv pair.
 		 */
-		public function setName( string $name ): void {
-			$this->name = sprintf( '%s/%s', $this->namespace, $name );
+		public function setKey( string $key ): void {
+			$this->key = $key;
 
 		}
 
