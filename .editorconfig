@@ -5,9 +5,17 @@ root = true
 # UTF-8, Unix-style newlines, newline ending every file, trim trailing whitespace
 [*]
 indent_style = space
-indent_size = 4
+indent_size = 2
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 end_of_line = lf
 
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+# Matches the exact files either package.json or .travis.yml
+[{composer.json,.travis.yml}]
+indent_style = space
+indent_size = 2
