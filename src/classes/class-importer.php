@@ -32,14 +32,7 @@ namespace Niteo\WooCart\Defaults {
 		 */
 		public function import( $file_path ) {
 			$data = $this->read_file( $file_path );
-			if ( ! empty( $data ) ) {
-				if ( is_array( $data ) ) {
-					foreach ( $data as $key => $val ) {
-						$importer = $this->resolve( $key );
-						$importer->import( $importer->toValue( $key, $val ) );
-					}
-				}
-			}
+			$this->parse( $data );
 
 			return true;
 		}
@@ -92,6 +85,21 @@ namespace Niteo\WooCart\Defaults {
 			}
 
 			throw new \Exception( "Importer for $key is not found." );
+		}
+
+		/**
+		 * @param array $data
+		 * @throws \Exception
+		 */
+		public function parse( array $data ) {
+			if ( ! empty( $data ) ) {
+				if ( is_array( $data ) ) {
+					foreach ( $data as $key => $val ) {
+						$importer = $this->resolve( $key );
+						$importer->import( $importer->toValue( $key, $val ) );
+					}
+				}
+			}
 		}
 
 	}

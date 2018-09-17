@@ -2,6 +2,8 @@
 
 namespace Niteo\WooCart\Defaults\Importers {
 
+	use Niteo\WooCart\Defaults\Value;
+
 
 	/**
 	 * Class WooOptionsValue

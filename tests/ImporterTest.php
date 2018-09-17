@@ -55,6 +55,7 @@ class ImporterTest extends TestCase
      * @covers \Niteo\WooCart\Defaults\Importers\WPOptions::import
      * @covers \Niteo\WooCart\Defaults\Importers\WPOptions::toValue
      * @covers \Niteo\WooCart\Defaults\Importers\WPOptionsValue::setValue
+     * @covers \Niteo\WooCart\Defaults\Importer::parse
      * @covers \Niteo\WooCart\Defaults\Value::__construct
      * @covers \Niteo\WooCart\Defaults\Value::getStrippedKey
      * @covers \Niteo\WooCart\Defaults\Value::getValue

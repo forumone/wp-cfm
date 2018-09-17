@@ -1,4 +1,4 @@
-VERSION := 1.0.1
+VERSION := 2.0.0
 PLUGINSLUG := woocart-defaults
 SRCPATH := $(shell pwd)/src
 
@@ -14,16 +14,21 @@ vendor: src/vendor
 	composer dump-autoload -a
 
 test: vendor
-	rm -rf src/vendor
+	grep -rl "Autoload" src/vendor/composer | xargs sed -i 's/Composer\\Autoload/NiteoWooCartDefaultsAutoload/g'
 	bin/phpunit --coverage-html=./reports
 
 src/vendor:
-	cd src && composer install --dev
+	cd src && composer install --no-dev
 	cd src && composer dump-autoload -a
 
 build: ensure
 	sed -i "s/@##VERSION##@/${VERSION}/" src/index.php
 	mkdir -p build
+	rm -rf src/vendor
+	cd src && composer install --no-dev
+	cd src && composer dump-autoload -a
+	rm -rf src/vendor/symfony/yaml/Tests/
+	grep -rl "Autoload" src/vendor/composer | xargs sed -i 's/Composer\\Autoload/NiteoWooCartDefaultsAutoload/g'
 	cp -ar $(SRCPATH) $(PLUGINSLUG)
 	zip -r $(PLUGINSLUG).zip $(PLUGINSLUG)
 	rm -rf $(PLUGINSLUG)
