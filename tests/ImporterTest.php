@@ -5,11 +5,13 @@ use PHPUnit\Framework\TestCase;
 
 class ImporterTest extends TestCase
 {
-    function setUp() {
+    function setUp()
+    {
         \WP_Mock::setUp();
     }
 
-    function tearDown() {
+    function tearDown()
+    {
         $this->addToAssertionCount(
             \Mockery::getContainer()->mockery_getExpectationCount()
         );
@@ -23,7 +25,7 @@ class ImporterTest extends TestCase
     public function testRead_file_non_serialized()
     {
         $i = new Importer();
-        $data = $i->read_file(dirname( __FILE__ ) ."/fixtures/non_serialized.yaml");
+        $data = $i->read_file(dirname(__FILE__) . "/fixtures/non_serialized.yaml");
         $this->assertEquals([
             'wp/test_name' => 'test_value',
         ], $data);
@@ -36,7 +38,7 @@ class ImporterTest extends TestCase
     public function testRead_file_serialized()
     {
         $i = new Importer();
-        $data = $i->read_file(dirname( __FILE__ ) ."/fixtures/serialized.yaml");
+        $data = $i->read_file(dirname(__FILE__) . "/fixtures/serialized.yaml");
         $this->assertEquals([
             'wp/test_name' => 'test_value',
             'wp/test_php' => 'i:123456;',
@@ -58,7 +60,6 @@ class ImporterTest extends TestCase
      * @covers \Niteo\WooCart\Defaults\Value::getValue
      * @covers \Niteo\WooCart\Defaults\Value::setKey
      * @covers \Niteo\WooCart\Defaults\Importer::import
-
      */
     public function testImport()
     {
@@ -73,12 +74,13 @@ class ImporterTest extends TestCase
         \WP_Mock::userFunction("update_option", [
             'return' => true,
             'args' => ['test_php', 'i:123456;'],
-        ]);        \WP_Mock::userFunction("update_option", [
+        ]);
+        \WP_Mock::userFunction("update_option", [
             'return' => true,
             'args' => ['test_json', '["abc"]'],
         ]);
         $i = new Importer();
-        $i->import(dirname( __FILE__ ) ."/fixtures/serialized.yaml");
+        $i->import(dirname(__FILE__) . "/fixtures/serialized.yaml");
     }
 
     /**

@@ -2,37 +2,19 @@
 
 namespace Niteo\WooCart\Defaults\Importers {
 
+	use Niteo\WooCart\Defaults\Value;
+
 	/**
-	 * Interface Configuration
-	 *
+	 * Trait FromArray
+   *
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
-	interface Configuration {
-
-
-		/**
-		 * @return iterable
-		 */
-		public function items(): iterable;
-
-		/**
-		 * @param mixed $item
-		 * @return mixed
-		 */
-		public function import( $item);
-
-		/**
-		 * Return importer specific Value instance.
-		 *
-		 * @param string $key Name of the kv pair.
-		 * @param mixed  $value Value of the kv pair.
-		 * @return mixed
-		 */
-		static function toValue( string $key, $value);
-	}
-
 	trait FromArray {
 
+		/**
+		 * @param array $data
+		 * @return Value
+		 */
 		public static function fromArray( array $data = [] ) {
 			foreach ( get_object_vars( $obj = new self() ) as $property => $default ) {
 				if ( ! array_key_exists( $property, $data ) ) {
@@ -44,8 +26,16 @@ namespace Niteo\WooCart\Defaults\Importers {
 		}
 	}
 
+	/**
+	 * Trait ToArray
+   *
+	 * @package Niteo\WooCart\Defaults\Importers
+	 */
 	trait ToArray {
 
+		/**
+		 * @return array
+		 */
 		public function toArray(): array {
 			return get_object_vars( $this );
 		}

@@ -1,17 +1,18 @@
 <?php
 
 use Niteo\WooCart\Defaults\Importers\WPOptions;
-use Niteo\WooCart\Defaults\Importers\WPOptionsValue;
 use PHPUnit\Framework\TestCase;
 
 class WPOptionsTest extends TestCase
 {
 
-    function setUp() {
+    function setUp()
+    {
         \WP_Mock::setUp();
     }
 
-    function tearDown() {
+    function tearDown()
+    {
         $this->addToAssertionCount(
             \Mockery::getContainer()->mockery_getExpectationCount()
         );
@@ -63,8 +64,8 @@ class WPOptionsTest extends TestCase
         $o = new WPOptions();
         $this->assertCount(4, $o->items());
         $value = $o->items()->current();
-        $this->assertEquals( "test_name", $value->getKey());
-        $this->assertEquals( "test_name", $value->getStrippedKey());
+        $this->assertEquals("test_name", $value->getKey());
+        $this->assertEquals("test_name", $value->getStrippedKey());
 
     }
 }

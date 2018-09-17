@@ -21,6 +21,7 @@ namespace Niteo\WooCart\Defaults {
 	 */
 	class Importer {
 
+
 		/**
 		 * Move the file bundle to DB.
 		 *

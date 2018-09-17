@@ -24,6 +24,7 @@ namespace Niteo\WooCart\Defaults {
 	class ConfigsRegistry {
 
 
+
 		/**
 		 * Return classes of all declared importers.
 		 *

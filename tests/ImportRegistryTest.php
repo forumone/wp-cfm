@@ -6,11 +6,13 @@ use PHPUnit\Framework\TestCase;
 
 class ImportRegistryTest extends TestCase
 {
-    function setUp() {
+    function setUp()
+    {
         \WP_Mock::setUp();
     }
 
-    function tearDown() {
+    function tearDown()
+    {
         $this->addToAssertionCount(
             \Mockery::getContainer()->mockery_getExpectationCount()
         );

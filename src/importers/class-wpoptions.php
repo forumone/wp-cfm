@@ -11,6 +11,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 */
 	class WPOptionsValue extends Value {
 
+
 		/**
 		 *  Group name used in UI or tables.
 		 */
@@ -36,10 +37,25 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class WPOptions implements Configuration {
 
 
+
 		/**
 		 *  This importer namespace.
 		 */
 		const namespace = 'wp';
+
+		/**
+		 * Return importer specific Value instance.
+		 *
+		 * @param string $key Name of the kv pair.
+		 * @param string $value Value of the kv pair.
+		 * @return WPOptionsValue
+		 */
+		static function toValue( string $key, $value ): WPOptionsValue {
+			$val = new WPOptionsValue( self::namespace );
+			$val->setKey( $key );
+			$val->setValue( $value );
+			return $val;
+		}
 
 		/**
 		 * Get WordPress configuration items from the database.
@@ -67,7 +83,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 			}
 		}
 
-
 		/**
 		 * Import (overwrite) WordPress core specific settings in the DB.
 		 *
@@ -76,20 +91,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 */
 		public function import( $value ) {
 			update_option( $value->getStrippedKey(), $value->getValue() );
-		}
-
-		/**
-		 * Return importer specific Value instance.
-		 *
-		 * @param string $key Name of the kv pair.
-		 * @param string $value Value of the kv pair.
-		 * @return WPOptionsValue
-		 */
-		static function toValue( string $key, $value ): WPOptionsValue {
-			$val = new WPOptionsValue( self::namespace );
-			$val->setKey( $key );
-			$val->setValue( $value );
-			return $val;
 		}
 	}
 }

@@ -21,6 +21,7 @@ namespace Niteo\WooCart\Defaults {
 	 */
 	class CLI_Command extends WP_CLI_Command {
 
+
 		/**
 		 * Imports bundle to database.
 		 *

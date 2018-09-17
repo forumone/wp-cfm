@@ -58,18 +58,18 @@ class WooTaxesTest extends TestCase
                 'tax_rate_order' => 'order',
                 'tax_rate_class' => 'class'
             ], [
-                0 => '%d',
-                1 => '%s',
-                2 => '%s',
-                3 => '%s',
-                4 => '%s',
-                5 => '%s',
-                6 => '%s',
-                7 => '%s',
-                8 => '%s',
-                9 => '%s',
-                10 => '%s'
-            ]);
+            0 => '%d',
+            1 => '%s',
+            2 => '%s',
+            3 => '%s',
+            4 => '%s',
+            5 => '%s',
+            6 => '%s',
+            7 => '%s',
+            8 => '%s',
+            9 => '%s',
+            10 => '%s'
+        ]);
         $wpdb->shouldReceive('replace')->with(
             "prepare_mock",
             ['tax_rate_id' => 0, 'location_code' => "location_code", 'location_type' => "location_type"],
@@ -79,8 +79,8 @@ class WooTaxesTest extends TestCase
         $tax = new Tax();
         $loc = new Location();
         $loc->tax_rate_id = 1234;
-        $loc->location_code="location_code";
-        $loc->location_type="location_type";
+        $loc->location_code = "location_code";
+        $loc->location_type = "location_type";
         $tax->class = "class";
         $tax->priority = "priority";
         $tax->state = "state";

@@ -19,12 +19,16 @@ namespace Niteo\WooCart\Defaults\Importers {
 		const group = 'WooCommerce Shipping Zones';
 
 		/**
-		 * Sets value of WooCommerce tax option.
+		 * Return ShippingLocation array.
 		 *
-		 * @param array $values value to store in yaml file.
+		 * @return iterable
 		 */
-		public function setValue( array $values ) {
-			$this->value = $values;
+		public function getLocations(): iterable {
+			foreach ( $this->getZone()->locations as $location ) {
+				$location          = ShippingLocation::fromArray( (array) $location );
+				$location->zone_id = $this->getID();
+				yield $location;
+			}
 		}
 
 		/**
@@ -37,17 +41,14 @@ namespace Niteo\WooCart\Defaults\Importers {
 		}
 
 		/**
-		 * Return ShippingLocation array.
+		 * Get tax id that was used in DB.
 		 *
-		 * @return iterable
+		 * @return int
 		 */
-		public function getLocations(): iterable {
-			foreach ( $this->getZone()->locations as $location ) {
-				$location          = ShippingLocation::fromArray( (array) $location );
-				$location->zone_id = $this->getID();
-				yield $location;
-			}
+		public function getID(): int {
+			return intval( $this->getStrippedKey() );
 		}
+
 		/**
 		 * Return ShippingMethod array.
 		 *
@@ -62,15 +63,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 		}
 
 		/**
-		 * Get tax id that was used in DB.
-		 *
-		 * @return int
-		 */
-		public function getID(): int {
-			return intval( $this->getStrippedKey() );
-		}
-
-		/**
 		 * Enforce Zone structure by casting in and to array.
 		 *
 		 * @param array $values
@@ -78,6 +70,15 @@ namespace Niteo\WooCart\Defaults\Importers {
 		public function setZone( array $values ) {
 			$zone = ShippingZone::fromArray( $values );
 			$this->setValue( $zone->toArray() );
+		}
+
+		/**
+		 * Sets value of WooCommerce tax option.
+		 *
+		 * @param array $values value to store in yaml file.
+		 */
+		public function setValue( array $values ) {
+			$this->value = $values;
 		}
 
 	}
@@ -88,6 +89,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class ShippingLocation {
+
 
 		use FromArray;
 		use ToArray;
@@ -105,12 +107,14 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 */
 		public $location_type;
 	}
+
 	/**
 	 * Class ShippingLocation
 	 *
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class ShippingMethod {
+
 
 		use FromArray;
 		use ToArray;
@@ -128,12 +132,14 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 */
 		public $is_enabled;
 	}
+
 	/**
 	 * Class ShippingZone
 	 *
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class ShippingZone {
+
 
 		use FromArray;
 		use ToArray;
@@ -168,7 +174,22 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class WooShipping implements Configuration {
 
 
+
 		const namespace = 'wooship';
+
+		/**
+		 * Return importer specific Value instance.
+		 *
+		 * @param string $key Name of the kv pair.
+		 * @param array  $value Value of the kv pair.
+		 * @return WooShippingZone
+		 */
+		static function toValue( string $key, $value ): WooShippingZone {
+			$val = new WooShippingZone( self::namespace );
+			$val->setKey( $key );
+			$val->setValue( $value );
+			return $val;
+		}
 
 		/**
 		 * Register the shipping zones in WCD.
@@ -212,7 +233,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 			}
 
 		}
-
 
 		/**
 		 * Import (overwrite) shipping zones into the DB
@@ -273,20 +293,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 					)
 				);
 			}
-		}
-
-		/**
-		 * Return importer specific Value instance.
-		 *
-		 * @param string $key Name of the kv pair.
-		 * @param array  $value Value of the kv pair.
-		 * @return WooShippingZone
-		 */
-		static function toValue( string $key, $value ): WooShippingZone {
-			$val = new WooShippingZone( self::namespace );
-			$val->setKey( $key );
-			$val->setValue( $value );
-			return $val;
 		}
 	}
 }

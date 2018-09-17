@@ -19,24 +19,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 		const group = 'WooCommerce Taxes';
 
 		/**
-		 * Sets value of WooCommerce tax option.
-		 *
-		 * @param array $values value to store in yaml file.
-		 */
-		public function setValue( array $values ) {
-			$this->value = $values;
-		}
-
-		/**
-		 * Return tax like object.
-		 *
-		 * @return Tax
-		 */
-		public function getTax(): Tax {
-			return Tax::fromArray( $this->value );
-		}
-
-		/**
 		 * Return Locations array.
 		 *
 		 * @return iterable
@@ -47,6 +29,15 @@ namespace Niteo\WooCart\Defaults\Importers {
 				$location->tax_rate_id = $this->getID();
 				yield $location;
 			}
+		}
+
+		/**
+		 * Return tax like object.
+		 *
+		 * @return Tax
+		 */
+		public function getTax(): Tax {
+			return Tax::fromArray( $this->value );
 		}
 
 		/**
@@ -68,6 +59,15 @@ namespace Niteo\WooCart\Defaults\Importers {
 			$this->setValue( $tax->toArray() );
 		}
 
+		/**
+		 * Sets value of WooCommerce tax option.
+		 *
+		 * @param array $values value to store in yaml file.
+		 */
+		public function setValue( array $values ) {
+			$this->value = $values;
+		}
+
 	}
 
 
@@ -77,6 +77,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class Tax {
+
 
 
 		use FromArray;
@@ -132,6 +133,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class Location {
 
 
+
 		use FromArray;
 		use ToArray;
 
@@ -162,6 +164,20 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * Namespace for this importer.
 		 */
 		const namespace = 'wootax';
+
+		/**
+		 * Return importer specific Value instance.
+		 *
+		 * @param string $key Name of the kv pair.
+		 * @param array  $value Value of the kv pair.
+		 * @return WooTaxesValue
+		 */
+		static function toValue( string $key, $value ): WooTaxesValue {
+			$val = new WooTaxesValue( self::namespace );
+			$val->setKey( $key );
+			$val->setValue( $value );
+			return $val;
+		}
 
 		/**
 		 * Register the tax rates in WCD.
@@ -204,7 +220,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 				yield $value;
 			}
 		}
-
 
 		/**
 		 * Import (overwrite) tax rates into the DB
@@ -263,20 +278,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 					)
 				);
 			}
-		}
-
-		/**
-		 * Return importer specific Value instance.
-		 *
-		 * @param string $key Name of the kv pair.
-		 * @param array  $value Value of the kv pair.
-		 * @return WooTaxesValue
-		 */
-		static function toValue( string $key, $value ): WooTaxesValue {
-			$val = new WooTaxesValue( self::namespace );
-			$val->setKey( $key );
-			$val->setValue( $value );
-			return $val;
 		}
 	}
 }

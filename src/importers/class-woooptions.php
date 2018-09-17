@@ -2,7 +2,6 @@
 
 namespace Niteo\WooCart\Defaults\Importers {
 
-	use Niteo\WooCart\Defaults\Value;
 
 	/**
 	 * Class WooOptionsValue
@@ -10,6 +9,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class WooOptionsValue extends Value {
+
 
 		/**
 		 *  Group name used in UI or tables.
@@ -35,10 +35,25 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class WooOptions implements Configuration {
 
 
+
 		/**
 		 *  This importer namespace.
 		 */
 		const namespace = 'woo';
+
+		/**
+		 * Return importer specific Value.
+		 *
+		 * @param string $key Name of the kv pair.
+		 * @param string $value Value of the kv pair.
+		 * @return WooOptionsValue
+		 */
+		static function toValue( string $key, $value ): WooOptionsValue {
+			$val = new WooOptionsValue( self::namespace );
+			$val->setKey( $key );
+			$val->setValue( $value );
+			return $val;
+		}
 
 		/**
 		 * Get WooCommerce configuration items from the database.
@@ -66,7 +81,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 			}
 		}
 
-
 		/**
 		 * Import (overwrite) WooCart specific settings in the DB.
 		 *
@@ -75,20 +89,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 */
 		public function import( $value ) {
 			update_option( $value->getStrippedKey(), $value->getValue() );
-		}
-
-		/**
-		 * Return importer specific Value.
-		 *
-		 * @param string $key Name of the kv pair.
-		 * @param string $value Value of the kv pair.
-		 * @return WooOptionsValue
-		 */
-		static function toValue( string $key, $value ): WooOptionsValue {
-			$val = new WooOptionsValue( self::namespace );
-			$val->setKey( $key );
-			$val->setValue( $value );
-			return $val;
 		}
 	}
 }

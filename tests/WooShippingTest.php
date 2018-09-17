@@ -74,8 +74,8 @@ class WooShippingTest extends TestCase
         $method->zone_id = 1234;
         $loc->zone_id = 1234;
 
-        $zone->name="name";
-        $zone->order="order";
+        $zone->name = "name";
+        $zone->order = "order";
         $zone->locations = [$loc->toArray()];
         $zone->methods = [$method->toArray()];
 
@@ -104,8 +104,8 @@ class WooShippingTest extends TestCase
 
         $zone = new \stdClass();
         $zone->zone_id = 1234;
-        $zone->zone_name="name";
-        $zone->zone_order="order";
+        $zone->zone_name = "name";
+        $zone->zone_order = "order";
 
         $method = new \stdClass();
         $method->zone_id = 1234;
@@ -118,13 +118,12 @@ class WooShippingTest extends TestCase
         $loc->zone_id = 1234;
 
 
-
         $wpdb = \Mockery::mock('\WPDB');
         $wpdb->prefix = 'wp_';
         $wpdb->shouldReceive('prepare')->andReturn("")->with('SELECT * FROM wp_woocommerce_shipping_zones');
         $wpdb->shouldReceive('prepare')->andReturn("")->with('SELECT location_code, location_type FROM wp_woocommerce_shipping_zone_locations WHERE zone_id = %d', 1234);
         $wpdb->shouldReceive('prepare')->andReturn("")->with('SELECT method_id, method_order, is_enabled FROM wp_woocommerce_shipping_zone_methods WHERE zone_id = %d', 1234);
-        $wpdb->shouldReceive('get_results')->andReturn([$zone, $zone, $zone, $zone, ]);
+        $wpdb->shouldReceive('get_results')->andReturn([$zone, $zone, $zone, $zone,]);
 
         $o = new WooShipping();
         $this->assertCount(4, $o->items());
@@ -134,7 +133,7 @@ class WooShippingTest extends TestCase
         $wpdb->shouldReceive('prepare')->andReturn("")->with('SELECT * FROM wp_woocommerce_shipping_zones');
         $wpdb->shouldReceive('prepare')->andReturn("")->with('SELECT location_code, location_type FROM wp_woocommerce_shipping_zone_locations WHERE zone_id = %d', 1234);
         $wpdb->shouldReceive('prepare')->andReturn("")->with('SELECT method_id, method_order, is_enabled FROM wp_woocommerce_shipping_zone_methods WHERE zone_id = %d', 1234);
-        $wpdb->shouldReceive('get_results')->andReturn([$zone, $zone, $zone, $zone, ], [$loc, $loc, $loc], [$method, $method,]);
+        $wpdb->shouldReceive('get_results')->andReturn([$zone, $zone, $zone, $zone,], [$loc, $loc, $loc], [$method, $method,]);
 
         $value = $o->items()->current();
         $this->assertEquals("1234", $value->getKey());
