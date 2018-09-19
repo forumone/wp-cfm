@@ -11,14 +11,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 */
 	class WooShippingZone extends Value {
 
-
-
-		/**
-		 *  Group name used in UI or tables.
-		 */
-		const group = 'WooCommerce Shipping Zones';
-
-		/**
+	    /**
 		 * Return ShippingLocation array.
 		 *
 		 * @return iterable

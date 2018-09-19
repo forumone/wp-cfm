@@ -21,8 +21,8 @@ class WOOOptionsTest extends TestCase
 
     /**
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::import
-     * @covers \Niteo\WooCart\Defaults\Importers\WooOptionsValue::setValue
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::toValue
+     * @covers \Niteo\WooCart\Defaults\Importers\WPOptionsValue::setValue
      * @covers \Niteo\WooCart\Defaults\Value::__construct
      * @covers \Niteo\WooCart\Defaults\Value::getStrippedKey
      * @covers \Niteo\WooCart\Defaults\Value::getValue
@@ -30,10 +30,46 @@ class WOOOptionsTest extends TestCase
      */
     public function testImport()
     {
-        \WP_Mock::userFunction("update_option", [
+        global $wpdb;
+
+        \WP_Mock::userFunction("get_option", [
             'return' => true,
-            'args' => ["test_name", "test_value"],
+            'args' => ["test_name"],
         ]);
+        $wpdb = \Mockery::mock('\WPDB');
+        $wpdb->options = 'wp_options';
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => 'test_value'], ['option_name' => 'test_name'])
+            ->andReturn(true);
+
+        $value = WooOptions::toValue("test_name", "test_value");
+        $o = new WooOptions();
+        $o->import($value);
+    }
+
+    /**
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::import
+     * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::toValue
+     * @covers \Niteo\WooCart\Defaults\Importers\WPOptionsValue::setValue
+     * @covers \Niteo\WooCart\Defaults\Value::__construct
+     * @covers \Niteo\WooCart\Defaults\Value::getStrippedKey
+     * @covers \Niteo\WooCart\Defaults\Value::getValue
+     * @covers \Niteo\WooCart\Defaults\Value::setKey
+     */
+    public function testImportNew()
+    {
+        global $wpdb;
+
+        \WP_Mock::userFunction("get_option", [
+            'return' => false,
+            'args' => ["test_name"],
+        ]);
+        $wpdb = \Mockery::mock('\WPDB');
+        $wpdb->options = 'wp_options';
+        $wpdb->shouldReceive('insert')
+            ->with('wp_options', ['option_value' => 'test_value', 'autoload' => 'yes', 'option_name' => 'test_name'], [0 => '%s', 1 => '%s', 2 => '%s'])
+            ->andReturn(true);
+
         $value = WooOptions::toValue("test_name", "test_value");
         $o = new WooOptions();
         $o->import($value);
@@ -42,7 +78,7 @@ class WOOOptionsTest extends TestCase
     /**
      * @covers \Niteo\WooCart\Defaults\Importers\WooOptions::items
      * @covers \Niteo\WooCart\Defaults\Value::__construct
-     * @covers \Niteo\WooCart\Defaults\Importers\WooOptionsValue::setValue
+     * @covers \Niteo\WooCart\Defaults\Importers\WPOptionsValue::setValue
      * @covers \Niteo\WooCart\Defaults\Value::getKey
      * @covers \Niteo\WooCart\Defaults\Value::getStrippedKey
      * @covers \Niteo\WooCart\Defaults\Value::setKey

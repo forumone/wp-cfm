@@ -65,21 +65,24 @@ class ImporterTest extends TestCase
     public function testImport()
     {
         global $wpdb;
+        \WP_Mock::userFunction("get_option", [
+            'return' => true,
+        ]);
 
         $wpdb = \Mockery::mock('\WPDB');
-        $wpdb->prefix = 'wp_';
-        \WP_Mock::userFunction("update_option", [
-            'return' => true,
-            'args' => ['test_name', 'test_value'],
-        ]);
-        \WP_Mock::userFunction("update_option", [
-            'return' => true,
-            'args' => ['test_php', 'i:123456;'],
-        ]);
-        \WP_Mock::userFunction("update_option", [
-            'return' => true,
-            'args' => ['test_json', '["abc"]'],
-        ]);
+        $wpdb->options = 'wp_options';
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => 'test_value'], ['option_name' => 'test_name'])
+            ->andReturn(true);
+
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => 'i:123456;'], ['option_name' => 'test_php'])
+            ->andReturn(true);
+
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => '["abc"]'], ['option_name' => 'test_json'])
+            ->andReturn(true);
+
         $i = new Importer();
         $i->import(dirname(__FILE__) . "/fixtures/serialized.yaml");
     }

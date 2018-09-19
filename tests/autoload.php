@@ -5,3 +5,7 @@ require_once "$root_dir/src/index.php";
 
 WP_Mock::setUsePatchwork(true);
 WP_Mock::bootstrap();
+
+function maybe_serialize($a){
+        return $a;
+}

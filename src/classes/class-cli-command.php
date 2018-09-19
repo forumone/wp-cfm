@@ -10,7 +10,8 @@
 
 namespace Niteo\WooCart\Defaults {
 
-	use Niteo\WooCart\Defaults\Importers\WooPage;
+    use Niteo\WooCart\Defaults\Importers\SellingLimit;
+    use Niteo\WooCart\Defaults\Importers\WooPage;
 	use WP_CLI;
 	use WP_CLI_Command;
 
@@ -90,6 +91,44 @@ namespace Niteo\WooCart\Defaults {
 				WP_CLI::success( "The page $path has been inserted as $id." );
 			} catch ( \Exception $e ) {
 				WP_CLI::error( "There was an error in pushing $path to the database." );
+			}
+
+		}
+
+		/**
+		 * Sets the woocommerce_all_except_countries based on shipping region.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <region>
+		 * : One of the regions in shipping table.
+		 *
+		 * ## EXAMPLES
+		 *
+		 *     wp wcd sell_only_to EU
+		 *
+		 * @codeCoverageIgnore
+		 * @when after_wp_load
+		 * @param $args array list of command line arguments.
+		 * @param $assoc_args array of named command line keys.
+		 * @throws WP_CLI\ExitException on wrong command.
+		 */
+		public function sell_only_to( $args, $assoc_args ) {
+			list($zone) = $args;
+
+			$limit =  new SellingLimit($zone);
+
+			if ( ! $limit->zoneID() ) {
+				WP_CLI::error( "$zone cannot be found." );
+			}
+
+			try {
+				$countries = $limit->countries($limit->zoneID());
+                update_option("woocommerce_all_except_countries", $countries);
+                $list = implode(",", $countries);
+				WP_CLI::success( "The region $zone with ($list) has been inserted to woocommerce_all_except_countries." );
+			} catch ( \Exception $e ) {
+				WP_CLI::error( "There was an error in pushing $zone to the database." );
 			}
 
 		}

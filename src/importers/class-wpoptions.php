@@ -11,12 +11,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 */
 	class WPOptionsValue extends Value {
 
-
-		/**
-		 *  Group name used in UI or tables.
-		 */
-		const group = 'WordPress Options';
-
 		/**
 		 * Sets value of WooCommerce option.
 		 *
@@ -35,8 +29,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 * @package Niteo\WooCart\Defaults\Importers
 	 */
 	class WPOptions implements Configuration {
-
-
 
 		/**
 		 *  This importer namespace.
@@ -74,21 +66,40 @@ namespace Niteo\WooCart\Defaults\Importers {
 			$results = $wpdb->get_results( $query );
 
 			foreach ( $results as $op ) {
-				$value = new WooOptionsValue( self::namespace );
+				$value = new WPOptionsValue( self::namespace );
 				$value->setKey( $op->option_name );
 				$value->setValue( $op->option_value );
 				yield $value;
 			}
 		}
 
-		/**
-		 * Import (overwrite) WordPress core specific settings in the DB.
-		 *
-		 * @param Value $value kv object for update or insert.
-		 * @access public
-		 */
-		public function import( $value ) {
-			update_option( $value->getStrippedKey(), $value->getValue() );
-		}
+        /**
+         * Import (overwrite) WordPress core specific settings in the DB.
+         *
+         * @param WPOptionsValue $data kv object for update or insert.
+         * @access public
+         * @return bool
+         */
+        public function import($data): bool
+        {
+            global $wpdb;
+            $option = $data->getStrippedKey();
+            $value = maybe_serialize($data->getValue());
+
+            $old_value = get_option($option);
+            if ($old_value) {
+                return $wpdb->update(
+                    $wpdb->options,
+                    ["option_value" => $value],
+                    ["option_name" => $option]
+                );
+            }
+            return $wpdb->insert(
+                $wpdb->options,
+                ["option_value" => $value, "autoload" => "yes", "option_name" => $option],
+                ["%s", "%s", "%s"]
+            );
+
+        }
 	}
 }

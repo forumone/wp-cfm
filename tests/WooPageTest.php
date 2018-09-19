@@ -69,26 +69,33 @@ class WooPageTest extends TestCase
      */
     function testinsertPage()
     {
+        global $wpdb;
 
         $p = new WooPage(dirname(__FILE__) . "/fixtures/page.html");
         $meta = $p->getPageMeta();
         \WP_Mock::userFunction("wp_insert_post", [
             'return' => 1234,
             'args' => [[
-                'post_content' => '[company-name] ("us", "we", or "our")',
+                'post_content' => '<p>[company-name] ("us", "we", or "our")</p>',
                 'post_title' => 'Cookie Policy',
                 'post_status' => 'publish',
                 'post_type' => 'page',
                 'post_name' => 'cookie-policy',
             ]]]);
-        \WP_Mock::userFunction("update_option", [
-            'return' => 1,
-            'args' => ['wp_page_for_privacy_policy', '1234']
+
+        \WP_Mock::userFunction("get_option", [
+            'return' => true,
         ]);
-        \WP_Mock::userFunction("update_option", [
-            'return' => 1,
-            'args' => ['cookie_page', 'cookie-policy']
-        ]);
+
+        $wpdb = \Mockery::mock('\WPDB');
+        $wpdb->options = 'wp_options';
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => '1234'], ['option_name' => 'wp_page_for_privacy_policy'])
+            ->andReturn(true);
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => 'cookie-policy'], ['option_name' => 'cookie_page'])
+            ->andReturn(true);
+
         $id = $p->insertPage($meta);
 
         $this->assertEquals(1234, $id);

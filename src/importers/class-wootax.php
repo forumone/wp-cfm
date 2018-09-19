@@ -11,13 +11,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 */
 	class WooTaxesValue extends Value {
 
-
-
-		/**
-		 *  Group name used in UI or tables.
-		 */
-		const group = 'WooCommerce Taxes';
-
 		/**
 		 * Return Locations array.
 		 *

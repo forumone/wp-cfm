@@ -63,3 +63,6 @@ lint: ensure
 psr: src/vendor
 	composer dump-autoload -a
 	cd src && composer dump-autoload -a
+
+i18n:
+	wp i18n make-pot src src/i18n/woocart-defaults.pot

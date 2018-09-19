@@ -9,7 +9,7 @@ namespace Niteo\WooCart;
  * Runtime:     7.2+
  * Author:      WooCart
  * Text Domain: woocart-defaults
- * Domain Path: i8n
+ * Domain Path: i18n
  * Author URI:  www.woocart.com
  */
 
