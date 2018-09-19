@@ -42,10 +42,8 @@ class WooTaxesTest extends TestCase
 
         $wpdb = \Mockery::mock('\WPDB');
         $wpdb->prefix = 'wp_';
-        $wpdb->shouldReceive('prepare')->andReturn("prepare_mock")->with('wp_woocommerce_tax_rates');
-        $wpdb->shouldReceive('prepare')->andReturn("prepare_mock")->with('wp_woocommerce_tax_rate_locations');
         $wpdb->shouldReceive('replace')->with(
-            "prepare_mock",
+            'wp_woocommerce_tax_rates',
             [
                 'tax_rate_id' => 0,
                 'tax_rate_country' => 'country',
@@ -71,7 +69,7 @@ class WooTaxesTest extends TestCase
             10 => '%s'
         ]);
         $wpdb->shouldReceive('replace')->with(
-            "prepare_mock",
+            'wp_woocommerce_tax_rate_locations',
             ['tax_rate_id' => 0, 'location_code' => "location_code", 'location_type' => "location_type"],
             [0 => '%d', 1 => '%s', 2 => '%s']
         );

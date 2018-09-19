@@ -51,9 +51,9 @@ namespace Niteo\WooCart\Defaults {
 			$importer = new Importer();
 			try {
 				$importer->import( $path );
-				WP_CLI::success( 'The bundle has been pulled into the database.' );
+				WP_CLI::success( "The $path has been pulled into the database." );
 			} catch ( \Exception $e ) {
-				WP_CLI::error( 'There was an error in pushing data to the database.' );
+				WP_CLI::error( "There was an error in pushing $path to the database." );
 			}
 
 		}
@@ -87,9 +87,9 @@ namespace Niteo\WooCart\Defaults {
 			try {
 				$meta = $page->getPageMeta();
 				$id   = $page->insertPage( $meta );
-				WP_CLI::success( "The page has been inserted as $id." );
+				WP_CLI::success( "The page $path has been inserted as $id." );
 			} catch ( \Exception $e ) {
-				WP_CLI::error( 'There was an error in pushing data to the database.' );
+				WP_CLI::error( "There was an error in pushing $path to the database." );
 			}
 
 		}

@@ -13,8 +13,8 @@ namespace Niteo\WooCart;
  * Author URI:  www.woocart.com
  */
 
-if(class_exists("WP_CLI")){
-    require_once __DIR__ . '/vendor/autoload.php';
+if ( class_exists( 'WP_CLI' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
 
-    \WP_CLI::add_command( 'wcd', __NAMESPACE__ . '\Defaults\CLI_Command' );
+	\WP_CLI::add_command( 'wcd', __NAMESPACE__ . '\Defaults\CLI_Command' );
 }

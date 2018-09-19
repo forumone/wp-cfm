@@ -187,8 +187,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 		public function items(): iterable {
 			global $wpdb;
 
-			$query     = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}woocommerce_tax_rates" );
-			$tax_rates = $wpdb->get_results( $query );
+			$tax_rates = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}woocommerce_tax_rates" );
 
 			foreach ( $tax_rates as $tax ) {
 
@@ -235,7 +234,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 			$tax = $data->getTax();
 
 			$wpdb->replace(
-				$wpdb->prepare( "{$wpdb->prefix}woocommerce_tax_rates" ),
+				"{$wpdb->prefix}woocommerce_tax_rates",
 				array(
 					'tax_rate_id'       => $id,
 					'tax_rate_country'  => $tax->country,
@@ -265,7 +264,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 
 			foreach ( $tax->locations as $location ) {
 				$wpdb->replace(
-					$wpdb->prepare( "{$wpdb->prefix}woocommerce_tax_rate_locations" ),
+					"{$wpdb->prefix}woocommerce_tax_rate_locations",
 					array(
 						'tax_rate_id'   => $id,
 						'location_code' => $location['location_code'],

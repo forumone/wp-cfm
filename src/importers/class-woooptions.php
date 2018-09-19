@@ -66,12 +66,10 @@ namespace Niteo\WooCart\Defaults\Importers {
 		public function items(): iterable {
 			global $wpdb;
 
-			$query = $wpdb->prepare(
-				"SELECT option_name, option_value FROM $wpdb->options
+			$query = "SELECT option_name, option_value FROM $wpdb->options
             WHERE option_name NOT LIKE '_transient%' AND option_name NOT LIKE '_site_transient%'
             AND option_name LIKE 'woocommerce_%'
-            ORDER BY option_name"
-			);
+            ORDER BY option_name";
 
 			$results = $wpdb->get_results( $query );
 
