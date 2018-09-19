@@ -36,7 +36,7 @@ class WooPageTest extends TestCase
             'post_title' => 'Cookie Policy',
             'post_type' => 'page',
             'post_status' => 'publish',
-            'post_content' => '[company-name] ("us", "we", or "our")',
+            'post_content' => '<p>[company-name] ("us", "we", or "our")</p>',
             'post_name' => 'cookie-policy',
             'post_excerpt' => null,
             'post_category' => null,
@@ -77,12 +77,9 @@ class WooPageTest extends TestCase
             'args' => [[
                 'post_content' => '[company-name] ("us", "we", or "our")',
                 'post_title' => 'Cookie Policy',
-                'post_excerpt' => NULL,
                 'post_status' => 'publish',
                 'post_type' => 'page',
                 'post_name' => 'cookie-policy',
-                'post_category' => NULL,
-                'meta_input' => NULL
             ]]]);
         \WP_Mock::userFunction("update_option", [
             'return' => 1,

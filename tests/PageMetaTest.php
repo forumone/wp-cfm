@@ -30,14 +30,7 @@ class PageMetaTest extends TestCase
         $p = new PageMeta();
         $p->post_name = "post_name";
         $this->assertEquals([
-            'post_content' => null,
-            'post_title' => null,
-            'post_excerpt' => null,
-            'post_status' => null,
-            'post_type' => null,
             'post_name' => 'post_name',
-            'post_category' => null,
-            'meta_input' => null,
         ], $p->getInsertParams());
     }
 
@@ -54,5 +47,17 @@ class PageMetaTest extends TestCase
             "wp/key" => '$ID',
         ];
         $this->assertEquals(['wp/key' => 1234], (array)$p->getDefaultsImport(["ID" => 1234]));
+    }
+
+    /**
+     * @covers \Niteo\WooCart\Defaults\Importers\PageMeta::getDefaultsImport
+     * @covers \Niteo\WooCart\Defaults\Importers\PageMeta::getInsertParams
+     * @covers Niteo\WooCart\Defaults\Importers\ToArray::toArray
+     */
+    public function testGetDefaultsImportEmpty()
+    {
+        $p = new PageMeta();
+        $p->post_name = "post_name";
+        $this->assertEquals([], (array)$p->getDefaultsImport(["ID" => 1234]));
     }
 }

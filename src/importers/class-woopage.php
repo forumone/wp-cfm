@@ -14,6 +14,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class PageMeta {
 
 
+
 		use FromArray;
 		use ToArray;
 
@@ -77,14 +78,16 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * @return array
 		 */
 		public function getInsertParams(): array {
-			$allowed = $this::wp_insert_post_params;
-			return array_filter(
+			$allowed  = $this::wp_insert_post_params;
+			$filtered = array_filter(
 				self::toArray(),
 				function ( $key ) use ( $allowed ) {
 					return in_array( $key, $allowed );
 				},
 				ARRAY_FILTER_USE_KEY
 			);
+			$filtered = array_filter( $filtered );
+			return $filtered;
 		}
 
 		/**
@@ -95,6 +98,11 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 */
 		public function getDefaultsImport( array $extra ): array {
 			$out = [];
+
+			if ( is_null( $this->woocart_defaults ) ) {
+				return $out;
+			}
+
 			foreach ( $this->woocart_defaults as $key => $value ) {
 				foreach ( $extra as $k => $v ) {
 					if ( $value === '$' . $k ) {
@@ -121,6 +129,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	class WooPage {
 
 
+
 		/**
 		 * @var string
 		 */
@@ -139,16 +148,13 @@ namespace Niteo\WooCart\Defaults\Importers {
 		public function getPageMeta(): PageMeta {
 			$contents = file_get_contents( $this->file_path );
 
-			$dom = new \DOMDocument();
-			$dom->loadHTML( $contents );
+			$re = '/<!--([\s\S]+?)-->/';
+			preg_match( $re, $contents, $matches, PREG_OFFSET_CAPTURE, 0 );
+			$meta                 = Yaml::parse( $matches[1][0] );
+			$meta['post_content'] = trim( preg_replace( $re, '', $contents ) );
 
-			$xpath   = new \DOMXPath( $dom );
-			$comment = $xpath->query( '//comment()' )->item( 0 );
-			$text    = $comment->nodeValue;
-			$comment->parentNode->removeChild( $comment );
-			$meta                 = Yaml::parse( $text );
-			$meta['post_content'] = $xpath->query( '//body' )->item( 0 )->nodeValue;
 			return PageMeta::fromArray( $meta );
+
 		}
 
 		/**
@@ -165,5 +171,6 @@ namespace Niteo\WooCart\Defaults\Importers {
 
 			return $post_id;
 		}
+
 	}
 }
