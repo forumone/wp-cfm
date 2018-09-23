@@ -26,39 +26,39 @@ namespace Niteo\WooCart\Defaults\Importers {
 		}
 
 		/**
-         * Return ID of the zone selected with region.
-         *
+		 * Return ID of the zone selected with region.
+		 *
 		 * @return int|null
 		 */
 		public function zoneID(): int {
-            global $wpdb;
+			global $wpdb;
 
-            $query = $wpdb->prepare(
-                "SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zones WHERE zone_name = %s",
-                $this->region
-            );
-            return $wpdb->get_var( $query );
+			$query = $wpdb->prepare(
+				"SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zones WHERE zone_name = %s",
+				$this->region
+			);
+			return $wpdb->get_var( $query );
 
 		}
 
 		/**
-         * Limit shipping to selected $zone_id;
-         *
+		 * Limit shipping to selected $zone_id;
+		 *
 		 * @param int $zone_id
 		 * @return array
 		 * @throws \Exception
 		 */
-		public function countries($zone_id): array {
-            global $wpdb;
-            $query = $wpdb->prepare(
-                "SELECT location_code FROM {$wpdb->prefix}woocommerce_shipping_zone_locations WHERE zone_id = %d",
-                $zone_id
-            );
-            $out = [];
-            foreach ($wpdb->get_results($query, 'ARRAY_A' ) as $result) {
-                $out[] = $result["location_code"];
-            }
-		    return $out;
+		public function countries( $zone_id ): array {
+			global $wpdb;
+			$query = $wpdb->prepare(
+				"SELECT location_code FROM {$wpdb->prefix}woocommerce_shipping_zone_locations WHERE zone_id = %d",
+				$zone_id
+			);
+			$out   = [];
+			foreach ( $wpdb->get_results( $query, 'ARRAY_A' ) as $result ) {
+				$out[] = $result['location_code'];
+			}
+			return $out;
 		}
 
 	}

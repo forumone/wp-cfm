@@ -42,7 +42,9 @@ class ImporterTest extends TestCase
         $this->assertEquals([
             'wp/test_name' => 'test_value',
             'wp/test_php' => 'i:123456;',
-            'wp/test_json' => '["abc"]'
+            'wp/test_json' => '["abc"]',
+            'wp/test_implode_newline' => "one\ntwo",
+            'wp/test_implode_comma' => 'one,two'
         ], $data);
 
     }
@@ -81,6 +83,13 @@ class ImporterTest extends TestCase
 
         $wpdb->shouldReceive('update')
             ->with('wp_options', ['option_value' => '["abc"]'], ['option_name' => 'test_json'])
+            ->andReturn(true);
+
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => "one\ntwo"], ['option_name' => 'test_implode_newline'])
+            ->andReturn(true);
+        $wpdb->shouldReceive('update')
+            ->with('wp_options', ['option_value' => "one,two"], ['option_name' => 'test_implode_comma'])
             ->andReturn(true);
 
         $i = new Importer();

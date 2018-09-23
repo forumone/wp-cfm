@@ -1,7 +1,4 @@
 <?php
-
-namespace Niteo\WooCart;
-
 /**
  * Plugin Name: WooCart Defaults
  * Description: Manage and deploy WordPress + WooCommerce configuration changes.
@@ -13,8 +10,18 @@ namespace Niteo\WooCart;
  * Author URI:  www.woocart.com
  */
 
-if ( class_exists( 'WP_CLI' ) ) {
+
+namespace Niteo\WooCart {
+
 	require_once __DIR__ . '/vendor/autoload.php';
 
-	\WP_CLI::add_command( 'wcd', __NAMESPACE__ . '\Defaults\CLI_Command' );
+	use Niteo\WooCart\Defaults\Shortcodes;
+
+	if ( class_exists( 'WP_CLI' ) ) {
+		\WP_CLI::add_command( 'wcd', __NAMESPACE__ . '\Defaults\CLI_Command' );
+	}
+
+	if ( function_exists( 'add_shortcode' ) ) {
+		new Shortcodes();
+	}
 }

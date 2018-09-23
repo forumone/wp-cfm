@@ -10,8 +10,9 @@
 
 namespace Niteo\WooCart\Defaults {
 
-    use Niteo\WooCart\Defaults\Importers\SellingLimit;
-    use Niteo\WooCart\Defaults\Importers\WooPage;
+	use Niteo\WooCart\Defaults\Generators\Product;
+	use Niteo\WooCart\Defaults\Importers\SellingLimit;
+	use Niteo\WooCart\Defaults\Importers\WooPage;
 	use WP_CLI;
 	use WP_CLI_Command;
 
@@ -22,6 +23,7 @@ namespace Niteo\WooCart\Defaults {
 	 * @package Niteo\WooCart\Defaults
 	 */
 	class CLI_Command extends WP_CLI_Command {
+
 
 
 		/**
@@ -116,21 +118,49 @@ namespace Niteo\WooCart\Defaults {
 		public function sell_only_to( $args, $assoc_args ) {
 			list($zone) = $args;
 
-			$limit =  new SellingLimit($zone);
+			$limit = new SellingLimit( $zone );
 
 			if ( ! $limit->zoneID() ) {
 				WP_CLI::error( "$zone cannot be found." );
 			}
 
 			try {
-				$countries = $limit->countries($limit->zoneID());
-                update_option("woocommerce_all_except_countries", $countries);
-                $list = implode(",", $countries);
+				$countries = $limit->countries( $limit->zoneID() );
+				update_option( 'woocommerce_all_except_countries', $countries );
+				$list = implode( ',', $countries );
 				WP_CLI::success( "The region $zone with ($list) has been inserted to woocommerce_all_except_countries." );
 			} catch ( \Exception $e ) {
 				WP_CLI::error( "There was an error in pushing $zone to the database." );
 			}
 
+		}
+
+		/**
+		 * Generate products.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <amount>
+		 * : The amount of products to generate
+		 * ---
+		 * default: 100
+		 * ---
+		 *
+		 * ## EXAMPLES
+		 * wc generate products 100
+		 *
+		 * @param array $args Argumens specified.
+		 * @param arrat $assoc_args Associative arguments specified.
+		 */
+		public function products( $args, $assoc_args ) {
+			list($amount) = $args;
+			$progress     = \WP_CLI\Utils\make_progress_bar( 'Generating products', $amount );
+			for ( $i = 1; $i <= $amount; $i++ ) {
+				Product::generate();
+				$progress->tick();
+			}
+			$progress->finish();
+			WP_CLI::success( $amount . ' products generated.' );
 		}
 
 	}

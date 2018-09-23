@@ -18,8 +18,6 @@ namespace Niteo\WooCart\Defaults {
 	 */
 	abstract class Value {
 
-
-
 		/**
 		 * @var string name of the value with namespace.
 		 */

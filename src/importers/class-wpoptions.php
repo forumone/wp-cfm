@@ -73,33 +73,39 @@ namespace Niteo\WooCart\Defaults\Importers {
 			}
 		}
 
-        /**
-         * Import (overwrite) WordPress core specific settings in the DB.
-         *
-         * @param WPOptionsValue $data kv object for update or insert.
-         * @access public
-         * @return bool
-         */
-        public function import($data): bool
-        {
-            global $wpdb;
-            $option = $data->getStrippedKey();
-            $value = maybe_serialize($data->getValue());
+		/**
+		 * Import (overwrite) WordPress core specific settings in the DB.
+		 *
+		 * @param WPOptionsValue $data kv object for update or insert.
+		 * @access public
+		 * @return bool
+		 */
+		public function import( $data ): bool {
+			global $wpdb;
+			$option = $data->getStrippedKey();
+			$value  = $data->getValue();
 
-            $old_value = get_option($option);
-            if ($old_value) {
-                return $wpdb->update(
-                    $wpdb->options,
-                    ["option_value" => $value],
-                    ["option_name" => $option]
-                );
-            }
-            return $wpdb->insert(
-                $wpdb->options,
-                ["option_value" => $value, "autoload" => "yes", "option_name" => $option],
-                ["%s", "%s", "%s"]
-            );
+			$old_value = get_option( $option );
 
-        }
+			if ( $old_value === false ) {
+				fwrite( STDOUT, "Inserting $option: $value" . PHP_EOL );
+				return $wpdb->insert(
+					$wpdb->options,
+					[
+						'option_value' => $value,
+						'autoload'     => 'yes',
+						'option_name'  => $option,
+					],
+					[ '%s', '%s', '%s' ]
+				);
+			}
+			fwrite( STDOUT, "Updating $option: $value" . PHP_EOL );
+			return $wpdb->update(
+				$wpdb->options,
+				[ 'option_value' => $value ],
+				[ 'option_name' => $option ]
+			);
+
+		}
 	}
 }

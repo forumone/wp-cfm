@@ -11,7 +11,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 	 */
 	class WooShippingZone extends Value {
 
-	    /**
+		/**
 		 * Return ShippingLocation array.
 		 *
 		 * @return iterable
@@ -236,11 +236,11 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 */
 		public function import( $data ) {
 			global $wpdb;
+			$inserted = false;
+			$id       = $data->getID();
+			$zone     = $data->getZone();
 
-			$id   = $data->getID();
-			$zone = $data->getZone();
-
-			$wpdb->insert(
+			$inserted &= $wpdb->insert(
 				"{$wpdb->prefix}woocommerce_shipping_zones",
 				array(
 					'zone_id'    => $id,
@@ -255,7 +255,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 			);
 
 			foreach ( $data->getLocations() as $location ) {
-				$wpdb->insert(
+				$inserted &= $wpdb->insert(
 					"{$wpdb->prefix}woocommerce_shipping_zone_locations",
 					array(
 						'zone_id'       => $id,
@@ -271,7 +271,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 			}
 
 			foreach ( $data->getMethods() as $method ) {
-				$wpdb->insert(
+				$inserted &= $wpdb->insert(
 					"{$wpdb->prefix}woocommerce_shipping_zone_methods",
 					array(
 						'zone_id'      => $id,
@@ -286,6 +286,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 					)
 				);
 			}
+			return $inserted;
 		}
 	}
 }

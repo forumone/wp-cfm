@@ -219,14 +219,15 @@ namespace Niteo\WooCart\Defaults\Importers {
 		 * @param WooTaxesValue $data Value
 		 *
 		 * @access public
+		 * @return bool
 		 */
 		public function import( $data ) {
 			global $wpdb;
+			$inserted = false;
+			$id       = $data->getID();
+			$tax      = $data->getTax();
 
-			$id  = $data->getID();
-			$tax = $data->getTax();
-
-			$wpdb->replace(
+			$inserted &= $wpdb->replace(
 				"{$wpdb->prefix}woocommerce_tax_rates",
 				array(
 					'tax_rate_id'       => $id,
@@ -256,7 +257,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 			);
 
 			foreach ( $tax->locations as $location ) {
-				$wpdb->replace(
+				$inserted &= $wpdb->replace(
 					"{$wpdb->prefix}woocommerce_tax_rate_locations",
 					array(
 						'tax_rate_id'   => $id,
@@ -270,6 +271,7 @@ namespace Niteo\WooCart\Defaults\Importers {
 					)
 				);
 			}
+			return $inserted;
 		}
 	}
 }

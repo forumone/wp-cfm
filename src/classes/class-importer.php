@@ -60,6 +60,12 @@ namespace Niteo\WooCart\Defaults {
 						case 'json':
 							$array[ $format[1] ] = json_encode( $array[ $format[1] ] );
 							break;
+						case 'implode_newline':
+							$array[ $format[1] ] = implode( "\n", $array[ $format[1] ] );
+							break;
+						case 'implode_comma':
+							$array[ $format[1] ] = implode( ',', $array[ $format[1] ] );
+							break;
 					}
 
 					unset( $array[ $format[0] ] );
