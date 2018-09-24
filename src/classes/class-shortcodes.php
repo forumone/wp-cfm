@@ -12,6 +12,18 @@ namespace Niteo\WooCart\Defaults {
 
 
 		/**
+		 * Shortcodes constructor.
+		 */
+		public function __construct() {
+			add_shortcode( 'woo-include', [ &$this, 'page' ] );
+			add_shortcode( 'company-name', [ &$this, 'company_name' ] );
+			add_shortcode( 'tax-id', [ &$this, 'tax_id' ] );
+			add_shortcode( 'policy-page', [ &$this, 'policy_page' ] );
+			add_shortcode( 'store-url', [ &$this, 'store_url' ] );
+			add_shortcode( 'store-name', [ &$this, 'store_name' ] );
+		}
+
+		/**
 		 * @param $props
 		 * @param null  $content
 		 * @return null
@@ -82,18 +94,6 @@ namespace Niteo\WooCart\Defaults {
 			$url     = get_permalink( get_option( 'wp_page_for_privacy_policy' ) );
 			$content = sprintf( '<a href="%s">%s</a>', $url, $url );
 			return $content;
-		}
-
-		/**
-		 * Shortcodes constructor.
-		 */
-		public function __construct() {
-			add_shortcode( 'woo-include', [ &$this, 'page' ] );
-			add_shortcode( 'company-name', [ &$this, 'company_name' ] );
-			add_shortcode( 'tax-id', [ &$this, 'tax_id' ] );
-			add_shortcode( 'policy-page', [ &$this, 'policy_page' ] );
-			add_shortcode( 'store-url', [ &$this, 'store_url' ] );
-			add_shortcode( 'store-name', [ &$this, 'store_name' ] );
 		}
 
 	}

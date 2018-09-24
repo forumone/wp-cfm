@@ -15,6 +15,7 @@ namespace Niteo\WooCart {
 
 	require_once __DIR__ . '/vendor/autoload.php';
 
+	use Niteo\WooCart\Defaults\Filters;
 	use Niteo\WooCart\Defaults\Shortcodes;
 
 	if ( class_exists( 'WP_CLI' ) ) {
@@ -23,5 +24,9 @@ namespace Niteo\WooCart {
 
 	if ( function_exists( 'add_shortcode' ) ) {
 		new Shortcodes();
+	}
+
+	if ( function_exists( 'do_shortcode' ) ) {
+		new Filters();
 	}
 }
