@@ -17,6 +17,7 @@ namespace Niteo\WooCart {
 
 	use Niteo\WooCart\Defaults\Filters;
 	use Niteo\WooCart\Defaults\Shortcodes;
+	use Niteo\WooCart\Defaults\GDPR;
 	use Niteo\WooCart\Defaults\AdminDashboard;
 
 	if ( class_exists( 'WP_CLI' ) ) {
@@ -32,9 +33,11 @@ namespace Niteo\WooCart {
 	}
 
 	/**
-	 * Panel for the store in the WP admin dashboard.
+	 * 1. Consent notification to comply with GDPR.
+	 * 2. Panel for the store in the WP admin dashboard.
 	 */
 	if ( function_exists( 'add_action' ) ) {
+		new GDPR();
 		new AdminDashboard();
 	}
 }

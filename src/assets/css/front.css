@@ -1,0 +1,42 @@
+.wc-defaults-gdpr {
+	position: fixed;
+	width: 100%;
+	padding: 20px;
+	background: #0b0b0b;
+	opacity: 0.85;
+	bottom: 0;
+	z-index: 999999;
+}
+.wc-defaults-gdpr p {
+	color: #ffffff;
+	margin: 0 !important;
+	text-align: center;
+}
+.wc-defaults-gdpr a.wcil,
+.wc-defaults-gdpr a.wcil:hover,
+.wc-defaults-gdpr a.wcil:focus {
+	color: #ffffff !important;
+	text-decoration: underline;
+}
+#wc-defaults-ok {
+	display: inline-block;
+	background: #ffffff;
+	font-weight: bold;
+	text-decoration: none;
+	color: #0b0b0b;
+	margin-left: 5px;
+	padding: 0 6px;
+	border-radius: 4px;
+}
+@media (max-width: 767px) {
+	.wc-defaults-gdpr p {
+		text-align: left;
+	}
+	.wc-defaults-gdpr a {
+		display: block;
+		max-width: 40px;
+		margin-top: 8px;
+		text-align: center;
+		margin-left: 0;
+	}
+}
