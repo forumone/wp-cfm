@@ -8,7 +8,7 @@ namespace Niteo\WooCart\Defaults {
 	 *
 	 * @package Niteo\WooCart\Defaults
 	 */
-	class Gdpr {
+	class GDPR {
 
 		/**
 		 * Gdpr constructor.
@@ -49,10 +49,10 @@ namespace Niteo\WooCart\Defaults {
 		 * @return null
 		 */
 		public function scripts() {
-			wp_enqueue_style( 'woocart-cookie', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/front.css', [], '@##VERSION##@' );
+			wp_enqueue_style( 'woocart-cookie', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/front.css', [], WCD_VERSION );
 
-			wp_enqueue_script( 'woocart-cookie', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/js.cookie.min.js', [], '@##VERSION##@' );
-			wp_enqueue_script( 'woocart-front', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/front.js', [ 'jquery', 'woocart-cookie' ], '@##VERSION##@', true );
+			wp_enqueue_script( 'woocart-cookie', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/js.cookie.min.js', [], WCD_VERSION );
+			wp_enqueue_script( 'woocart-front', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/front.js', [ 'jquery', 'woocart-cookie' ], WCD_VERSION, true );
 		}
 
 		/**

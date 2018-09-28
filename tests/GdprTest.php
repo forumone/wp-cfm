@@ -4,7 +4,7 @@
 use Niteo\WooCart\Defaults\Gdpr;
 use PHPUnit\Framework\TestCase;
 
-class GdprTest extends TestCase
+class GDPRTest extends TestCase
 {
     function setUp()
     {
@@ -30,7 +30,7 @@ class GdprTest extends TestCase
      */
     public function testConstructor()
     {
-        $gdpr = new Gdpr();
+        $gdpr = new GDPR();
         \WP_Mock::expectActionAdded( 'wp_footer', [ $gdpr, 'show_consent' ] );
         \WP_Mock::expectActionAdded( 'wp_enqueue_scripts', [ $gdpr, 'scripts' ] );
 
