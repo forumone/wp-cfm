@@ -18,7 +18,7 @@ test: vendor
 	bin/phpunit --coverage-html=./reports
 
 src/vendor:
-	cd src && composer install --no-dev
+	cd src && composer install
 	cd src && composer dump-autoload -a
 
 build: ensure
