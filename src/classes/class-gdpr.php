@@ -1,19 +1,25 @@
 <?php
+/**
+ * Handles GDPR consent on the plugin frontend.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage woocart-defaults
+ * @since      1.0.0
+ */
 
 namespace Niteo\WooCart\Defaults {
 
-	use Niteo\WooCart\Release;
-
 
 	/**
-	 * Class Gdpr
+	 * Class GDPR
 	 *
 	 * @package Niteo\WooCart\Defaults
 	 */
 	class GDPR {
 
 		/**
-		 * Gdpr constructor.
+		 * GDPR constructor.
 		 */
 		public function __construct() {
 			add_action( 'wp_footer', [ &$this, 'show_consent' ] );

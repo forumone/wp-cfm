@@ -1,7 +1,7 @@
 <?php
 
 
-use Niteo\WooCart\Defaults\Gdpr;
+use Niteo\WooCart\Defaults\GDPR;
 use PHPUnit\Framework\TestCase;
 
 class GDPRTest extends TestCase
@@ -22,11 +22,11 @@ class GDPRTest extends TestCase
 
 
     /**
-     * Testing constructor covers the entire Gdpr() class.
-     * @covers \Niteo\WooCart\Defaults\Gdpr::__construct
-     * @covers \Niteo\WooCart\Defaults\Gdpr::show_consent
-     * @covers \Niteo\WooCart\Defaults\Gdpr::scripts
-     * @covers \Niteo\WooCart\Defaults\Gdpr::get_id_by_slug
+     * Testing constructor covers the entire GDPR() class.
+     * @covers \Niteo\WooCart\Defaults\GDPR::__construct
+     * @covers \Niteo\WooCart\Defaults\GDPR::show_consent
+     * @covers \Niteo\WooCart\Defaults\GDPR::scripts
+     * @covers \Niteo\WooCart\Defaults\GDPR::get_id_by_slug
      */
     public function testConstructor()
     {
