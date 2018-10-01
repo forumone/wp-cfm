@@ -93,7 +93,14 @@ namespace Niteo\WooCart\Defaults {
 							<!-- Add your products -->
 							<h3><?php esc_html_e( 'Add Your Products', 'woocart-defaults' ); ?></h3>
 							<p><?php printf( 
-								__('Add your products manually or import a CSV with the <a href="%s">WooCommerce import</a>.', 'woocart-defaults' ),
+								wp_kses(
+									__( 'Add your products manually or import a CSV with the <a href="%s">WooCommerce import</a>.', 'woocart-defaults' ),
+									array(
+										'a' => array(
+											'href' => array()
+										)
+									)
+								),
 								esc_url(
 									get_admin_url( null, 'edit.php?post_type=product&page=product_importer' )
 								)
