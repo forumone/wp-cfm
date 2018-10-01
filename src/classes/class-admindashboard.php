@@ -46,6 +46,10 @@ namespace Niteo\WooCart\Defaults {
 				.welcome-panel-content .about-description {
 					padding: 0 10px;
 				}
+				.welcome-panel-content li {
+				    display: inline-block;
+				    margin-right: 13px;
+				}
 			</style>
 
 			<div class="welcome-panel-content">
@@ -88,7 +92,12 @@ namespace Niteo\WooCart\Defaults {
 						<div class="welcome-panel-inner">
 							<!-- Add your products -->
 							<h3><?php esc_html_e( 'Add Your Products', 'woocart-defaults' ); ?></h3>
-							<p><?php printf( esc_html__( 'Add your products manually or import a CSV with the %sWooCommerce import%s.', 'woocart-defaults' ), '<a href="' . esc_url( get_admin_url( null, 'edit.php?post_type=product&page=product_importer' ) ) . '">', '</a>' ); ?></p>
+							<p><?php printf( 
+								__('Add your products manually or import a CSV with the <a href="%s">WooCommerce import</a>.', 'woocart-defaults' ),
+								esc_url(
+									get_admin_url( null, 'edit.php?post_type=product&page=product_importer' )
+								)
+							); ?></p>
 						</div>
 					</div>
 				</div>
