@@ -1,18 +1,33 @@
-(function( $ ) {
-	var consent = Cookies.get( 'woocart-gdpr' );
+function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
+}
 
-	if( consent ) {
-		$( '.wc-defaults-gdpr' ).hide();
+function setCookie(name, value, days) {
+    var d = new Date;
+
+    // Time is in milliseconds.
+    d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
+    document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
+}
+
+var consent = getCookie('woocart-gdpr');
+
+if(consent !== null) {
+	document.querySelector('.wc-defaults-gdpr').style.display = 'none';
+}
+
+document.addEventListener('click', function(event) {
+	if(!event.target.matches('#wc-defaults-ok')) {
+		return;
 	}
 
-	// On clicking consent button
-	$( document ).on( 'click', '#wc-defaults-ok', function( e ) {
-		e.preventDefault();
+	// Prevent default click event.
+	event.preventDefault();
 
-		// Set the cookie (with expiry after 180 days)
-		Cookies.set( 'woocart-gdpr', 'agree', { expires: 180 } );
+	// Set cookie for 180 days.
+	setCookie('woocart-gdpr', 'agree', 180);
 
-		// Hide the notification
-		$( '.wc-defaults-gdpr' ).fadeOut();
-	} );
-})( jQuery );
+	// Hide consent bar.
+	document.querySelector('.wc-defaults-gdpr').style.display = 'none';
+}, false);

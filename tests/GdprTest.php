@@ -26,7 +26,6 @@ class GDPRTest extends TestCase
      * @covers \Niteo\WooCart\Defaults\GDPR::__construct
      * @covers \Niteo\WooCart\Defaults\GDPR::show_consent
      * @covers \Niteo\WooCart\Defaults\GDPR::scripts
-     * @covers \Niteo\WooCart\Defaults\GDPR::get_id_by_slug
      */
     public function testConstructor()
     {
