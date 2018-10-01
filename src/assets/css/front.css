@@ -32,7 +32,7 @@
 	.wc-defaults-gdpr p {
 		text-align: left;
 	}
-	.wc-defaults-gdpr a {
+	#wc-defaults-ok {
 		display: block;
 		max-width: 40px;
 		margin-top: 8px;

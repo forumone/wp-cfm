@@ -22,9 +22,7 @@ class GDPRTest extends TestCase
 
 
     /**
-     * Testing constructor covers the entire GDPR() class.
      * @covers \Niteo\WooCart\Defaults\GDPR::__construct
-     * @covers \Niteo\WooCart\Defaults\GDPR::show_consent
      * @covers \Niteo\WooCart\Defaults\GDPR::scripts
      */
     public function testConstructor()
@@ -33,18 +31,58 @@ class GDPRTest extends TestCase
         \WP_Mock::expectActionAdded( 'wp_footer', [ $gdpr, 'show_consent' ] );
         \WP_Mock::expectActionAdded( 'wp_enqueue_scripts', [ $gdpr, 'scripts' ] );
 
+        $gdpr->__construct();
+        \WP_Mock::assertHooksAdded();
+    }
+
+    /**
+     * @covers \Niteo\WooCart\Defaults\GDPR::__construct
+     * @covers \Niteo\WooCart\Defaults\GDPR::show_consent
+     */
+    public function testConsent()
+    {
+        $gdpr = new GDPR();
         \WP_Mock::wpFunction(
             'get_option', array(
-                'return' => true
+                'args'      => 'woocommerce_allow_tracking',
+                'return'    => 'no'
+            )
+        );
+        \WP_Mock::wpFunction(
+            'absint', array(
+                'return'    => true
+            )
+        );
+        \WP_Mock::wpFunction(
+            'esc_url', array(
+                'return'    => true
             )
         );
         \WP_Mock::wpFunction(
             'get_permalink', array(
-                'return' => true
+                'args'      => 10,
+                'return'    => 'https://woocart.com'
             )
         );
-
-        $gdpr->__construct();
-        \WP_Mock::assertHooksAdded();
+        \WP_Mock::wpFunction(
+            'get_option', array(
+                'args'      => 'wp_page_for_privacy_policy',
+                'return'    => 10
+            )
+        );
+        \WP_Mock::wpFunction(
+            'get_option', array(
+                'args'      => 'wp_page_for_cookie_policy',
+                'return'    => 20
+            )
+        );
+        \WP_Mock::wpFunction(
+            'wp_kses', array(
+                'return'    => 'Standard output.'
+            )
+        );
+        $gdpr->show_consent();
+        $this->expectOutputString( '<div class="wc-defaults-gdpr"><p>Standard output. <a href="javascript:;" id="wc-defaults-ok">OK</a></p></div><!-- .wc-defaults-gdpr -->'
+        );
     }
 }

@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-10-01T22:24:00+05:30\n"
-"PO-Revision-Date: 2018-10-01T22:24:00+05:30\n"
+"POT-Creation-Date: 2018-10-02T17:41:31+05:30\n"
+"PO-Revision-Date: 2018-10-02T17:41:31+05:30\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: woocart-defaults\n"
 
@@ -28,6 +28,14 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "www.woocart.com"
+msgstr ""
+
+#: classes/class-gdpr.php:50
+msgid "We use cookies to improve your experience on our site. To find out more, read our <a href=\"%s\" class=\"wcil\">Privacy Policy</a> and <a href=\"%s\" class=\"wcil\">Cookie Policy</a>."
+msgstr ""
+
+#: classes/class-gdpr.php:61
+msgid "OK"
 msgstr ""
 
 #: classes/class-admindashboard.php:56

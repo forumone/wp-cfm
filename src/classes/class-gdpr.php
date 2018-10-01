@@ -43,11 +43,24 @@ namespace Niteo\WooCart\Defaults {
 					$cookies_page = esc_url( get_permalink( $cookies ) );
 
 					if ( $privacy_page && $cookies_page ) {
-			?>
-						<div class="wc-defaults-gdpr">
-							<p><?php echo sprintf( __( 'We use cookies to improve your experience on our site. To find out more, read our <a href="%s" class="wcil">Privacy Policy</a> and <a href="%s" class="wcil">Cookie Policy</a>.', 'woocart-defaults' ), $privacy_page, $cookies_page ); ?> <a href="javascript:;" id="wc-defaults-ok"><?php esc_html_e( 'OK', 'woocart-defaults' ); ?></a></p>
-						</div><!-- .wc-defaults-gdpr -->
-			<?php
+						echo '<div class="wc-defaults-gdpr">';
+						echo '<p>';
+						echo sprintf(
+							wp_kses(
+								__( 'We use cookies to improve your experience on our site. To find out more, read our <a href="%s" class="wcil">Privacy Policy</a> and <a href="%s" class="wcil">Cookie Policy</a>.', 'woocart-defaults' ),
+								array(
+									'a' => array(
+										'href' 	=> array(),
+										'class' => array()
+									)
+								)
+							),
+							$privacy_page,
+							$cookies_page
+						);
+						echo ' <a href="javascript:;" id="wc-defaults-ok">' . esc_html__( 'OK', 'woocart-defaults' ) . '</a>';
+						echo '</p>';
+						echo '</div><!-- .wc-defaults-gdpr -->';
 					}
 				}
 			}

@@ -14,7 +14,7 @@ before_script:
 - touch /tmp/.htaccess
 script:
 - make test
-- bin/coverage-check clover.xml 77
+- bin/coverage-check clover.xml 80
 deploy:
   - provider: script
     skip_cleanup: true
