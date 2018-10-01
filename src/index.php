@@ -17,6 +17,7 @@ namespace Niteo\WooCart {
 
 	use Niteo\WooCart\Defaults\Filters;
 	use Niteo\WooCart\Defaults\Shortcodes;
+	use Niteo\WooCart\Defaults\AdminDashboard;
 
 	if ( class_exists( 'WP_CLI' ) ) {
 		\WP_CLI::add_command( 'wcd', __NAMESPACE__ . '\Defaults\CLI_Command' );
@@ -28,5 +29,12 @@ namespace Niteo\WooCart {
 
 	if ( function_exists( 'do_shortcode' ) ) {
 		new Filters();
+	}
+
+	/**
+	 * Panel for the store in the WP admin dashboard.
+	 */
+	if ( function_exists( 'add_action' ) ) {
+		new AdminDashboard();
 	}
 }
