@@ -1,25 +1,34 @@
-#, fuzzy
+# Copyright (C) 2018 WooCart
+# This file is distributed under the same license as the WooCart Defaults plugin.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: WooCart Defaults\n"
-"POT-Creation-Date: 2018-10-01 19:41+0530\n"
-"PO-Revision-Date: 2018-10-01 19:41+0530\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: WooCart Defaults @##VERSION##@\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/src\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: index.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"POT-Creation-Date: 2018-10-01T22:24:00+05:30\n"
+"PO-Revision-Date: 2018-10-01T22:24:00+05:30\n"
+"X-Generator: WP-CLI 2.0.1\n"
+"X-Domain: woocart-defaults\n"
+
+#. Plugin Name of the plugin
+msgid "WooCart Defaults"
+msgstr ""
+
+#. Description of the plugin
+msgid "Manage and deploy WordPress + WooCommerce configuration changes."
+msgstr ""
+
+#. Author of the plugin
+msgid "WooCart"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "www.woocart.com"
+msgstr ""
 
 #: classes/class-admindashboard.php:56
 msgid "Welcome to your new store!"
@@ -38,9 +47,7 @@ msgid "To start receiving payments, you'll need to set up a payment gateway."
 msgstr ""
 
 #: classes/class-admindashboard.php:65
-msgid ""
-"Here are the instructions and the recommended plugins for the popular "
-"gateways:"
+msgid "Here are the instructions and the recommended plugins for the popular gateways:"
 msgstr ""
 
 #: classes/class-admindashboard.php:80
@@ -48,9 +55,7 @@ msgid "Connect a Shipping Courier"
 msgstr ""
 
 #: classes/class-admindashboard.php:81
-msgid ""
-"If you prepare shipping slips automatically, you'll need to use a shipping "
-"courier plugin."
+msgid "If you prepare shipping slips automatically, you'll need to use a shipping courier plugin."
 msgstr ""
 
 #: classes/class-admindashboard.php:82
@@ -62,53 +67,29 @@ msgid "Add Your Products"
 msgstr ""
 
 #: classes/class-admindashboard.php:97
-#, php-format
-msgid ""
-"Add your products manually or import a CSV with the <a href=\"%s"
-"\">WooCommerce import</a>."
+msgid "Add your products manually or import a CSV with the <a href=\"%s\">WooCommerce import</a>."
 msgstr ""
 
 #: classes/class-admindashboard.php:116
 msgid "Add Your Own Logo and Slider Banners"
 msgstr ""
 
-#: classes/class-admindashboard.php:117
-#, php-format
-msgid ""
-"You'll want to add your own logo and banners to the store. You can use "
-"something like %sthe free tool Canva%s to create these graphics."
-msgstr ""
-
-#: classes/class-admindashboard.php:119
-msgid "Start Customizing"
-msgstr ""
-
-#: classes/class-admindashboard.php:127
-msgid "Test The Checkout"
+#: classes/class-admindashboard.php:118
+msgid "You'll want to add your own logo and banners to the store. You can use something like %sthe free tool <a href=\"https://www.canva.com/create/banners/\" target=\"_blank\" rel=\"noopener noreferrer\">Canva</a> to create these graphics."
 msgstr ""
 
 #: classes/class-admindashboard.php:128
-msgid ""
-"Go through the buying process and review that everything is working as it "
-"should."
+msgid "Start Customizing"
 msgstr ""
 
-#: classes/class-admindashboard.php:130
+#: classes/class-admindashboard.php:136
+msgid "Test The Checkout"
+msgstr ""
+
+#: classes/class-admindashboard.php:137
+msgid "Go through the buying process and review that everything is working as it should."
+msgstr ""
+
+#: classes/class-admindashboard.php:139
 msgid "Visit Your Store"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "WooCart Defaults"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid "Manage and deploy WordPress + WooCommerce configuration changes."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "WooCart"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "www.woocart.com"
 msgstr ""

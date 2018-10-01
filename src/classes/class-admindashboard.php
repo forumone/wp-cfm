@@ -64,12 +64,12 @@ namespace Niteo\WooCart\Defaults {
 							<p><?php esc_html_e( 'To start receiving payments, you\'ll need to set up a payment gateway.', 'woocart-defaults' ); ?></p>
 							<p><?php esc_html_e( 'Here are the instructions and the recommended plugins for the popular gateways:', 'woocart-defaults' ); ?></p>
 							<ul>
-								<li><a href="https://wordpress.org/plugins/paypal-for-woocommerce/" target="_blank">PayPal</a></li>
-								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-stripe/" target="_blank">Stripe</a></li>
-								<li><a href="https://wordpress.org/plugins/klarna-checkout-for-woocommerce/" target="_blank">Klarna</a></li>
-								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-paypal-powered-by-braintree/" target="_blank">BrainTree</a></li>
-								<li><a href="https://wordpress.org/plugins/paymill/" target="_blank">Paymill</a></li>
-								<li><a href="https://wordpress.org/plugins/woocommerce-payu-paisa/" target="_blank">PayU</a></li>
+								<li><a href="https://wordpress.org/plugins/paypal-for-woocommerce/" target="_blank" rel="noopener noreferrer">PayPal</a></li>
+								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-stripe/" target="_blank" rel="noopener noreferrer">Stripe</a></li>
+								<li><a href="https://wordpress.org/plugins/klarna-checkout-for-woocommerce/" target="_blank" rel="noopener noreferrer">Klarna</a></li>
+								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-paypal-powered-by-braintree/" target="_blank" rel="noopener noreferrer">BrainTree</a></li>
+								<li><a href="https://wordpress.org/plugins/paymill/" target="_blank" rel="noopener noreferrer">Paymill</a></li>
+								<li><a href="https://wordpress.org/plugins/woocommerce-payu-paisa/" target="_blank" rel="noopener noreferrer">PayU</a></li>
 							</ul>
 						</div>
 					</div>
@@ -81,9 +81,9 @@ namespace Niteo\WooCart\Defaults {
 							<p><?php esc_html_e( 'If you prepare shipping slips automatically, you\'ll need to use a shipping courier plugin.', 'woocart-defaults' ); ?></p>
 							<p><?php esc_html_e( 'Here are the recommended plugins for the most popular couriers:', 'woocart-defaults' ); ?></p>
 							<ul>
-								<li><a href="https://wordpress.org/plugins/dhl-for-woocommerce/" target="_blank">DHL</a></li>
-								<li><a href="https://woocommerce.com/products/fedex-shipping-module/" target="_blank">FedEx</a></li>
-								<li><a href="https://wordpress.org/plugins/flexible-shipping-ups/" target="_blank">UPS</a></li>
+								<li><a href="https://wordpress.org/plugins/dhl-for-woocommerce/" target="_blank" rel="noopener noreferrer">DHL</a></li>
+								<li><a href="https://woocommerce.com/products/fedex-shipping-module/" target="_blank" rel="noopener noreferrer">FedEx</a></li>
+								<li><a href="https://wordpress.org/plugins/flexible-shipping-ups/" target="_blank" rel="noopener noreferrer">UPS</a></li>
 							</ul>
 						</div>
 					</div>
@@ -114,7 +114,16 @@ namespace Niteo\WooCart\Defaults {
 						<div class="welcome-panel-inner">
 							<!-- Logo & slider banners -->
 							<h3><?php esc_html_e( 'Add Your Own Logo and Slider Banners', 'woocart-defaults' ); ?></h3>
-							<p><?php printf( esc_html__( 'You\'ll want to add your own logo and banners to the store. You can use something like %sthe free tool Canva%s to create these graphics.', 'woocart-defaults' ), '<a href="https://www.canva.com/create/banners/" target="_blank">', '</a>' ); ?></p>
+							<p><?php echo wp_kses(
+								__( 'You\'ll want to add your own logo and banners to the store. You can use something like %sthe free tool <a href="https://www.canva.com/create/banners/" target="_blank" rel="noopener noreferrer">Canva</a> to create these graphics.', 'woocart-defaults' ),
+								array(
+									'a' => array(
+										'href' 		=> array(),
+										'target' 	=> array(),
+										'rel' 		=> array()
+									)
+								)
+							); ?></p>
 							<ul>
 								<li><a href="<?php echo esc_url( get_admin_url( null, 'customize.php' ) ); ?>"><?php esc_html_e( 'Start Customizing', 'woocart-defaults' ); ?></a></li>
 							</ul>
