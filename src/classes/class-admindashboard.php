@@ -64,12 +64,12 @@ namespace Niteo\WooCart\Defaults {
 							<p><?php esc_html_e( 'To start receiving payments, you\'ll need to set up a payment gateway.', 'woocart-defaults' ); ?></p>
 							<p><?php esc_html_e( 'Here are the instructions and the recommended plugins for the popular gateways:', 'woocart-defaults' ); ?></p>
 							<ul>
-								<li><a href="https://wordpress.org/plugins/paypal-for-woocommerce/" target="_blank"><?php esc_html_e( 'PayPal', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-stripe/" target="_blank"><?php esc_html_e( 'Stripe', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://wordpress.org/plugins/klarna-checkout-for-woocommerce/" target="_blank"><?php esc_html_e( 'Klarna', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-paypal-powered-by-braintree/" target="_blank"><?php esc_html_e( 'BrainTree', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://wordpress.org/plugins/paymill/" target="_blank"><?php esc_html_e( 'Paymill', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://wordpress.org/plugins/woocommerce-payu-paisa/" target="_blank"><?php esc_html_e( 'PayU', 'woocart-defaults' ); ?></a></li>
+								<li><a href="https://wordpress.org/plugins/paypal-for-woocommerce/" target="_blank">PayPal</a></li>
+								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-stripe/" target="_blank">Stripe</a></li>
+								<li><a href="https://wordpress.org/plugins/klarna-checkout-for-woocommerce/" target="_blank">Klarna</a></li>
+								<li><a href="https://wordpress.org/plugins/woocommerce-gateway-paypal-powered-by-braintree/" target="_blank">BrainTree</a></li>
+								<li><a href="https://wordpress.org/plugins/paymill/" target="_blank">Paymill</a></li>
+								<li><a href="https://wordpress.org/plugins/woocommerce-payu-paisa/" target="_blank">PayU</a></li>
 							</ul>
 						</div>
 					</div>
@@ -81,9 +81,9 @@ namespace Niteo\WooCart\Defaults {
 							<p><?php esc_html_e( 'If you prepare shipping slips automatically, you\'ll need to use a shipping courier plugin.', 'woocart-defaults' ); ?></p>
 							<p><?php esc_html_e( 'Here are the recommended plugins for the most popular couriers:', 'woocart-defaults' ); ?></p>
 							<ul>
-								<li><a href="https://wordpress.org/plugins/dhl-for-woocommerce/" target="_blank"><?php esc_html_e( 'DHL', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://woocommerce.com/products/fedex-shipping-module/" target="_blank"><?php esc_html_e( 'FedEx', 'woocart-defaults' ); ?></a></li>
-								<li><a href="https://wordpress.org/plugins/flexible-shipping-ups/" target="_blank"><?php esc_html_e( 'UPS', 'woocart-defaults' ); ?></a></li>
+								<li><a href="https://wordpress.org/plugins/dhl-for-woocommerce/" target="_blank">DHL</a></li>
+								<li><a href="https://woocommerce.com/products/fedex-shipping-module/" target="_blank">FedEx</a></li>
+								<li><a href="https://wordpress.org/plugins/flexible-shipping-ups/" target="_blank">UPS</a></li>
 							</ul>
 						</div>
 					</div>
