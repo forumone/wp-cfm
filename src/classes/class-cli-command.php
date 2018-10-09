@@ -13,6 +13,7 @@ namespace Niteo\WooCart\Defaults {
 	use Niteo\WooCart\Defaults\Generators\Product;
 	use Niteo\WooCart\Defaults\Importers\SellingLimit;
 	use Niteo\WooCart\Defaults\Importers\WooPage;
+	use Niteo\WooCart\Defaults\Importers\WooProducts;
 	use WP_CLI;
 	use WP_CLI_Command;
 
@@ -147,10 +148,10 @@ namespace Niteo\WooCart\Defaults {
 		 * ---
 		 *
 		 * ## EXAMPLES
-		 * wc generate products 100
+		 * wp wcd products 100
 		 *
 		 * @param array $args Argumens specified.
-		 * @param arrat $assoc_args Associative arguments specified.
+		 * @param array $assoc_args Associative arguments specified.
 		 */
 		public function products( $args, $assoc_args ) {
 			list($amount) = $args;
@@ -161,6 +162,39 @@ namespace Niteo\WooCart\Defaults {
 			}
 			$progress->finish();
 			WP_CLI::success( $amount . ' products generated.' );
+		}
+
+		/**
+		 * Import demo products.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <path>
+		 * : Path to file with products
+		 *
+		 * [--common=<common_path>]
+		 * : Path to .common directory for localizations
+		 * ---
+		 * default: /provision/localizations/Countries/.common/
+		 * ---
+		 *
+		 * ## EXAMPLES
+		 * wp wcd demo_products /provision/localizations/Countries/.common/products-electronics.html
+		 *
+		 * @param array $args Arguments specified.
+		 * @param array $assoc_args Associative arguments specified.
+		 */
+		public function demo_products( $args, $assoc_args ) {
+			list($path) = $args;
+
+			if ( ! file_exists( $path ) ) {
+				WP_CLI::error( "$path cannot be found." );
+			}
+
+			$products = new WooProducts( $assoc_args['common'] );
+			$products->add_products( $path );
+
+			WP_CLI::success( $products->get_product_count() . ' products added.' );
 		}
 
 	}
