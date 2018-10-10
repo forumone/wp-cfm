@@ -33,6 +33,18 @@ class WooProductTest extends TestCase
      */
     function testadd_products() {
         $faker = \Mockery::mock();
+
+        \WP_Mock::userFunction(
+            'has_term', array(
+                'return' => true
+            )
+        );
+        \WP_Mock::userFunction(
+            'get_term_by', array(
+                'return' => [ 'term_id' => 10 ]
+            )
+        );
+
         $faker->shouldReceive('boolean')->times(18)->andReturn(true);
         $faker->shouldReceive('randomFloat')->times(3)->andReturn(150);
         $faker->shouldReceive('numberBetween')->times(18)->andReturn(175);
@@ -118,6 +130,7 @@ class WooProductTest extends TestCase
             'gallery' => array(3534, 3535, 3536),
             'description' => 'Product description',
             'details' => 'charger included',
+            'category_ids' => [ 10 ]
         );
 
         $props = array(
@@ -142,6 +155,7 @@ class WooProductTest extends TestCase
             'reviews_allowed'    => true,
             'purchase_note'      => 'product note',
             'menu_order'         => 175,
+            'category_ids'       => $data['category_ids'],
             'image_id'           => $data['image_id'],
             'gallery_image_ids'  => $data['gallery'],
         );
