@@ -1,0 +1,23 @@
+language: php
+sudo: false
+dist: xenial
+matrix:
+  fast_finish: true
+cache:
+  directories:
+  - $HOME/.composer/cache/files
+php:
+- 7.2
+before_script:
+- composer install
+- mkdir -p build/logs
+- touch /tmp/.htaccess
+script:
+- make test
+- bin/coverage-check clover.xml 78
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: "make publish"
+    on:
+      tags: true

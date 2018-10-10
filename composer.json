@@ -1,16 +1,38 @@
 {
-  "name": "forumone/wp-cfm",
-  "description": "Manage and deploy WordPress configuration changes",
-  "keywords": ["WordPress", "plugin"],
-  "authors":[
-    {
-      "name": "Matt Gibbs",
-      "homepage": "https://facetwp.com/"
-    }
-  ],
-  "type": "wordpress-plugin",
   "require": {
-    "php": ">=5.6.4",
-    "symfony/yaml": "^3.3"
+    "php": ">=7.2.0",
+    "ext-gd": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "10up/wp_mock": "0.3.0",
+    "antecedent/patchwork": "*",
+    "php-coveralls/php-coveralls": "^2.1",
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "edsonmedina/php_testability": "dev-master",
+    "rregeer/phpunit-coverage-check": "^0.1.6",
+    "phpunit/phpcov": "^5.0"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "\"bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+    ],
+    "post-update-cmd": [
+      "\"bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+    ]
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "bin-dir": "bin/"
+  },
+  "autoload": {
+    "psr-4": {
+      "Niteo\\WooCart\\Defaults\\": "classes",
+      "Niteo\\WooCart\\Defaults\\Importers\\": "importers",
+      "Niteo\\WooCart\\Defaults\\Generators\\": "generators"
+    }
   }
 }

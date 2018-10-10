@@ -1,0 +1,103 @@
+# Copyright (C) 2018 WooCart
+# This file is distributed under the same license as the WooCart Defaults plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCart Defaults @##VERSION##@\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/src\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-10-02T17:41:31+05:30\n"
+"PO-Revision-Date: 2018-10-02T17:41:31+05:30\n"
+"X-Generator: WP-CLI 2.0.1\n"
+"X-Domain: woocart-defaults\n"
+
+#. Plugin Name of the plugin
+msgid "WooCart Defaults"
+msgstr ""
+
+#. Description of the plugin
+msgid "Manage and deploy WordPress + WooCommerce configuration changes."
+msgstr ""
+
+#. Author of the plugin
+msgid "WooCart"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "www.woocart.com"
+msgstr ""
+
+#: classes/class-gdpr.php:50
+msgid "We use cookies to improve your experience on our site. To find out more, read our <a href=\"%s\" class=\"wcil\">Privacy Policy</a> and <a href=\"%s\" class=\"wcil\">Cookie Policy</a>."
+msgstr ""
+
+#: classes/class-gdpr.php:61
+msgid "OK"
+msgstr ""
+
+#: classes/class-admindashboard.php:56
+msgid "Welcome to your new store!"
+msgstr ""
+
+#: classes/class-admindashboard.php:57
+msgid "You are only a few steps away from selling."
+msgstr ""
+
+#: classes/class-admindashboard.php:63
+msgid "Connect a Payment Gateway"
+msgstr ""
+
+#: classes/class-admindashboard.php:64
+msgid "To start receiving payments, you'll need to set up a payment gateway."
+msgstr ""
+
+#: classes/class-admindashboard.php:65
+msgid "Here are the instructions and the recommended plugins for the popular gateways:"
+msgstr ""
+
+#: classes/class-admindashboard.php:80
+msgid "Connect a Shipping Courier"
+msgstr ""
+
+#: classes/class-admindashboard.php:81
+msgid "If you prepare shipping slips automatically, you'll need to use a shipping courier plugin."
+msgstr ""
+
+#: classes/class-admindashboard.php:82
+msgid "Here are the recommended plugins for the most popular couriers:"
+msgstr ""
+
+#: classes/class-admindashboard.php:94
+msgid "Add Your Products"
+msgstr ""
+
+#: classes/class-admindashboard.php:97
+msgid "Add your products manually or import a CSV with the <a href=\"%s\">WooCommerce import</a>."
+msgstr ""
+
+#: classes/class-admindashboard.php:116
+msgid "Add Your Own Logo and Slider Banners"
+msgstr ""
+
+#: classes/class-admindashboard.php:118
+msgid "You'll want to add your own logo and banners to the store. You can use something like %sthe free tool <a href=\"https://www.canva.com/create/banners/\" target=\"_blank\" rel=\"noopener noreferrer\">Canva</a> to create these graphics."
+msgstr ""
+
+#: classes/class-admindashboard.php:128
+msgid "Start Customizing"
+msgstr ""
+
+#: classes/class-admindashboard.php:136
+msgid "Test The Checkout"
+msgstr ""
+
+#: classes/class-admindashboard.php:137
+msgid "Go through the buying process and review that everything is working as it should."
+msgstr ""
+
+#: classes/class-admindashboard.php:139
+msgid "Visit Your Store"
+msgstr ""
