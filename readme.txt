@@ -1,11 +1,13 @@
 === WP-CFM ===
-Contributors: mgibbs189
+Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam
+Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Donate link: http://forumone.com/
-Tags: configuration, settings, configuration management, features, drupal
 Requires at least: 4.0
-Tested up to: 4.5.3
-Stable tag: trunk
-License: GPL2
+Tested up to: 4.9.4
+Requires PHP: 5.6
+Stable tag: 1.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Manage and deploy WordPress configuration changes
 
@@ -84,6 +86,17 @@ function my_pull_callback( $params ) {
         // Import the data
     }
 }
+
+
+/**
+ * Changes WP-CFM configuration files to YAML format instead of JSON.
+ * @param string $format The default 'json' format.
+ * @return string
+ */
+add_filter( 'wpcfm_config_format', function( $format ) {
+    $format = 'yaml';   // Value can be 'yaml' or 'yml'.
+    return $format;
+} );
 </pre>
 
 == Installation ==
@@ -97,6 +110,16 @@ function my_pull_callback( $params ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.5 =
+* New: Toggle to show/hide already registered options (props @mickaelperrin)
+* New: `wpcfm_config_format` filter allow export configuration as YAML files (props @mickaelperrin)
+* New: Check configuration file exist before import (props @mickaelperrin)
+* Fix: File bundle properties are not checked (props @mickaelperrin)
+* Fix: Import wp-cfm settings (props @mickaelperrin)
+* Fix: Bad PHP Version comparison (props @mickaelperrin)
+* Fix: Undefined constant WPCFM_CONFIG_FORMAT_REQUESTED (props @mickaelperrin)
+* Improved: Better Custom Field Suite plugin detection (props @s3ththompson)
 
 = 1.4.5 =
 * Fix: only the first taxonomy was showing in the admin UI (props @Rebenton)
