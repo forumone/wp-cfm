@@ -9,6 +9,7 @@ class WPCFM_Ajax
         add_action( 'wp_ajax_wpcfm_push', array( $this, 'push_settings' ) );
         add_action( 'wp_ajax_wpcfm_pull', array( $this, 'pull_settings' ) );
         add_action( 'wp_ajax_wpcfm_diff', array( $this, 'load_diff' ) );
+        add_action( 'wp_ajax_wpcfm_upload', array( $this, 'upload_bundle' ) );
     }
 
 
@@ -92,5 +93,24 @@ class WPCFM_Ajax
             echo __( 'Pull successful', 'wpcfm' );
         }
         exit;
+    }
+
+
+    /**
+     * Accept uploaded bundle to filesystem
+     */
+    function upload_bundle() {
+      if ( current_user_can( 'manage_options' ) ) {
+          $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
+          $file_content = stripslashed( $_POST['file_content'] );
+          WPCFM()->upload->upload_bundle( $bundle_name, $file_content );
+          if(WPCFM()->upload->error) {
+              echo WPCFM()->upload->error;
+          }
+          else {
+              echo __( 'Upload successful', 'wpcfm' );
+          }
+      }
+      exit;
     }
 }
