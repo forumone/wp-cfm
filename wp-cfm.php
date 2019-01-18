@@ -139,6 +139,7 @@ class WPCFM_Core
             wp_enqueue_script( 'wpcfm_admin', WPCFM_URL . '/assets/js/admin.js', [ 'jquery' ], WPCFM_VERSION, true );
 			wp_localize_script( 'wpcfm_admin', 'wpcfm_admin', [
 				'is_network' => is_network_admin(),
+				'_nonce' => wp_create_nonce( 'wpcfm' ),
 			]) ;
         }
     }
