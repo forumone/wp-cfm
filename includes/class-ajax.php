@@ -16,7 +16,10 @@ class WPCFM_Ajax
      * Load admin settings
      */
     function load_settings() {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( check_ajax_referer( 'wpcfm', '_nonce' ) && current_user_can( 'manage_options' ) ) {
+            $ajax_is_network = rest_sanitize_boolean( $_POST['is_network'] );
+            WPCFM()->options->is_network = $ajax_is_network;
+
             $bundles = WPCFM()->helper->get_bundles();
             echo json_encode( array( 'bundles' => $bundles ) );
         }
@@ -28,7 +31,9 @@ class WPCFM_Ajax
      * Save admin settings
      */
     function save_settings() {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( check_ajax_referer( 'wpcfm', '_nonce' ) && current_user_can( 'manage_options' ) ) {
+            $ajax_is_network = rest_sanitize_boolean( $_POST['is_network'] );
+            WPCFM()->options->is_network = $ajax_is_network;
             $settings = stripslashes( $_POST['data'] );
 
             // Save the option
@@ -51,7 +56,9 @@ class WPCFM_Ajax
 
 
     function load_diff() {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( check_ajax_referer( 'wpcfm', '_nonce' ) && current_user_can( 'manage_options' ) ) {
+            $ajax_is_network = rest_sanitize_boolean( $_POST['is_network'] );
+            WPCFM()->options->is_network = $ajax_is_network;
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
             $comparison = WPCFM()->readwrite->compare_bundle( $bundle_name );
 
@@ -73,7 +80,9 @@ class WPCFM_Ajax
      * Push settings to filesystem
      */
     function push_settings() {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( check_ajax_referer( 'wpcfm', '_nonce' ) && current_user_can( 'manage_options' ) ) {
+            $ajax_is_network = rest_sanitize_boolean( $_POST['is_network'] );
+            WPCFM()->options->is_network = $ajax_is_network;
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
             WPCFM()->readwrite->push_bundle( $bundle_name );
             echo __( 'Push successful', 'wpcfm' );
@@ -86,7 +95,9 @@ class WPCFM_Ajax
      * Pull settings into DB
      */
     function pull_settings() {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( check_ajax_referer( 'wpcfm', '_nonce' ) && current_user_can( 'manage_options' ) ) {
+            $ajax_is_network = rest_sanitize_boolean( $_POST['is_network'] );
+            WPCFM()->options->is_network = $ajax_is_network;
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
             WPCFM()->readwrite->pull_bundle( $bundle_name );
             echo __( 'Pull successful', 'wpcfm' );
