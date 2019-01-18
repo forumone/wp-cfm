@@ -136,6 +136,7 @@
                 $.post(ajaxurl, {
                     'action': 'wpcfm_pull',
                     is_network: wpcfm_admin.is_network,
+                    '_nonce': wpcfm_admin._nonce,
                     'data': { 'bundle_name': bundle_name }
                 }, function(response) {
                     $('.wpcfm-response').html(response);
