@@ -3,9 +3,9 @@ Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinso
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.0
-Tested up to: 4.9.4
+Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,6 +110,9 @@ add_filter( 'wpcfm_config_format', function( $format ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.5.1 =
+* Fix: Tested with latest WordPress 5.2.1. Removing the plugin outdated notice at WordPress.org plugin repository.
 
 = 1.5 =
 * New: Toggle to show/hide already registered options (props @mickaelperrin)
