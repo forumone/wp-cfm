@@ -3,7 +3,9 @@
 
         // Load
         $.post(ajaxurl, {
-            action: 'wpcfm_load'
+            'action': 'wpcfm_load',
+            'is_network': wpcfm_admin.is_network,
+            '_nonce': wpcfm_admin._nonce
         }, function(response) {
             $.each(response.bundles, function(idx, obj) {
                 var $this = $('.bundles-hidden .bundle-row').clone();
@@ -54,6 +56,8 @@
 
             $.post(ajaxurl, {
                 'action': 'wpcfm_save',
+                'is_network': wpcfm_admin.is_network,
+                '_nonce': wpcfm_admin._nonce,
                 'data': JSON.stringify(data)
             }, function(response) {
                 $('.wpcfm-bundles .bundle-row').removeClass('unsaved');
@@ -75,20 +79,20 @@
         });
 
         $(document).on('click', '.hide-registered', function(e) {
-          e.preventDefault();
-          var $row = $(this).closest('.bundle-row');
-          $('.wpcfm-bundles').find('input[type=checkbox]:checked').each(function() {
-            $row.find('input[type=checkbox][value="'+this.value+'"]').not(':checked').parent().hide();
-          });
-          $row.find('.hide-registered').hide();
-          $row.find('.show-all').show();
+            e.preventDefault();
+            var $row = $(this).closest('.bundle-row');
+            $('.wpcfm-bundles').find('input[type=checkbox]:checked').each(function() {
+                $row.find('input[type=checkbox][value="'+this.value+'"]').not(':checked').parent().hide();
+            });
+            $row.find('.hide-registered').hide();
+            $row.find('.show-all').show();
         });
         $(document).on('click', '.show-all', function(e) {
-          e.preventDefault();
-          var $row = $(this).closest('.bundle-row');
-          $row.find('input[type=checkbox]').parent().show();
-          $row.find('.hide-registered').show();
-          $row.find('.show-all').hide();
+            e.preventDefault();
+            var $row = $(this).closest('.bundle-row');
+            $row.find('input[type=checkbox]').parent().show();
+            $row.find('.hide-registered').show();
+            $row.find('.show-all').hide();
         });
 
         // Toggle bundle details
@@ -114,6 +118,8 @@
 
             $.post(ajaxurl, {
                 'action': 'wpcfm_push',
+                'is_network': wpcfm_admin.is_network,
+                '_nonce': wpcfm_admin._nonce,
                 'data': { 'bundle_name': bundle_name }
             }, function(response) {
                 $('.wpcfm-response').html(response);
@@ -129,6 +135,8 @@
 
                 $.post(ajaxurl, {
                     'action': 'wpcfm_pull',
+                    is_network: wpcfm_admin.is_network,
+                    '_nonce': wpcfm_admin._nonce,
                     'data': { 'bundle_name': bundle_name }
                 }, function(response) {
                     $('.wpcfm-response').html(response);
@@ -142,6 +150,8 @@
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
             $.post(ajaxurl, {
                 'action': 'wpcfm_diff',
+                'is_network': wpcfm_admin.is_network,
+                '_nonce': wpcfm_admin._nonce,
                 'data': { 'bundle_name': bundle_name }
             }, function(response) {
                 if ('' != response.error) {

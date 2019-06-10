@@ -5,7 +5,6 @@ $configuration = $this->helper->group_items( $configuration );
 
 ?>
 
-<script src="<?php echo WPCFM_URL; ?>/assets/js/admin.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/multiselect/jquery.multiselect.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/diff_match_patch.js"></script>
 <script src="<?php echo WPCFM_URL; ?>/assets/js/pretty-text-diff/jquery.pretty-text-diff.js"></script>
