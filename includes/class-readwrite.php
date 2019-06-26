@@ -114,6 +114,8 @@ class WPCFM_Readwrite
 
     /**
      * Compare the DB vs file versions
+     * @param string $bundle_name The bundle name (or "all")
+     * @return array
      */
     function compare_bundle( $bundle_name ) {
 
@@ -144,6 +146,10 @@ class WPCFM_Readwrite
         // Remove the .label
         unset( $file_bundle['.label'] );
 
+        //save a copy of the original arrays before converting
+        $original_file_bundle = $file_bundle;
+        $original_db_bundle = $db_bundle;
+
         // Convert to YAML for better readability if PHP version is compatible
         if (PHP_VERSION_ID >= 50604 && WPCFM_CONFIG_USE_YAML_DIFF) {
             $file_bundle = WPCFM_Helper::convert_to_yaml($file_bundle, false);
@@ -155,8 +161,8 @@ class WPCFM_Readwrite
         }
         else {
             $return['error'] = '';
-            $return['file'] = $file_bundle;
-            $return['db'] = $db_bundle;
+            $return['file'] = $original_file_bundle;
+            $return['db'] = $original_db_bundle;
         }
 
         return $return;
