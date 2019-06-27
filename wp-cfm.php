@@ -43,7 +43,7 @@ class WPCFM_Core
     function __construct() {
 
         // setup variables
-        define( 'WPCFM_VERSION', '1.4.5' );
+        define( 'WPCFM_VERSION', '1.5.1' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
