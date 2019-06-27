@@ -44,21 +44,22 @@ class WPCFM_Core
 
         // setup variables
         define( 'WPCFM_VERSION', '1.5.1' );
+        define( 'WPCFM_MULTI_ENV',  apply_filters( 'wpcfm_multi_env', false ) );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
         if (PHP_VERSION_ID < 50604) {
           define( 'WPCFM_CONFIG_FORMAT', 'json');
           define( 'WPCFM_CONFIG_FORMAT_REQUESTED',  apply_filters( 'wpcfm_config_format', 'json'));
-        } else {
+      } else {
           define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
-        }
-        define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true));
-        define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
+      }
+      define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true));
+      define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
-        add_action( 'init', array( $this, 'init' ) );
-    }
+      add_action( 'init', array( $this, 'init' ) );
+  }
 
 
     /**
