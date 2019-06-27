@@ -44,15 +44,25 @@ class WPCFM_Core
 
         // setup variables
         define( 'WPCFM_VERSION', '1.5.1' );
+        define( 'WPCFM_DIR', dirname( __FILE__ ) );
+
+        $config_dir = WP_CONTENT_DIR . '/config';
+        $config_url = WP_CONTENT_URL . '/config';
+
         // Register multiple environments.
         define( 'WPCFM_REGISTER_MULTI_ENV',  apply_filters( 'wpcfm_multi_env', [] ) );
         if ( !empty( WPCFM_REGISTER_MULTI_ENV ) ) {
             // Set the current environment where the WordPress site is running.
             define( 'WPCFM_CURRENT_ENV',  apply_filters( 'wpcfm_current_env', '' ) );
+            // If we have an env name, append it to create a subfolder inside wp-content/config/ directory.
+            if ( !empty( WPCFM_CURRENT_ENV ) ) {
+                $config_dir .= '/' . WPCFM_CURRENT_ENV;
+                $config_url .= '/' . WPCFM_CURRENT_ENV;
+            }
         }
-        define( 'WPCFM_DIR', dirname( __FILE__ ) );
-        define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
-        define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
+
+        define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', $config_dir ) );
+        define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', $config_url ) );
         if (PHP_VERSION_ID < 50604) {
           define( 'WPCFM_CONFIG_FORMAT', 'json');
           define( 'WPCFM_CONFIG_FORMAT_REQUESTED',  apply_filters( 'wpcfm_config_format', 'json'));
