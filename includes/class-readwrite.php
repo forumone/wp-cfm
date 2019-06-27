@@ -12,21 +12,14 @@ class WPCFM_Readwrite
 
         // Create the "config" folder
         $this->folder = WPCFM_CONFIG_DIR;
-        $error_msg_path = 'wp-content/config/';
-
-        // If we are using multi environment, let's set the path to the folder of the current env.
-        if ( defined( 'WPCFM_CURRENT_ENV' ) && !empty(WPCFM_CURRENT_ENV) ) {
-            $this->folder .= '/' . WPCFM_CURRENT_ENV;
-            $error_msg_path .= WPCFM_CURRENT_ENV;
-        }
 
         if ( ! is_dir( $this->folder ) ) {
             if ( ! wp_mkdir_p( $this->folder ) ) {
-                $this->error = __( 'Create ' . $error_msg_path .  ' and grant write access', 'wpcfm' );
+                $this->error = __( 'Create ' . $this->folder .  ' and grant write access', 'wpcfm' );
             }
         }
         elseif ( ! is_writable( $this->folder ) ) {
-            $this->error = __( 'The ' . $error_msg_path .  ' folder is not writable', 'wpcfm' );
+            $this->error = __( 'The ' . $this->folder .  ' folder is not writable', 'wpcfm' );
         }
     }
 
