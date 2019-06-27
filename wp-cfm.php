@@ -44,7 +44,12 @@ class WPCFM_Core
 
         // setup variables
         define( 'WPCFM_VERSION', '1.5.1' );
-        define( 'WPCFM_MULTI_ENV',  apply_filters( 'wpcfm_multi_env', false ) );
+        // Register multiple environments.
+        define( 'WPCFM_REGISTER_MULTI_ENV',  apply_filters( 'wpcfm_multi_env', [] ) );
+        if ( !empty( WPCFM_REGISTER_MULTI_ENV ) ) {
+            // Set the current environment where the WordPress site is running.
+            define( 'WPCFM_CURRENT_ENV',  apply_filters( 'wpcfm_current_env', '' ) );
+        }
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
