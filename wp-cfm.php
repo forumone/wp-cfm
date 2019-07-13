@@ -50,10 +50,12 @@ class WPCFM_Core
         $config_url = WP_CONTENT_URL . '/config';
 
         // Register multiple environments.
-        define( 'WPCFM_REGISTER_MULTI_ENV',  apply_filters( 'wpcfm_multi_env', [] ) );
+        define( 'WPCFM_REGISTER_MULTI_ENV', $this->set_multi_env() );
+
+        // If multiple environments were defined.
         if ( !empty( WPCFM_REGISTER_MULTI_ENV ) ) {
             // Set the current environment where the WordPress site is running.
-            define( 'WPCFM_CURRENT_ENV',  apply_filters( 'wpcfm_current_env', '' ) );
+            define( 'WPCFM_CURRENT_ENV',  $this->set_current_env() );
             // If we have an env name, append it to create a subfolder inside wp-content/config/ directory.
             if ( !empty( WPCFM_CURRENT_ENV ) ) {
                 $config_dir .= '/' . WPCFM_CURRENT_ENV;
@@ -75,6 +77,24 @@ class WPCFM_Core
         // WP is loaded
       add_action( 'init', array( $this, 'init' ) );
   }
+
+
+    /**
+     * Enables multi environment feature on WP-CFM.
+     * @return array
+     */
+    private function set_multi_env() {
+        return apply_filters( 'wpcfm_multi_env', [] );
+    }
+
+
+    /**
+     * Defines the current environment.
+     * @return string
+     */
+    private function set_current_env() {
+        return apply_filters( 'wpcfm_current_env', '' );
+    }
 
 
     /**
