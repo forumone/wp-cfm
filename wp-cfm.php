@@ -37,6 +37,7 @@ class WPCFM_Core
     public $registry;
     public $options;
     public $helper;
+    private $pantheon_env = '';
     private static $instance;
 
 
@@ -48,6 +49,11 @@ class WPCFM_Core
 
         $config_dir = WP_CONTENT_DIR . '/config';
         $config_url = WP_CONTENT_URL . '/config';
+
+        // Check if we are on Pantheon hosting environment.
+        if ( defined( 'PANTHEON_ENVIRONMENT' ) ) {
+            $this->pantheon_env = PANTHEON_ENVIRONMENT;
+        }
 
         // Register multiple environments.
         define( 'WPCFM_REGISTER_MULTI_ENV', $this->set_multi_env() );
@@ -84,7 +90,14 @@ class WPCFM_Core
      * @return array
      */
     private function set_multi_env() {
-        return apply_filters( 'wpcfm_multi_env', [] );
+        $environments = [];
+
+        // If we are in a Pantheon environment, set the 3 instances slugs out of the box.
+        if ( !empty( $this->pantheon_env ) ) {
+            $environments = ['dev', 'test', 'live'];
+        }
+
+        return apply_filters( 'wpcfm_multi_env', $environments );
     }
 
 
@@ -93,7 +106,7 @@ class WPCFM_Core
      * @return string
      */
     private function set_current_env() {
-        return apply_filters( 'wpcfm_current_env', '' );
+        return apply_filters( 'wpcfm_current_env', $this->pantheon_env );
     }
 
 
