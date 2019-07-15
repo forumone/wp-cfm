@@ -5,7 +5,7 @@ Donate link: http://forumone.com/
 Requires at least: 4.0
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.5.1
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,28 @@ add_filter( 'wpcfm_config_format', function( $format ) {
     $format = 'yaml';   // Value can be 'yaml' or 'yml'.
     return $format;
 } );
+
+
+/**
+ * Activates and registers multiple environments to manage different configurations.
+ * @return array
+ */
+add_filter( 'wpcfm_multi_env', function() {
+    return [
+        'dev',
+        'test',
+        'live'
+    ];
+} );
+
+
+/**
+ * Defines the current environment.
+ * @return array
+ */
+add_filter( 'wpcfm_current_env', function() {
+    return 'dev';
+} );
 </pre>
 
 == Installation ==
@@ -110,6 +132,11 @@ add_filter( 'wpcfm_config_format', function( $format ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.6.0 =
+* Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
+* New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
+* New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
 
 = 1.5.1 =
 * Fix: Tested with latest WordPress 5.2.1. Removing the plugin outdated notice at WordPress.org plugin repository.
