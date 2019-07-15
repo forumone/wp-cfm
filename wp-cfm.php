@@ -180,11 +180,22 @@ class WPCFM_Core
 
 
     /**
-     * Enqueue media CSS
+     * Enqueue WP-CFM admin styles and javascript.
      */
     function admin_scripts( $hook ) {
+        // Exit this funtion if doing AJAX.
+        if ( wp_doing_ajax() ) {
+            return;
+        }
+
         if ( 'settings_page_wpcfm' == $hook ) {
+            $min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
             wp_enqueue_style( 'media-views' );
+            wp_enqueue_script( 'wpcfm-multiselect', plugins_url( "assets/js/multiselect/jquery.multiselect{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
+            wp_enqueue_script( 'wpcfm-diff-match-patch', plugins_url( "assets/js/pretty-text-diff/diff_match_patch{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
+            wp_enqueue_script( 'wpcfm-pretty-text-diff', plugins_url( "assets/js/pretty-text-diff/jquery.pretty-text-diff{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
+            wp_enqueue_script( 'wpcfm-admin-js', plugins_url( "assets/js/admin{$min}.js", __FILE__ ), [ 'jquery', 'wpcfm-multiselect', 'wpcfm-pretty-text-diff' ], WPCFM_VERSION );
+            wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), [], WPCFM_VERSION );
         }
     }
 
