@@ -12,6 +12,19 @@ $configuration = $this->helper->group_items( $configuration );
     <div class="wpcfm-info">
         <?php _e( 'Current environment: ', 'wpcfm' ); ?><code><?php echo ucfirst( WPCFM_CURRENT_ENV ); ?></code>
     </div>
+
+    <!-- Environment Switcher -->
+    <div class="wpcfm-env-switch">
+        <select name="wpcfm_env_switch" id="wpcfm_env_switch">
+            <?php foreach ( WPCFM_REGISTER_MULTI_ENV as $env ): ?>
+                <option value="<?php echo $env; ?>"
+                <?php if ( WPCFM_CURRENT_ENV == $env ): ?>
+                    <?php echo 'selected="selected"'; ?>
+                <?php endif ?>
+                ><?php echo ucfirst( $env ); ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
 <?php endif; ?>
 
 <?php if (defined('WPCFM_CONFIG_FORMAT_REQUESTED') && in_array(WPCFM_CONFIG_FORMAT_REQUESTED, array('yml', 'yaml'))): ?>
