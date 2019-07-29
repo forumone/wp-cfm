@@ -10,15 +10,15 @@ $configuration = $this->helper->group_items( $configuration );
 
     <?php if ( defined( 'WPCFM_CURRENT_ENV' ) && !empty( WPCFM_CURRENT_ENV ) ): ?>
     <div class="wpcfm-info">
-        <?php _e( 'Current environment: ', 'wpcfm' ); ?><code><?php echo ucfirst( WPCFM_CURRENT_ENV ); ?></code>
+        <?php _e( 'Current environment', 'wpcfm' ); ?>: <code><?php echo ucfirst( WPCFM_CURRENT_ENV ); ?></code>
     </div>
 
     <!-- Environment Switcher -->
     <div class="wpcfm-env-switch">
-        <select name="wpcfm_env_switch" id="wpcfm_env_switch">
+        <?php _e( 'Compare with', 'wpcfm' ); ?>: <select name="wpcfm_env_switch" id="wpcfm_env_switch">
             <?php foreach ( WPCFM_REGISTER_MULTI_ENV as $env ): ?>
                 <option value="<?php echo $env; ?>"
-                <?php if ( WPCFM_CURRENT_ENV == $env ): ?>
+                    <?php if ( ( WPCFM_CURRENT_ENV == $env && !defined( 'WPCFM_COMPARE_ENV' ) ) || ( defined( 'WPCFM_COMPARE_ENV' ) && WPCFM_COMPARE_ENV == $env ) ): ?>
                     <?php echo 'selected="selected"'; ?>
                 <?php endif ?>
                 ><?php echo ucfirst( $env ); ?></option>

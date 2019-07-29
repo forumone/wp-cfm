@@ -106,6 +106,15 @@ class WPCFM_Core
      * @return string
      */
     private function set_current_env() {
+        // Get Compare Env when rendering the settings page.
+        if ( !wp_doing_ajax() || !defined( 'WP_CLI' ) ) {
+            $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
+            if ( $compare_env ) {
+                define( 'WPCFM_COMPARE_ENV',  $compare_env );
+            }
+        }
+
+        // Get Compare Env when doing AJAX.
         if ( wp_doing_ajax() ) {
             $compare_env = filter_input( INPUT_POST, "compare_env", FILTER_SANITIZE_STRING );
             if ( $compare_env && in_array( $compare_env, WPCFM_REGISTER_MULTI_ENV ) ) {
