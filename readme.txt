@@ -137,6 +137,7 @@ add_filter( 'wpcfm_current_env', function() {
 * Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
 * New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
 * New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
+* New: Filter `wpcfm_is_ssot` to set WP-CFM as the single source of truth for plugin's config. At run time it skips loading plugin options from DB, instead it reads them from the bundle's config files.
 
 = 1.5.1 =
 * Fix: Tested with latest WordPress 5.2.1. Removing the plugin outdated notice at WordPress.org plugin repository.

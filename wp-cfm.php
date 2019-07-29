@@ -77,11 +77,12 @@ class WPCFM_Core
       } else {
           define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
       }
-      define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true));
+      define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true ) );
+      define( 'WPCFM_IS_SSOT',  apply_filters( 'wpcfm_is_ssot', false ) );
       define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
-      add_action( 'init', array( $this, 'init' ) );
+      add_action( 'init', array( $this, 'init' ), 1 );
   }
 
 
@@ -174,6 +175,34 @@ class WPCFM_Core
         foreach ( $integrations as $filename ) {
             if ( '.' != substr( $filename, 0, 1 ) ) {
                 include( WPCFM_DIR . "/includes/integrations/$filename" );
+            }
+        }
+
+        // Set Plugin's options tracked with WP-CFM to load their values from the bundled JSON files.
+        if ( WPCFM_IS_SSOT ) {
+            $this->set_as_ssot();
+        }
+    }
+
+
+    /**
+     *  Set WP-CFM file bundle's config as the Single Source of Truth.
+     *  Override DB values for all tracked options.
+     */
+    private function set_as_ssot() {
+        $file_bundles = WPCFM()->helper->get_file_bundles();
+        if ( $file_bundles ) {
+            $plugin_opts = array_reduce(
+                array_column( $file_bundles, 'config' ),
+                'array_merge',
+                []
+            );
+
+            // Loop available plugin options and a pre_option_{$option} filter for them.
+            foreach ( $plugin_opts as $key => $value ) {
+                add_filter( 'pre_option_' . $key, function( $pre ) use ( $value ) {
+                    return maybe_unserialize( $value );
+                } );
             }
         }
     }
