@@ -106,6 +106,13 @@ class WPCFM_Core
      * @return string
      */
     private function set_current_env() {
+        if ( wp_doing_ajax() ) {
+            $compare_env = filter_input( INPUT_POST, "compare_env", FILTER_SANITIZE_STRING );
+            if ( $compare_env && in_array( $compare_env, WPCFM_REGISTER_MULTI_ENV ) ) {
+                return $compare_env;
+            }
+        }
+
         return apply_filters( 'wpcfm_current_env', $this->pantheon_env );
     }
 
@@ -195,6 +202,11 @@ class WPCFM_Core
             wp_enqueue_script( 'wpcfm-diff-match-patch', plugins_url( "assets/js/pretty-text-diff/diff_match_patch{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
             wp_enqueue_script( 'wpcfm-pretty-text-diff', plugins_url( "assets/js/pretty-text-diff/jquery.pretty-text-diff{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
             wp_enqueue_script( 'wpcfm-admin-js', plugins_url( "assets/js/admin{$min}.js", __FILE__ ), [ 'jquery', 'wpcfm-multiselect', 'wpcfm-pretty-text-diff' ], WPCFM_VERSION );
+
+            // Safely get env value from plugin backend URL, if exists.
+            $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
+            wp_localize_script( 'wpcfm-admin-js', 'compare_env', $compare_env );
+
             wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), [], WPCFM_VERSION );
         }
     }
