@@ -78,7 +78,6 @@ class WPCFM_Core
           define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
       }
       define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true ) );
-      define( 'WPCFM_IS_SSOT',  apply_filters( 'wpcfm_is_ssot', false ) );
       define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
@@ -179,7 +178,7 @@ class WPCFM_Core
         }
 
         // Set Plugin's options tracked with WP-CFM to load their values from the bundled JSON files.
-        if ( WPCFM_IS_SSOT ) {
+        if ( apply_filters( 'wpcfm_is_ssot', false ) ) {
             $this->set_as_ssot();
         }
     }
