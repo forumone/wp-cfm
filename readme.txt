@@ -119,6 +119,13 @@ add_filter( 'wpcfm_multi_env', function() {
 add_filter( 'wpcfm_current_env', function() {
     return 'dev';
 } );
+
+
+/**
+ * Skips loading from DB tracked plugin options, instead it reads them directly from the bundle's config files.
+ * @return bool
+ */
+add_filter( 'wpcfm_is_ssot', '__return_true' );
 </pre>
 
 == Installation ==
