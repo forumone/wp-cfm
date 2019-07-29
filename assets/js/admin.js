@@ -182,5 +182,12 @@
             $(this).closest('.bundle-row').attr('data-bundle', val);
             $(this).closest('.bundle-row').find('.bundle-toggle').html(label);
         });
+
+        // Toggle between environments.
+        $('#wpcfm_env_switch').on('change', function() {
+            window.location = window.location.href + '&compare_env=' + $(this).val();
+        });
+
+
     });
 })(jQuery);
