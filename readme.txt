@@ -5,7 +5,7 @@ Donate link: http://forumone.com/
 Requires at least: 4.7
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.6.0
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,7 +67,7 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 
 == Changelog ==
 
-= 1.6.0 =
+= 1.6 =
 * Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
 * New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
 * New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
