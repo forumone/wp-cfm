@@ -57,7 +57,9 @@ class WPCFM_Helper
     function get_file_bundles() {
 
         $output = array();
-        $filenames = scandir( WPCFM_CONFIG_DIR );
+        $filenames = array_filter( scandir( WPCFM_CONFIG_DIR ), function( $item ) {
+            return !is_dir( WPCFM_CONFIG_DIR . '/' . $item );
+        });
 
         foreach ( $filenames as $filename ) {
 
@@ -118,8 +120,8 @@ class WPCFM_Helper
     function get_bundle_by_name( $bundle_name ) {
         $bundles = $this->get_bundles();
         return isset( $bundles[ $bundle_name ] ) ?
-            $bundles[ $bundle_name ] :
-            array();
+        $bundles[ $bundle_name ] :
+        array();
     }
 
 

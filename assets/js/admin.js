@@ -3,7 +3,8 @@
 
         // Load
         $.post(ajaxurl, {
-            action: 'wpcfm_load'
+            action: 'wpcfm_load',
+            compare_env: compare_env
         }, function(response) {
             $.each(response.bundles, function(idx, obj) {
                 var $this = $('.bundles-hidden .bundle-row').clone();
@@ -54,6 +55,7 @@
 
             $.post(ajaxurl, {
                 'action': 'wpcfm_save',
+                'compare_env': compare_env,
                 'data': JSON.stringify(data)
             }, function(response) {
                 $('.wpcfm-bundles .bundle-row').removeClass('unsaved');
@@ -79,17 +81,17 @@
           var $row = $(this).closest('.bundle-row');
           $('.wpcfm-bundles').find('input[type=checkbox]:checked').each(function() {
             $row.find('input[type=checkbox][value="'+this.value+'"]').not(':checked').parent().hide();
-          });
+        });
           $row.find('.hide-registered').hide();
           $row.find('.show-all').show();
-        });
+      });
         $(document).on('click', '.show-all', function(e) {
           e.preventDefault();
           var $row = $(this).closest('.bundle-row');
           $row.find('input[type=checkbox]').parent().show();
           $row.find('.hide-registered').show();
           $row.find('.show-all').hide();
-        });
+      });
 
         // Toggle bundle details
         $(document).on('click', '.bundle-row:not(.row-all) .bundle-toggle', function() {
@@ -114,6 +116,7 @@
 
             $.post(ajaxurl, {
                 'action': 'wpcfm_push',
+                'compare_env': compare_env,
                 'data': { 'bundle_name': bundle_name }
             }, function(response) {
                 $('.wpcfm-response').html(response);
@@ -129,6 +132,7 @@
 
                 $.post(ajaxurl, {
                     'action': 'wpcfm_pull',
+                    'compare_env': compare_env,
                     'data': { 'bundle_name': bundle_name }
                 }, function(response) {
                     $('.wpcfm-response').html(response);
@@ -142,6 +146,7 @@
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
             $.post(ajaxurl, {
                 'action': 'wpcfm_diff',
+                'compare_env': compare_env,
                 'data': { 'bundle_name': bundle_name }
             }, function(response) {
                 if ('' != response.error) {
@@ -177,5 +182,12 @@
             $(this).closest('.bundle-row').attr('data-bundle', val);
             $(this).closest('.bundle-row').find('.bundle-toggle').html(label);
         });
+
+        // Toggle between environments.
+        $('#wpcfm_env_switch').on('change', function() {
+            window.location = window.location.href + '&compare_env=' + $(this).val();
+        });
+
+
     });
 })(jQuery);

@@ -15,11 +15,11 @@ class WPCFM_Readwrite
 
         if ( ! is_dir( $this->folder ) ) {
             if ( ! wp_mkdir_p( $this->folder ) ) {
-                $this->error = __( 'Create wp-content/config/ and grant write access', 'wpcfm' );
+                $this->error = __( 'Create ' . $this->folder .  ' and grant write access', 'wpcfm' );
             }
         }
         elseif ( ! is_writable( $this->folder ) ) {
-            $this->error = __( 'The wp-content/config/ folder is not writable', 'wpcfm' );
+            $this->error = __( 'The ' . $this->folder .  ' folder is not writable', 'wpcfm' );
         }
     }
 
@@ -52,36 +52,36 @@ class WPCFM_Readwrite
             // If we import wpcfm settings don't update it
             if (!$dontUpdateSettings) {
               $dontUpdateSettings = $bundle_name == 'wpcfm';
-            }
-            if ($dontUpdateSettings) {
+          }
+          if ($dontUpdateSettings) {
               continue;
-            }
+          }
 
             // Update the bundle's config options (using the pull file)
-            $exists = false;
-            foreach ( $settings['bundles'] as $key => $bundle_settings ) {
-                if ( $bundle_name == $bundle_settings['name'] ) {
-                    $settings['bundles'][ $key ]['label'] = $bundle_label;
-                    $settings['bundles'][ $key ]['config'] = array_keys( $data );
-                    $exists = true;
-                    break;
-                }
-            }
-
-            if ( ! $exists ) {
-                $settings['bundles'][] = array(
-                    'label'     => $bundle_label,
-                    'name'      => $bundle_name,
-                    'config'    => array_keys( $data ),
-                );
+          $exists = false;
+          foreach ( $settings['bundles'] as $key => $bundle_settings ) {
+            if ( $bundle_name == $bundle_settings['name'] ) {
+                $settings['bundles'][ $key ]['label'] = $bundle_label;
+                $settings['bundles'][ $key ]['config'] = array_keys( $data );
+                $exists = true;
+                break;
             }
         }
 
-        // Write the settings
-        if (!$dontUpdateSettings) {
-          WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
+        if ( ! $exists ) {
+            $settings['bundles'][] = array(
+                'label'     => $bundle_label,
+                'name'      => $bundle_name,
+                'config'    => array_keys( $data ),
+            );
         }
     }
+
+        // Write the settings
+    if (!$dontUpdateSettings) {
+      WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
+  }
+}
 
 
     /**
@@ -100,7 +100,7 @@ class WPCFM_Readwrite
 
             if (WPCFM_CONFIG_FORMAT == 'json') {
             // JSON_PRETTY_PRINT for PHP 5.4+
-            $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
+                $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
                 json_encode( $data, JSON_PRETTY_PRINT ) :
                 json_encode( $data );
             }
@@ -167,7 +167,6 @@ class WPCFM_Readwrite
      * Returns the bundle filename.
      * @return string
      */
-
     function bundle_filename( $bundle_name ) {
         $filename = "$this->folder/$bundle_name." . WPCFM_CONFIG_FORMAT;
 
@@ -193,7 +192,7 @@ class WPCFM_Readwrite
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
             if (WPCFM_CONFIG_FORMAT == 'json') {
-            return json_decode( $contents, true );
+                return json_decode( $contents, true );
             }
             elseif (in_array(WPCFM_CONFIG_FORMAT, array('yaml', 'yml'))) {
               $array = Yaml::parse($contents);
@@ -202,20 +201,20 @@ class WPCFM_Readwrite
                 if (preg_match('/\.(.*)_format/i', $key, $format)) {
                   switch ($array[$format[0]]) {
                     case 'serialized':
-                      $array[$format[1]] = serialize($array[$format[1]]);
-                      break;
+                    $array[$format[1]] = serialize($array[$format[1]]);
+                    break;
                     case 'json':
-                      $array[$format[1]] = json_encode($array[$format[1]]);
-                      break;
-                  }
-                  unset($array[$format[0]]);
+                    $array[$format[1]] = json_encode($array[$format[1]]);
+                    break;
                 }
-              }
-              return $array;
+                unset($array[$format[0]]);
             }
         }
-        return array();
+        return $array;
     }
+}
+return array();
+}
 
 
     /**

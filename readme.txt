@@ -2,10 +2,10 @@
 Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Donate link: http://forumone.com/
-Requires at least: 4.0
+Requires at least: 4.7
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.5.1
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,54 +50,10 @@ You can optionally set `bundle_name` to "all" to include all bundles.
 
 Append the `--network` flag to include multisite bundles.
 
-= How to add custom configuration =
+= Filters =
 
-<pre>
-add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
-add_filter( 'wpcfm_pull_callback', 'my_pull_callback' );
+See the filters reference page at the [GitHub Wiki](https://github.com/forumone/wp-cfm/wiki/Filters-Reference).
 
-
-/**
- * Register custom settings
- *
- * @param array $items Associative array of configuration items
- * @return array
- */
-function my_configuration_items( $items ) {
-    $items['myprefix_data'] = array(
-        'value'     => 'YOUR CONFIGURATION DATA',
-        'label'     => 'The value label', // optional
-        'group'     => 'The Group Name', // optional
-    );
-    return $items;
-}
-
-
-/**
- * Tell WP-CFM how to import custom settings
- *
- * $params['name']          The option name
- * $params['group']         The option group
- * $params['old_value']     The current DB value that will get overwritten
- * $params['new_value']     The new DB value
- */
-function my_pull_callback( $params ) {
-    if ( 'myprefix_data' == $params['name'] ) {
-        // Import the data
-    }
-}
-
-
-/**
- * Changes WP-CFM configuration files to YAML format instead of JSON.
- * @param string $format The default 'json' format.
- * @return string
- */
-add_filter( 'wpcfm_config_format', function( $format ) {
-    $format = 'yaml';   // Value can be 'yaml' or 'yml'.
-    return $format;
-} );
-</pre>
 
 == Installation ==
 
@@ -110,6 +66,11 @@ add_filter( 'wpcfm_config_format', function( $format ) {
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.6.0 =
+* Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
+* New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
+* New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
 
 = 1.5.1 =
 * Fix: Tested with latest WordPress 5.2.1. Removing the plugin outdated notice at WordPress.org plugin repository.

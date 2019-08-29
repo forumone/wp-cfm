@@ -3,7 +3,7 @@
 Plugin Name: WP-CFM
 Plugin URI: https://forumone.github.io/wp-cfm/
 Description: WordPress Configuration Management
-Version: 1.5.1
+Version: 1.6.0
 Author: Forum One
 Author URI: http://forumone.com/
 License: GPLv3
@@ -37,27 +37,102 @@ class WPCFM_Core
     public $registry;
     public $options;
     public $helper;
+    private $pantheon_env = '';
     private static $instance;
 
 
     function __construct() {
 
         // setup variables
-        define( 'WPCFM_VERSION', '1.4.5' );
+        define( 'WPCFM_VERSION', '1.6.0' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
-        define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', WP_CONTENT_DIR . '/config' ) );
-        define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', WP_CONTENT_URL . '/config' ) );
+
+        $config_dir = WP_CONTENT_DIR . '/config';
+        $config_url = WP_CONTENT_URL . '/config';
+
+        // Check if we are on Pantheon hosting environment.
+        if ( defined( 'PANTHEON_ENVIRONMENT' ) ) {
+            // Set the Pantheon environment to test or live
+            if ( in_array( PANTHEON_ENVIRONMENT, array('test', 'live' ) ) ){
+                $this->pantheon_env = PANTHEON_ENVIRONMENT;
+            // Otherwise, default to dev for dev and multidev
+            } else {
+                $this->pantheon_env = 'dev';
+            }
+
+            // Change the config directory to private/config on Pantheon
+            $config_dir = $_SERVER['DOCUMENT_ROOT'] . '/private/config';
+            $config_url = WP_HOME . '/private/config';
+        }
+
+        // Register multiple environments.
+        define( 'WPCFM_REGISTER_MULTI_ENV', $this->set_multi_env() );
+
+        // If multiple environments were defined.
+        if ( !empty( WPCFM_REGISTER_MULTI_ENV ) ) {
+            // Set the current environment where the WordPress site is running.
+            define( 'WPCFM_CURRENT_ENV',  $this->set_current_env() );
+            // If we have an env name, append it to create a subfolder inside wp-content/config/ directory.
+            if ( !empty( WPCFM_CURRENT_ENV ) ) {
+                $config_dir .= '/' . WPCFM_CURRENT_ENV;
+                $config_url .= '/' . WPCFM_CURRENT_ENV;
+            }
+        }
+
+        define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', $config_dir ) );
+        define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', $config_url ) );
         if (PHP_VERSION_ID < 50604) {
           define( 'WPCFM_CONFIG_FORMAT', 'json');
           define( 'WPCFM_CONFIG_FORMAT_REQUESTED',  apply_filters( 'wpcfm_config_format', 'json'));
-        } else {
+      } else {
           define( 'WPCFM_CONFIG_FORMAT',  apply_filters( 'wpcfm_config_format', 'json'));
-        }
-        define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true));
-        define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
+      }
+      define( 'WPCFM_CONFIG_USE_YAML_DIFF',  apply_filters( 'wpcfm_config_use_yaml_diff', true));
+      define( 'WPCFM_URL', plugins_url( '', __FILE__ ) );
 
         // WP is loaded
-        add_action( 'init', array( $this, 'init' ) );
+      add_action( 'init', array( $this, 'init' ) );
+  }
+
+
+    /**
+     * Enables multi environment feature on WP-CFM.
+     * @return array
+     */
+    private function set_multi_env() {
+        $environments = [];
+
+        // If we are in a Pantheon environment, set the 3 instances slugs out of the box.
+        if ( !empty( $this->pantheon_env ) ) {
+            $environments = ['dev', 'test', 'live'];
+        }
+
+        return apply_filters( 'wpcfm_multi_env', $environments );
+    }
+
+
+    /**
+     * Defines the current environment.
+     * @return string
+     */
+    private function set_current_env() {
+        // Get Compare Env when rendering the settings page.
+        if ( !wp_doing_ajax() || !defined( 'WP_CLI' ) ) {
+            $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
+            if ( $compare_env ) {
+                define( 'WPCFM_COMPARE_ENV',  $compare_env );
+            }
+        }
+
+        // Get Compare Env when doing AJAX.
+        if ( wp_doing_ajax() ) {
+            $compare_env = filter_input( INPUT_POST, "compare_env", FILTER_SANITIZE_STRING );
+            if ( $compare_env && in_array( $compare_env, WPCFM_REGISTER_MULTI_ENV ) ) {
+                return $compare_env;
+            }
+        }
+
+        return apply_filters( 'wpcfm_current_env', $this->pantheon_env );
     }
 
 
@@ -131,11 +206,27 @@ class WPCFM_Core
 
 
     /**
-     * Enqueue media CSS
+     * Enqueue WP-CFM admin styles and javascript.
      */
     function admin_scripts( $hook ) {
+        // Exit this funtion if doing AJAX.
+        if ( wp_doing_ajax() ) {
+            return;
+        }
+
         if ( 'settings_page_wpcfm' == $hook ) {
+            $min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
             wp_enqueue_style( 'media-views' );
+            wp_enqueue_script( 'wpcfm-multiselect', plugins_url( "assets/js/multiselect/jquery.multiselect{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
+            wp_enqueue_script( 'wpcfm-diff-match-patch', plugins_url( "assets/js/pretty-text-diff/diff_match_patch{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
+            wp_enqueue_script( 'wpcfm-pretty-text-diff', plugins_url( "assets/js/pretty-text-diff/jquery.pretty-text-diff{$min}.js", __FILE__ ), [ 'jquery' ], WPCFM_VERSION );
+            wp_enqueue_script( 'wpcfm-admin-js', plugins_url( "assets/js/admin{$min}.js", __FILE__ ), [ 'jquery', 'wpcfm-multiselect', 'wpcfm-pretty-text-diff' ], WPCFM_VERSION );
+
+            // Safely get env value from plugin backend URL, if exists.
+            $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
+            wp_localize_script( 'wpcfm-admin-js', 'compare_env', $compare_env );
+
+            wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), [], WPCFM_VERSION );
         }
     }
 
