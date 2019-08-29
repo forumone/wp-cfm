@@ -15,7 +15,7 @@ $configuration = $this->helper->group_items( $configuration );
 
     <!-- Environment Switcher -->
     <div class="wpcfm-env-switch">
-        <?php _e( 'Compare with', 'wpcfm' ); ?>: <select name="wpcfm_env_switch" id="wpcfm_env_switch">
+        <?php _e( 'Switch config to', 'wpcfm' ); ?>: <select name="wpcfm_env_switch" id="wpcfm_env_switch">
             <?php foreach ( WPCFM_REGISTER_MULTI_ENV as $env ): ?>
                 <option value="<?php echo $env; ?>"
                     <?php if ( ( WPCFM_CURRENT_ENV == $env && !defined( 'WPCFM_COMPARE_ENV' ) ) || ( defined( 'WPCFM_COMPARE_ENV' ) && WPCFM_COMPARE_ENV == $env ) ): ?>
