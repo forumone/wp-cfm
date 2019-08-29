@@ -52,7 +52,17 @@ class WPCFM_Core
 
         // Check if we are on Pantheon hosting environment.
         if ( defined( 'PANTHEON_ENVIRONMENT' ) ) {
-            $this->pantheon_env = PANTHEON_ENVIRONMENT;
+            // Set the Pantheon environment to test or live
+            if ( in_array( PANTHEON_ENVIRONMENT, array('test', 'live' ) ) ){
+                $this->pantheon_env = PANTHEON_ENVIRONMENT;
+            // Otherwise, default to dev for dev and multidev
+            } else {
+                $this->pantheon_env = 'dev';
+            }
+
+            // Change the config directory to private/config on Pantheon
+            $config_dir = $_SERVER['DOCUMENT_ROOT'] . '/private/config';
+            $config_url = WP_HOME . '/private/config';
         }
 
         // Register multiple environments.
