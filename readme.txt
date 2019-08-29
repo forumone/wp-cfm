@@ -50,76 +50,10 @@ You can optionally set `bundle_name` to "all" to include all bundles.
 
 Append the `--network` flag to include multisite bundles.
 
-= How to add custom configuration =
+= Filters =
 
-<pre>
-add_filter( 'wpcfm_configuration_items', 'my_configuration_items' );
-add_filter( 'wpcfm_pull_callback', 'my_pull_callback' );
+See the filters reference page at the [GitHub Wiki](https://github.com/forumone/wp-cfm/wiki/Filters-Reference).
 
-
-/**
- * Register custom settings
- *
- * @param array $items Associative array of configuration items
- * @return array
- */
-function my_configuration_items( $items ) {
-    $items['myprefix_data'] = array(
-        'value'     => 'YOUR CONFIGURATION DATA',
-        'label'     => 'The value label', // optional
-        'group'     => 'The Group Name', // optional
-    );
-    return $items;
-}
-
-
-/**
- * Tell WP-CFM how to import custom settings
- *
- * $params['name']          The option name
- * $params['group']         The option group
- * $params['old_value']     The current DB value that will get overwritten
- * $params['new_value']     The new DB value
- */
-function my_pull_callback( $params ) {
-    if ( 'myprefix_data' == $params['name'] ) {
-        // Import the data
-    }
-}
-
-
-/**
- * Changes WP-CFM configuration files to YAML format instead of JSON.
- * @param string $format The default 'json' format.
- * @return string
- */
-add_filter( 'wpcfm_config_format', function( $format ) {
-    $format = 'yaml';   // Value can be 'yaml' or 'yml'.
-    return $format;
-} );
-
-
-/**
- * Activates and registers multiple environments to manage different configurations.
- * @return array
- */
-add_filter( 'wpcfm_multi_env', function() {
-    return [
-        'dev',
-        'test',
-        'live'
-    ];
-} );
-
-
-/**
- * Defines the current environment.
- * @return array
- */
-add_filter( 'wpcfm_current_env', function() {
-    return 'dev';
-} );
-</pre>
 
 == Installation ==
 
