@@ -3,7 +3,7 @@
 Changes to this plugin are documented in this file. This project adheres to [Semantic Versioning](http://semver.org)
 
 
-## 1.6.0 - 08-29-2019
+## 1.6 - 08-29-2019
 * Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
 * New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
 * New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
