@@ -71,6 +71,7 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 * Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
 * New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
 * New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
+* New: Filter `wpcfm_is_ssot` adds capability to set configuration bundles as the Single Source of Truth (SSOT), rather than the database, for all tracked options.
 
 = 1.5.1 =
 * Fix: Tested with latest WordPress 5.2.1. Removing the plugin outdated notice at WordPress.org plugin repository.
