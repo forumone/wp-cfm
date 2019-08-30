@@ -1,0 +1,2 @@
+- name: WordPress Plugin Deploy
+  uses: 10up/action-wordpress-plugin-deploy@1.2.1
