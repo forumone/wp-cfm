@@ -5,3 +5,8 @@
 # Files
 /.gitattributes export-ignore
 /.gitignore export-ignore
+/CHANGELOG.md export-ignore
+/composer.json export-ignore
+/composer.lock export-ignore
+/README.md export-ignore
+/.editorconfig export-ignore
