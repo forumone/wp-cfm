@@ -6,6 +6,7 @@ class WPCFM_Readwrite
 
     public $folder;
     public $error;
+    static $db_data;
 
 
     function __construct() {
@@ -284,7 +285,10 @@ return array();
     function write_db( $bundle_name, $file_data ) {
 
         $success = false;
-        $db_data = WPCFM()->registry->get_configuration_items();
+        if ( empty( static::$db_data ) ) {
+            static::$db_data = WPCFM()->registry->get_configuration_items();
+        }
+        $db_data = static::$db_data;
 
         foreach ( $file_data as $key => $val ) {
 
