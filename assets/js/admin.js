@@ -3,8 +3,9 @@
 
         // Load
         $.post(ajaxurl, {
-            action: 'wpcfm_load',
-            compare_env: compare_env
+            'action': 'wpcfm_load',
+            'compare_env': compare_env,
+            'network': $('#is-network').val(),
         }, function(response) {
             $.each(response.bundles, function(idx, obj) {
                 var $this = $('.bundles-hidden .bundle-row').clone();
@@ -56,6 +57,7 @@
             $.post(ajaxurl, {
                 'action': 'wpcfm_save',
                 'compare_env': compare_env,
+                'network': $('#is-network').val(),
                 'data': JSON.stringify(data)
             }, function(response) {
                 $('.wpcfm-bundles .bundle-row').removeClass('unsaved');
@@ -117,6 +119,7 @@
             $.post(ajaxurl, {
                 'action': 'wpcfm_push',
                 'compare_env': compare_env,
+                'network': $('#is-network').val(),
                 'data': { 'bundle_name': bundle_name }
             }, function(response) {
                 $('.wpcfm-response').html(response);
@@ -133,6 +136,7 @@
                 $.post(ajaxurl, {
                     'action': 'wpcfm_pull',
                     'compare_env': compare_env,
+                    'network': $('#is-network').val(),
                     'data': { 'bundle_name': bundle_name }
                 }, function(response) {
                     $('.wpcfm-response').html(response);
@@ -147,6 +151,7 @@
             $.post(ajaxurl, {
                 'action': 'wpcfm_diff',
                 'compare_env': compare_env,
+                'network': $('#is-network').val(),
                 'data': { 'bundle_name': bundle_name }
             }, function(response) {
                 if ('' != response.error) {

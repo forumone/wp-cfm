@@ -12,8 +12,11 @@ class WPCFM_Options
         $argv = isset( $_SERVER['argv'] ) ? $_SERVER['argv'] : array();
         $has_network_flag = ( false !== array_search( '--network', $argv ) );
 
+        // AJAX is-network flag
+        $is_network = isset( $_REQUEST['network'] ) ? (bool) $_REQUEST['network'] : false;
+
         // Network admin
-        if ( is_network_admin() || $has_network_flag ) {
+        if ( is_network_admin() || $has_network_flag || $is_network ) {
             $this->is_network = true;
         }
     }
