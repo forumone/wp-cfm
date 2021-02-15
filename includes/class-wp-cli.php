@@ -133,16 +133,15 @@ class WPCFM_CLI_Command extends WP_CLI_Command
      * wp config bundles
      *
      */
-    function bundles() {
+    function bundles($args=array(),$assoc_args=array()) {
+        $defaults = array('format'   => 'table');
+        $assoc_args = array_merge($defaults, $assoc_args);
+
         $bundles = WPCFM()->helper->get_bundles();
-        $header = array( 'Bundle', 'Label', 'In File', 'In DB', 'Configs' );
-        $table = new \cli\Table( $header, array() );
-        foreach( $bundles as $bundle ) {
-            $row = array( $bundle['name'], $bundle['label'], $bundle['is_file'], $bundle['is_db'] );
-            $row[] = implode( ', ', $bundle['config'] );
-            $table->addrow( $row );
-        }
-        $table->display();
+
+        $header = array( 'name', 'label', 'is_file', 'is_db', 'config' );
+
+        WP_CLI\Utils\format_items($assoc_args['format'],$bundles,$header);
     }
 
     /**
