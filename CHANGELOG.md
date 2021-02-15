@@ -2,7 +2,7 @@
 
 Changes to this plugin are documented in this file. This project adheres to [Semantic Versioning](http://semver.org)
 
-## 1.7 - 02-15-2021
+## 1.7.1 - 02-15-2021
 * Improved: Cache results of WPCFM_Registry::get_configuration_items() (props @fariasf).
 * New: Added `--format` parameter for the bundles command to retrieve bundle information from the CLI (props @gilzow).
 * Improved: Use `home_url()` instead of `WP_HOME` since this one isn't always guaranteed to be set (props @kyletaylored).
