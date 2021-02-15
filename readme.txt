@@ -5,7 +5,7 @@ Donate link: http://forumone.com/
 Requires at least: 4.7
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,12 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.7 =
+* Improved: Cache results of WPCFM_Registry::get_configuration_items() (props @fariasf).
+* New: Added `--format` parameter for the bundles command to retrieve bundle information from the CLI (props @gilzow).
+* Improved: Use `home_url()` instead of `WP_HOME` since this one isn't always guaranteed to be set (props @kyletaylored).
+* Fix: Warning invalid argument supplied for foreach() on CLI command (props @adnoh).
 
 = 1.6 =
 * Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
