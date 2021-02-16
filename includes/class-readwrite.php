@@ -146,7 +146,7 @@ class WPCFM_Readwrite
         unset( $file_bundle['.label'] );
 
         // Convert to YAML for better readability if PHP version is compatible
-        if (PHP_VERSION_ID >= 50604 && WPCFM_CONFIG_USE_YAML_DIFF && !defined( 'WP_CLI' )) {
+        if (PHP_VERSION_ID >= 50604 && WPCFM_CONFIG_USE_YAML_DIFF) {
             $file_bundle = WPCFM_Helper::convert_to_yaml($file_bundle, false);
             $db_bundle   = WPCFM_Helper::convert_to_yaml($db_bundle, false);
         }
