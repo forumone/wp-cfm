@@ -89,20 +89,24 @@ class WPCFM_CLI_Command extends WP_CLI_Command
             $only_db_rows = array();
             $only_file_rows = array();
             $diff_rows = array();
-            foreach( $compare['db'] as $key => $value ) {
-                if ( !isset( $compare['file'][$key] ) ) {
-                    $only_db_rows[] = array($key, $value);
-                }
-                elseif ( $value !== $compare['file'][$key] ) {
-                    $diff_rows[$key] = array( $key, $compare['file'][$key], $value );
+            if ( is_array( $compare['db'] ) ) {
+                foreach( $compare['db'] as $key => $value ) {
+                    if ( !isset( $compare['file'][$key] ) ) {
+                        $only_db_rows[] = array($key, $value);
+                    }
+                    elseif ( $value !== $compare['file'][$key] ) {
+                        $diff_rows[$key] = array( $key, $compare['file'][$key], $value );
+                    }
                 }
             }
-            foreach( $compare['file'] as $key => $value ) {
-                if ( !isset( $compare['db'][$key] ) ) {
-                    $only_file_rows[] = array( $key, $value );
-                }
-                elseif ( $value !== $compare['db'][$key] ) {
-                    $diff_rows[$key] = array( $key, $compare['db'][$key], $value );
+            if ( is_array( $compare['file'] ) ) {
+                foreach( $compare['file'] as $key => $value ) {
+                    if ( !isset( $compare['db'][$key] ) ) {
+                        $only_file_rows[] = array( $key, $value );
+                    }
+                    elseif ( $value !== $compare['db'][$key] ) {
+                        $diff_rows[$key] = array( $key, $compare['db'][$key], $value );
+                    }
                 }
             }
             if ( count( $only_file_rows) > 0 ) {
