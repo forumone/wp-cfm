@@ -61,7 +61,7 @@ class WPCFM_Core
             }
 
             // Change the config directory to private/config on Pantheon
-            $config_dir = $_SERVER['DOCUMENT_ROOT'] . '/private/config';
+            $config_dir = untrailingslashit($_ENV['DOCROOT']) . '/private/config';
             $config_url = home_url() . '/private/config';
         }
 
