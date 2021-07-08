@@ -46,6 +46,8 @@ $configuration = $this->helper->group_items( $configuration );
     <?php endforeach; ?>
 </div>
 
+<input type="hidden" id="is-network" value="<?php echo is_network_admin() ? 1: 0 ?>">
+
 <div class="wpcfm-bundles">
     <div class="wpcfm-action-buttons">
         <div style="float:right">
