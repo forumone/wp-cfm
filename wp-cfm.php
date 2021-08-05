@@ -252,7 +252,7 @@ class WPCFM_Core
 
             // Safely get env value from plugin backend URL, if exists.
             $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
-            wp_localize_script( 'wpcfm-admin-js', 'compare_env', $compare_env );
+            wp_localize_script( 'wpcfm-admin-js', 'compare_env', array( 'env' => $compare_env ) );
 
             wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), [], WPCFM_VERSION );
         }
