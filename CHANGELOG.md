@@ -2,6 +2,9 @@
 
 Changes to this plugin are documented in this file. This project adheres to [Semantic Versioning](http://semver.org)
 
+## 1.7.3 - 12-01-2021
+* Fix: PHP notice "WP_Scripts::localize was called incorrectly". The $l10n parameter must be an array.
+
 ## 1.7.2 - 02-16-2021
 * Improved: Fix Warning invalid argument supplied on CLI command.
 
