@@ -3,7 +3,7 @@
 Plugin Name: WP-CFM
 Plugin URI: https://forumone.github.io/wp-cfm/
 Description: WordPress Configuration Management
-Version: 1.7.2
+Version: 1.7.3
 Author: Forum One
 Author URI: http://forumone.com/
 License: GPLv3
@@ -44,7 +44,7 @@ class WPCFM_Core
     function __construct() {
 
         // setup variables
-        define( 'WPCFM_VERSION', '1.7.2' );
+        define( 'WPCFM_VERSION', '1.7.3' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
 
         $config_dir = WP_CONTENT_DIR . '/config';
@@ -252,7 +252,7 @@ class WPCFM_Core
 
             // Safely get env value from plugin backend URL, if exists.
             $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
-            wp_localize_script( 'wpcfm-admin-js', 'compare_env', $compare_env );
+            wp_localize_script( 'wpcfm-admin-js', 'compare_env', array( 'env' => $compare_env ) );
 
             wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), [], WPCFM_VERSION );
         }
