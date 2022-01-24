@@ -1,11 +1,11 @@
 === WP-CFM ===
-Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam
+Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam, gbeezus
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.7
 Tested up to: 5.6.1
 Requires PHP: 5.6
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,9 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.7.4 =
+* Fix: Pantheon Quick Silver hooks silently failing to pull updated configuration.
 
 = 1.7.3 =
 * Fix: PHP notice "WP_Scripts::localize was called incorrectly". The $l10n parameter must be an array.

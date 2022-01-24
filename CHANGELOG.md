@@ -2,6 +2,9 @@
 
 Changes to this plugin are documented in this file. This project adheres to [Semantic Versioning](http://semver.org)
 
+## 1.7.4 - 01-24-2022
+* Fix: Pantheon Quick Silver hooks silently failing to pull updated configuration.
+
 ## 1.7.3 - 12-01-2021
 * Fix: PHP notice "WP_Scripts::localize was called incorrectly". The $l10n parameter must be an array.
 
