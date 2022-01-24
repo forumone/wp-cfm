@@ -1,5 +1,5 @@
 === WP-CFM ===
-Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam
+Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam, gbeezus
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.7
