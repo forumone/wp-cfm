@@ -3,7 +3,7 @@
 Plugin Name: WP-CFM
 Plugin URI: https://forumone.github.io/wp-cfm/
 Description: WordPress Configuration Management
-Version: 1.7.4
+Version: 1.7.5
 Author: Forum One
 Author URI: http://forumone.com/
 License: GPLv3
@@ -44,7 +44,7 @@ class WPCFM_Core
     function __construct() {
 
         // setup variables
-        define( 'WPCFM_VERSION', '1.7.4' );
+        define( 'WPCFM_VERSION', '1.7.5' );
         define( 'WPCFM_DIR', dirname( __FILE__ ) );
 
         $config_dir = WP_CONTENT_DIR . '/config';

@@ -3,9 +3,9 @@ Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinso
 Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.7
-Tested up to: 5.6.1
+Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,9 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 3. Diff viewer to track changes within a bundle
 
 == Changelog ==
+
+= 1.7.5 =
+* Fix: Tested with latest WordPress release v6.0.2. Removing the plugin outdated notice at WordPress.org plugin repository.
 
 = 1.7.4 =
 * Fix: Pantheon Quick Silver hooks silently failing to pull updated configuration.
