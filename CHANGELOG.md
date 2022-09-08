@@ -2,6 +2,9 @@
 
 Changes to this plugin are documented in this file. This project adheres to [Semantic Versioning](http://semver.org)
 
+## 1.7.5 - 09-08-2022
+* Fix: Tested with latest WordPress release v6.0.2. Removing the plugin outdated notice at WordPress.org plugin repository.
+
 ## 1.7.4 - 01-24-2022
 * Fix: Pantheon Quick Silver hooks silently failing to pull updated configuration.
 
