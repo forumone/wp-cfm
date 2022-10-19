@@ -166,7 +166,7 @@ class WPCFM_Helper
                 }
             }
         }
-        return Yaml::dump($data, 10);
+        return Yaml::dump($data, 10, 4, Yaml::DUMP_OBJECT);
     }
 
 }

@@ -196,7 +196,7 @@ class WPCFM_Readwrite
                 return json_decode( $contents, true );
             }
             elseif (in_array(WPCFM_CONFIG_FORMAT, array('yaml', 'yml'))) {
-              $array = Yaml::parse($contents);
+              $array = Yaml::parse($contents, Yaml::PARSE_OBJECT);
               foreach ($array as $key => $value) {
                 $format = array();
                 if (preg_match('/\.(.*)_format/i', $key, $format)) {
