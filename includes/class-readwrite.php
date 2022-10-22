@@ -45,6 +45,12 @@ class WPCFM_Readwrite
         // Import each bundle into DB
         foreach ( $bundles as $bundle_name ) {
             $data = $this->read_file( $bundle_name );
+
+            // Skip bundle if no file matching the bundle name was found
+            if (empty($data)) {
+                continue;
+            }
+
             $bundle_label = $data['.label'];
             unset( $data['.label'] );
 
