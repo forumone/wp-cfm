@@ -52,37 +52,37 @@ class WPCFM_Readwrite
 
             // If we import wpcfm settings don't update it
             if (!$dontUpdateSettings) {
-              $dontUpdateSettings = $bundle_name == 'wpcfm';
-          }
-          if ($dontUpdateSettings) {
-              continue;
-          }
+                $dontUpdateSettings = $bundle_name == 'wpcfm';
+            }
+            if ($dontUpdateSettings) {
+                continue;
+            }
 
             // Update the bundle's config options (using the pull file)
-          $exists = false;
-          foreach ( $settings['bundles'] as $key => $bundle_settings ) {
-            if ( $bundle_name == $bundle_settings['name'] ) {
-                $settings['bundles'][ $key ]['label'] = $bundle_label;
-                $settings['bundles'][ $key ]['config'] = array_keys( $data );
-                $exists = true;
-                break;
+            $exists = false;
+            foreach ( $settings['bundles'] as $key => $bundle_settings ) {
+                if ( $bundle_name == $bundle_settings['name'] ) {
+                    $settings['bundles'][ $key ]['label'] = $bundle_label;
+                    $settings['bundles'][ $key ]['config'] = array_keys( $data );
+                    $exists = true;
+                    break;
+                }
+            }
+
+            if ( ! $exists ) {
+                $settings['bundles'][] = array(
+                    'label'     => $bundle_label,
+                    'name'      => $bundle_name,
+                    'config'    => array_keys( $data ),
+                );
             }
         }
 
-        if ( ! $exists ) {
-            $settings['bundles'][] = array(
-                'label'     => $bundle_label,
-                'name'      => $bundle_name,
-                'config'    => array_keys( $data ),
-            );
+        // Write the settings
+        if (!$dontUpdateSettings) {
+            WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
         }
     }
-
-        // Write the settings
-    if (!$dontUpdateSettings) {
-      WPCFM()->options->update( 'wpcfm_settings', json_encode( $settings ) );
-  }
-}
 
 
     /**
@@ -100,7 +100,7 @@ class WPCFM_Readwrite
             $data['.label'] = $bundle_meta['label'];
 
             if (WPCFM_CONFIG_FORMAT == 'json') {
-            // JSON_PRETTY_PRINT for PHP 5.4+
+                // JSON_PRETTY_PRINT for PHP 5.4+
                 $data = version_compare( PHP_VERSION, '5.4.0', '>=' ) ?
                 json_encode( $data, JSON_PRETTY_PRINT ) :
                 json_encode( $data );
@@ -196,26 +196,26 @@ class WPCFM_Readwrite
                 return json_decode( $contents, true );
             }
             elseif (in_array(WPCFM_CONFIG_FORMAT, array('yaml', 'yml'))) {
-              $array = Yaml::parse($contents);
-              foreach ($array as $key => $value) {
-                $format = array();
-                if (preg_match('/\.(.*)_format/i', $key, $format)) {
-                  switch ($array[$format[0]]) {
-                    case 'serialized':
-                    $array[$format[1]] = serialize($array[$format[1]]);
-                    break;
-                    case 'json':
-                    $array[$format[1]] = json_encode($array[$format[1]]);
-                    break;
+                $array = Yaml::parse($contents);
+                foreach ($array as $key => $value) {
+                    $format = array();
+                    if (preg_match('/\.(.*)_format/i', $key, $format)) {
+                        switch ($array[$format[0]]) {
+                            case 'serialized':
+                                $array[$format[1]] = serialize($array[$format[1]]);
+                                break;
+                            case 'json':
+                                $array[$format[1]] = json_encode($array[$format[1]]);
+                                break;
+                        }
+                        unset($array[$format[0]]);
+                    }
                 }
-                unset($array[$format[0]]);
+                return $array;
             }
         }
-        return $array;
+        return array();
     }
-}
-return array();
-}
 
 
     /**
