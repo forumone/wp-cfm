@@ -74,6 +74,8 @@ class WPCFM_Taxonomy
             $lookup['id'][ $term['term_id'] ] = $term;
         }
 
+        $new_terms = $this->sort_terms_by_hierarchy( $new_terms );
+
         // Loop through the "desired" terms
         foreach ( $new_terms as $term ) {
             $term_id = (int) $term['term_id'];
@@ -129,6 +131,41 @@ class WPCFM_Taxonomy
                 ) );
             }
         }
+    }
+
+    /**
+     * Sorts a flat list of terms to ensure that parent terms will always be created
+     * prior to their children. Uses recursion to recurse into multiple levels of the
+     * term hierarchy.
+     *
+     * @param array   $terms The full list of terms to sort.
+     * @param integer $parent_id Parent term ID for current iteration.
+     * @return array The array sorted with children immediately following their parent
+     */
+    public function sort_terms_by_hierarchy( $terms, $parent_id = 0 ) {
+        $new_terms = array();
+
+        // Get all child terms of the supplied parent.
+        $child_terms = array_filter(
+            $terms,
+            function ( $t ) use ( $parent_id ) {
+                return $t['parent'] === $parent_id;
+            }
+        );
+
+        // Iterate through each child term.
+        foreach ( $child_terms as $term ) {
+            $new_terms[] = $term;
+
+            // Recurse into potential child terms.
+            $deeper_child_terms = $this->sort_terms_by_hierarchy( $terms, $term['term_id'] );
+
+            // Merge such that parent term comes before children.
+            // Will include all lower levels.
+            $new_terms = array_merge( $new_terms, $deeper_child_terms );
+        }
+
+        return $new_terms;
     }
 }
 
