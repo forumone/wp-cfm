@@ -271,14 +271,14 @@ class WPCFM_Core
      * i18n support
      */
     function load_textdomain() {
-        $locale = apply_filters( 'plugin_locale', get_locale(), 'wpcfm' );
-        $mofile = WP_LANG_DIR . '/wpcfm-' . $locale . '.mo';
+        $locale = apply_filters( 'plugin_locale', get_locale(), 'wp-cfm' );
+        $mofile = WP_LANG_DIR . '/wp-cfm-' . $locale . '.mo';
 
         if ( file_exists( $mofile ) ) {
             load_textdomain( 'wpcfm', $mofile );
         }
         else {
-            load_plugin_textdomain( 'wpcfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+            load_plugin_textdomain( 'wp-cfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
     }
 }

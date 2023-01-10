@@ -32,7 +32,7 @@ class WPCFM_Taxonomy
             $items[ 'tax/' . $tax->name ] = array(
                 'value' => json_encode( $values ),
                 'label' => $tax->label,
-                'group' => 'Taxonomy Terms',
+                'group' => __( 'Taxonomy Terms', 'wp-cfm' ),
             );
 
         }
