@@ -55,16 +55,17 @@ class WPCFM_Helper
      * Get file bundles
      */
     function get_file_bundles() {
+        $config_env_dir = \trailingslashit( WPCFM_CONFIG_DIR . '/' . WPCFM_CURRENT_ENV );
 
         $output = array();
-        $filenames = array_filter( scandir( WPCFM_CONFIG_DIR ), function( $item ) {
-            return !is_dir( WPCFM_CONFIG_DIR . '/' . $item );
+        $filenames = array_filter( scandir( $config_env_dir  ), function( $item ) use( $config_env_dir ) {
+            return !is_dir( $config_env_dir . $item );
         });
 
         foreach ( $filenames as $filename ) {
 
-            // Ignore dot files
-            if ( '.' == substr( $filename, 0, 1 ) ) {
+            // Ignore dot and default files
+            if ( '.' == substr( $filename, 0, 1 ) || 0 === strpos( $filename, 'default' ) ) {
                 continue;
             }
 
