@@ -178,7 +178,6 @@ class WPCFM_Readwrite
      */
     function bundle_filename( $bundle_name, $env = '' ) {
         $env = trailingslashit( $env ?: $this->env );
-        $filename = "$this->folder/$bundle_name." . WPCFM_CONFIG_FORMAT;
         $filename = "$this->folder/{$env}{$bundle_name}." . WPCFM_CONFIG_FORMAT;
 
         if ( is_multisite() ) {
@@ -186,7 +185,7 @@ class WPCFM_Readwrite
                 $filename = "$this->folder/{$env}network-$bundle_name." . WPCFM_CONFIG_FORMAT;
             }
             else {
-                $filename = "$this->folder/{$env}blog" . get_current_blog_id() . "-$bundle_name." . WPCFM_CONFIG_FORMAT;$filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name." . WPCFM_CONFIG_FORMAT;
+                $filename = "$this->folder/{$env}blog" . get_current_blog_id() . "-$bundle_name." . WPCFM_CONFIG_FORMAT;
             }
         }
 
@@ -218,8 +217,6 @@ class WPCFM_Readwrite
         $bundle_name = substr( $bundle_name, -1 * strlen( WPCFM_CONFIG_FORMAT ) ) != WPCFM_CONFIG_FORMAT
             ? $bundle_name
             : substr( $bundle_name, 0, strlen( $bundle_name ) - strlen( WPCFM_CONFIG_FORMAT ) - 1 );
-
-        $configs = [];
 
         // Get config from the default "environment"
         $default_file = "$this->folder/default/$bundle_name." . WPCFM_CONFIG_FORMAT;

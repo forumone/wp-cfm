@@ -24,6 +24,7 @@ class WPCFM_Helper
 
         // Then merge file bundles
         $file_bundles = $this->get_file_bundles();
+
         foreach ( $file_bundles as $bundle_name => $bundle ) {
             if ( isset( $output[ $bundle_name ] ) ) {
                 $output[ $bundle_name ]['is_file'] = true;
@@ -80,7 +81,7 @@ class WPCFM_Helper
                     continue;
                 }
 
-                $bundle_name = str_replace( '.json', '', $filename_parts[1] );
+                $bundle_name = str_replace( '.' . WPCFM_CONFIG_FORMAT, '', $filename_parts[1] );
 
                 if ( WPCFM()->options->is_network ) {
                     if ( 'network' != $filename_parts[0] ) {
@@ -94,6 +95,7 @@ class WPCFM_Helper
             }
 
             $bundle_data = WPCFM()->readwrite->read_file( $bundle_name );
+
             $bundle_label = $bundle_data['.label'];
             unset( $bundle_data['.label'] );
 
