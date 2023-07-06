@@ -118,7 +118,9 @@ class WPCFM_Core
     private function set_current_env() {
         // Get Compare Env when rendering the settings page.
         if ( !wp_doing_ajax() || !defined( 'WP_CLI' ) ) {
-            $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
+            $compare_env = isset( $_GET['compare_env'] )
+                ? sanitize_text_field( $_GET['compare_env'] )
+                : '';
             if ( $compare_env ) {
                 define( 'WPCFM_COMPARE_ENV',  $compare_env );
             }
@@ -126,7 +128,9 @@ class WPCFM_Core
 
         // Get Compare Env when doing AJAX.
         if ( wp_doing_ajax() ) {
-            $compare_env = filter_input( INPUT_POST, "compare_env", FILTER_SANITIZE_STRING );
+            $compare_env = isset( $_GET['compare_env'] )
+              ? sanitize_text_field( $_GET['compare_env'] )
+              : '';
             if ( $compare_env && in_array( $compare_env, WPCFM_REGISTER_MULTI_ENV ) ) {
                 return $compare_env;
             }
@@ -251,7 +255,9 @@ class WPCFM_Core
             wp_enqueue_script( 'wpcfm-admin-js', plugins_url( "assets/js/admin{$min}.js", __FILE__ ), [ 'jquery', 'wpcfm-multiselect', 'wpcfm-pretty-text-diff' ], WPCFM_VERSION );
 
             // Safely get env value from plugin backend URL, if exists.
-            $compare_env = filter_input( INPUT_GET, "compare_env", FILTER_SANITIZE_STRING );
+            $compare_env = isset( $_GET['compare_env'] )
+              ? sanitize_text_field( $_GET['compare_env'] )
+              : '';
             wp_localize_script( 'wpcfm-admin-js', 'compare_env', array( 'env' => $compare_env ) );
 
             wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), [], WPCFM_VERSION );
