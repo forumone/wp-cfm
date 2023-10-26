@@ -4,19 +4,19 @@
 *.orig
 *.log
 *.rej
-*.swo
-*.swp
+.*.sw[a-z]
 *.vi
 *~
 *.sass-cache
 
-# Local Development files/folders.
+# Local Development or temporary build files/folders.
 .env
 .wp-env.override.json
 phpcs.xml
 phpstan.neon
 phpunit.xml
 .phpunit.result.cache
+clover.xml
 
 # OS or Editor folders
 .DS_Store
@@ -32,6 +32,21 @@ nbproject
 *.sublime-workspace
 .idea
 clover.xml
+*.tmproj
+*.tmproject
+tmtags
+*.un~
+Session.vim
+
+# Mac OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini
 
 # Dreamweaver added files
 _notes
@@ -46,9 +61,12 @@ dwsync.xml
 .svn
 .CVS
 intermediate
-.idea
 cache
 node_modules
 dist
 
+# Build artifacts not to ignore.
+vendor/*
+!vendor/autoload.php
+!vendor/composer
 

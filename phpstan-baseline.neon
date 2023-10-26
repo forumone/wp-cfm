@@ -1,0 +1,931 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method WPCFM_Ajax\\:\\:load_diff\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-ajax.php
+
+		-
+			message: "#^Method WPCFM_Ajax\\:\\:load_settings\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-ajax.php
+
+		-
+			message: "#^Method WPCFM_Ajax\\:\\:pull_settings\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-ajax.php
+
+		-
+			message: "#^Method WPCFM_Ajax\\:\\:push_settings\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-ajax.php
+
+		-
+			message: "#^Method WPCFM_Ajax\\:\\:save_settings\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-ajax.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Cannot access offset 'bundles' on mixed\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Cannot access offset 'is_db' on mixed\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Cannot access offset 'is_file' on mixed\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Cannot access offset 'name' on mixed\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Constant WPCFM_CONFIG_DIR not found\\.$#"
+			count: 2
+			path: includes/class-helper.php
+
+		-
+			message: "#^Constant WPCFM_CONFIG_FORMAT not found\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Constant WPCFM_CONFIG_URL not found\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:convert_to_yaml\\(\\) has parameter \\$data with no type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:convert_to_yaml\\(\\) has parameter \\$saveFormat with no type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_bundle_by_name\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_bundle_by_name\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_bundle_names\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_bundle_url\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_bundle_url\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_bundles\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:get_file_bundles\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:group_items\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Helper\\:\\:group_items\\(\\) has parameter \\$items with no type specified\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, array\\<int, string\\>\\|false given\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Possibly invalid array key type \\(array\\<int, string\\>\\|string\\)\\.$#"
+			count: 1
+			path: includes/class-helper.php
+
+		-
+			message: "#^Method WPCFM_Options\\:\\:get\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-options.php
+
+		-
+			message: "#^Method WPCFM_Options\\:\\:get\\(\\) has parameter \\$option with no type specified\\.$#"
+			count: 1
+			path: includes/class-options.php
+
+		-
+			message: "#^Method WPCFM_Options\\:\\:update\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-options.php
+
+		-
+			message: "#^Method WPCFM_Options\\:\\:update\\(\\) has parameter \\$option with no type specified\\.$#"
+			count: 1
+			path: includes/class-options.php
+
+		-
+			message: "#^Method WPCFM_Options\\:\\:update\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: includes/class-options.php
+
+		-
+			message: "#^Property WPCFM_Options\\:\\:\\$is_network has no type specified\\.$#"
+			count: 1
+			path: includes/class-options.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 2
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Cannot access offset 'bundles' on mixed\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Cannot access offset 'config' on mixed\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Cannot access offset 'name' on mixed\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 6
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Constant WPCFM_CONFIG_DIR not found\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Constant WPCFM_CONFIG_FORMAT not found\\.$#"
+			count: 7
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Constant WPCFM_CONFIG_USE_YAML_DIFF not found\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:bundle_filename\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:callback_wp_options\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:callback_wp_options\\(\\) has parameter \\$params with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:compare_bundle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:compare_bundle\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:delete_file\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:delete_file\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:pull_bundle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:push_bundle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:read_db\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:read_db\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:read_file\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:read_file\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:read_file\\(\\) should return array but returns mixed\\.$#"
+			count: 2
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:write_db\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:write_db\\(\\) has parameter \\$file_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:write_file\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:write_file\\(\\) has parameter \\$bundle_name with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Method WPCFM_Readwrite\\:\\:write_file\\(\\) has parameter \\$data with no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of static method Symfony\\\\Component\\\\Yaml\\\\Yaml\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, mixed given\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Property WPCFM_Readwrite\\:\\:\\$db_data has no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Property WPCFM_Readwrite\\:\\:\\$error has no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Property WPCFM_Readwrite\\:\\:\\$folder has no type specified\\.$#"
+			count: 1
+			path: includes/class-readwrite.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Cannot access offset 'bundles' on mixed\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Cannot access offset 'config' on mixed\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Cannot access offset 'name' on mixed\\.$#"
+			count: 2
+			path: includes/class-registry.php
+
+		-
+			message: "#^Method WPCFM_Registry\\:\\:disallowed_items\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Method WPCFM_Registry\\:\\:disallowed_items\\(\\) has parameter \\$items with no type specified\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Method WPCFM_Registry\\:\\:get_configuration_items\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Method WPCFM_Registry\\:\\:get_duplicates\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-registry.php
+
+		-
+			message: "#^Call to method display\\(\\) on an unknown class cli\\\\Table\\.$#"
+			count: 4
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Call to static method add_command\\(\\) on an unknown class WP_CLI\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class WP_CLI\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Call to static method line\\(\\) on an unknown class WP_CLI\\.$#"
+			count: 3
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class WP_CLI\\.$#"
+			count: 2
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class WP_CLI\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Function WP_CLI\\\\Utils\\\\format_items not found\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Instantiated class cli\\\\Table not found\\.$#"
+			count: 4
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:bundles\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:bundles\\(\\) has parameter \\$args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:bundles\\(\\) has parameter \\$assoc_args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:diff\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:diff\\(\\) has parameter \\$args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:diff\\(\\) has parameter \\$assoc_args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:pull\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:pull\\(\\) has parameter \\$args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:pull\\(\\) has parameter \\$assoc_args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:push\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:push\\(\\) has parameter \\$args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:push\\(\\) has parameter \\$assoc_args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:show_bundle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:show_bundle\\(\\) has parameter \\$args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Method WPCFM_CLI_Command\\:\\:show_bundle\\(\\) has parameter \\$assoc_args with no type specified\\.$#"
+			count: 1
+			path: includes/class-wp-cli.php
+
+		-
+			message: "#^Function acf_extract_var not found\\.$#"
+			count: 2
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Function acf_get_field_group not found\\.$#"
+			count: 2
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Function acf_get_fields not found\\.$#"
+			count: 2
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Function acf_prepare_fields_for_export not found\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Function acf_prepare_fields_for_import not found\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Function acf_update_field not found\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Function acf_update_field_group not found\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Method WPCFM_Advanced_Custom_Fields\\:\\:acf_pull\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Method WPCFM_Advanced_Custom_Fields\\:\\:acf_push\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Method WPCFM_Advanced_Custom_Fields\\:\\:acf_push\\(\\) has parameter \\$group_id with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Method WPCFM_Advanced_Custom_Fields\\:\\:configuration_items\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Method WPCFM_Advanced_Custom_Fields\\:\\:configuration_items\\(\\) has parameter \\$items with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Method WPCFM_Advanced_Custom_Fields\\:\\:get_field_groups\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Offset 'new_value' does not exist on string\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Offset 'parent' does not exist on array\\{menu_order\\: int\\<0, max\\>\\}\\.$#"
+			count: 1
+			path: includes/integrations/acf.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 2
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Cannot access offset 'cfs_fields' on mixed\\.$#"
+			count: 8
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Cannot access offset 'id' on mixed\\.$#"
+			count: 5
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Cannot access offset 'name' on mixed\\.$#"
+			count: 2
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Cannot access offset 'parent_id' on mixed\\.$#"
+			count: 5
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Cannot access offset mixed on mixed\\.$#"
+			count: 6
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 3
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Function CFS not found\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:cfs_pull\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:configuration_items\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:configuration_items\\(\\) has parameter \\$items with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:get_field_groups\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:pull_callback\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:pull_callback\\(\\) has parameter \\$callback with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:pull_callback\\(\\) has parameter \\$callback_params with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:save_field_group\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Method WPCFM_Custom_Field_Suite\\:\\:save_field_group\\(\\) has parameter \\$field_group with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Offset 'new_value' does not exist on string\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Offset 'old_value' does not exist on string\\.$#"
+			count: 1
+			path: includes/integrations/custom-field-suite.php
+
+		-
+			message: "#^Argument of an invalid type array\\<int, int\\|string\\|WP_Term\\>\\|string\\|WP_Error supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 2
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access offset 'description' on mixed\\.$#"
+			count: 2
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access offset 'name' on mixed\\.$#"
+			count: 2
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access offset 'parent' on mixed\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access offset 'slug' on mixed\\.$#"
+			count: 3
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access offset 'term_id' on array\\{term_id\\: int, term_taxonomy_id\\: int\\|string\\}\\|WP_Error\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access offset 'term_id' on mixed\\.$#"
+			count: 3
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$description on int\\|string\\|WP_Term\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$label on string\\|WP_Taxonomy\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$name on int\\|string\\|WP_Term\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$name on string\\|WP_Taxonomy\\.$#"
+			count: 2
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$parent on int\\|string\\|WP_Term\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$slug on int\\|string\\|WP_Term\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot access property \\$term_id on int\\|string\\|WP_Term\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 3
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Method WPCFM_Taxonomy\\:\\:configuration_items\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Method WPCFM_Taxonomy\\:\\:configuration_items\\(\\) has parameter \\$items with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Method WPCFM_Taxonomy\\:\\:import_terms\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Method WPCFM_Taxonomy\\:\\:pull_callback\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Method WPCFM_Taxonomy\\:\\:pull_callback\\(\\) has parameter \\$callback with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Method WPCFM_Taxonomy\\:\\:pull_callback\\(\\) has parameter \\$callback_params with no type specified\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Offset 'name' does not exist on string\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Offset 'new_value' does not exist on string\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Offset 'old_value' does not exist on string\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Parameter \\#1 \\$args of function get_terms expects array\\{taxonomy\\?\\: array\\<string\\>\\|string, object_ids\\?\\: array\\<int\\>\\|int, orderby\\?\\: string, order\\?\\: string, hide_empty\\?\\: bool\\|int, include\\?\\: array\\<int\\>\\|string, exclude\\?\\: array\\<int\\>\\|string, exclude_tree\\?\\: array\\<int\\>\\|string, \\.\\.\\.\\}, string given\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Parameter \\#1 \\$term of function wp_insert_term expects string, mixed given\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Parameter \\#2 \\$output of function get_taxonomies expects string, array\\<string, string\\> given\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Parameter \\#3 \\$args of function wp_insert_term expects array\\{alias_of\\?\\: string, description\\?\\: string, parent\\?\\: int, slug\\?\\: string\\}, array\\{description\\: mixed, parent\\: int, slug\\: mixed\\} given\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Parameter \\#3 \\$args of function wp_update_term expects array\\{alias_of\\?\\: string, description\\?\\: string, parent\\?\\: int, slug\\?\\: string\\}, array\\{description\\: mixed, parent\\: int, name\\: mixed\\} given\\.$#"
+			count: 1
+			path: includes/integrations/taxonomy.php
+
+		-
+			message: "#^Constant WPCFM_REGISTER_MULTI_ENV not found\\.$#"
+			count: 1
+			path: templates/page-settings.php
+
+		-
+			message: "#^Variable \\$this might not be defined\\.$#"
+			count: 3
+			path: templates/page-settings.php
+
+		-
+			message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Constant WPCFM_DIR not found\\.$#"
+			count: 5
+			path: wp-cfm.php
+
+		-
+			message: "#^Constant WPCFM_REGISTER_MULTI_ENV not found\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Constant WPCFM_VERSION not found\\.$#"
+			count: 5
+			path: wp-cfm.php
+
+		-
+			message: "#^Constant WP_CONTENT_DIR not found\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Constant WP_CONTENT_URL not found\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Function WPCFM\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:admin_menu\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:admin_scripts\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:admin_scripts\\(\\) has parameter \\$hook with no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:init\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:instance\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:load_textdomain\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:network_admin_menu\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:set_as_ssot\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:set_multi_env\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Method WPCFM_Core\\:\\:settings_page\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Property WPCFM_Core\\:\\:\\$helper has no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Property WPCFM_Core\\:\\:\\$instance has no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Property WPCFM_Core\\:\\:\\$options has no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Property WPCFM_Core\\:\\:\\$pantheon_env has no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Property WPCFM_Core\\:\\:\\$readwrite has no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
+
+		-
+			message: "#^Property WPCFM_Core\\:\\:\\$registry has no type specified\\.$#"
+			count: 1
+			path: wp-cfm.php
