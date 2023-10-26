@@ -44,7 +44,7 @@ class WPCFM_Ajax
                 }
             }
 
-            echo __( 'Settings saved', 'wpcfm' );
+            echo __( 'Settings saved', 'wp-cfm' );
         }
         exit;
     }
@@ -76,7 +76,7 @@ class WPCFM_Ajax
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
             WPCFM()->readwrite->push_bundle( $bundle_name );
-            echo __( 'Push successful', 'wpcfm' );
+            echo __( 'Push successful', 'wp-cfm' );
         }
         exit;
     }
@@ -89,7 +89,7 @@ class WPCFM_Ajax
         if ( current_user_can( 'manage_options' ) ) {
             $bundle_name = stripslashes( $_POST['data']['bundle_name'] );
             WPCFM()->readwrite->pull_bundle( $bundle_name );
-            echo __( 'Pull successful', 'wpcfm' );
+            echo __( 'Pull successful', 'wp-cfm' );
         }
         exit;
     }

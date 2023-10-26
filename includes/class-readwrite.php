@@ -16,11 +16,11 @@ class WPCFM_Readwrite
 
         if ( ! is_dir( $this->folder ) ) {
             if ( ! wp_mkdir_p( $this->folder ) ) {
-                $this->error = __( 'Create ' . $this->folder .  ' and grant write access', 'wpcfm' );
+                $this->error = __( 'Create ' . $this->folder .  ' and grant write access', 'wp-cfm' );
             }
         }
         elseif ( ! is_writable( $this->folder ) ) {
-            $this->error = __( 'The ' . $this->folder .  ' folder is not writable', 'wpcfm' );
+            $this->error = __( 'The ' . $this->folder .  ' folder is not writable', 'wp-cfm' );
         }
     }
 
@@ -158,7 +158,7 @@ class WPCFM_Readwrite
         }
 
         if ( $file_bundle == $db_bundle ) {
-            $return['error'] = __( 'Both versions are identical', 'wpcfm' );
+            $return['error'] = __( 'Both versions are identical', 'wp-cfm' );
         }
         else {
             $return['error'] = '';
@@ -299,7 +299,7 @@ class WPCFM_Readwrite
         foreach ( $file_data as $key => $val ) {
 
             // Set a default group if needed
-            $group = isset( $db_data[ $key ]['group'] ) ? $db_data[ $key ]['group'] : __( 'WP Options', 'wpcfm' );
+            $group = isset( $db_data[ $key ]['group'] ) ? $db_data[ $key ]['group'] : __( 'WP Options', 'wp-cfm' );
 
             // Make sure "old_value" exists
             if ( empty( $db_data[ $key ]['value'] ) ) {

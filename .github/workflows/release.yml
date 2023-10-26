@@ -1,0 +1,56 @@
+name: Create a Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  ACTION_VERSION: 1
+
+jobs:
+  release:
+    name: New Release
+
+    if: github.repository == 'forumone/wp-cfm'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # https://github.com/marketplace/actions/semver-conventional-commits
+    - name: Get Versions
+      id: semver
+      uses: ietf-tools/semver-action@v1
+      with:
+        token: ${{ github.token }}
+        branch: main
+
+    - name: Create Release Name
+      id: release-name
+      run: |
+        RELEASE_NAME=$(echo ${{ steps.semver.outputs.nextStrict }} Release)
+        echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_OUTPUT
+
+    # https://github.com/marketplace/actions/changelog-from-conventional-commits
+    - name: Generate a Changelog Entry
+      id: changelog
+      uses: requarks/changelog-action@v1
+      with:
+        token: ${{ github.token }}
+        fromTag: ${{ github.ref_name }}
+        toTag: ${{ steps.semver.outputs.current }}
+        writeToFile: false
+
+    # https://github.com/marketplace/actions/create-release
+    - name: Create Release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        name: ${{ steps.release-name.outputs.RELEASE_NAME }}
+        tag: ${{ steps.semver.outputs.next }}
+        commit: ${{ github.sha }}
+        body: ${{ steps.changelog.outputs.changes }}
+
