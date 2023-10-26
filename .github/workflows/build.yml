@@ -1,0 +1,101 @@
+name: Prepare a Release
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+env:
+  ACTION_VERSION: 1
+
+jobs:
+  release:
+    name: New Release
+
+    if: github.repository == 'forumone/wp-cfm'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # https://github.com/marketplace/actions/setup-node-js-environment
+    - name: Setup Node Environment
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - name: Get NPM Cache Directory
+      id: npm-cache
+      if: ${{ !env.ACT }}
+      run: echo "::set-output name=dir::$(npm config get cache)"
+
+    - name: Cache Node Modules
+      if: ${{ !env.ACT }}
+      uses: actions/cache@v2
+      env:
+        npm-cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-
+
+    # https://github.com/marketplace/actions/semver-conventional-commits
+    - name: Get Versions
+      id: semver
+      uses: ietf-tools/semver-action@v1
+      with:
+        token: ${{ github.token }}
+        branch: main
+
+    - name: Create Release Name
+      id: release-name
+      run: |
+        RELEASE_NAME=$(echo "=  ${{ steps.semver.outputs.nextStrict }} =")
+        echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_OUTPUT
+
+    # https://github.com/marketplace/actions/changelog-from-conventional-commits
+    - name: Generate Changelog
+      id: changelog
+      uses: requarks/changelog-action@v1
+      with:
+        token: ${{ github.token }}
+        fromTag: ${{ github.ref_name }}
+        toTag: ${{ steps.semver.outputs.current }}
+
+    - name: NPM Install
+      run: npm ci
+
+    # https://github.com/marketplace/actions/update-file
+    - name: Update readme.txt Changelog
+      uses: wow-actions/update-file@v1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        path: readme.txt
+        content: |
+          ${{ steps.release-name.outputs.RELEASE_NAME }}
+          ${{ steps.changelog.outputs.changes }}
+
+    - name: Set Release Version
+      run: npm run version:bump ${{ steps.semver.outputs.next }}
+
+    - name: Prepare a New Build
+      run: npm run build
+
+    - name: Create Commit Message
+      id: commit-msg
+      run: |
+        COMMIT_MSG=$(echo "chore(release): Updates and builds for release ${{ steps.semver.outputs.nextStrict }}")
+        echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_OUTPUT
+
+    # https://github.com/marketplace/actions/git-commit-push-changes
+    - name: Commit & Push Release Changes
+      uses: actions-x/commit@v6
+      with:
+        email: support+f1builder@forumone.com
+        name: F1 Builder
+        message: ${{ steps.commit-msg.outputs.COMMIT_MSG }}

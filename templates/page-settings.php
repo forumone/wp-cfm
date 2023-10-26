@@ -10,12 +10,12 @@ $configuration = $this->helper->group_items( $configuration );
 
     <?php if ( defined( 'WPCFM_CURRENT_ENV' ) && !empty( WPCFM_CURRENT_ENV ) ): ?>
     <div class="wpcfm-info">
-        <?php _e( 'Current environment', 'wpcfm' ); ?>: <code><?php echo ucfirst( WPCFM_CURRENT_ENV ); ?></code>
+        <?php _e( 'Current environment', 'wp-cfm' ); ?>: <code><?php echo ucfirst( WPCFM_CURRENT_ENV ); ?></code>
     </div>
 
     <!-- Environment Switcher -->
     <div class="wpcfm-env-switch">
-        <?php _e( 'Switch config to', 'wpcfm' ); ?>: <select name="wpcfm_env_switch" id="wpcfm_env_switch">
+        <?php _e( 'Switch config to', 'wp-cfm' ); ?>: <select name="wpcfm_env_switch" id="wpcfm_env_switch">
             <?php foreach ( WPCFM_REGISTER_MULTI_ENV as $env ): ?>
                 <option value="<?php echo $env; ?>"
                     <?php if ( ( WPCFM_CURRENT_ENV == $env && !defined( 'WPCFM_COMPARE_ENV' ) ) || ( defined( 'WPCFM_COMPARE_ENV' ) && WPCFM_COMPARE_ENV == $env ) ): ?>
@@ -38,9 +38,9 @@ $configuration = $this->helper->group_items( $configuration );
 <div class="wpcfm-warnings">
     <?php foreach ( $this->registry->get_duplicates() as $option => $bundles ): ?>
         <div class="wpcfm-warning">
-            <?php _e( 'Warning: ', 'wpcfm' ); ?>
+            <?php _e( 'Warning: ', 'wp-cfm' ); ?>
             <?php echo( $option ); ?>
-            <?php _e( 'is tracked by multiple bundles: ', 'wpcfm' ); ?>
+            <?php _e( 'is tracked by multiple bundles: ', 'wp-cfm' ); ?>
             <?php echo( implode( ', ', $bundles ) ); ?>
         </div>
     <?php endforeach; ?>
@@ -50,18 +50,18 @@ $configuration = $this->helper->group_items( $configuration );
     <div class="wpcfm-action-buttons">
         <div style="float:right">
             <span class="wpcfm-response"></span>
-            <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wpcfm' ); ?></a>
+            <a class="button-primary wpcfm-save"><?php _e( 'Save Changes', 'wp-cfm' ); ?></a>
         </div>
-        <a class="button add-bundle"><?php _e( 'Add Bundle', 'wpcfm' ); ?></a>
+        <a class="button add-bundle"><?php _e( 'Add Bundle', 'wp-cfm' ); ?></a>
         <div class="clear"></div>
     </div>
 
     <div class="bundle-row row-all" data-bundle="all">
         <div class="bundle-header">
             <div class="bundle-actions">
-                <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button push-bundle" title="Write database changes to the filesystem"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button pull-bundle" title="Import file changes into the database"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wp-cfm' ); ?></a> &nbsp;
+                <a class="button push-bundle" title="Write database changes to the filesystem"><?php _e( 'Push', 'wp-cfm' ); ?></a> &nbsp;
+                <a class="button pull-bundle" title="Import file changes into the database"><?php _e( 'Pull', 'wp-cfm' ); ?></a>
             </div>
             <div class="bundle-toggle">All Bundles</div>
             <div class="clear"></div>
@@ -80,9 +80,9 @@ $configuration = $this->helper->group_items( $configuration );
         <div class="bundle-header">
             <div class="bundle-actions">
                 <span class="no-actions">Save to see actions</span>
-                <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button push-bundle disabled" title="Write database changes to the filesystem"><?php _e( 'Push', 'wpcfm' ); ?></a> &nbsp;
-                <a class="button pull-bundle disabled" title="Import file changes into the database"><?php _e( 'Pull', 'wpcfm' ); ?></a>
+                <a class="button diff-bundle" title="Compare differences"><?php _e( 'Diff', 'wp-cfm' ); ?></a> &nbsp;
+                <a class="button push-bundle disabled" title="Write database changes to the filesystem"><?php _e( 'Push', 'wp-cfm' ); ?></a> &nbsp;
+                <a class="button pull-bundle disabled" title="Import file changes into the database"><?php _e( 'Pull', 'wp-cfm' ); ?></a>
             </div>
             <div class="bundle-toggle">New bundle</div>
             <div class="clear"></div>
@@ -104,8 +104,8 @@ $configuration = $this->helper->group_items( $configuration );
                     <?php endforeach; ?>
                 </select>
             </div>
-            <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wpcfm' ); ?></a>
-            <a class="download-bundle hidden"><?php _e( 'Download', 'wpcfm' ); ?></a>
+            <a class="remove-bundle"><?php _e( 'Delete Bundle', 'wp-cfm' ); ?></a>
+            <a class="download-bundle hidden"><?php _e( 'Download', 'wp-cfm' ); ?></a>
             <div class="clear"></div>
         </div>
     </div>

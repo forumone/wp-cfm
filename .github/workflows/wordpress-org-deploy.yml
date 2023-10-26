@@ -1,16 +1,55 @@
 name: Deploy to WordPress.org
 on:
-  push:
-    tags:
-    - "*"
+  release:
+    types: [published]
+
+env:
+  ACTION_VERSION: 1
+
 jobs:
-  tag:
-    name: New tag
+  deploy-release:
+    name: Deploy Release
+
+    if: github.repository == 'forumone/wp-cfm'
+
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - name: WordPress Plugin Deploy
-      uses: 10up/action-wordpress-plugin-deploy@master
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup Node Environment
+      uses: actions/setup-node@v1
+      # https://github.com/marketplace/actions/setup-node-js-environment
+      with:
+        node-version: 14.x
+
+    - name: Get NPM Cache Directory
+      id: npm-cache
+      if: ${{ !env.ACT }}
+      run: echo "::set-output name=dir::$(npm config get cache)"
+
+    - name: Cache Node Modules
+      if: ${{ !env.ACT }}
+      uses: actions/cache@v2
+      env:
+        npm-cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-
+
+    - name: NPM Install
+      run: npm ci
+
+    - name: Prepare a WordPress.org Release
+      run: npm run release
+
+    - name: WordPress.org Plugin Deploy
+      uses: nk-o/action-wordpress-plugin-deploy@master
+      # https://github.com/marketplace/actions/wordpress-plugin-deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
