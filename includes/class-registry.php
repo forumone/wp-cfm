@@ -5,6 +5,7 @@ class WPCFM_Registry
 
     function __construct() {
         add_filter( 'wpcfm_configuration_items', array( $this, 'disallowed_items' ) );
+        add_filter( 'wpcfm_configuration_items', array( $this, 'get_configuration_items_from_files' ) );
     }
 
 
@@ -107,5 +108,24 @@ class WPCFM_Registry
             }
         }
         return $result;
+    }
+    function get_configuration_items_from_files($items) {
+      $file_bundles = WPCFM()->helper->get_file_bundles();
+      $db_items = array_keys($items);
+      foreach ($file_bundles as $file_bundle) {
+        if (!isset($file_bundle['config'])) {
+          continue;
+        }
+        $file_items = array_keys($file_bundle['config']);
+        foreach ($file_items as $item) {
+          if (in_array($item, $db_items)) {
+            continue;
+          }
+          $items[$item]['value'] = $file_bundle['config'][$item];
+          $items[$item]['label'] = $item . ' ( not in database )';
+          $items[$item]['not_in_db'] = true;
+        }
+      }
+      return $items;
     }
 }
