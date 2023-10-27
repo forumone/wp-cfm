@@ -66,9 +66,12 @@ module.exports = function (grunt) {
 					'!CONTRIBUTING.md',
 					'!README.md',
 					'!HOWTO.md',
-					'!phpcs.xml', '!phpcs.xml.dist', '!phpstan.neon.dist', '!grumphp.yml.dist', // CodeSniffer Configuration.
+					'!patches/**',
+					'!phpcs.xml', '!phpcs.xml.dist', '!phpstan.neon.dist', '!phpstan-baseline.neon', '!grumphp.yml.dist', // CodeSniffer Configuration.
 					'!codecov.yml', // Code coverage configuration.
-					'!tools/**', // Local Development/Build tools configuration.
+					'!tools/**', '!dev-cli', '!docker-compose.yml', // Local Development/Build tools configuration.
+					'!vendor/wpackagist-theme/**',
+					'!wp-cli.yml'
 				],
 				dest: 'dist/',
 				options: {
@@ -85,7 +88,7 @@ module.exports = function (grunt) {
 				options: {
 					updateDomains: true
 				},
-				src: ['*.php', '**/*.php', '!node_modules/**', '!tests/**', '!scripts/**', '!vendor/**', '!wordpress/**']
+				src: ['*.php', '**/*.php', '!node_modules/**', '!tests/**', '!tools/**', '!scripts/**', '!vendor/**', '!wordpress/**']
 			},
 		},
 
@@ -109,7 +112,7 @@ module.exports = function (grunt) {
 						'.github/.*',							//GitHub platform
 						'tests/.*', 'scripts/.*',	//unit testing
 						'vendor/.*', 							//composer
-						'wordpress/.*',
+						'tools/.*'
 					],                                // List of files or directories to ignore.
 					mainFile: 'wp-cfm.php',                     // Main project file.
 					potFilename: 'wp-cfm.pot',                  // Name of the POT file.
@@ -168,6 +171,7 @@ module.exports = function (grunt) {
 					'!node_modules/**',
 					'!dist/**',
 					'!tests/**',
+					'!tools/**',
 					'!vendor/**',
 					'!wordpress/**',
 					'!*~',
@@ -208,7 +212,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('readme', ['wp_readme_to_markdown']);
 	grunt.registerTask('test', ['checktextdomain']);
 	grunt.registerTask('build', ['gitinfo', 'test', 'i18n', 'readme']);
-	grunt.registerTask('release', ['checkbranch:HEAD', 'checkrepo', 'gitinfo', 'checktextdomain', 'clean', 'copy']);
+	grunt.registerTask('release', ['checkrepo', 'gitinfo', 'checktextdomain', 'clean', 'copy']);
 
 };
 

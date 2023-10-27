@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-CFM 1.7.5\n"
 "Report-Msgid-Bugs-To: https://github.com/forumon/wp-cfm/issues\n"
-"POT-Creation-Date: 2023-10-26 06:39:04+00:00\n"
+"POT-Creation-Date: 2023-10-30 03:04:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Pull successful"
 msgstr ""
 
-#: includes/class-helper.php:138 includes/class-readwrite.php:302
+#: includes/class-helper.php:138 includes/class-readwrite.php:306
 msgid "WP Options"
 msgstr ""
 

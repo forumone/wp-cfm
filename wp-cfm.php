@@ -120,23 +120,24 @@ class WPCFM_Core {
 	 * @return string
 	 */
 	private function set_current_env() {
+		$compare_env = null;
 		// Get Compare Env when rendering the settings page.
 		if ( ! wp_doing_ajax() || ! defined( 'WP_CLI' ) ) {
-			$compare_env = isset( $_GET['compare_env'] )
-				? sanitize_text_field( $_GET['compare_env'] )
-				: '';
-			if ( $compare_env ) {
+			if ( isset( $_GET['compare_env'] ) ) {
+				$compare_env = $this->filter_string_polyfill( $_GET['compare_env'] );
+			}
+			if ( ! empty( $compare_env ) ) {
 				define( 'WPCFM_COMPARE_ENV', $compare_env );
 			}
 		}
 
 		// Get Compare Env when doing AJAX.
 		if ( wp_doing_ajax() ) {
-			$compare_env = isset( $_GET['compare_env'] )
-			  ? sanitize_text_field( $_GET['compare_env'] )
-			  : '';
-			if ( $compare_env && in_array( $compare_env, WPCFM_REGISTER_MULTI_ENV ) ) {
-				return $compare_env;
+			if ( isset( $_POST['compare_env'] ) ) {
+				$compare_env = $this->filter_string_polyfill( $_POST['compare_env'] );
+				if ( ! empty( $compare_env ) && in_array( $compare_env, WPCFM_REGISTER_MULTI_ENV ) ) {
+					return strval( $compare_env );
+				}
 			}
 		}
 
@@ -281,7 +282,9 @@ class WPCFM_Core {
 
 
 	/**
-	 * i18n support
+	 * i18n support.
+	 *
+	 * @return void
 	 */
 	function load_textdomain() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'wpcfm' );
@@ -292,6 +295,27 @@ class WPCFM_Core {
 		} else {
 			load_plugin_textdomain( 'wpcfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
+	}
+
+	/**
+	 * Deprecated `FILTER_SANITIZE_STRING` polyfill.
+	 *
+	 * @param string $string A raw string that should be sanitized.
+	 *
+	 * @return string|bool
+	 */
+	private function filter_string_polyfill( string $string ) {
+		$str = preg_replace( '/\x00|<[^>]*>?/', '', $string );
+
+		if ( empty( $str ) ) {
+			return false;
+		}
+
+		return str_replace(
+			array( "'", '"' ),
+			array( '&#39;', '&#34;' ),
+			$str
+		);
 	}
 }
 

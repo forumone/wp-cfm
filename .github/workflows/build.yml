@@ -7,6 +7,8 @@ on:
       - main
 
 env:
+  PHP_VERSION: '7.4'
+  COMPOSER_VERSION: '2.5'
   ACTION_VERSION: 1
 
 jobs:
@@ -18,14 +20,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # https://github.com/marketplace/actions/checkout
     - name: Checkout Code
       uses: actions/checkout@v2
 
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      if: ${{ !env.ACT }}
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    # https://github.com/marketplace/actions/cache
+    - name: Cache Composer dependencies
+      if: ${{ !env.ACT }}
+      uses: actions/cache@v3
+      env:
+        composer-cache-name: cache-composer
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-build-${{ env.composer-cache-name }}-php${{ env.PHP_VERSION }}-v${{ env.ACTION_VERSION }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.composer-cache-name }}-php${{ env.PHP_VERSION }}-v${{ env.ACTION_VERSION }}-
+
     # https://github.com/marketplace/actions/setup-node-js-environment
     - name: Setup Node Environment
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version-file: '.nvmrc'
+        cache: ${{ !env.ACT && 'npm' || '' }}
 
     - name: Get NPM Cache Directory
       id: npm-cache
@@ -43,6 +64,13 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-
+
+    # https://github.com/marketplace/actions/setup-php-action
+    - name: Setup PHP & Composer Environment
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "${{ env.PHP_VERSION }}"
+        tools: "composer:${{ env.COMPOSER_VERSION }}"
 
     # https://github.com/marketplace/actions/semver-conventional-commits
     - name: Get Versions
@@ -66,6 +94,9 @@ jobs:
         token: ${{ github.token }}
         fromTag: ${{ github.ref_name }}
         toTag: ${{ steps.semver.outputs.current }}
+
+    - name: Install Composer Dependencies
+      run: composer install --no-dev --prefer-dist
 
     - name: NPM Install
       run: npm ci

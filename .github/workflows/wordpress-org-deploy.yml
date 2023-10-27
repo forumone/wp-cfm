@@ -18,11 +18,12 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
+    # https://github.com/marketplace/actions/setup-node-js-environment
     - name: Setup Node Environment
-      uses: actions/setup-node@v1
-      # https://github.com/marketplace/actions/setup-node-js-environment
+      uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version-file: '.nvmrc'
+        cache: ${{ !env.ACT && 'npm' || '' }}
 
     - name: Get NPM Cache Directory
       id: npm-cache
@@ -47,11 +48,11 @@ jobs:
     - name: Prepare a WordPress.org Release
       run: npm run release
 
+    # https://github.com/marketplace/actions/wordpress-plugin-deploy
     - name: WordPress.org Plugin Deploy
       uses: nk-o/action-wordpress-plugin-deploy@master
-      # https://github.com/marketplace/actions/wordpress-plugin-deploy
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SOURCE_DIR: dist/
         SLUG: wp-cfm

@@ -26,16 +26,14 @@ class Unescaper
     /**
      * Regex fragment that matches an escaped character in a double quoted string.
      */
-    const REGEX_ESCAPED_CHARACTER = '\\\\(x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8}|.)';
+    public const REGEX_ESCAPED_CHARACTER = '\\\\(x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8}|.)';
 
     /**
      * Unescapes a single quoted string.
      *
      * @param string $value A single quoted string
-     *
-     * @return string The unescaped string
      */
-    public function unescapeSingleQuotedString($value)
+    public function unescapeSingleQuotedString(string $value): string
     {
         return str_replace('\'\'', '\'', $value);
     }
@@ -44,10 +42,8 @@ class Unescaper
      * Unescapes a double quoted string.
      *
      * @param string $value A double quoted string
-     *
-     * @return string The unescaped string
      */
-    public function unescapeDoubleQuotedString($value)
+    public function unescapeDoubleQuotedString(string $value): string
     {
         $callback = function ($match) {
             return $this->unescapeCharacter($match[0]);
@@ -61,10 +57,8 @@ class Unescaper
      * Unescapes a character that was found in a double-quoted string.
      *
      * @param string $value An escaped character
-     *
-     * @return string The unescaped character
      */
-    private function unescapeCharacter($value)
+    private function unescapeCharacter(string $value): string
     {
         switch ($value[1]) {
             case '0':
@@ -120,23 +114,19 @@ class Unescaper
 
     /**
      * Get the UTF-8 character for the given code point.
-     *
-     * @param int $c The unicode code point
-     *
-     * @return string The corresponding UTF-8 character
      */
-    private static function utf8chr($c)
+    private static function utf8chr(int $c): string
     {
         if (0x80 > $c %= 0x200000) {
-            return chr($c);
+            return \chr($c);
         }
         if (0x800 > $c) {
-            return chr(0xC0 | $c >> 6).chr(0x80 | $c & 0x3F);
+            return \chr(0xC0 | $c >> 6).\chr(0x80 | $c & 0x3F);
         }
         if (0x10000 > $c) {
-            return chr(0xE0 | $c >> 12).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+            return \chr(0xE0 | $c >> 12).\chr(0x80 | $c >> 6 & 0x3F).\chr(0x80 | $c & 0x3F);
         }
 
-        return chr(0xF0 | $c >> 18).chr(0x80 | $c >> 12 & 0x3F).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+        return \chr(0xF0 | $c >> 18).\chr(0x80 | $c >> 12 & 0x3F).\chr(0x80 | $c >> 6 & 0x3F).\chr(0x80 | $c & 0x3F);
     }
 }
