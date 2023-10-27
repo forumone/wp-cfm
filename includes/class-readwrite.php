@@ -5,6 +5,7 @@ class WPCFM_Readwrite
 {
 
     public $folder;
+    public $env;
     public $error;
     public $db_data;
 
@@ -13,6 +14,7 @@ class WPCFM_Readwrite
 
         // Create the "config" folder
         $this->folder = WPCFM_CONFIG_DIR;
+        $this->env = WPCFM_CURRENT_ENV;
 
         if ( ! is_dir( $this->folder ) ) {
             if ( ! wp_mkdir_p( $this->folder ) ) {
@@ -174,28 +176,69 @@ class WPCFM_Readwrite
      * Returns the bundle filename.
      * @return string
      */
-    function bundle_filename( $bundle_name ) {
-        $filename = "$this->folder/$bundle_name." . WPCFM_CONFIG_FORMAT;
+    function bundle_filename( $bundle_name, $env = '' ) {
+        $env = trailingslashit( $env ?: $this->env );
+        $filename = "$this->folder/{$env}{$bundle_name}." . WPCFM_CONFIG_FORMAT;
 
         if ( is_multisite() ) {
             if ( WPCFM()->options->is_network ) {
-                $filename = "$this->folder/network-$bundle_name." . WPCFM_CONFIG_FORMAT;
+                $filename = "$this->folder/{$env}network-$bundle_name." . WPCFM_CONFIG_FORMAT;
             }
             else {
-                $filename = "$this->folder/blog" . get_current_blog_id() . "-$bundle_name." . WPCFM_CONFIG_FORMAT;
+                $filename = "$this->folder/{$env}blog" . get_current_blog_id() . "-$bundle_name." . WPCFM_CONFIG_FORMAT;
             }
         }
 
         return $filename;
     }
 
-
     /**
-     * Load the file bundle
+     * Load a file bundle's compiled config
+     *
+     * - private/config/
+     *   - dev/
+     *     - default-bundle.json
+     *     - blog1-bundle.json
+     *     - blog2-bundle.json
+     *   - test/
+     *     - default-bundle.json
+     *     - blog1-bundle.json
+     *     - blog2-bundle.json
+     *   - live/
+     *     - default-bundle.json
+     *     - blog1-bundle.json
+     *     - blog2-bundle.json
+     *   - default/
+     *     - bundle.json
+     *
      * @return array
      */
     function read_file( $bundle_name ) {
-        $filename = $this->bundle_filename( $bundle_name );
+        $bundle_name = substr( $bundle_name, -1 * strlen( WPCFM_CONFIG_FORMAT ) ) != WPCFM_CONFIG_FORMAT
+            ? $bundle_name
+            : substr( $bundle_name, 0, strlen( $bundle_name ) - strlen( WPCFM_CONFIG_FORMAT ) - 1 );
+
+        // Get config from the default "environment"
+        $default_file = "$this->folder/default/$bundle_name." . WPCFM_CONFIG_FORMAT;
+        $default_config = $this->parse_file( $default_file );
+
+        $env_default_file = "$this->folder/$this->env/default-$bundle_name." . WPCFM_CONFIG_FORMAT;
+        $env_default_config = $this->parse_file( $env_default_file );
+
+        $bundle_file = $this->bundle_filename( $bundle_name );
+        $bundle_config = $this->parse_file( $bundle_file );
+
+        $config = array_merge( $default_config, $env_default_config, $bundle_config );
+
+        return apply_filters( 'wpcfm_bundle_config', $config, $bundle_name, $this->env );
+    }
+
+    /**
+     * Parse the contents of a single file.
+     * @return array
+     */
+    function parse_file( $filename ) {
+        $array = [];
         if ( is_readable( $filename ) ) {
             $contents = file_get_contents( $filename );
             if (WPCFM_CONFIG_FORMAT == 'json') {

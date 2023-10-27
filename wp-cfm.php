@@ -70,16 +70,7 @@ class WPCFM_Core
         // Register multiple environments.
         define( 'WPCFM_REGISTER_MULTI_ENV', $this->set_multi_env() );
 
-        // If multiple environments were defined.
-        if ( !empty( WPCFM_REGISTER_MULTI_ENV ) ) {
-            // Set the current environment where the WordPress site is running.
-            define( 'WPCFM_CURRENT_ENV',  $this->set_current_env() );
-            // If we have an env name, append it to create a subfolder inside wp-content/config/ directory.
-            if ( !empty( WPCFM_CURRENT_ENV ) ) {
-                $config_dir .= '/' . WPCFM_CURRENT_ENV;
-                $config_url .= '/' . WPCFM_CURRENT_ENV;
-            }
-        }
+        define( 'WPCFM_CURRENT_ENV',  $this->set_current_env() );
 
         define( 'WPCFM_CONFIG_DIR', apply_filters( 'wpcfm_config_dir', $config_dir ) );
         define( 'WPCFM_CONFIG_URL', apply_filters( 'wpcfm_config_url', $config_url ) );
