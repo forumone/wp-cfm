@@ -25,8 +25,6 @@
 /.nvmrc export-ignore
 /.wp-env.json export-ignore
 /CHANGELOG.md export-ignore
-/composer.json export-ignore
-/composer.lock export-ignore
 /Gruntfile.js export-ignore
 /grumphp.yml.dist export-ignore
 /phpcs.xml.dist export-ignore

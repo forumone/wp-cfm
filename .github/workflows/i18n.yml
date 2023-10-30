@@ -1,0 +1,37 @@
+name: Internationalization
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+      - 'feature/**'
+      - 'fix/**'
+
+env:
+  WP_MULTISITE: 0
+  ACTION_VERSION: 1
+
+jobs:
+  check_i18n:
+    name: Setup & Check Internationalization
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # https://github.com/marketplace/actions/checkout
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # https://github.com/marketplace/actions/setup-node-js-environment
+    - name: Setup Node Environment
+      uses: actions/setup-node@v2
+      with:
+        node-version-file: '.nvmrc'
+        cache: ${{ !env.ACT && 'npm' || '' }}
+
+    - name: NPM Install
+      run: npm ci
+
+    - name: Check i18n Compliance
+      run: npm run i18n:check
