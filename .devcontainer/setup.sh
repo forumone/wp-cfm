@@ -2,13 +2,15 @@
 
 set -eux
 
-if [ -z ${CODESPACE_NAME+x} ]; then
+# true is shell command and always return 0
+# false always return 1
+if [ -z "${CODESPACES}" ] ; then
 	SITE_HOST="http://localhost:8080"
 else
 	SITE_HOST="https://${CODESPACE_NAME}-8080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
 fi
 
-PLUGIN_DIR=/workspace/wp-cfm
+PLUGIN_DIR=/workspaces/wp-cfm
 
 # Install Composer dependencies.
 cd "${PLUGIN_DIR}"

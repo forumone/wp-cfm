@@ -12,15 +12,18 @@ services:
       - phpmyadmin
       - web
       - mailhog
-    working_dir: /workspace/wp-cfm
-    environment:
+    working_dir: /workspaces/wp-cfm
+    environment: &env
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_TEST_DB_NAME: wordpress_test
+      CODESPACES: "${CODESPACES}"
+      CODESPACE_NAME: "${CODESPACE_NAME}"
+      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: "${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
     volumes:
-      - .:/workspace/wp-cfm:cached
+      - .:/workspaces/wp-cfm:cached
       - ./tools/local-env:/app:cached
       - .:/app/wp-content/plugins/wp-cfm:ro,cached
       - ~/.composer:/root/.composer:cached
@@ -36,10 +39,7 @@ services:
     ports:
       - 8080:80
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+      <<: *env
     volumes:
       - ./tools/local-env:/app:cached
       - .:/app/wp-content/plugins/wp-cfm:ro,cached
@@ -81,7 +81,7 @@ services:
     restart: unless-stopped
     ports:
       - 1025:1025 # smtp server
-      - 8025:8025 # web ui
+      - 8026:8025 # web ui
     networks:
       - wpcfm-net
 
