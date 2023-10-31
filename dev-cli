@@ -1,0 +1,65 @@
+#!/usr/bin/env sh
+## Description: Run local development commands.
+## Usage: ./dev-cli [flags] [command]
+## Example: "./dev-cli phpcs"
+
+WORKSPACE_NAME="wp-cfm"
+WORKSPACE_DIR=./
+WORKSPACE_PATH=/workspaces/wp-cfm
+
+# Check for the devcontainer CLI.
+# TODO: Add a devcontainer CLI check and provide a docker compose fallback.
+
+case $1 in
+	start)
+		# Pop the first argument.
+		shift
+		# Run the command.
+		if command -v devpod > /dev/null 2>&1; then
+			devpod up "${WORKSPACE_DIR}" "$@"
+		elif command -v devcontainer > /dev/null 2>&1; then
+			devcontainer --workspace-folder "${WORKSPACE_DIR}" up "$@"
+		else
+			echo "No devcontainer management tool found!"
+		fi
+	;;
+	stop)
+		# Pop the first argument.
+		shift
+		# Run the command.
+		if command -v devpod > /dev/null 2>&1; then
+			devpod stop "${WORKSPACE_NAME}" "$@"
+		elif command -v docker > /dev/null 2>&1; then
+			SUPPRESS=$( docker ps -aq | xargs docker stop | xargs docker rm >/dev/null 2>&1 ) >/dev/null 2>&1
+		else
+			echo "No devcontainer management tool found!"
+		fi
+	;;
+	status)
+		# Pop the first argument.
+		shift
+		# Run the command.
+		if command -v devpod > /dev/null 2>&1; then
+			devpod status "${WORKSPACE_NAME}" "$@"
+		elif command -v devcontainer > /dev/null 2>&1; then
+			devcontainer --workspace-folder "${WORKSPACE_DIR}" read-configuration "$@"
+		else
+			echo "No devcontainer management tool found!"
+		fi
+	;;
+	shell)
+		# Pop the first argument.
+		shift
+		# Run the command.
+		if command -v devpod > /dev/null 2>&1; then
+			devpod ssh "${WORKSPACE_NAME}" --command "pushd ${WORKSPACE_PATH} && bash"
+		elif command -v devcontainer > /dev/null 2>&1; then
+			devcontainer exec --workspace-folder "${WORKSPACE_DIR}" bash "$@"
+		else
+			echo "No devcontainer management tool found!"
+		fi
+	;;
+	*)
+		echo "Usage: ./dev-cli [flags] [command]"
+	;;
+esac

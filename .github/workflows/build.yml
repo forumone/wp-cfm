@@ -1,0 +1,130 @@
+name: Prepare a Release
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+env:
+  PHP_VERSION: '7.4'
+  COMPOSER_VERSION: '2.5'
+  ACTION_VERSION: 1
+
+jobs:
+  release:
+    name: New Release
+
+    if: github.repository == 'forumone/wp-cfm'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # https://github.com/marketplace/actions/checkout
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      if: ${{ !env.ACT }}
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    # https://github.com/marketplace/actions/cache
+    - name: Cache Composer dependencies
+      if: ${{ !env.ACT }}
+      uses: actions/cache@v3
+      env:
+        composer-cache-name: cache-composer
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-build-${{ env.composer-cache-name }}-php${{ env.PHP_VERSION }}-v${{ env.ACTION_VERSION }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.composer-cache-name }}-php${{ env.PHP_VERSION }}-v${{ env.ACTION_VERSION }}-
+
+    # https://github.com/marketplace/actions/setup-node-js-environment
+    - name: Setup Node Environment
+      uses: actions/setup-node@v2
+      with:
+        node-version-file: '.nvmrc'
+        cache: ${{ !env.ACT && 'npm' || '' }}
+
+    - name: Get NPM Cache Directory
+      id: npm-cache
+      if: ${{ !env.ACT }}
+      run: echo "::set-output name=dir::$(npm config get cache)"
+
+    - name: Cache Node Modules
+      if: ${{ !env.ACT }}
+      uses: actions/cache@v2
+      env:
+        npm-cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.npm-cache-name }}-v${{ env.ACTION_VERSION }}-
+
+    # https://github.com/marketplace/actions/setup-php-action
+    - name: Setup PHP & Composer Environment
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "${{ env.PHP_VERSION }}"
+        tools: "composer:${{ env.COMPOSER_VERSION }}"
+
+    # https://github.com/marketplace/actions/semver-conventional-commits
+    - name: Get Versions
+      id: semver
+      uses: ietf-tools/semver-action@v1
+      with:
+        token: ${{ github.token }}
+        branch: release
+
+    - name: Create Release Name
+      id: release-name
+      run: |
+        RELEASE_NAME=$(echo "= ${{ steps.semver.outputs.nextStrict }} =")
+        echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_OUTPUT
+
+    # https://github.com/marketplace/actions/changelog-from-conventional-commits
+    - name: Generate Changelog Entry
+      id: changelog
+      uses: requarks/changelog-action@v1
+      with:
+        token: ${{ github.token }}
+        fromTag: release
+        toTag: ${{ steps.semver.outputs.current }}
+
+    - name: Generate Changelog Temp File
+      run: printf "${{ steps.release-name.outputs.RELEASE_NAME }}\n${{ steps.changelog.outputs.changes }}" > changelog.txt
+
+    - name: Install Composer Dependencies
+      run: composer install --no-dev --prefer-dist
+
+    - name: NPM Install
+      run: npm ci
+
+    # Use PHP to replace the current changelog entry with the latest changelog entry.
+    - name: Update readme.txt Changelog
+      run: php -r 'file_put_contents("readme.txt", preg_replace("/(<!-- Please keep comment here to allow auto-update -->)(\s).*(\s)(<!-- \[END AUTO UPDATE\] -->)/ms", "$1$2" . trim(preg_replace("/\r\n/", "\n", file_get_contents("changelog.txt"))) . "$3$4", file_get_contents("readme.txt")));'
+
+    - name: Set Release Version
+      run: npm run version:bump ${{ steps.semver.outputs.next }}
+
+    - name: Prepare a New Build
+      run: npm run build
+
+    - name: Create Commit Message
+      id: commit-msg
+      run: |
+        COMMIT_MSG=$(echo "chore(release): Updates and builds for release ${{ steps.semver.outputs.nextStrict }}")
+        echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_OUTPUT
+
+    # https://github.com/marketplace/actions/add-commit
+    - name: Add & Commit/Push Release Changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: F1 Builder
+        author_email: support+f1builder@forumone.com
+        new_branch: release
+        message: ${{ steps.commit-msg.outputs.COMMIT_MSG }}

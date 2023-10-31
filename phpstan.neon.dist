@@ -1,0 +1,26 @@
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+	# https://phpstan.org/config-reference#rule-level
+	level: max
+	# https://phpstan.org/config-reference#phpversion
+	phpVersion: 80000
+	# https://phpstan.org/config-reference#inferprivatepropertytypefromconstructor
+	inferPrivatePropertyTypeFromConstructor: true
+	# https://phpstan.org/user-guide/ignoring-errors#reporting-unused-ignores
+	reportUnmatchedIgnoredErrors: false
+
+	bootstrapFiles:
+		- tests/phpstan-bootstrap.php
+
+	paths:
+		- wp-cfm.php
+		- includes/
+		- templates/
+
+	ignoreErrors:
+		# Uses func_get_args()
+		#- '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
+		# Ignore cookie_redirect_key deprecation errors.
+		- '/^Access to deprecated property \$cookie_redirect_key/'

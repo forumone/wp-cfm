@@ -1,15 +1,15 @@
 === WP-CFM ===
-Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam, gbeezus
-Tags: configuration, settings, configuration management, features, drupal, wordpress, wp-cli
+Contributors: mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, joshlevinson, jmslbam, gbeezus, tnolte
+Tags: configuration, settings, configuration management, features, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.7
-Tested up to: 6.0.2
-Requires PHP: 5.6
-Stable tag: 1.7.5
+Tested up to: 6.3.2
+Requires PHP: 7.4
+Stable tag: 1.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Manage and deploy WordPress configuration changes
+Manage and deploy WordPress configuration changes.
 
 == Description ==
 
@@ -67,120 +67,27 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 
 == Changelog ==
 
-= 1.7.5 =
-* Fix: Tested with latest WordPress release v6.0.2. Removing the plugin outdated notice at WordPress.org plugin repository.
+<!-- [START AUTO UPDATE] -->
+<!-- Please keep comment here to allow auto-update -->
+= 1.7.6 =
+### :bug: Bug Fixes
+- [](https://github.com/forumone/wp-cfm/commit/de3cac52607d7879b07e62a42bac62dc7925e98a) - **readwrite**: Add check to skip pulling a bundle if there was no matching bundle file *(PR #132 by @jessedyck)*
+- [](https://github.com/forumone/wp-cfm/commit/e6fd2c7e14041a9c0d79d850f31d25d593cafae4) - **core**: Swap instances of filter_input for sanitize_text_field *(PR #136 by @gbeezus)*
+- [](https://github.com/forumone/wp-cfm/commit/d5a6122cc1661268eadcf076e5f71809529d60b4) - **PHP**: Fixes PHP related deprecation notices & build bugs *(PR #146 by @timnolte)*
+  - :arrow_lower_right: *fixes issue #135 opened by @gbeezus*
+  - :arrow_lower_right: *fixes issue #147 opened by @timnolte*
 
-= 1.7.4 =
-* Fix: Pantheon Quick Silver hooks silently failing to pull updated configuration.
+### :wrench: Chores
+- [](https://github.com/forumone/wp-cfm/commit/49b269405aa51b536a891a55aa672434be60a0c9) - **ci**: Adds Build/Release Workflows & Updates for Automation *(commit by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/e7cccf9bfb93f532274a50d62e53f72870a51458) - **linting**: Adds Linting Support & Sets a Baseline *(PR #145 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/d41216b2c39d9fcaee4ad791f067537fc5582221) - **ci**: Fixes Release Build SemVer Changes Lookup *(PR #150 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/f81429d365e6409b59b67ef0b5a5d4bf9548bb45) - **ci**: Fixes New Release Changelog Generation GitHub Actions Step *(PR #152 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/711fba63773f8f18f4891d05999fc497326fcbb0) - **ci**: Fixes new Release Build Workflow to Update the readme.txt *(PR #154 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/769ad58be7487d684ed5c11a4067418668042e30) - **ci**: Fixes Missing Quotes During Temp Changelog Output *(PR #156 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/d605935e48ae0d768d2ada1493bc9924d4c4009e) - **ci**: Forces Use of Release Branch for New Release Commit *(PR #158 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/199323147701dded5a28cb4f50dff920617bbf99) - **ci**: Changes the GitHub Action Used for Release Commits/Pushes *(PR #160 by @timnolte)*
+<!-- [END AUTO UPDATE] -->
 
-= 1.7.3 =
-* Fix: PHP notice "WP_Scripts::localize was called incorrectly". The $l10n parameter must be an array.
+--------
 
-= 1.7.2 =
-* Improved: Fix Warning invalid argument supplied on CLI command.
-
-= 1.7.1 =
-* Improved: Cache results of WPCFM_Registry::get_configuration_items() (props @fariasf).
-* New: Added `--format` parameter for the bundles command to retrieve bundle information from the CLI (props @gilzow).
-* Improved: Use `home_url()` instead of `WP_HOME` since this one isn't always guaranteed to be set (props @kyletaylored).
-* Fix: Warning invalid argument supplied for foreach() on CLI command (props @adnoh).
-
-= 1.6 =
-* Improved: Following WordPress best practices. Including CSS and JS scripts for plugin admin page using `admin_enqueue_scripts` action.
-* New: Filters `wpcfm_multi_env` and `wpcfm_current_env` to activate multiple environments functionality.
-* New: Detects Pantheon hosting automatically and activates the multiple environments functionality. Registers out of the box `dev`, `test` and `live` for Pantheon.
-* New: Filter `wpcfm_is_ssot` adds capability to set configuration bundles as the Single Source of Truth (SSOT), rather than the database, for all tracked options.
-
-= 1.5.1 =
-* Fix: Tested with latest WordPress 5.2.1. Removing the plugin outdated notice at WordPress.org plugin repository.
-
-= 1.5 =
-* New: Toggle to show/hide already registered options (props @mickaelperrin)
-* New: `wpcfm_config_format` filter allow export configuration as YAML files (props @mickaelperrin)
-* New: Check configuration file exist before import (props @mickaelperrin)
-* Fix: File bundle properties are not checked (props @mickaelperrin)
-* Fix: Import wp-cfm settings (props @mickaelperrin)
-* Fix: Bad PHP Version comparison (props @mickaelperrin)
-* Fix: Undefined constant WPCFM_CONFIG_FORMAT_REQUESTED (props @mickaelperrin)
-* Improved: Better Custom Field Suite plugin detection (props @s3ththompson)
-
-= 1.4.5 =
-* Fix: only the first taxonomy was showing in the admin UI (props @Rebenton)
-
-= 1.4.4 =
-* New: `wpcfm_config_dir` filter (customize config dir)
-* New: `wpcfm_config_url` filter (customize config url)
-* Fix: issue with .dot files in config directory
-* Fix: PHP7 warning
-
-= 1.4.3 =
-* Fixed: WP-CLI diff (props @mortana42)
-
-= 1.4.2 =
-* Fixed: pulls broken due to taxonomy bug
-* Fixed: Custom Field Suite support
-* Improved: code formatting
-
-= 1.4.1 =
-* Wrapped CFS integration into a class
-* Removed unnecessary diff code
-* Code formatting tweaks
-
-= 1.4 =
-* New: support for taxonomy terms
-* Improved: better usability for response messages
-* Improved: replaced multiselect UI tool
-* Fixed: diff viewer highlighting issues
-* Added screenshots
-
-= 1.3.2 =
-* wp-cli diff support (props @joshkoenig)
-* wp-cli show bundles support (props @joshkoenig)
-* wp-cli get bundle details (props @joshkoenig)
-
-= 1.3.1 =
-* Fix for bundle deletion
-* Better WP-CLI network support
-* Now using "wp_mkdir_p" to check for writable config folder
-* Updated translations
-
-= 1.3 =
-* Multisite support (props @alfreddatakillen)
-* Added download link for each bundle (props @alfreddatakillen)
-* Notification when the same option is stored in multiple bundles
-* Subclasses can be accessed as base class variables
-* Fix: ensure that "old_value" exists
-* Updated translations
-
-= 1.2 =
-* Made "diff viewer" close button appear clickable
-* Fixed bug with Custom Field Suite and loop sub-fields
-
-= 1.1 =
-* Added support for a config option label
-* Added `get_facet_by_name` helper method
-* Admin UI now recognizes file bundles
-* Better error handling
-
-= 1.0.5 =
-* Synchronize bundle config options list with file during Pull
-
-= 1.0.4 =
-* Added i18n support
-* Fallback for JSON_PRETTY_PRINT when PHP < 5.4
-* Fixed PHP notices when doing Pulls
-* Excluded some unnecessary CFS config options
-
-= 1.0.3 =
-* Added relative plugin URL (props @tormjens)
-* Added subtle admin screen animations
-* Better file error handling
-* CFS integration - each field group now has its own configuration item
-* Added `wpcfm_pull_callback` filter
-* Moved the "all" bundle handler from the ajax class to readwrite
-
-= 1.0.2 =
-* Fix: error when Custom Field Suite isn't active
-
-= 1.0.1 =
-* Custom Field Suite integration
+[See the previous changelogs here](https://github.com/forumone/wp-cfm/blob/main/CHANGELOG.md#changelog)
