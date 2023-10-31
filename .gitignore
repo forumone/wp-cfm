@@ -30,6 +30,7 @@ phpstan.neon
 phpunit.xml
 .phpunit.result.cache
 clover.xml
+changelog.txt
 
 # WordPress Development environment directories to ignore.
 tools/local-env/wp

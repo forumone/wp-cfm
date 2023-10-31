@@ -83,11 +83,11 @@ jobs:
     - name: Create Release Name
       id: release-name
       run: |
-        RELEASE_NAME=$(echo "=  ${{ steps.semver.outputs.nextStrict }} =")
+        RELEASE_NAME=$(echo "= ${{ steps.semver.outputs.nextStrict }} =")
         echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_OUTPUT
 
     # https://github.com/marketplace/actions/changelog-from-conventional-commits
-    - name: Generate Changelog
+    - name: Generate Changelog Entry
       id: changelog
       uses: requarks/changelog-action@v1
       with:
@@ -95,21 +95,18 @@ jobs:
         fromTag: release
         toTag: ${{ steps.semver.outputs.current }}
 
+    - name: Generate Changelog Temp File
+      run: printf ${{ steps.release-name.outputs.RELEASE_NAME }}\n${{ steps.changelog.outputs.changes }} > changelog.txt
+
     - name: Install Composer Dependencies
       run: composer install --no-dev --prefer-dist
 
     - name: NPM Install
       run: npm ci
 
-    # https://github.com/marketplace/actions/update-file
+    # Use PHP to replace the current changelog entry with the latest changelog entry.
     - name: Update readme.txt Changelog
-      uses: wow-actions/update-file@v1
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        path: readme.txt
-        content: |
-          ${{ steps.release-name.outputs.RELEASE_NAME }}
-          ${{ steps.changelog.outputs.changes }}
+      run: php -r 'file_put_contents("readme.txt", preg_replace("/(<!-- Please keep comment here to allow auto-update -->)(\s).*(\s)(<!-- \[END AUTO UPDATE\] -->)/ms", "$1$2" . trim(preg_replace("/\r\n/", "\n", file_get_contents("changelog.txt"))) . "$3$4", file_get_contents("readme.txt")));'
 
     - name: Set Release Version
       run: npm run version:bump ${{ steps.semver.outputs.next }}
