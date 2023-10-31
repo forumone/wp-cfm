@@ -120,11 +120,11 @@ jobs:
         COMMIT_MSG=$(echo "chore(release): Updates and builds for release ${{ steps.semver.outputs.nextStrict }}")
         echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_OUTPUT
 
-    # https://github.com/marketplace/actions/git-commit-push-changes
-    - name: Commit & Push Release Changes
-      uses: actions-x/commit@v6
+    # https://github.com/marketplace/actions/add-commit
+    - name: Add & Commit/Push Release Changes
+      uses: EndBug/add-and-commit@v9
       with:
-        email: support+f1builder@forumone.com
-        name: F1 Builder
-        branch: release
+        author_name: F1 Builder
+        author_email: support+f1builder@forumone.com
+        new_branch: release
         message: ${{ steps.commit-msg.outputs.COMMIT_MSG }}
