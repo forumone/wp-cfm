@@ -96,7 +96,7 @@ jobs:
         toTag: ${{ steps.semver.outputs.current }}
 
     - name: Generate Changelog Temp File
-      run: printf ${{ steps.release-name.outputs.RELEASE_NAME }}\n${{ steps.changelog.outputs.changes }} > changelog.txt
+      run: printf "${{ steps.release-name.outputs.RELEASE_NAME }}\n${{ steps.changelog.outputs.changes }}" > changelog.txt
 
     - name: Install Composer Dependencies
       run: composer install --no-dev --prefer-dist
