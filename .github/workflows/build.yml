@@ -92,7 +92,7 @@ jobs:
       uses: requarks/changelog-action@v1
       with:
         token: ${{ github.token }}
-        fromTag: ${{ github.ref_name }}
+        fromTag: release
         toTag: ${{ steps.semver.outputs.current }}
 
     - name: Install Composer Dependencies
