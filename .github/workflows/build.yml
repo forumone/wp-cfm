@@ -126,4 +126,5 @@ jobs:
       with:
         email: support+f1builder@forumone.com
         name: F1 Builder
+        branch: release
         message: ${{ steps.commit-msg.outputs.COMMIT_MSG }}
