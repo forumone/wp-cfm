@@ -4,7 +4,7 @@
   "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
-  "workspaceFolder": "/workspace/${localWorkspaceFolderBasename}",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
   "customizations": {
     "vscode": {
@@ -32,7 +32,23 @@
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [8080, 8081, 8025, 3306],
+  "forwardPorts": [8080, 8081, 8026, 3306],
+
+  // Maps a port number, "host:port" value, range, or regular expression to a set of default options. See port attributes for available options
+  "portsAttributes": {
+    "8080": {
+      "label": "WordPress Development/Testing Site"
+    },
+    "8081": {
+      "label": "phpMyAdmin"
+    },
+    "8026": {
+      "label": "MailHog"
+    },
+    "3306": {
+      "label": "MariaDB"
+    }
+  },
 
   // Use `onCreateCommand` to run commands as part of the container creation.
   "onCreateCommand": "sudo chmod +x .devcontainer/install.sh && .devcontainer/install.sh",

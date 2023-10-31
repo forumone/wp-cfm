@@ -59,7 +59,7 @@
     "welcome-build-command": "npm start"
   },
   "scripts": {
-    "preinstall": "npx force-resolutions",
+    "preinstall": "npx force-resolutions --yes",
     "build": "npm run grunt build",
     "release": "npm run grunt release -- --force",
     "start": "wp-env start",
