@@ -12,7 +12,7 @@ on:
     types: [published]
 
 env:
-  ACTION_VERSION: 2
+  ACTION_VERSION: 3
 
 jobs:
   deploy-release:
@@ -58,9 +58,9 @@ jobs:
 
     # https://github.com/marketplace/actions/wordpress-plugin-deploy
     - name: WordPress.org Plugin Deploy
-      uses: nk-o/action-wordpress-plugin-deploy@master
+      uses: 10up/action-wordpress-plugin-deploy@stable
       env:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        SOURCE_DIR: dist/
+        BUILD_DIR: dist/
         SLUG: wp-cfm
