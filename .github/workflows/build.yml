@@ -9,7 +9,7 @@ on:
 env:
   PHP_VERSION: '7.4'
   COMPOSER_VERSION: '2.5'
-  ACTION_VERSION: 1
+  ACTION_VERSION: 10
 
 jobs:
   release:
