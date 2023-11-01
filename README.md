@@ -5,7 +5,7 @@
 **Requires at least:** 4.7  
 **Tested up to:** 6.3.2  
 **Requires PHP:** 7.4  
-**Stable tag:** 1.7.7  
+**Stable tag:** 1.7.8  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -69,12 +69,9 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 
 <!-- [START AUTO UPDATE] -->
 <!-- Please keep comment here to allow auto-update -->
-### 1.7.7 ###
+### 1.7.8 ###
 ### :bug: Bug Fixes
-- [](https://github.com/forumone/wp-cfm/commit/0c26ca566cc07e11f490f1bd7ee58c9ed714a1c3) - **ci**: Trigger New WordPress.org Release *(PR #164 by @timnolte)*
-
-### :wrench: Chores
-- [](https://github.com/forumone/wp-cfm/commit/b59eea4b23bef692fa9bac88e010cfc98700543f) - **ci**: Updates Deployment Workflow for Manual & Automated Deployments to WP.org *(commit by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/4e13f08df6419656742e25f89f73dc9af826aeb5) - **deploy**: Fixes GHA for WP.org Deployments *(PR #167 by @timnolte)*
 <!-- [END AUTO UPDATE] -->
 
 --------
