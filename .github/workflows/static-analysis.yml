@@ -5,14 +5,12 @@ on:
   push:
     branches:
       - develop
-      - 'feature/**'
-      - 'fix/**'
 
 env:
   WP_MULTISITE: 0
   PHP_VERSION: '7.4'
   COMPOSER_VERSION: '2.5'
-  ACTION_VERSION: 1
+  ACTION_VERSION: 2
 
 jobs:
   check_static_analysis:

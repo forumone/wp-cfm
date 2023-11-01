@@ -5,12 +5,10 @@ on:
   push:
     branches:
       - develop
-      - 'feature/**'
-      - 'fix/**'
 
 env:
   WP_MULTISITE: 0
-  ACTION_VERSION: 1
+  ACTION_VERSION: 2
 
 jobs:
   check_i18n:
