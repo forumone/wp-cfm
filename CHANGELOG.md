@@ -1,6 +1,21 @@
 # Change Log
 
-## [release] - 2023-10-31
+## 1.7.8 - 20230-10-31
+### :bug: Bug Fixes
+- [`4e13f08`](https://github.com/forumone/wp-cfm/commit/4e13f08df6419656742e25f89f73dc9af826aeb5) - **deploy**: Fixes GHA for WP.org Deployments *(PR #167 by @timnolte)*
+
+### :wrench: Chores
+- [`9ae1ae3`](https://github.com/forumone/wp-cfm/commit/9ae1ae31872e748d6aefd2c9489ca0a2ddf67cbc) - **release**: Updates and builds for release 1.7.8 *(commit by @f1builder)*
+
+## 1.7.7 - 2023-10-31
+### :bug: Bug Fixes
+- [`0c26ca5`](https://github.com/forumone/wp-cfm/commit/0c26ca566cc07e11f490f1bd7ee58c9ed714a1c3) - **ci**: Trigger New WordPress.org Release *(PR #164 by @timnolte)*
+
+### :wrench: Chores
+- [`b59eea4`](https://github.com/forumone/wp-cfm/commit/b59eea4b23bef692fa9bac88e010cfc98700543f) - **ci**: Updates Deployment Workflow for Manual & Automated Deployments to WP.org *(commit by @timnolte)*
+- [`e25a5ab`](https://github.com/forumone/wp-cfm/commit/e25a5abc6058a8fe4e8f839630596cc4e65f6e7d) - **release**: Updates and builds for release 1.7.7 *(commit by @f1builder)*
+
+## 1.7.6 - 2023-10-31
 ### :bug: Bug Fixes
 - [`de3cac5`](https://github.com/forumone/wp-cfm/commit/de3cac52607d7879b07e62a42bac62dc7925e98a) - **readwrite**: Add check to skip pulling a bundle if there was no matching bundle file *(PR [#132](https://github.com/forumone/wp-cfm/pull/132) by [@jessedyck](https://github.com/jessedyck))*
 - [`e6fd2c7`](https://github.com/forumone/wp-cfm/commit/e6fd2c7e14041a9c0d79d850f31d25d593cafae4) - **core**: Swap instances of filter_input for sanitize_text_field *(PR [#136](https://github.com/forumone/wp-cfm/pull/136) by [@gbeezus](https://github.com/gbeezus))*
