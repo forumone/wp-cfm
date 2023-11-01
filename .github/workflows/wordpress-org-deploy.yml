@@ -1,10 +1,18 @@
 name: Deploy to WordPress.org
+
 on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Create a Release]
+    types:
+      - completed
+    branches:
+      - main
   release:
     types: [published]
 
 env:
-  ACTION_VERSION: 1
+  ACTION_VERSION: 2
 
 jobs:
   deploy-release:
