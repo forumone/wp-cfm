@@ -265,8 +265,17 @@ class WPCFM_Core {
 			// Safely get env value from plugin backend URL, if exists.
 			$compare_env = isset( $_GET['compare_env'] )
 			  ? sanitize_text_field( $_GET['compare_env'] )
-			  : '';
-			wp_localize_script( 'wpcfm-admin-js', 'compare_env', array( 'env' => $compare_env ) );
+				: '';
+
+			wp_localize_script(
+				'wpcfm-admin-js',
+				'compare_env',
+				array(
+					'ajax_url'         => admin_url( 'admin-ajax.php' ),
+					'env'              => $compare_env,
+					'wpcfm_ajax_nonce' => wp_create_nonce( 'wpcfm_ajax_nonce' ),
+				)
+			);
 
 			wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), array(), WPCFM_VERSION );
 		}

@@ -2,11 +2,12 @@
     $(function() {
 
         // Load
-        $.post(ajaxurl, {
+        $.post(compare_env.ajax_url, {
             action: 'wpcfm_load',
-            compare_env: compare_env.env
+            compare_env: compare_env.env,
+            _ajax_nonce: compare_env.wpcfm_ajax_nonce
         }, function(response) {
-            $.each(response.bundles, function(idx, obj) {
+            $.each(response.data.bundles, function(idx, obj) {
                 var $this = $('.bundles-hidden .bundle-row').clone();
                 $this.find('.bundle-label').val(obj.label);
                 $this.find('.bundle-name').val(obj.name);
@@ -30,7 +31,9 @@
                 // Trigger jQuery Multi Select
                 $this.find('.bundle-select').multiSelect();
             });
-        }, 'json');
+        }, 'json').fail(function(response) {
+            $('.wpcfm-response').html(response.responseJSON.data.message);
+        });
 
 
         // Save
@@ -53,14 +56,17 @@
                 data.bundles.push(obj);
             });
 
-            $.post(ajaxurl, {
-                'action': 'wpcfm_save',
-                'compare_env': compare_env.env,
-                'data': JSON.stringify(data)
+            $.post(compare_env.ajax_url, {
+                action: 'wpcfm_save',
+                compare_env: compare_env.env,
+                _ajax_nonce: compare_env.wpcfm_ajax_nonce,
+                data: JSON.stringify(data)
             }, function(response) {
                 $('.wpcfm-bundles .bundle-row').removeClass('unsaved');
                 $('.wpcfm-bundles .push-bundle').removeClass('disabled');
-                $('.wpcfm-response').html(response);
+                $('.wpcfm-response').html(response.data.message);
+            }).fail(function(response) {
+                $('.wpcfm-response').html(response.responseJSON.data.message);
             });
         });
 
@@ -114,12 +120,15 @@
             $('.wpcfm-response').html('Exporting to file...');
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
-            $.post(ajaxurl, {
-                'action': 'wpcfm_push',
-                'compare_env': compare_env.env,
-                'data': { 'bundle_name': bundle_name }
+            $.post(compare_env.ajax_url, {
+                action: 'wpcfm_push',
+                compare_env: compare_env.env,
+                _ajax_nonce: compare_env.wpcfm_ajax_nonce,
+                data: { 'bundle_name': bundle_name }
             }, function(response) {
-                $('.wpcfm-response').html(response);
+                $('.wpcfm-response').html(response.data.message);
+            }).fail(function(response) {
+                $('.wpcfm-response').html(response.responseJSON.data.message);
             });
         });
 
@@ -130,12 +139,15 @@
                 $('.wpcfm-response').html('Importing into DB...');
                 var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
 
-                $.post(ajaxurl, {
-                    'action': 'wpcfm_pull',
-                    'compare_env': compare_env.env,
-                    'data': { 'bundle_name': bundle_name }
+                $.post(compare_env.ajax_url, {
+                    action: 'wpcfm_pull',
+                    compare_env: compare_env.env,
+                    _ajax_nonce: compare_env.wpcfm_ajax_nonce,
+                    data: { 'bundle_name': bundle_name }
                 }, function(response) {
-                    $('.wpcfm-response').html(response);
+                    $('.wpcfm-response').html(response.data.message);
+                }).fail(function(response) {
+                    $('.wpcfm-response').html(response.responseJSON.data.message);
                 });
             }
         });
@@ -144,22 +156,22 @@
         // "Diff" button
         $(document).on('click', '.diff-bundle:not(.disabled)', function() {
             var bundle_name = $(this).closest('.bundle-row').attr('data-bundle');
-            $.post(ajaxurl, {
-                'action': 'wpcfm_diff',
-                'compare_env': compare_env.env,
-                'data': { 'bundle_name': bundle_name }
+            $.post(compare_env.ajax_url, {
+                action: 'wpcfm_diff',
+                compare_env: compare_env.env,
+                _ajax_nonce: compare_env.wpcfm_ajax_nonce,
+                data: { 'bundle_name': bundle_name }
             }, function(response) {
-                if ('' != response.error) {
-                    $('.wpcfm-diff .diff').html(response.error);
-                }
-                else {
-                    $('.wpcfm-diff .original').text(response.file);
-                    $('.wpcfm-diff .changed').text(response.db);
+                if ('' != response.data.file) {
+                    $('.wpcfm-diff .original').text(response.data.file);
+                    $('.wpcfm-diff .changed').text(response.data.db);
                     $('.wpcfm-diff').prettyTextDiff();
                 }
                 $('.media-modal').show();
                 $('.media-modal-backdrop').show();
-            }, 'json');
+            }, 'json').fail(function(response) {
+                $('.wpcfm-response').html(response.responseJSON.data.message);
+            });
         });
 
 

@@ -4,7 +4,7 @@
   "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "workspaceFolder": "/workspaces/wp-cfm",
 
   "customizations": {
     "vscode": {
@@ -32,7 +32,7 @@
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [8080, 8081, 8026, 3306],
+  "forwardPorts": [8080, 8081, 8027, 3306],
 
   // Maps a port number, "host:port" value, range, or regular expression to a set of default options. See port attributes for available options
   "portsAttributes": {
@@ -42,7 +42,7 @@
     "8081": {
       "label": "phpMyAdmin"
     },
-    "8026": {
+    "8027": {
       "label": "MailHog"
     },
     "3306": {
