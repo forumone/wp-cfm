@@ -1,5 +1,16 @@
 # Change Log
 
+## [release] - 2024-02-07
+### :bug: Bug Fixes
+- [`a11a6c2`](https://github.com/forumone/wp-cfm/commit/a11a6c2e4c8618726cffea4a994217be8943ec5f) - **Admin AJAX**: Fixes CSRF issue in AJAX requests due to missing nonces *(commit by [@timnolte](https://github.com/timnolte))*
+
+### :wrench: Chores
+- [`4377104`](https://github.com/forumone/wp-cfm/commit/4377104208239b15f2e4d4edae700b1c2af38885) - **ci**: Fixes Release Tag Format *(PR [#170](https://github.com/forumone/wp-cfm/pull/170) by [@timnolte](https://github.com/timnolte))*
+- [`648ae5a`](https://github.com/forumone/wp-cfm/commit/648ae5abc2fdcbdbf5e5487979ae113c2c5c543d) - **docs**: Updates Contributors List *(PR [#171](https://github.com/forumone/wp-cfm/pull/171) by [@timnolte](https://github.com/timnolte))*
+- [`272e452`](https://github.com/forumone/wp-cfm/commit/272e452721b7f57542fd9a4637b9bf25b84d81cb) - **PHPStan**: Fixes PHPStan linting errors in security patch *(PR [#172](https://github.com/forumone/wp-cfm/pull/172) by [@timnolte](https://github.com/timnolte))*
+- [`5d3b9e8`](https://github.com/forumone/wp-cfm/commit/5d3b9e846baa51d9119c3f196acd23cbe57ce14e) - **README**: Updates WordPress version compatibility *(PR [#173](https://github.com/forumone/wp-cfm/pull/173) by [@timnolte](https://github.com/timnolte))*
+
+
 ## 1.7.8 - 20230-10-31
 ### :bug: Bug Fixes
 - [`4e13f08`](https://github.com/forumone/wp-cfm/commit/4e13f08df6419656742e25f89f73dc9af826aeb5) - **deploy**: Fixes GHA for WP.org Deployments *(PR #167 by @timnolte)*
@@ -153,3 +164,5 @@
 * Custom Field Suite integration
 
 [release]: https://github.com/forumone/wp-cfm/compare/1.7.5...release
+
+[release]: https://github.com/forumone/wp-cfm/compare/1.7.8...release

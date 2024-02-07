@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'forumone/wp-cfm',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => 'b038166c5786e744a93c902066091c339647a647',
+        'pretty_version' => 'dev-ffe7673d0555d0b8675fb57e0cf2c862d110bfbd',
+        'version' => 'dev-ffe7673d0555d0b8675fb57e0cf2c862d110bfbd',
+        'reference' => 'ffe7673d0555d0b8675fb57e0cf2c862d110bfbd',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'forumone/wp-cfm' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => 'b038166c5786e744a93c902066091c339647a647',
+            'pretty_version' => 'dev-ffe7673d0555d0b8675fb57e0cf2c862d110bfbd',
+            'version' => 'dev-ffe7673d0555d0b8675fb57e0cf2c862d110bfbd',
+            'reference' => 'ffe7673d0555d0b8675fb57e0cf2c862d110bfbd',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
