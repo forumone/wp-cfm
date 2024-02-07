@@ -1,6 +1,32 @@
 # Change Log
 
-## [release] - 2023-10-31
+## [release] - 2024-02-07
+### :bug: Bug Fixes
+- [`a11a6c2`](https://github.com/forumone/wp-cfm/commit/a11a6c2e4c8618726cffea4a994217be8943ec5f) - **Admin AJAX**: Fixes CSRF issue in AJAX requests due to missing nonces *(commit by [@timnolte](https://github.com/timnolte))*
+
+### :wrench: Chores
+- [`4377104`](https://github.com/forumone/wp-cfm/commit/4377104208239b15f2e4d4edae700b1c2af38885) - **ci**: Fixes Release Tag Format *(PR [#170](https://github.com/forumone/wp-cfm/pull/170) by [@timnolte](https://github.com/timnolte))*
+- [`648ae5a`](https://github.com/forumone/wp-cfm/commit/648ae5abc2fdcbdbf5e5487979ae113c2c5c543d) - **docs**: Updates Contributors List *(PR [#171](https://github.com/forumone/wp-cfm/pull/171) by [@timnolte](https://github.com/timnolte))*
+- [`272e452`](https://github.com/forumone/wp-cfm/commit/272e452721b7f57542fd9a4637b9bf25b84d81cb) - **PHPStan**: Fixes PHPStan linting errors in security patch *(PR [#172](https://github.com/forumone/wp-cfm/pull/172) by [@timnolte](https://github.com/timnolte))*
+- [`5d3b9e8`](https://github.com/forumone/wp-cfm/commit/5d3b9e846baa51d9119c3f196acd23cbe57ce14e) - **README**: Updates WordPress version compatibility *(PR [#173](https://github.com/forumone/wp-cfm/pull/173) by [@timnolte](https://github.com/timnolte))*
+
+
+## 1.7.8 - 20230-10-31
+### :bug: Bug Fixes
+- [`4e13f08`](https://github.com/forumone/wp-cfm/commit/4e13f08df6419656742e25f89f73dc9af826aeb5) - **deploy**: Fixes GHA for WP.org Deployments *(PR #167 by @timnolte)*
+
+### :wrench: Chores
+- [`9ae1ae3`](https://github.com/forumone/wp-cfm/commit/9ae1ae31872e748d6aefd2c9489ca0a2ddf67cbc) - **release**: Updates and builds for release 1.7.8 *(commit by @f1builder)*
+
+## 1.7.7 - 2023-10-31
+### :bug: Bug Fixes
+- [`0c26ca5`](https://github.com/forumone/wp-cfm/commit/0c26ca566cc07e11f490f1bd7ee58c9ed714a1c3) - **ci**: Trigger New WordPress.org Release *(PR #164 by @timnolte)*
+
+### :wrench: Chores
+- [`b59eea4`](https://github.com/forumone/wp-cfm/commit/b59eea4b23bef692fa9bac88e010cfc98700543f) - **ci**: Updates Deployment Workflow for Manual & Automated Deployments to WP.org *(commit by @timnolte)*
+- [`e25a5ab`](https://github.com/forumone/wp-cfm/commit/e25a5abc6058a8fe4e8f839630596cc4e65f6e7d) - **release**: Updates and builds for release 1.7.7 *(commit by @f1builder)*
+
+## 1.7.6 - 2023-10-31
 ### :bug: Bug Fixes
 - [`de3cac5`](https://github.com/forumone/wp-cfm/commit/de3cac52607d7879b07e62a42bac62dc7925e98a) - **readwrite**: Add check to skip pulling a bundle if there was no matching bundle file *(PR [#132](https://github.com/forumone/wp-cfm/pull/132) by [@jessedyck](https://github.com/jessedyck))*
 - [`e6fd2c7`](https://github.com/forumone/wp-cfm/commit/e6fd2c7e14041a9c0d79d850f31d25d593cafae4) - **core**: Swap instances of filter_input for sanitize_text_field *(PR [#136](https://github.com/forumone/wp-cfm/pull/136) by [@gbeezus](https://github.com/gbeezus))*
@@ -138,3 +164,5 @@
 * Custom Field Suite integration
 
 [release]: https://github.com/forumone/wp-cfm/compare/1.7.5...release
+
+[release]: https://github.com/forumone/wp-cfm/compare/1.7.8...release

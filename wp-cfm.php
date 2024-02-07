@@ -13,7 +13,7 @@
  * Plugin Name:       WP-CFM
  * Plugin URI:        https://forumone.github.io/wp-cfm/
  * Description:       WordPress Configuration Management
- * Version:           1.7.8
+ * Version:           1.7.9
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            Forum One
@@ -34,7 +34,7 @@ if ( PHP_VERSION_ID >= 50604 ) {
 class WPCFM_Core {
 
 
-	const VERSION = '1.7.8';
+	const VERSION = '1.7.9';
 	public $readwrite;
 	public $registry;
 	public $options;
@@ -265,8 +265,17 @@ class WPCFM_Core {
 			// Safely get env value from plugin backend URL, if exists.
 			$compare_env = isset( $_GET['compare_env'] )
 			  ? sanitize_text_field( $_GET['compare_env'] )
-			  : '';
-			wp_localize_script( 'wpcfm-admin-js', 'compare_env', array( 'env' => $compare_env ) );
+				: '';
+
+			wp_localize_script(
+				'wpcfm-admin-js',
+				'compare_env',
+				array(
+					'ajax_url'         => admin_url( 'admin-ajax.php' ),
+					'env'              => $compare_env,
+					'wpcfm_ajax_nonce' => wp_create_nonce( 'wpcfm_ajax_nonce' ),
+				)
+			);
 
 			wp_enqueue_style( 'wpcfm-admin', plugins_url( "assets/css/admin{$min}.css", __FILE__ ), array(), WPCFM_VERSION );
 		}

@@ -1,6 +1,6 @@
 {
   "name": "wp-cfm",
-  "version": "1.7.8",
+  "version": "1.7.9",
   "description": "Manage and deploy WordPress configuration changes.",
   "main": "Gruntfile.js",
   "repository": {

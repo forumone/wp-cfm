@@ -15,20 +15,28 @@ class WPCFM_Ajax {
 	/**
 	 * Load admin settings
 	 */
-	function load_settings() {
-		if ( current_user_can( 'manage_options' ) ) {
+	public function load_settings() {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'wpcfm_ajax_nonce' ) ) {
 			$bundles = WPCFM()->helper->get_bundles();
-			echo json_encode( array( 'bundles' => $bundles ) );
+			wp_send_json(
+				array(
+					'success' => true,
+					'data' => array(
+						'bundles' => $bundles,
+					),
+				)
+			);
 		}
-		exit;
+
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 
 
 	/**
 	 * Save admin settings
 	 */
-	function save_settings() {
-		if ( current_user_can( 'manage_options' ) ) {
+	public function save_settings() {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'wpcfm_ajax_nonce' ) ) {
 			$settings = stripslashes( $_POST['data'] );
 
 			// Save the option
@@ -44,14 +52,20 @@ class WPCFM_Ajax {
 				}
 			}
 
-			echo __( 'Settings saved', 'wp-cfm' );
+			wp_send_json(
+				array(
+					'success' => true,
+					'data' => array( 'message' => __( 'Settings saved', 'wp-cfm' ) ),
+				)
+			);
 		}
-		exit;
+
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 
 
-	function load_diff() {
-		if ( current_user_can( 'manage_options' ) ) {
+	public function load_diff() {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'wpcfm_ajax_nonce' ) ) {
 			$bundle_name = stripslashes( $_POST['data']['bundle_name'] );
 			$comparison = WPCFM()->readwrite->compare_bundle( $bundle_name );
 
@@ -63,34 +77,52 @@ class WPCFM_Ajax {
 				$comparison['db'] = print_r( $comparison['db'], true );
 			}
 
-			echo json_encode( $comparison );
+			wp_send_json(
+				array(
+					'success' => true,
+					'data' => $comparison,
+				)
+			);
 		}
-		exit;
+
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 
 
 	/**
 	 * Push settings to filesystem
 	 */
-	function push_settings() {
-		if ( current_user_can( 'manage_options' ) ) {
+	public function push_settings() {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'wpcfm_ajax_nonce' ) ) {
 			$bundle_name = stripslashes( $_POST['data']['bundle_name'] );
 			WPCFM()->readwrite->push_bundle( $bundle_name );
-			echo __( 'Push successful', 'wp-cfm' );
+			wp_send_json(
+				array(
+					'success' => true,
+					'data' => array( 'message' => __( 'Push successful', 'wp-cfm' ) ),
+				)
+			);
 		}
-		exit;
+
+		wp_send_json_error( array( 'success' => false ), 403 );
 	}
 
 
 	/**
 	 * Pull settings into DB
 	 */
-	function pull_settings() {
-		if ( current_user_can( 'manage_options' ) ) {
+	public function pull_settings() {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'wpcfm_ajax_nonce' ) ) {
 			$bundle_name = stripslashes( $_POST['data']['bundle_name'] );
 			WPCFM()->readwrite->pull_bundle( $bundle_name );
-			echo __( 'Pull successful', 'wp-cfm' );
+			wp_send_json(
+				array(
+					'success' => true,
+					'data' => array( 'message' => __( 'Pull successful', 'wp-cfm' ) ),
+				)
+			);
 		}
-		exit;
+
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 }
