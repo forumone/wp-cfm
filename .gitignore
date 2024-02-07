@@ -37,6 +37,7 @@ tools/local-env/wp
 tools/local-env/wp-content/db.php
 tools/local-env/wp-content/.litespeed_conf.dat
 tools/local-env/wp-content/cache/*
+tools/local-env/wp-content/config/*
 tools/local-env/wp-content/ewww/*
 tools/local-env/wp-content/litespeed/*
 !tools/local-env/wp-content/plugins/

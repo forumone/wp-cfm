@@ -81,7 +81,7 @@ services:
     restart: unless-stopped
     ports:
       - 1025:1025 # smtp server
-      - 8026:8025 # web ui
+      - 8027:8025 # web ui
     networks:
       - wpcfm-net
 
