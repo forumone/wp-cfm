@@ -13,7 +13,7 @@
  * Plugin Name:       WP-CFM
  * Plugin URI:        https://forumone.github.io/wp-cfm/
  * Description:       WordPress Configuration Management
- * Version:           1.7.8
+ * Version:           1.7.9
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            Forum One
@@ -34,7 +34,7 @@ if ( PHP_VERSION_ID >= 50604 ) {
 class WPCFM_Core {
 
 
-	const VERSION = '1.7.8';
+	const VERSION = '1.7.9';
 	public $readwrite;
 	public $registry;
 	public $options;
