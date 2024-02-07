@@ -3,7 +3,7 @@ Contributors: forum1, mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, jos
 Tags: configuration, settings, configuration management, features, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.7
-Tested up to: 6.3.2
+Tested up to: 6.4.3
 Requires PHP: 7.4
 Stable tag: 1.7.8
 License: GPLv2 or later
