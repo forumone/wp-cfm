@@ -28,7 +28,7 @@ class WPCFM_Ajax {
 			);
 		}
 
-		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), '403' );
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 
 
@@ -60,7 +60,7 @@ class WPCFM_Ajax {
 			);
 		}
 
-		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), '403' );
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 
 
@@ -85,7 +85,7 @@ class WPCFM_Ajax {
 			);
 		}
 
-		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), '403' );
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 
 
@@ -104,7 +104,7 @@ class WPCFM_Ajax {
 			);
 		}
 
-		wp_send_json_error( array( 'success' => false ), '403' );
+		wp_send_json_error( array( 'success' => false ), 403 );
 	}
 
 
@@ -123,6 +123,6 @@ class WPCFM_Ajax {
 			);
 		}
 
-		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), '403' );
+		wp_send_json_error( array( 'message' => __( 'Unauthorized request!', 'wp-cfm' ) ), 403 );
 	}
 }
