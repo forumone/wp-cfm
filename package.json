@@ -37,6 +37,7 @@
     "grunt-cli": "1.4.1",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-uglify": "5.2.2",
     "grunt-gitinfo": "^0.1.9",
     "grunt-shell": "^2.1.0",
     "grunt-version": "3.0.0",
