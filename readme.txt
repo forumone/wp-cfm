@@ -5,7 +5,7 @@ Donate link: http://forumone.com/
 Requires at least: 4.7
 Tested up to: 6.4.3
 Requires PHP: 7.4
-Stable tag: 1.7.9
+Stable tag: 1.7.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,15 +69,10 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 
 <!-- [START AUTO UPDATE] -->
 <!-- Please keep comment here to allow auto-update -->
-= 1.7.9 =
+= 1.7.10 =
 ### :bug: Bug Fixes
-- [](https://github.com/forumone/wp-cfm/commit/a11a6c2e4c8618726cffea4a994217be8943ec5f) - **Admin AJAX**: Fixes CSRF issue in AJAX requests due to missing nonces *(commit by @timnolte)*
-
-### :wrench: Chores
-- [](https://github.com/forumone/wp-cfm/commit/4377104208239b15f2e4d4edae700b1c2af38885) - **ci**: Fixes Release Tag Format *(PR #170 by @timnolte)*
-- [](https://github.com/forumone/wp-cfm/commit/648ae5abc2fdcbdbf5e5487979ae113c2c5c543d) - **docs**: Updates Contributors List *(PR #171 by @timnolte)*
-- [](https://github.com/forumone/wp-cfm/commit/272e452721b7f57542fd9a4637b9bf25b84d81cb) - **PHPStan**: Fixes PHPStan linting errors in security patch *(PR #172 by @timnolte)*
-- [](https://github.com/forumone/wp-cfm/commit/5d3b9e846baa51d9119c3f196acd23cbe57ce14e) - **README**: Updates WordPress version compatibility *(PR #173 by @timnolte)*
+- [](https://github.com/forumone/wp-cfm/commit/2304a6c5e4fe7c42f306af08c3fabd1de141bff5) - **Assets**: Fixes missing asset updates *(PR #177 by @timnolte)*
+  - :arrow_lower_right: *fixes issue #176 opened by @tych095*
 <!-- [END AUTO UPDATE] -->
 
 --------

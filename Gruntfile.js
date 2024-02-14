@@ -180,6 +180,18 @@ module.exports = function (grunt) {
 			},
 		},
 
+		// Minify JavaScript files.
+		uglify: {
+			options: {
+				mangle: false
+			},
+			my_target: {
+				files: {
+					'assets/js/admin.min.js': ['assets/js/admin.js']
+				}
+			}
+		},
+
 		// Bump version numbers
 		version: {
 			class: {
@@ -211,7 +223,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('i18n', ['addtextdomain', 'makepot', 'po2mo']);
 	grunt.registerTask('readme', ['wp_readme_to_markdown']);
 	grunt.registerTask('test', ['checktextdomain']);
-	grunt.registerTask('build', ['gitinfo', 'test', 'i18n', 'readme']);
+	grunt.registerTask('build', ['gitinfo', 'test', 'i18n', 'readme', 'uglify']);
 	grunt.registerTask('release', ['checkrepo', 'gitinfo', 'checktextdomain', 'clean', 'copy']);
 
 };
